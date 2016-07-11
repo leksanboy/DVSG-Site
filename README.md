@@ -22,12 +22,12 @@ Step-3: Install Bower 									|
 
 
 
-Step-4: Create redirecting Folder file
-	--> '.bowerrc'
-			{
-			    "directory": "app/src/bower_components"
-			}
-
+Step-4: Create redirecting Bower files
+-----------------------------------------------
+	'.bowerrc' --> put into file
+	{
+	    "directory": "app/src/bower_components"
+	}
 
 
 Step-5: Open Project Folder (Console, Terminal)
