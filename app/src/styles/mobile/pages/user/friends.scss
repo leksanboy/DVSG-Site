@@ -1,0 +1,143 @@
+@media (max-width: 599px){
+	body{
+		.innerBody{
+			.innerBodyContent{
+				.pageFriends{
+					margin:  128px auto 0;
+
+					#formTwo,
+					#formThree{
+						display: none;
+					}
+
+					.friendBox{
+						border-bottom: 1px solid rgba(255, 255, 255, 0.23);
+						padding: 12px 2%;
+						float: left;
+						width: 96%;
+
+						&:last-child{
+							border: none;
+						}
+
+						.head{
+							float: left;
+							width: 100%;
+
+							.image{
+								box-sizing: border-box;
+								border: 1px solid #fff;
+								border-radius: 50%;
+								overflow: hidden;
+								height: 48px;
+								width: 48px;
+								float: left;
+
+								img{
+									height: 100%;
+									width: 100%;
+								}
+							}
+
+							.name{
+								margin: 0 0 0 12px;
+								font-size: 15px;
+								float: left;
+								color: #fff;
+
+								.date{
+									color: rgba(255, 255, 255, 0.5);
+									margin: 2px 0 0;
+									font-size: 11px;
+								}
+							}
+
+							.delete{
+								float: right;
+								height: 24px;
+								width: 24px;
+
+								svg{
+									height: 18px;
+									width: 18px;
+									margin: 3px;
+									fill: #fff;
+								}
+							}
+
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								margin: -18px 0 0;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								right: 2%;
+
+								.text{
+									padding: 4px 6px 8px;
+									color: #404040;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
+									}
+								}
+							}
+
+							.buttons{
+								margin: -26px 0 0 60px;
+								width: 100%;
+								float: left;
+
+								button{
+									border-radius: 3px;
+									margin: 0 8px 0 0;
+									background: #09f;
+									border: none;
+									height: 24px;
+									color: #fff;
+
+									&:first-child{
+										background: red;
+									}
+								}
+							}
+						}
+
+						.body{
+							-webkit-box-orient: vertical;
+							text-overflow: ellipsis;
+							-webkit-line-clamp: 2;
+							word-break: break-all;
+							display: -webkit-box;
+							margin: 0 0 0 60px;
+							overflow: hidden;
+							font-size: 14px;
+							float: left;
+						}
+					}
+				}
+			}
+		}
+	}
+}

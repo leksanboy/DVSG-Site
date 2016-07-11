@@ -1,0 +1,154 @@
+@media (max-width: 899px){
+	body{
+		.innerBody{
+			.innerBodyContent{
+				.pageRegister{
+					margin: 120px 0 0 0 !important;
+
+					label{
+						margin: 12px 5% 0;
+						font-size: 13px;
+						color: #fff;
+						float: left;
+						width: 90%;
+					}
+
+					.inputRegister{
+						border: 1px solid #fff;
+						border-radius: 3px;
+						background: none;
+						margin: 12px 3%;
+						font-size: 14px;
+						transition: .3s;
+						outline: none;
+						padding: 0 2%;
+						height: 36px;
+						color: #fff;
+						width: 90%;
+
+						&:focus{
+							border: 1px solid #09f;
+						}
+					}
+
+					.estadoDeName,
+					.estadoDeEmail,
+					.estadoDePassword,
+					.estadoDeCaptcha{
+						margin: -40px 8px 0 0;
+						position: absolute;
+						right: 3%;
+
+						.yes{
+							display: none;
+
+							svg{
+								fill: #2196F3;
+								height: 20px;
+								width: 20px;
+							}
+						}
+
+						.padlock,
+						.no{
+							display: none;
+
+							svg{
+								fill: #F44336;
+								height: 20px;
+								width: 20px;
+							}
+						}
+
+						.loader{
+							display: none;
+
+							svg{
+								height: 20px;
+								width: 20px;
+
+								.qp-circular-loader {
+									width: 64px;
+									height: 64px;
+									stroke-width: 3px;
+								}
+								.qp-circular-loader-path {
+									stroke-dasharray: 58.9;
+									stroke-dashoffset: 58.9;
+								}
+								.qp-circular-loader,
+								.qp-circular-loader * {
+									transform-origin: 50% 50%;
+								}	
+								.qp-circular-loader {
+									animation-iteration-count: infinite;
+									animation-timing-function: linear;
+									animation-name: rotatespinner;
+									animation-duration: 1568.63ms;
+								}
+								.qp-circular-loader-path {
+									animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+									animation-iteration-count: infinite, infinite, infinite;
+									animation-name: fillunfill, rotspinner, colorspinner;
+									animation-play-state: running, running, running;
+									animation-duration: 1333ms, 5332ms, 5332ms;
+									animation-fill-mode: forwards;
+								}
+							}
+						}
+					}
+
+					.terms{
+						margin: 24px 4%;
+						width: 92%;
+						color: #777;
+
+						a{
+							color: #aaa;
+						}
+					}
+
+					.button{
+						text-transform: uppercase;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						background: #0C98F5;
+						border-radius: 3px;
+						text-align: center;
+						line-height: 42px;
+						margin: 32px auto;
+						transition: .45s;
+						appearance: none;
+						font-size: 13px;
+						display: block;
+						outline: none;
+						border: none;
+						height: 42px;
+						color: #fff;
+						width: 94%;
+					}
+
+					.buttonRegisterChekingNo,
+					.buttonRegisterChekingYes{
+						border: 2px solid #F24235;
+						transform: scale(1.2,1.2);
+						background: none;
+						height: 42px;
+						width: 42px;
+						padding: 0;
+					}
+
+					.buttonRegisterChekingYes{
+						border: 2px solid #0C98F5;
+					}
+					
+					.buttonRegisterChekingPumping{
+						animation: spinbutton .8s infinite;
+						transform-style: preserve-3d;
+						transition: 150ms ease;
+					}
+				}
+			}
+		}
+	}
+}

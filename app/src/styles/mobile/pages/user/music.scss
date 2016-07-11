@@ -1,0 +1,111 @@
+@media (max-width: 599px){
+	body{
+		.innerBody{
+			.headerMusic{
+				height: 148px !important;
+
+				.playerBox{
+					float: left;
+					width: 100%;
+
+					.buttons{
+						margin: 0 auto 4px;
+						transition: .6s;
+						display: flex;
+						height: 52px;
+						width: 148px;
+
+						.previous,
+						.next{
+							border-radius: 3px;
+							margin: 8px 0;
+							height: 36px;
+							width: 36px;
+							float: left;
+
+							svg{
+								padding: 6px;
+								height: 24px;
+								width: 24px;
+								fill: #fff;
+							}
+
+							&:active{
+								background: rgba(255,255,255, 0.5);
+							}
+						}
+
+						.playPause{
+							box-sizing: border-box;
+							border: 2px solid #fff;
+							border-radius: 50%;
+							margin: 0 12px;
+							height: 52px;
+							width: 52px;
+
+							.play,
+							.pause{
+								svg{
+									padding: 8px;
+									height: 32px;
+									width: 32px;
+									fill: #fff;
+								}
+							}
+
+							.pause{
+								display: none;
+							}
+						}
+					}
+
+					.titleAndProgress{
+						width: 100%;
+						float: left;
+						height: 36px;
+
+						.titleDuration{
+							display: flex;
+							margin: 0 2%;
+							float: left;
+							width: 96%;
+
+							.text,
+							.duration{
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								line-height: 32px;
+								overflow: hidden;
+								text-align: left;
+								font-size: 13px;
+								height: 32px;
+								color: #fff;
+								width: 100%;
+								float: left;
+							}
+
+							.duration{
+								text-align: right;
+								width: 120px;
+							}
+						}
+
+						.progress{
+							background: #fff;
+							width: 100%;
+							height: 4px;
+							float: left;
+						}
+					}
+				}
+			}
+
+			.innerBodyContent{
+				.pageMusic{
+					margin:  154px auto 0;
+					text-align: center;
+				}
+			}
+		}
+	}
+}

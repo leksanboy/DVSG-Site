@@ -1,0 +1,1 @@
+<svg viewBox="0 0 48 48"><path d="M16 10v28l22-14z"/></svg>

@@ -1,0 +1,336 @@
+@media (max-width: 899px){
+	body{
+		.innerBody{
+			.innerBodyContent{
+				.pageVersus{
+					.imageBoxLeft,
+					.imageBoxRight{
+						margin: 1vw 0 1vw 1%;
+						background: #5A5D60;
+						position: relative;
+						overflow: hidden;
+						transition:	.6s;
+						height: 48.5vw;
+						width: 48.5%;
+						float: left;
+						padding: 0;
+
+						img{
+							filter: grayscale(100%);
+							opacity: 0.5;
+							height: 100%;
+							width: 100%;
+						}
+					}
+
+					.vs{
+						box-shadow: 0 5px 15px 0 rgba(0,0,0,.29), 0 17px 50px 0 rgba(0,0,0,0.17);
+						margin: 20.5vw 0 0px -20px;
+						border: 2px solid #FFFFFF;
+						box-sizing: border-box;
+						position: absolute;
+						border-radius: 50%;
+						user-select: none;
+						transition: .6s;
+						float: right;
+						height: 40px;
+						width: 40px;
+						left: 50%;
+
+						&:before{
+							box-shadow: 0 5px 15px 0 rgba(0,0,0,.19), 0 17px 50px 0 rgba(0,0,0,0.07);
+							margin: 3px 0 0 3px;
+							background: #FFFFFF;
+							position: absolute;
+							border-radius: 50%;
+							text-align: center;
+							line-height: 30px;
+							font-weight: bold;
+							transition: .6s;
+							font-size: 13px;
+							color: #404040;
+							content: 'VS';
+							height: 30px;
+							width: 30px;
+						}
+					}
+
+					.opacityButton{
+						opacity: .75;
+
+						&:before{
+							transform: scale(.75,.75);
+						}
+					}
+
+					.selectBoxLeft,
+					.selectBoxRight{
+						margin: 0 0 0 1%;
+						width: 48.5%;
+						float: left;
+					
+						.versusSelect{
+							border-radius: 3px;
+							margin: 0 0 1vw 0;
+							line-height: 36px;
+							background: #fff;
+							transition:	.6s;
+							color: #404040;
+							outline: none;
+							height: 36px;
+							border: none;
+							width: 100%;
+
+							span{
+								padding: 0 0 0 12px;
+							}
+						
+							select{
+								background: transparent;
+								padding: 0 0 0 12px;
+								appearance: none;
+								font-size: 14px;
+								color: #404040;
+							  	outline: none;
+								height: 100%;
+							  	border: none;
+								width: 100%;
+
+								span{
+									padding: 0 0 0 12px;
+									font-size: 14px;
+									color: #404040;
+									height: 100%;
+									width: 100%;
+								}
+							}
+							
+							svg{
+								margin: -26px 14px 0 0;
+								fill: #404040;
+								float: right;
+								height: 16px;
+								width: 16px;
+							}
+						}
+
+						.hidden{
+							text-decoration: none;
+							pointer-events: none; 
+							opacity: 0.3;
+						}
+					}
+
+					.collapseBox{
+						overflow: hidden;
+						height: 1px;
+						opacity: 0;
+					}
+
+					.content{
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						.dataBox{
+							margin: 12px 0;
+							float: left;
+							width: 100%;
+
+							.title{
+								border-bottom: 1px solid #fff;
+								text-transform: uppercase;
+								letter-spacing: 6px;
+								text-align: center;
+								font-weight: 300;
+								padding: 12px 0;
+								font-size: 13px;
+								color: #FFFFFF;
+								width: 100%;
+
+								.arrow{
+									margin: -20px 3% 0 0;
+									position: absolute;
+									cursor: pointer;
+									height: 24px;
+									width: 24px;
+									right: 0;
+
+									&:before{
+										transform: translate(15px, 5px) rotate(-135deg);
+										transition: all 0.6s ease-in-out 0.05s;
+										position: absolute;
+										background: #fff;
+										display: block;
+										height: 13px;
+										width: 2px;
+										content: "";
+									}
+
+									&:after{
+										transform: translate(1px, 10px) rotate(-135deg);
+										transition: all 0.6s ease-in-out 0.05s;
+										position: absolute;
+										background: #fff;
+										display: block;
+										height: 2px;
+										width: 13px;
+										content: "";
+									}
+								}
+
+								.arrowCollapse{
+									&:before{
+										transform: translate(11px, 5px) rotate(-225deg);
+									}
+									&:after{
+										transform: translate(5px, 11px) rotate(-225deg);
+									}
+								}
+							}
+
+							.body{
+								overflow: hidden;
+
+								ul{
+									list-style: none;
+									padding: 0;
+									margin: 0;
+
+									li{
+										border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+										text-align: center;
+										padding: 12px 6px;
+										font-size: 11px;
+
+										&:last-child{
+											border: none;
+										}
+
+										span{
+											margin: -15px 0 0 0;
+											font-size: 13px;
+											color: #09f;
+											float: left;
+
+											&:last-child{
+												float: right;
+											}
+										}	
+									}
+								}
+
+								.dimensionsLeft,
+								.dimensionsRight{
+									margin: 12px 0 0;
+									float: left;
+									width: 50%;
+
+									.imgBox{
+										box-sizing: border-box;
+										margin: 0 2%;
+										float: left;
+										width: 96%;
+
+										img{
+											height: 100%;
+											width: 100%;
+										}
+
+										.sideUp{
+											margin: -38px 0 0 19.25%;
+											position: absolute;
+											font-size: 12px;
+											height: 12px;
+											float: left;
+											color: #09f;
+											width: 40px;
+										}
+										.sideDown{
+											margin: -18px 0 0 19.25%;
+											position: absolute;
+											font-size: 12px;
+											height: 12px;
+											float: left;
+											color: #09f;
+											width: 40px;
+										}
+
+										.frontUp{
+											margin: -38px 0 0 7.5%;
+											position: absolute;
+											font-size: 12px;
+											height: 12px;
+											float: left;
+											color: #09f;
+											width: 40px;
+										}
+										.frontDown{
+											margin: -18px 0 0 7.5%;
+											position: absolute;
+											font-size: 12px;
+											height: 12px;
+											float: left;
+											color: #09f;
+											width: 40px;
+										}
+
+										.frontHeight{
+											margin: -73px 0 0 18.5%;
+											position: absolute;
+											transform: rotate(-90deg);
+											font-size: 12px;
+											height: 12px;
+											float: left;
+											color: #09f;
+											width: 40px;
+										}
+
+										.backUp{
+											margin: -38px 0 0 33.75%;
+											position: absolute;
+											font-size: 12px;
+											height: 12px;
+											float: left;
+											color: #09f;
+											width: 40px;
+										}
+										.backDown{
+											margin: -18px 0 0 33.75%;
+											position: absolute;
+											font-size: 12px;
+											height: 12px;
+											float: left;
+											color: #09f;
+											width: 40px;
+										}
+									}
+								}
+
+								.dimensionsLeft{
+									margin: 12px 0 0;
+									float: left;
+									width: 50%;
+
+									.imgBox{
+										box-sizing: border-box;
+										margin: 0 2%;
+										float: left;
+										width: 96%;
+
+										&:first-child{
+											img{
+												transform: scaleX(-1);
+												filter: fliph;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

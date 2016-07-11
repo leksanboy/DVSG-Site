@@ -1,0 +1,573 @@
+@media (max-width: 899px){
+	body{
+		.innerBody{
+			.innerBodyContent{
+				.pageCars{
+					overflow: hidden;
+
+					.carsBox{
+						position: relative;
+						margin: 0 0 1vw 1%;
+						overflow: hidden;
+						height: 32vw;
+						color: #fff;
+						float: left;
+						width: 32%;
+						padding: 0;
+
+						&:last-child{
+							margin: 0 0 1vw 34%;
+						}
+
+						img{
+							position: absolute;
+							margin: 3vw auto;
+							height: 20vw;
+							width: 20vw;
+							right: 0;
+							left: 0;
+						}
+
+						p{
+							position: absolute;
+							text-align: center;
+							padding: 4vw 0;
+							width: 100%;
+							margin: 0;
+							bottom: 0;
+						}
+
+						squarebox{
+							position: absolute;
+							height: 100%;
+							width: 100%;
+						}
+
+						.ripplesquarebox {
+							background: rgba(255, 255, 255, 0.15);
+							pointer-events: none;
+							border-radius: 100%;
+							transform: scale(0);
+							position: absolute;
+						}
+						.ripplesquarebox.showsquarebox {
+							animation: ripplesquarebox .75s ease-out;
+						}
+					}
+				}
+
+				.pageCarsBrandModels{
+					.brand{
+						margin: 12px 1%;
+						float: left;
+						width: 98%;
+
+						img{
+							margin: 3vw 3%;
+							height: 20vw;
+							width: 20vw;
+							float: left;
+						}
+
+						p{
+							line-height: 20vw;
+							padding: 1.5vw 0;
+							font-size: 7vw;
+							color: #fff;
+							float: left;
+							margin: 2%;
+						}
+					}
+
+					.modelBox{
+						text-transform: capitalize;
+						box-sizing: border-box;
+						background: #263748;
+						border-radius: 3px;
+						overflow: hidden;
+						margin: 6px 2%;
+						height: 64px;
+						float: left;
+						width: 96%;
+
+						.image{
+							background: rgba(21, 25, 29, 0.1);
+							width: 106.666px;
+							height: 64px;
+							float: left;
+
+							img{
+								height: 100%;
+								width: 100%;
+							}
+						}
+
+						.title{
+							padding: 2px 16px 0;
+							line-height: 26px;
+							font-size: 14px;
+							float: left;
+							color: #fff;
+							width: 54%;
+						}
+
+						.price{
+							padding: 0px 16px 0;
+							font-size: 12px;
+							float: left;
+							color: #999;
+							width: 54%;
+						}
+
+						.data{
+							padding: 2px 14px;
+							font-size: 12px;
+							color: #09f;
+							float: left;
+							width: 54%;
+
+							svg{
+								filter: drop-shadow(0px 1px 7px rgba(0,0,0,0.333));
+								margin: 0 4px -2px;
+								height: 14px;
+								width: 14px;
+								fill: #09f;
+							}
+						}
+					}
+
+					.modelYear{
+						font-weight: 300;
+						font-size: 16px;
+						margin: 12px 5%;
+						color: #FFF;
+						float: left;
+						width: 90%;
+					}
+				}
+
+				.pageCarModel{
+					.swiperModel{
+						background: #222C35;
+						overflow: hidden;
+						height: 56vw;
+						width: 100%;
+
+						.swiper-wrapper {
+							transform: translate3d(0px, 0, 0);
+							transition-timing-function: ease;
+							transition-property: transform;
+							transition-duration: 0s;
+							position: relative;
+							width: 100%;
+
+							.swiper-slide {
+								transform: translate3d(0, 0, 0);
+								overflow: hidden;
+								height: 100%;
+								width: 100%;
+								float: left;
+
+								img {
+									margin-left: -39%;
+									height: 100%;
+									width: 178%;
+									bottom: 0;
+									right: 0;
+									left: 0;
+									top: 0;
+								}
+							}
+						}
+
+						.pagination {
+						    transform: translateY(-20px);
+						    position: inherit;
+						    margin: 0 0 0 5px;
+						    z-index: 10000;
+						    width: 100%;
+						}
+
+						.swiper-pagination-switch {
+						    background: rgba(0, 0, 0, 0.27);
+						    display: inline-block;
+						    border-radius: 50%;
+							margin: 0 3px;
+						    height: 5px;
+						    width: 5px;
+						}
+
+						.swiper-active-switch {
+						    background: #09f;
+							transition: .3s;
+						}
+
+						.swiper-arrow-left,
+						.swiper-arrow-right{
+							display: none;
+						}
+					}
+
+					.brand{
+						margin: 12px 1%;
+						float: left;
+						width: 98%;
+
+						.logo{
+							margin: 0 3%;
+							height: 84px;
+							width: 84px;
+							float: left;
+						
+							img{
+								height: 100%;
+								width: 100%;
+							}
+						}
+
+						.title{
+							margin: 18px 0 0 12px;
+							font-size: 14px;
+							float: left;
+							color: #999;
+
+							.subtitle{
+								text-transform: capitalize;
+								font-size: 20px;
+								color: #fff;
+							}
+						}
+
+
+						p{
+							line-height: 20vw;
+							padding: 1.5vw 0;
+							font-size: 7vw;
+							color: #fff;
+							float: left;
+							margin: 2%;
+						}
+					}
+
+					.content{
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						.dataBox{
+							margin: 0 0 32px;
+							float: left;
+							width: 100%;
+
+							.description{
+								font-weight: 100;
+								font-size: 13px;
+								margin: 0 2%;
+								color: #FFF;
+							}
+
+							.video{
+								padding-bottom: 56.25%;
+								position: relative;
+								overflow: hidden;
+								margin: 24px 0 0;
+								height: 0;
+
+								iframe, object {
+									position: absolute;
+									height: 100%;
+									width: 100%;
+									left: 0;
+									top: 0;
+								}
+							}
+
+							.title{
+								border-bottom: 1px solid #fff;
+								text-transform: uppercase;
+								letter-spacing: 6px;
+								text-align: center;
+								font-weight: 300;
+								padding: 12px 0;
+								font-size: 13px;
+								color: #FFFFFF;
+								opacity: 0.13;
+								width: 100%;
+							}
+
+							ul{
+								list-style: none;
+								padding: 0;
+								margin: 0;
+
+								li{
+									border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+									padding: 12px 6px;
+									font-size: 12px;
+
+									&:last-child{
+										border: none;
+									}
+
+									span{
+										color: #fff;
+
+										&:last-child{
+											float: right;
+											color: #09f;
+
+										}
+									}	
+								}
+							}
+
+							.dimensions{
+								margin: 12px 0 0;
+								float: left;
+								width: 100%;
+
+								div{
+									box-sizing: border-box;
+									height: 25vw;
+									float: left;
+									width: 50%;
+
+									img{
+										height: 100%;
+										width: 100%;
+									}
+
+									.sideUp{
+										margin: -38px 0 0 19.25%;
+										position: absolute;
+										font-size: 12px;
+										height: 12px;
+										float: left;
+										color: #09f;
+										width: 40px;
+									}
+									.sideDown{
+										margin: -18px 0 0 19.25%;
+										position: absolute;
+										font-size: 12px;
+										height: 12px;
+										float: left;
+										color: #09f;
+										width: 40px;
+									}
+
+									.frontUp{
+										margin: -38px 0 0 7.5%;
+										position: absolute;
+										font-size: 12px;
+										height: 12px;
+										float: left;
+										color: #09f;
+										width: 40px;
+									}
+									.frontDown{
+										margin: -18px 0 0 7.5%;
+										position: absolute;
+										font-size: 12px;
+										height: 12px;
+										float: left;
+										color: #09f;
+										width: 40px;
+									}
+
+									.frontHeight{
+										margin: -77px 0 0 18.5%;
+										position: absolute;
+										transform: rotate(-90deg);
+										font-size: 12px;
+										height: 12px;
+										float: left;
+										color: #09f;
+										width: 40px;
+									}
+
+									.backUp{
+										margin: -38px 0 0 33.75%;
+										position: absolute;
+										font-size: 12px;
+										height: 12px;
+										float: left;
+										color: #09f;
+										width: 40px;
+									}
+									.backDown{
+										margin: -18px 0 0 33.75%;
+										position: absolute;
+										font-size: 12px;
+										height: 12px;
+										float: left;
+										color: #09f;
+										width: 40px;
+									}
+								}
+							}
+						}
+					}
+
+					.pageAnalytics{
+						border-bottom: 1px solid #fff;
+						text-align: right;
+						font-size: 13px;
+						padding: 12px 0;
+						margin: 0 2%;
+						float: left;
+						color: #fff;
+						width: 96%;
+
+						svg{
+							margin: 0 8px -4px;
+							height: 18px;
+							width: 18px;
+							fill: #fff;
+						}
+
+						.liked{
+							svg{
+								fill: #09f;
+							}
+						}
+					}
+
+					.comments{
+						padding: 12px 0;
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						.box{
+							margin: 2px 0;
+							width: 100%;
+							float: left;
+
+							.avatar{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 50%;
+								margin: 0 0 0 4px;
+								overflow: hidden;
+								height: 36px;
+								width: 36px;
+								float: left;
+							}
+
+							.name{
+								padding: 2px 12px;
+								font-size: 13px;
+								float: left;
+								color: #777;
+
+								a{
+									text-decoration: none;
+									color: #fff;
+									
+									&:active{
+										color: #09f;
+									}
+								}
+							}
+
+							.delete{
+								margin: 0 4px 0 0;
+								float: right;
+
+								svg{
+									height: 20px;
+									width: 20px;
+									fill: #333;
+								}
+							}
+
+							.content{
+								text-overflow: ellipsis;
+								word-break: break-word;
+								margin: -12px 0 0 50px;
+								line-height: 15px;
+								min-height: 15px;
+								font-size: 13px;
+								float: left;
+								color: #999;
+								width: 100%;
+
+								.inner{
+									padding: 0 56px 12px 0;
+								}
+							}
+						}
+					}
+
+					.noComents{
+						text-align: center;
+						padding: 12px 0;
+						color: #fff;
+					}
+
+					.newComment{
+						width: 100%;
+						float: left;
+
+						.inputBox{
+							box-shadow: inset 0 -1px 0 0 #333;
+							padding: 8px 13% 8px 3%;
+							margin: 18px 3% 12px;
+							background: none;
+							font-size: 13px;
+							transform: none;
+							color: #ffffff;
+							outline: none;
+							border: none;
+							resize: none;
+							height: 18px;
+							width: 78%;
+
+							&:focus{
+								box-shadow: inset 0 -1px 0 0 #09f;
+							}
+						}
+
+						.button{
+							padding: 6px 7% 2px 3%;
+							border-radius: 3px;
+							position: relative;
+							margin: -50px 0 0;
+							float: right;
+							height: 26px;
+							color: #fff;
+							width: 3%;
+
+							svg{
+								height: 22px;
+								width: 22px;
+								fill: #333;
+							}
+						}
+					}
+
+					.showMoreComments{
+						text-align: center;
+						border-radius: 3px;
+						line-height: 36px;
+						background: #FFF;
+						margin: 24px 10%;
+						color: #404040;
+						height: 36px;
+						float: left;
+						width: 80%;
+					}
+
+					.registerToComment{
+						text-transform: uppercase;
+						text-align: center;
+						padding: 12px 0;
+						float: left;
+						color: #09f;
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+}

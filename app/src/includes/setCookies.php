@@ -1,0 +1,1 @@
+<?php setcookie("CookieMonster", 1, time() + (7 * 24 * 60 * 60),"/");  /* expira en 7 dias */ ?>

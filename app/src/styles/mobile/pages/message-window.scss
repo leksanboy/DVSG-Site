@@ -1,0 +1,297 @@
+/*CROPPER MODAL WINDOW*/
+.messageModalWindow{
+	overflow-y: scroll;
+	position: fixed;
+	transition: .3s;
+	overflow: auto;
+	z-index: 9999;
+	outline: 0;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	top: 0;
+	display: none;
+
+	.box{
+		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+		box-sizing: border-box;
+		border-radius: 3px;
+		padding: 12px 6px;
+		margin: 12px auto;
+		background: #fff;
+		display: table;
+		width: 96%;
+
+		.head{
+			border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+			box-sizing: border-box;
+			padding: 0 8px 8px;
+			float: left;
+			width: 100%;
+
+			.image{
+				border: 1px solid #404040;
+				box-sizing: border-box;
+				border-radius: 50%;
+				overflow: hidden;
+				height: 36px;
+				width: 36px;
+				float: left;
+
+				img{
+					height: 100%;
+					width: 100%;
+				}
+			}
+
+			.name{
+				margin: 2px 0 0 12px;
+				font-size: 15px;
+				float: left;
+				color: #404040;
+
+				.date{
+					color: rgba(0, 0, 0, 0.5);
+					margin: 2px 0 0;
+					font-size: 11px;
+				}
+			}
+
+			.search{
+				float: left;
+				width: 100%;
+
+				form{
+					input{
+						border: 1px solid #404040;
+						background: transparent;
+						box-sizing: border-box;
+						border-radius: 3px;
+						padding: 0px 36px;
+						font-size: 15px;
+						color: #404040;
+						height: 36px;
+						width: 100%;
+						float: left;
+						outline: 0;
+
+						&:focus{
+							border: 1px solid #09f;
+						}
+					}
+
+					.searchIcon,
+					.loaderIcon,
+					.clearIcon{
+						margin: 0 0 -36px;
+						height: 36px;
+						width: 36px;
+						float: left;
+
+						svg{
+							padding: 6px;
+							height: 24px;
+							width: 24px;
+							fill:#aaa;
+						}
+					}
+
+					.clearIcon{
+						margin: -36px 0 0;
+						float: right;
+					}
+
+					.loaderIcon{
+						display: none;
+
+						svg{
+							padding: 10px;
+							height: 16px;
+							width: 16px;
+
+							.qp-circular-loader {
+								width: 64px;
+								height: 64px;
+								stroke-width: 3px;
+							}
+							.qp-circular-loader-path {
+								stroke-dasharray: 58.9;
+								stroke-dashoffset: 58.9;
+							}
+							.qp-circular-loader,
+							.qp-circular-loader * {
+								transform-origin: 50% 50%;
+							}	
+							.qp-circular-loader {
+								animation-iteration-count: infinite;
+								animation-timing-function: linear;
+								animation-name: rotatespinner;
+								animation-duration: 1568.63ms;
+							}
+							.qp-circular-loader-path {
+								animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+								animation-iteration-count: infinite, infinite, infinite;
+								animation-name: fillunfill, rotspinner, colorspinner;
+								animation-play-state: running, running, running;
+								animation-duration: 1333ms, 5332ms, 5332ms;
+								animation-fill-mode: forwards;
+							}
+						}
+					}
+				}
+			}
+
+			.searchReceiverDataList{
+				box-shadow: 0 10px 20px rgba(0,0,0,.19),0 6px 6px rgba(0,0,0,.23);
+				margin: 39px 0px 0 0px;
+				border-radius: 3px;
+				position: absolute;
+				max-height: 220px;
+				overflow-y: auto;
+				background: #fff;
+				width: 92%;
+				padding: 0;
+				left: 4%;
+
+				.receiverBox{
+					border-bottom: 1px solid #e5e5e5;
+					height: 48px;
+					margin: 0 2%;
+					float: left;
+					width: 96%;
+
+					.image{
+						border: 1px solid #404040;
+						box-sizing: border-box;
+						border-radius: 50%;
+						overflow: hidden;
+						margin: 6px 0 0;
+						height: 36px;
+						width: 36px;
+						float: left;
+
+						img{
+							height: 100%;
+							width: 100%;
+						}
+					}
+
+					.name{
+						margin: 6px 0 0 12px;
+						line-height: 36px;
+						font-size: 15px;
+						color: #404040;
+						height: 36px;
+						float: left;
+					}
+
+					&:active{
+						background: #09f;
+					}
+				}
+
+				.noData{
+					text-transform: uppercase;
+					font-weight: normal;
+					text-align: center;
+					line-height: 56px;
+					color: #404040;
+					height: 56px;
+					margin: 0 2%;
+					float: left;
+					width: 96%;
+				}
+			}
+		}
+
+		.body{
+			border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+			box-sizing: border-box;
+			word-break: break-all;
+			padding: 12px 8px;
+			font-size: 14px;
+			color: #404040;
+			float: left;
+			width: 100%;
+		}
+
+		.answerBox{
+			display: none;
+			float: left;
+			width: 100%;
+
+			textarea{
+				border: 1px solid rgba(0, 0, 0, 0.5);
+				background: transparent;
+				box-sizing: border-box;
+				border-radius: 3px;
+				padding: 6px 8px;
+				min-height: 96px;
+				font-size: 14px;
+				color: #404040;
+				margin: 12px 0;
+				outline: none;
+				float: left;
+				width: 100%;
+
+				&:focus{
+					border-color: #09f;
+				};
+			}
+		}
+
+		.buttons{
+			margin: 12px 0 0;
+			width: 100%;
+			float: left;
+
+			button{
+				background: transparent;
+				border-radius: 3px;
+				font-size: 13px;
+				padding: 0 8px;
+				color: #404040;
+				outline: none;
+				margin: 0 4px;
+				float: right;
+				border: none;
+				height: 28px;
+
+				&:last-child{
+					color: #09f;
+					display: none;
+				}
+
+				&:active{
+					background: #e5e5e5;
+				}
+			}
+		}
+
+		.newMessageForm{
+			.answerBox{
+				display: block;
+			}
+
+			.buttons{
+				button{
+					&:last-child{
+						display: block;
+					}
+				}
+			}
+		}
+	}
+}
+
+.showModal{
+	background: rgba(0, 0, 0, 0.666); 
+}
+
+.modalDisplay{
+	display: block; 
+}
+
+.modalHidden{
+	overflow: hidden;
+}

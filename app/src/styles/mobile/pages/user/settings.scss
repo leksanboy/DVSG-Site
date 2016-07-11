@@ -1,0 +1,409 @@
+@media (max-width: 599px){
+	body{
+		.innerBody{
+			.innerBodyContent{
+				.pageSettings{
+					margin:  128px auto 0;
+
+					#formTwo,
+					#formThree,
+					#formFour{
+						display: none;
+					}
+
+					.avatarBox{
+						margin: 12px auto 0;
+						display: block;
+
+						.avatar,
+						.background{
+						    box-shadow: 0 0 5px rgba(0,0,0,.15);
+						    border: 1px solid #fff;
+						    border-radius: 3px;
+						    position: relative;
+						    overflow: hidden;
+						    height: 112px;
+						    width: 112px;
+						    margin: auto;
+
+						    img{
+								height: 100%;
+								width: 100%;
+							}
+
+							svg{
+								filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.5));
+								fill: rgba(255, 255, 255, 0.66);
+								margin: 32px 0 0 -24px;
+								position: absolute;
+								height: 48px;
+								width: 48px;
+								left: 50%;
+							}
+						}
+
+						.background{
+						    height: 112px;
+						    width: 200px;
+						}
+
+						button{
+							text-transform: uppercase;
+							border-radius: 3px;
+							margin: 12px auto;
+							background: #09f;
+							font-size: 13px;
+							display: block;
+							outline: none;
+							height: 36px;
+							border: none;
+							color: #fff;
+						}
+					}
+
+					.colorBox{
+						float: left;
+						width: 100%;
+
+						.title{
+							color: rgba(255, 255, 255, 0.5);
+							padding: 8px 2%;
+							width: 100%;
+						}
+
+						.selector{
+							margin: 0 2%;
+							float: left;
+							width: 96%;
+
+							button{
+								text-transform: uppercase;
+								border-radius: 3px;
+								background: #fff;
+								font-size: 13px;
+								outline: none;
+								height: 36px;
+								border: none;
+								color: #fff;
+								float: left;
+								width: 20%;
+							}
+
+							label{
+								float: left;
+								height: 0;
+								width: 0;
+
+								svg{
+									margin: 11px 0 0 22px;
+									height: 14px;
+									width: 14px;
+									fill: #fff;
+								}
+							}
+
+							input{
+								background: transparent;
+								box-sizing: border-box;
+								border: 1px solid #fff;
+								border-radius: 3px;
+								margin: 0px 0 0 2%;
+								padding: 0 36px;
+								font-size: 14px;
+								outline: none;
+								height: 36px;
+								color: #fff;
+								float: left;
+								width: 78%;
+
+								&:focus{
+									border-color: #09f;
+								};
+							}
+						}
+
+						.box{
+							box-shadow: inset 0 8px 8px -8px #000, inset 0 -8px 8px -8px #000;
+							background: #123055;
+							overflow: hidden;
+							margin: 12px 0 0;
+							transition: .6s;
+							width: 100%;
+							float: left;
+							height: 0;
+
+							.btn{
+								box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+								border-radius: 3px;
+								margin: 6px 1%;
+								height: 36px;
+								float: left;
+								width: 18%;
+							}
+
+							.button-red{
+								background: #F44336;
+							}
+							.button-pink{
+								background: #FF4081;
+							}
+							.button-purple{
+								background: #9C27B0;
+							}
+							.button-deeppurple{
+								background: #7C4DFF;
+							}
+							.button-indigo{
+								background: #303F9F;
+							}
+							.button-blue{
+								background: #448AFF;
+							}
+							.button-lightblue{
+								background: #03A9F4;
+							}
+							.button-teal{
+								background: #009688;
+							}
+							.button-green{
+								background: #4CAF50;
+							}
+							.button-lightgreen{
+								background: #8BC34A;
+							}
+							.button-lime{
+								background: #CDDC39;
+							}
+							.button-yellow{
+								background: #FFEB3B;
+							}
+							.button-orange{
+								background: #FF9800;
+							}
+							.button-deeporange{
+								background: #FF5722;
+							}
+							.button-bluegrey{
+								background: #607D8B;
+							}
+						}
+
+						.showColorBox{
+							height: 146px;
+						}
+					}
+
+					.inputBox{
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						.title{
+							color: rgba(255, 255, 255, 0.5);
+							padding: 8px 2%;
+							width: 100%;
+						}
+
+						input{
+							background: transparent;
+							box-sizing: border-box;
+							border: 1px solid #fff;
+							border-radius: 3px;
+							font-size: 14px;
+							padding: 0 8px;
+							outline: none;
+							height: 36px;
+							color: #fff;
+							float: left;
+							width: 100%;
+							margin: 0;
+
+							&:focus{
+								border-color: #09f;
+							};
+						}
+
+						textarea{
+							background: transparent;
+							box-sizing: border-box;
+							border: 1px solid #fff;
+							border-radius: 3px;
+							padding: 6px 8px;
+							font-size: 14px;
+							outline: none;
+							color: #fff;
+							float: left;
+							width: 100%;
+							margin: 0;
+
+							&:focus{
+								border-color: #09f;
+							};
+						}
+
+						.select{
+							box-sizing: border-box;							
+							height: 36px;
+							float: left;
+							width: 100%;
+							margin: 0;
+							display: flex;
+
+							select{
+								background: transparent;
+								box-sizing: border-box;
+								border: 1px solid #fff;
+								border-radius: 3px;
+								margin: 0 0 0 1%;
+								font-size: 14px;
+								outline: none;
+								height: 36px;
+								color: #fff;
+								float: left;
+								width: 100%;
+
+								&:first-child{
+									margin: 0;
+								}
+							}
+						}
+
+						.status{
+							margin: 8px 12px 0 0;
+							position: absolute;
+							right: 2%;
+
+							.done{
+								display: none;
+
+								svg{
+									fill: #2196F3;
+									height: 20px;
+									width: 20px;
+								}
+							}
+
+							.bad{
+								display: none;
+
+								svg{
+									fill: #F44336;
+									height: 20px;
+									width: 20px;
+								}
+							}
+
+							.loader{
+								display: none;
+
+								svg{
+									height: 20px;
+									width: 20px;
+
+									.qp-circular-loader {
+										width: 64px;
+										height: 64px;
+										stroke-width: 3px;
+									}
+									.qp-circular-loader-path {
+										stroke-dasharray: 58.9;
+										stroke-dashoffset: 58.9;
+									}
+									.qp-circular-loader,
+									.qp-circular-loader * {
+										transform-origin: 50% 50%;
+									}	
+									.qp-circular-loader {
+										animation-iteration-count: infinite;
+										animation-timing-function: linear;
+										animation-name: rotatespinner;
+										animation-duration: 1568.63ms;
+									}
+									.qp-circular-loader-path {
+										animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+										animation-iteration-count: infinite, infinite, infinite;
+										animation-name: fillunfill, rotspinner, colorspinner;
+										animation-play-state: running, running, running;
+										animation-duration: 1333ms, 5332ms, 5332ms;
+										animation-fill-mode: forwards;
+									}
+								}
+							}
+						}
+					}
+
+					.languageBox{
+						width: 100%;
+						float: left;
+
+						a{
+							text-transform: uppercase;
+							font-weight: normal;
+							text-align: center;
+							border-radius: 3px;
+							line-height: 36px;
+							margin: 0 2% 24px;
+							background: #fff;
+							color: #404040;
+							height: 36px;
+							float: left;
+							width: 96%;
+
+							svg{
+								margin: 6px 6px -6px -30px;
+								height: 24px;
+								width: 24px;
+								fill: #fff;
+							}
+
+							&.selected{
+								color: #fff;
+
+								svg{
+									fill: #fff;
+								}
+							}
+
+							&:active{
+								background: #404040;
+								color: #fff;
+
+								svg{
+									fill: #fff;
+								}
+							}
+						}
+					}
+
+					.buttonSave{
+						text-transform: uppercase;
+						border-radius: 3px;
+						background: #09f;
+						margin: 36px 15%;
+						transition: .6s;
+						font-size: 13px;
+						display: block;
+						height: 36px;
+						border: none;
+						color: #fff;
+						float: left;
+						outline: 0;
+						width: 70%;
+					}
+
+					.errorButton{
+						background: #ff0000 !important;
+						margin: 36px 25% !important;
+						width: 50% !important;
+					}
+
+					.doneButton{
+						background: #0099ff !important;
+						margin: 36px 2% !important;
+						width: 96% !important;
+					}
+				}
+			}
+		}
+	}
+}
