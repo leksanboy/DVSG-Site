@@ -12,7 +12,7 @@
 	$totalRows_searchReceiverData = mysql_num_rows($searchReceiverData);
 ?>
 
-<?php if ($totalRows_searchReceiverData!=''){
+<?php if ($totalRows_searchReceiverData!=0){
 	do {
 		if ($row_searchReceiverData['sender'] == $_SESSION['MM_Id']){ 
 			$receiver = $row_searchReceiverData['receiver'];

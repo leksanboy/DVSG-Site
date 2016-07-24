@@ -53,8 +53,8 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageShop">
-					<?php include_once("pages/shop/content.php");?>
-					<?php include_once("pages/shop/allPosts.php");?>
+					<?php include_once("pages/web/shop/content.php");?>
+					<?php include_once("pages/web/shop/allPosts.php");?>
 					<!-- <div class="advert"></div>
 
 					<div class="loadMoreNotices">

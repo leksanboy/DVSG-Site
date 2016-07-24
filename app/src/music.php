@@ -12,11 +12,25 @@
 
 	//User data
 	mysql_select_db($database_conexion, $conexion);
-	$query_userData = sprintf("SELECT * FROM z_users WHERE z_users.id = %s", 
+	$query_userData = sprintf("SELECT primary_color, secondary_color FROM z_users WHERE z_users.id = %s", 
 	GetSQLValueString($userId, "int"));
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
 	$totalRows_userData = mysql_num_rows($userData);
+
+	//User music  --> songsList
+	mysql_select_db($database_conexion, $conexion);
+	$query_songsList = sprintf("SELECT m.id, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON f.song = m.id WHERE m.user = $userId");
+	$songsList = mysql_query($query_songsList, $conexion) or die(mysql_error());
+	$row_songsList = mysql_fetch_assoc($songsList);
+	$totalRows_songsList = mysql_num_rows($songsList);
+
+	//User music  --> songsListJS
+	mysql_select_db($database_conexion, $conexion);
+	$query_songsListJS = sprintf("SELECT m.id, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON f.song = m.id WHERE m.user = $userId");
+	$songsListJS = mysql_query($query_songsListJS, $conexion) or die(mysql_error());
+	$row_songsListJS = mysql_fetch_assoc($songsListJS);
+	$totalRows_songsListJS = mysql_num_rows($songsListJS);
 ?>
 <!DOCTYPE html>
 	<?php include_once("includes/fuckoff.php"); ?>
@@ -63,10 +77,10 @@
 				</div>
 				<div class="playerBox">
 					<div class="buttons">
-						<div class="previous">
+						<div class="previous" onclick="playPausePrevNext(2)">
 							<?php include("images/svg/previous-track.php");?>
 						</div>
-						<div class="playPause">
+						<div class="playPause" onclick="playPausePrevNext(1)">
 							<div class="play">
 								<?php include("images/svg/play.php");?>
 							</div>
@@ -74,22 +88,23 @@
 								<?php include("images/svg/pause.php");?>
 							</div>
 						</div>
-						<div class="next">
+						<div class="next" onclick="playPausePrevNext(3)">
 							<?php include("images/svg/next-track.php");?>
 						</div>
-						
 					</div>
 					<div class="titleAndProgress">
 						<div class="titleDuration">
-							<div class="text">TRAP 2015 – David Guetta, Afrojack ft. Nicki Minaj - Hey Mama</div>
-							<div class="duration">00:00:00</div>
+							<div class="text" id="playerBoxAudioPlayingTitle"></div>
+							<div class="duration" id="playerBoxAudioPlayingDuration"><?php echo $row_songsList['duration']?></div>
 						</div>
-
-						<div class="title"></div>
-
-						<div class="progress" style="background:#<?php echo $row_userData['secondary_color']; ?>"></div>
+						<div class="progress">
+							<input type="range" id="playerBoxAudioProgress" min="0" max="1000" value="0" onchange="setProgressBar(event.target)"/>
+							<div class="buffer" id="playerBoxAudioBuffering"></div>
+						</div>
 					</div>
-					
+
+					<div id="playerBoxAudioCounter" style="display: none">0</div>
+					<audio id="playerBoxAudio" preload controls src="" style="display: none"></audio>
 				</div>
 			</div>
 			<div class="innerBodyContent">
@@ -107,3 +122,5 @@
 	<?php include_once("includes/aplazarscripts.php");?>
 </html>
 <?php mysql_free_result($userData); ?>
+<?php mysql_free_result($songsList); ?>
+<?php mysql_free_result($songsListJS); ?>
