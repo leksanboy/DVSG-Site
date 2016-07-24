@@ -238,14 +238,10 @@
     // ···> Get songs list
     var playing = false,
         mediaPath = '<?php echo $urlWeb ?>' + 'pages/user/music/songs/',
-        tracks = [ 	<?php $contador = 0; 
-        			do {
-            			$contador = $contador + 1;
-		            ?>
+        tracks = [ 	<?php do { ?>
 		            	{
-		                    "track": 	<?php echo $contador ?>,
-		                    "name": 	"<?php echo $row_songsListJS['title'] ?>",
-		                    "file": 	"<?php echo $row_songsListJS['name'] ?>"
+		                    "name": "<?php echo $row_songsListJS['title'] ?>",
+		                    "file": "<?php echo $row_songsListJS['name'] ?>"
 		                },
 		            <?php } while ($row_songsListJS = mysql_fetch_assoc($songsListJS)); ?>
 		        ],
