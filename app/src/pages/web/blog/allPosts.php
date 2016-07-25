@@ -34,7 +34,7 @@
 </div>
 
 <div class="loadingMore" style="display:none" id="loaderShortByShop">
-	<?php include_once("images/svg/spinner.php");?>
+	<?php include("images/svg/spinner.php");?>
 </div>
 
 <div class="loadMore" onclick="loadMoreBlogPost(2);">

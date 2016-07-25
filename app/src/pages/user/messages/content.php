@@ -288,7 +288,7 @@
 
 			$.ajax({
 				type: 'POST',
-				url: url + 'pages/user/messages/inbox/searchReceiver.php',
+				url: url + 'pages/user/messages/inbox/search.php',
 				data: 'receiverValue=' + value1,
 				success: function(response) {
 					setTimeout(function() {

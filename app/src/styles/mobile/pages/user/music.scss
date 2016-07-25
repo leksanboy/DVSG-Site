@@ -161,62 +161,83 @@
 					text-align: center;
 
 					.searchBox{
-						border-radius: 3px;
-						overflow: hidden;
-						background: #fff;
-						transition: .3s;
 						margin: 12px 2%;
-						height: 40px;
 						float: left;
 						width: 96%;
-					
-						input{
-							padding: 12px 26% 12px 12%;
-							border-style: none;
-							line-height: 16px;
-							background: none;
-							font-size: 13px;
-							outline: none;
-							float: left;
-							color: #000;
-							width: 62%;
-						}
 
-						svg{
-							margin: 12px 0 0 12px;
-							position: absolute;
-							height: 18px;
-							width: 18px;
-							fill: #777;
-							left: 2%;
-						}
-
-						.searchApply{
-							margin: -40px 0 0 0;
-							position: relative;
-							float: right;
-
-							.button{
-								padding: 8px;
-								height: 24px;
-								width: 24px;
+						form{
+							input{
+								box-sizing: border-box;
+								border-radius: 3px;
+								padding: 0px 36px;
+								background: #fff;
+								font-size: 14px;
+								color: #404040;
+								border: none;
+								height: 36px;
+								width: 100%;
 								float: left;
-								
+								outline: 0;
+
+								&:focus{
+									border: 1px solid #09f;
+								}
+							}
+
+							.searchIcon,
+							.loaderIcon,
+							.clearIcon{
+								margin: -36px 0 0;
+								height: 36px;
+								width: 36px;
+								float: left;
+
 								svg{
-									margin: 0 0 0 2px;
-									position: inherit;
+									padding: 6px;
 									height: 24px;
 									width: 24px;
-									fill: #777;
+									fill:#aaa;
 								}
+							}
 
-								&:nth-child(2){
-									display: none;
-									
-									svg{
-										margin: 4px 0 0 4px;
-										height: 16px;
-										width: 16px;
+							.clearIcon{
+								float: right;
+							}
+
+							.loaderIcon{
+								display: none;
+
+								svg{
+									padding: 10px;
+									height: 16px;
+									width: 16px;
+
+									.qp-circular-loader {
+										width: 64px;
+										height: 64px;
+										stroke-width: 3px;
+									}
+									.qp-circular-loader-path {
+										stroke-dasharray: 58.9;
+										stroke-dashoffset: 58.9;
+									}
+									.qp-circular-loader,
+									.qp-circular-loader * {
+										transform-origin: 50% 50%;
+									}	
+									.qp-circular-loader {
+										animation-iteration-count: infinite;
+										animation-timing-function: linear;
+										animation-name: rotatespinner;
+										animation-duration: 1568.63ms;
+									}
+									.qp-circular-loader-path {
+										animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+										animation-iteration-count: infinite, infinite, infinite;
+										animation-name: fillunfill, rotspinner, colorspinner;
+										animation-play-state: running, running, running;
+										animation-duration: 1333ms, 5332ms, 5332ms;
+										animation-fill-mode: forwards;
 									}
 								}
 							}
@@ -229,7 +250,6 @@
 						margin: 0;
 
 						li{
-							box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 							border-radius: 3px;
 							margin: 6px 2%;
 							display: flex;
@@ -237,14 +257,13 @@
 							width: 96%;
 
 							.playPause{
-								border-right: 1px solid rgba(255, 255, 255, 0.23);
 								box-sizing: border-box;
 								height: 36px;
 								width: 36px;
 
 								svg{
-									height: 24px;
 									padding: 6px;
+									height: 24px;
 									width: 24px;
 									fill: #fff;
 								}
@@ -271,21 +290,43 @@
 							}
 
 							.actions{
-								border-left: 1px solid rgba(255, 255, 255, 0.23);
-								border-radius: 0 3px 3px 0;
 								box-sizing: border-box;
 								height: 36px;
 								width: 36px;
 
 								svg{
-									padding: 12px;
-									height: 12px;
-									width: 12px;
+									padding: 6px;
+									height: 24px;
+									width: 24px;
 									fill: #fff;
 								}
 
-								&:active{
-									background: rgba(255, 0, 0, 0.5);
+								.delete{
+									border-radius: 3px;
+									height: 100%;
+									width: 100%;
+
+									&:active{
+										background: rgba(255, 0, 0, 0.5);
+									}
+								}
+
+								.add{
+									border-radius: 3px;
+									height: 100%;
+									width: 100%;
+									
+									&:active{
+										background: rgba(0, 153, 255, 0.5);
+									}
+								}
+
+								.added{
+									display: none;
+
+									svg{
+										fill: #09f;
+									}
 								}
 							}
 
@@ -330,6 +371,11 @@
 										}
 									}
 								}
+							}
+
+							&.active{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								background-color: rgba(255, 255, 255, 0.07);
 							}
 						}
 					}

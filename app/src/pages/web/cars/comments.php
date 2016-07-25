@@ -6,7 +6,7 @@
             <input type="button" style="display:none" onclick="newComment(comment.value, page.value);" id="btn_comentario">
             <label for="btn_comentario">
                 <div class="button">
-                    <?php include_once("images/svg/send.php");?>
+                    <?php include("images/svg/send.php");?>
                 </div>
             </label>
         </form>
