@@ -17,20 +17,6 @@
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
 	$totalRows_userData = mysql_num_rows($userData);
-
-	// //User music  --> songsList
-	// mysql_select_db($database_conexion, $conexion);
-	// $query_songsList = sprintf("SELECT f.id, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
-	// $songsList = mysql_query($query_songsList, $conexion) or die(mysql_error());
-	// $row_songsList = mysql_fetch_assoc($songsList);
-	// $totalRows_songsList = mysql_num_rows($songsList);
-
-	// //User music  --> songsListJS
-	// mysql_select_db($database_conexion, $conexion);
-	// $query_songsListJS = sprintf("SELECT f.id, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
-	// $songsListJS = mysql_query($query_songsListJS, $conexion) or die(mysql_error());
-	// $row_songsListJS = mysql_fetch_assoc($songsListJS);
-	// $totalRows_songsListJS = mysql_num_rows($songsListJS);
 ?>
 <!DOCTYPE html>
 	<?php include("includes/fuckoff.php"); ?>
