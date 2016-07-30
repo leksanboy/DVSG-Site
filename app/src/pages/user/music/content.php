@@ -18,8 +18,10 @@
 
 <script type="text/javascript">
 	//·····> SVG icons
-	var uploadIcon = '<svg viewBox="0 0 48 48"><path d="M18 32h12V20h8L24 6 10 20h8zm-8 4h28v4H10z"/></svg>';
+	var uploadIcon 	= '<svg viewBox="0 0 48 48"><path d="M18 32h12V20h8L24 6 10 20h8zm-8 4h28v4H10z"/></svg>';
 	var loadingIcon = '<svg viewBox="0 0 28 28"><g class="qp-circular-loader"><path class="qp-circular-loader-path" fill="none" d="M 14,1.5 A 12.5,12.5 0 1 1 1.5,14" stroke-linecap="round" /></g></svg>';
+	var arrowUpIcon = '<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>';
+	var progressIcon = '<svg><circle fill="none"/></svg>';
 	
 	//·····> Get id element
 	function getFile(el){
@@ -27,6 +29,7 @@
 	}
 
 	//·····> Add new song
+	var filesArray = [];
 	function uploadSong(type, event){
 		if (type==1) { // Open
 			$('.messageModalWindow').toggleClass('modalDisplay');
@@ -36,23 +39,16 @@
 			$('body').toggleClass('modalHidden');
 
 			var box = "<div class='head'>\
-							UPLOAD SONG\
+							UPLOAD SONGS\
 						</div>\
 						<form enctype='multipart/form-data' method='post' onSubmit='return false' style='color:#000'>\
 							<div class='upload'>\
 								<label for='fileUpload'>\
-									" + uploadIcon + " Upload a song\
+									" + uploadIcon + " Upload\
 								</label>\
-								<input type='file' name='fileUpload' id='fileUpload' onChange='uploadSong(4, event)' accept='audio/*'>\
+								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadSong(4, event)' accept='audio/*'>\
 							</div>\
-							<div class='progressBar'>\
-								<div class='title' id='title'></div>\
-								<div class='operations'>\
-									<div class='status' id='status'></div>\
-									<div class='loading' id='loading'>" + loadingIcon + "</div>\
-								</div>\
-								<progress id='progressBar' value='0' max='100'></progress>\
-							</div>\
+							<div class='filesBox'></div>\
 							<div class='buttons'>\
 								<button onClick='uploadSong(3)'>UPLOAD</button>\
 								<button onClick='uploadSong(2)'>CLOSE</button>\
@@ -62,60 +58,84 @@
 			$('.messageModalWindow .box').html(box);
 		} else if (type==2) { //Close
 			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('body').toggleClass('modalHidden');
+
 			setTimeout(function() {
 				$('.messageModalWindow').toggleClass('showModal');
+				$(".filesBox").html('');
+				filesArray = [];
 			}, 100);
-			$('body').toggleClass('modalHidden');
 		} else if (type==3) { //Save
-			var file = getFile("fileUpload").files[0];
-			var formdata = new FormData();
-			var ajax = new XMLHttpRequest();
+			var i = 0;
 
-			formdata.append("fileUpload", file);
-			ajax.upload.addEventListener("progress", progressHandler, false);
-			ajax.addEventListener("load", completeHandler, false);
-			ajax.addEventListener("error", errorHandler, false);
-			ajax.addEventListener("abort", abortHandler, false);
-			ajax.open("POST", "pages/user/music/upload.php");
-			ajax.send(formdata);
-			// ajax.open("POST", "pages/user/music/upload.php?title="+titleSong);
+			for (; i < filesArray.length; i++) {
+				var file = filesArray[i],
+					formdata = new FormData(),
+					ajax = new XMLHttpRequest();
 
+				ajaxCall(file, formdata, ajax, i);
+			}
+
+			function ajaxCall(file, formdata, ajax, i){
+				formdata.append("fileUpload", file);
+				ajax.upload.addEventListener("progress", function(evt){ progressHandler(evt, i) }, false);
+				ajax.addEventListener("load", function(evt){ completeHandler(evt, i) }, false);
+				ajax.addEventListener("error", function(evt){ errorHandler(evt, i) }, false);
+				ajax.addEventListener("abort", function(evt){ abortHandler(evt, i) }, false);
+				ajax.open("POST", "pages/user/music/upload.php");
+				ajax.send(formdata);
+			}
 		} else if (type==4) { //Get song data
-			var file = event.currentTarget.files[0];
-			$('.progressBar').show();
+			var	file,
+				i = 0;
 
-		    if (file.name == undefined || file.name == '') {
-		    	document.getElementById("title").innerHTML = "Untitled";
-		    }else{
-		   		document.getElementById("title").innerHTML = file.name;
-		    }
+			for (; i < event.currentTarget.files.length; i++) {
+      			file = event.currentTarget.files[i];
+				filesArray.push(file);
+	      		
+	      		var title = "\
+			      		<div class='fileStatus' id='fileStatus"+ i +"'>\
+							<div class='title' id='title'>" + file.name + "</div>\
+							<div class='operations'>\
+								<div class='status' id='status'>\
+									<div class='progress'>" + progressIcon + "</div>\
+									<div class='percentage'>0%</div>\
+									<div class='loading'>" + arrowUpIcon + "</div>\
+									<div class='result'></div>\
+								</div>\
+							</div>\
+						</div>";
+
+	      		$(".filesBox").append(title);
+      		}
 		}
 	}
 
 	//·····> Add new song uploading progress bar
-	function progressHandler(event){
-		/* https://www.developphp.com/video/JavaScript/File-
-		Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP */
+	/* https://www.developphp.com/video/JavaScript/File-
+	Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP */
+	function progressHandler(event, i){
 		var percent = (event.loaded / event.total) * 100;
-		getFile("progressBar").value = Math.round(percent);
-		getFile("status").innerHTML = Math.round(percent)+"%";
+		percent = Math.round(percent);
 
-		var percentRound = Math.round(percent);
-		if (percentRound == '100') {
-			getFile("loading").style.display="block";
+		if (percent == 100){
+			$('#fileStatus' + i + ' .operations #status .loading').show();
+			$('#fileStatus' + i + ' .operations #status .percentage').hide();
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  0);
 		}else{
-			getFile("loading").style.display="none";
+			$('#fileStatus' + i + ' #status .percentage').html(percent + '%');
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  107 - percent);
 		}
 	}
-	function completeHandler(event){
-		getFile("status").innerHTML = event.target.responseText;
-		getFile("loading").style.display="none";
+	function completeHandler(event, i){
+		$('#fileStatus' + i + ' .operations #status .loading').hide();
+		$('#fileStatus' + i + ' .operations #status .result').html(event.target.responseText);
 	}
-	function errorHandler(event){
-		getFile("status").innerHTML = "Failed";
+	function errorHandler(event, i){
+		$('#fileStatus' + i + ' .operations #status .result').html('Failed');
 	}
-	function abortHandler(event){
-		getFile("status").innerHTML = "Aborted";
+	function abortHandler(event, i){
+		$('#fileStatus' + i + ' .operations #status .result').html('Aborted');
 	}
 
 	//·····> Add song

@@ -216,9 +216,9 @@
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
 
-	    echo "<svg viewBox='0 0 48 48'><path d='M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z'/></svg>";
+	    echo "<svg viewBox='0 0 48 48' fill='#09f'><path d='M18 32.34L9.66 24l-2.83 2.83L18 38l24-24-2.83-2.83z'/></svg>";
 	} else {
-	    echo "<svg viewBox='0 0 48 48'><path d='M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z'/></svg>";
+	    echo "<svg viewBox='0 0 48 48' fill='#f00'><path d='M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z'/></svg>";
 	}
 
 ?>

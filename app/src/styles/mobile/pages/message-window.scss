@@ -1,3 +1,27 @@
+@keyframes uploading {
+	0% {
+		fill: #ccc;
+		transform: translateY(6px);
+	}
+	25% {
+		fill: #09f;
+		opacity: 1;
+	}
+	50% {
+		fill: #09f;
+		opacity: .75;
+		transform: translateY(-4px);
+	}
+	90% {
+		opacity: 0;
+		transform: translateY(-4px);
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(6px);
+	}
+}
+
 /*CROPPER MODAL WINDOW*/
 .messageModalWindow{
 	overflow-y: scroll;
@@ -12,14 +36,14 @@
 	top: 0;
 	display: none;
 
+
 	.box{
 		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 		box-sizing: border-box;
 		border-radius: 3px;
 		padding: 12px 6px;
-		margin: 12px auto;
 		background: #fff;
-		display: table;
+		margin: 12px 2%;
 		float: left;
 		width: 96%;
 
@@ -291,7 +315,6 @@
 			border-radius: 3px;
 			margin: 12px 2.5%;
 			background: #fff;
-			transition: .3s;
 			color: #404040;
 			outline: none;
 			border: none;
@@ -327,110 +350,128 @@
 			}
 		}
 
-		.progressBar{
-			margin: 12px 2.5%;
-			float: left;
-			width: 95%;
-			display: none;
-
-			.title{
-				text-overflow: ellipsis;
-				box-sizing: border-box;
-				white-space: nowrap;
-				font-weight: normal;
-				overflow: hidden;
-				text-align: left;
-				font-size: 13px;
-				color: #404040;
-				padding: 0 4px;
-				height: 36px;
-				line-height: 36px;
+		.filesBox{
+			width: 100%;
+		
+			.fileStatus{
+				margin: 4px 2.5%;
 				float: left;
-				width: 80%;
-			}
+				width: 95%;
 
-			.operations{
-				height: 36px;
-				float: left;
-				width: 20%;
-
-				.status{
+				.title{
+					text-overflow: ellipsis;
 					box-sizing: border-box;
+					white-space: nowrap;
 					font-weight: normal;
-					text-align: right;
-					line-height: 36px;
+					overflow: hidden;
+					text-align: left;
 					font-size: 13px;
+					color: #404040;
 					padding: 0 4px;
 					height: 36px;
-					float: right;
-
-					svg{
-						padding: 6px 4px;
-						height: 24px;
-						width: 24px;
-						fill: #09f;
-					}
+					line-height: 36px;
+					float: left;
+					width: 80%;
 				}
 
-				.loading{
-					display: none;
+				.operations{
 					height: 36px;
-					float: right;
+					float: left;
+					width: 20%;
 
-					svg{
-						padding: 10px 4px;
-						height: 16px;
-						width: 16px;
+					.status{
+						border: 2px solid #ccc;
+						box-sizing: border-box;
+						border-radius: 50%;
+						margin: 2px 0 0 0;
+						float: right;
+						height: 32px;
+						width: 32px;
 
-						.qp-circular-loader {
-							width: 64px;
-							height: 64px;
-							stroke-width: 3px;
+						.progress{
+							margin: -2px 0 0 -2px;
+							position: absolute;
+							height: 32px;
+							width: 32px;
+
+							svg{
+								transform: rotate(-90deg);
+								height: 100%;
+								width: 100%;
+
+								circle{
+									transition: 1ms stroke-dashoffset;
+									stroke-dashoffset: 100;
+									stroke-dasharray: 100;
+									stroke-linecap: round;
+									stroke-width: 2;
+									stroke: #09f;
+									cy: 16;
+									cx: 16;
+									r: 15;
+								}
+							}
 						}
-						.qp-circular-loader-path {
-							stroke-dasharray: 58.9;
-							stroke-dashoffset: 58.9;
+
+						.percentage{
+							margin: -2px 0 0 -2px;
+							font-weight: normal;
+							position: absolute;
+							text-align: center;
+							line-height: 32px;
+							font-size: 10px;
+							height: 32px;
+							width: 32px;
+							color: #999;
 						}
-						.qp-circular-loader,
-						.qp-circular-loader * {
-							transform-origin: 50% 50%;
-						}	
-						.qp-circular-loader {
-							animation-iteration-count: infinite;
-							animation-timing-function: linear;
-							animation-name: rotatespinner;
-							animation-duration: 1568.63ms;
+
+						.loading{
+							display: none;
+							position: absolute;
+							overflow: hidden;
+							height: 28px;
+							width: 28px;
+							margin: 0;
+
+							svg{
+								animation: uploading .6s infinite;
+								fill: #404040;
+								padding: 4px;
+								height: 20px;
+								width: 20px;
+							}
 						}
-						.qp-circular-loader-path {
-							animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
-							animation-iteration-count: infinite, infinite, infinite;
-							animation-name: fillunfill, rotspinner, colorspinner;
-							animation-play-state: running, running, running;
-							animation-duration: 1333ms, 5332ms, 5332ms;
-							animation-fill-mode: forwards;
+
+						.result{
+
+							svg{
+								padding: 4px;
+								height: 20px;
+								width: 20px;
+							}
 						}
 					}
 				}
-			}
 
-			progress{
-				background: #ccc;
-				border: none;
-				float: left;
-				width: 100%;
-				height: 4px;
-
-				&::-webkit-progress-bar {
+				progress{
 					background: #ccc;
-				}
-				&::-webkit-progress-value {
-					background: #09f;
-				}
-				&::-moz-progress-bar {
-					background: #09f;
-				}
-				&::-ms-fill {
-					background: #09f;
+					border: none;
+					float: left;
+					width: 100%;
+					height: 4px;
+
+					&::-webkit-progress-bar {
+						background: #ccc;
+					}
+					&::-webkit-progress-value {
+						background: #09f;
+					}
+					&::-moz-progress-bar {
+						background: #09f;
+					}
+					&::-ms-fill {
+						background: #09f;
+					}
 				}
 			}
 		}
