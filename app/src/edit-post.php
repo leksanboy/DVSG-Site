@@ -71,17 +71,17 @@
 			<div class="innerBodyContent">
 				<?php if ($tipopost == 1){ ?>
 					<div class="pageBody pageCreateNoticePost">
-						<?php include_once("pages/postFunctions/notice/edit/content.php");?>
+						<?php include_once("pages/web/postFunctions/notice/edit/content.php");?>
 					</div>
 				<?php } ?>
 				<?php if ($tipopost == 2){ ?>
 					<div class="pageBody pageCreateShopPost">
-						<?php include_once("pages/postFunctions/shop/edit/content.php");?>
+						<?php include_once("pages/web/postFunctions/shop/edit/content.php");?>
 					</div>
 				<?php } ?>
 				<?php if ($tipopost == 3){ ?>
 					<div class="pageBody pageCreateShopPost">
-						<?php include_once("pages/postFunctions/blog/edit/content.php");?>
+						<?php include_once("pages/web/postFunctions/blog/edit/content.php");?>
 					</div>
 				<?php } ?>
 				<?php include_once("includes/footer.php");?>

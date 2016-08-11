@@ -49,7 +49,7 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageVersus">
-					<?php include_once("pages/versus/content.php");?>
+					<?php include_once("pages/web/versus/content.php");?>
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>

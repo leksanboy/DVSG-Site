@@ -66,7 +66,7 @@
 						<div class="pending">+<?php echo saber_cuantos_amigos_estan_sin_confirmar($_SESSION['MM_Id']) ?></div>
 					<?php }?>
 				</li>
-				<li style="opacity:0.35">
+				<li onClick="clickThePage(17)">
 					<?php include("images/svg/photos.php");?>
 					My Photos
 				</li>
@@ -74,7 +74,7 @@
 					<?php include("images/svg/music.php");?>
 					My Music
 				</li>
-				<li style="opacity:0.35">
+				<li onClick="clickThePage(16)">
 					<?php include("images/svg/videos.php");?>
 					My Videos
 				</li>

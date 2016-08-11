@@ -24,7 +24,7 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageSocialNetwork">
-					<?php include_once("pages/socialNetwork/content.php");?>
+					<?php include_once("pages/web/socialNetwork/content.php");?>
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>

@@ -2,8 +2,9 @@
 	<div class="avatarBox">
 		<div class="avatar" onclick="openModalAccount(1)">
 			<?php include("images/svg/photos.php"); ?>
-			<img src="<?php echo $row_userData['avatar']; ?>" alt="">
+			<img src="<?php echo $row_userData['avatar_original']; ?>" alt="Avatar">
 			<input type="hidden" name="avatar" value="<?php echo $row_userData['avatar']; ?>">
+			<input type="hidden" name="avatar_original" value="<?php echo $row_userData['avatar_original']; ?>">
 		</div>
 	</div>
 
@@ -344,7 +345,7 @@
 				return (v == '') ? '2013' : v;
 			});
 		}
-		var paintCals = function (day, month, year) {
+		var dateFormat = function (day, month, year) {
 			resetDates();
 			var selMonthDates = daysInMonth((parseInt($lm.val(), 10) + 1), $ly.val());
 			adjustDates(selMonthDates, $ld);
@@ -366,11 +367,12 @@
 			$('#log').empty().append('Fecha: ' + selectedDate).append('<br>');
 			$('#log').append('Siguiente: ' + nextDay);
 		}
+
 		$('.select select').on('change', function () {
 			var ldia = $ld.val();
 			var lmes = $lm.val();
 			var lano = $ly.val();
-			var ldias = paintCals(ldia, lmes, lano);
+			var ldias = dateFormat(ldia, lmes, lano);
 		});
 	});
 

@@ -1,4 +1,4 @@
-<?php require_once('../../Connections/conexion.php');
+<?php require_once('../../../Connections/conexion.php');
 
 	$_SESSION['comentarios'] = $_SESSION['comentarios'] + $_POST['cantidad'];
 
@@ -30,7 +30,7 @@
 		    <?php if (isset ($_SESSION['MM_Id'])){ ?> 
 		        <?php  if (($row_GetMoreComments['user'] == $_SESSION['MM_Id']) || (rango_admin ($_SESSION['MM_Id']) ==4)) {?>
 		            <div class="delete" onClick="deleteComment('<?php echo $row_GetMoreComments['id'] ?>');">
-		                <?php include("../../images/svg/close.php");?>
+		                <?php include("../../../images/svg/close.php");?>
 		            </div>
 		        <?php }?>
 		    <?php }?>

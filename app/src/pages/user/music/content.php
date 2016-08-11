@@ -30,7 +30,7 @@
 
 	//·····> Add new song
 	var filesArray = [];
-	function uploadSong(type, event){
+	function uploadFile(type, event){
 		if (type==1) { // Open
 			$('.messageModalWindow').toggleClass('modalDisplay');
 			setTimeout(function() {
@@ -46,12 +46,12 @@
 								<label for='fileUpload'>\
 									" + uploadIcon + " Upload\
 								</label>\
-								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadSong(4, event)' accept='audio/*'>\
+								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadFile(4, event)' accept='audio/*'>\
 							</div>\
 							<div class='filesBox'></div>\
 							<div class='buttons'>\
-								<button onClick='uploadSong(3)'>UPLOAD</button>\
-								<button onClick='uploadSong(2)'>CLOSE</button>\
+								<button onClick='uploadFile(3)'>UPLOAD</button>\
+								<button onClick='uploadFile(2)'>CLOSE</button>\
 							</div>\
 						</form>"
 
@@ -92,6 +92,10 @@
 			for (; i < event.currentTarget.files.length; i++) {
       			file = event.currentTarget.files[i];
 				filesArray.push(file);
+
+				// id3(file, function(err, tags) {
+				// 	console.log('DT: ', err, tags);
+				// });
 	      		
 	      		var title = "\
 			      		<div class='fileStatus' id='fileStatus"+ i +"'>\

@@ -51,13 +51,13 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageHome">
-					<?php include_once("pages/home/swiperSlider.php");?>
-					<?php include_once("pages/home/randomNotices.php");?>
+					<?php include_once("pages/web/home/swiperSlider.php");?>
+					<?php include_once("pages/web/home/randomNotices.php");?>
 					<div class="advert">
 						<?php include_once("includes/addByGoogle.php");?>
 					</div>
 					<div class="loadMoreNotices">
-						<?php include_once("pages/home/allNotices.php");?>
+						<?php include_once("pages/web/home/allNotices.php");?>
 					</div>
 					<div class="loadMore" onclick="loadMorePost(2);">LOAD MORE</div>
 					<div class="loadingMore">

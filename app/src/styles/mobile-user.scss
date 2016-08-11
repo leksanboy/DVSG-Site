@@ -4,6 +4,8 @@
 @import 'mobile/pages/user/messages'; /*MESSAGES Styles*/
 @import 'mobile/pages/user/friends'; /*FRIENDS Styles*/
 @import 'mobile/pages/user/music'; /*MUSIC Styles*/
+@import 'mobile/pages/user/videos'; /*VIDEOS Styles*/
+@import 'mobile/pages/user/photos'; /*VIDEOS Styles*/
 
 @media (max-width: 899px){
 	/*Fonts*/
@@ -186,7 +188,7 @@
 				position: fixed;
 				transition: .3s;
 				display: block;
-				height: 112px;
+				height: 56px;
 				width: 100%;
 				z-index: 9;
 				right: 0;
@@ -416,6 +418,11 @@
 					height: 2px;
 					bottom: 0;
 				}
+			}
+
+			.headerSettings,
+			.headerMessages{
+				height: 112px;
 			}
 
 			.innerBodyContent{

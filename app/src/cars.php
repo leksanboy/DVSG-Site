@@ -32,7 +32,7 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageCars">
-					<?php include_once("pages/cars/content.php");?>
+					<?php include_once("pages/web/cars/content.php");?>
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>

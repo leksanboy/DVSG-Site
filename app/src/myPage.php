@@ -39,7 +39,7 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageProfile">
-					<?php include_once("user/myPage/content.php");?>
+					<?php include_once("pages/user/myPage/content.php");?>
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>

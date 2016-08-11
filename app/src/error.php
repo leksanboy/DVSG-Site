@@ -26,7 +26,7 @@
 				<div class="pageBody">
 					<div>
 						<br><br><br><br><br><br>
-						<center> ERROR </center>
+						<center> -ERROR- </center>
 						<br><br><br><br><br><br>
 					</div>
 				</div>

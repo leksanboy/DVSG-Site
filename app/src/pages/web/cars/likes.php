@@ -1,4 +1,4 @@
-<?php require_once('../../Connections/conexion.php'); 
+<?php require_once('../../../Connections/conexion.php'); 
 	if (comprobacionLikesCars($_SESSION['MM_Id'],$_POST['iddelmodel'])=='true'){                                 
 	    $insertSQL = sprintf("INSERT INTO z_cars_likes (user, page) VALUES (%s, %s)",
 		GetSQLValueString($_SESSION['MM_Id'], "int"),

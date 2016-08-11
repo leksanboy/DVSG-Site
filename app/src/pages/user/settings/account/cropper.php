@@ -17,7 +17,7 @@
 		<div class="container">
 		    <div class="inner">
 				<div class="wrapper">
-					<img class="cropperAccount" src="<?php echo $row_userData['avatar']; ?>" alt="">
+					<img class="cropperAccount" src="<?php echo $row_userData['avatar_original']; ?>" alt="">
 				</div>
 				<div class="panel">
 					<button type="button">
@@ -134,12 +134,15 @@
 			}, 100);
 			$('body').toggleClass('modalHidden');
 		}else if (type==2) {
-			var dataURL = $imageAccount.cropper("getDataURL", "image/jpeg");
+			var dataURLOriginal = $imageAccount.cropper("getDataURL", "image/jpeg");
+	        $("#formOne .avatarBox .avatar img").attr('src', dataURLOriginal);
+	        $("#formOne .avatarBox .avatar input[name='avatar_original']").attr('value', dataURLOriginal);
 
-			console.log('account');
-
-	        $("#formOne .avatarBox .avatar img").attr('src', dataURL);
-	        $("#formOne .avatarBox .avatar input").attr('value', dataURL);
+			var dataURLLittle = $imageAccount.cropper("getDataURL", {
+	            width: 50,
+	            height: 50
+	        });
+	        $("#formOne .avatarBox .avatar input[name='avatar']").attr('value', dataURLLittle);
 
 	        openModalAccount(1);
 		}

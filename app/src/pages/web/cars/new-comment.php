@@ -1,4 +1,4 @@
-<?php require_once('../../Connections/conexion.php');
+<?php require_once('../../../Connections/conexion.php');
 
     $tiempocotejo= time();
     $insertSQL = sprintf("INSERT INTO z_cars_comments (user, time, comment, page) VALUES (%s, %s, %s, %s)",

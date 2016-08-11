@@ -36,7 +36,7 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageCreateShopPost">
-					<?php include_once("pages/postFunctions/shop/create/content.php");?>	
+					<?php include_once("pages/web/postFunctions/shop/create/content.php");?>	
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>

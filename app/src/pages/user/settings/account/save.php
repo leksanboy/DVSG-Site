@@ -1,6 +1,7 @@
 <?php require_once('../../../../Connections/conexion.php');
-    $updateSQL = sprintf("UPDATE z_users SET avatar=%s, primary_color=%s, secondary_color=%s, nombre=%s, car=%s, profession=%s, country_id=%s, country=%s, city_id=%s, city=%s, birthday=%s, relationship=%s, other=%s WHERE id=%s",
+    $updateSQL = sprintf("UPDATE z_users SET avatar=%s, avatar_original=%s, primary_color=%s, secondary_color=%s, nombre=%s, car=%s, profession=%s, country_id=%s, country=%s, city_id=%s, city=%s, birthday=%s, relationship=%s, other=%s WHERE id=%s",
         GetSQLValueString($_POST['avatar'], "text"),
+        GetSQLValueString($_POST['avatar_original'], "text"),
         GetSQLValueString($_POST['primary-color'], "text"),
         GetSQLValueString($_POST['secondary-color'], "text"),
         GetSQLValueString($_POST['nombre'], "text"),

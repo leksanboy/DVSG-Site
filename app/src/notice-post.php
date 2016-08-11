@@ -39,7 +39,7 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageCreateNoticePost">
-					<?php include_once("pages/postFunctions/notice/create/content.php");?>	
+					<?php include_once("pages/web/postFunctions/notice/create/content.php");?>	
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>

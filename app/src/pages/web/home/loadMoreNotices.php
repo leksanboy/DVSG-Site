@@ -2,10 +2,9 @@
 
 	mysql_select_db($database_conexion, $conexion);
 
-	$_SESSION['indice']= $_SESSION['indice'] + $_POST['paginado'];
-	$query_LoadMoreNotices = sprintf("SELECT * FROM z_posts WHERE tipo=1 ORDER BY id DESC LIMIT %s,2",
-	GetSQLValueString($_SESSION['indice'], "int"));
-		
+	$_SESSION['indice'] = $_SESSION['indice'] + $_POST['paginado'];
+	$query_LoadMoreNotices = sprintf("SELECT * FROM z_posts WHERE tipo = 1 ORDER BY id DESC LIMIT %s,2",
+		GetSQLValueString($_SESSION['indice'], "int"));
 	$LoadMoreNotices = mysql_query($query_LoadMoreNotices, $conexion) or die(mysql_error());
 	$row_LoadMoreNotices = mysql_fetch_assoc($LoadMoreNotices);
 	$totalRows_LoadMoreNotices = mysql_num_rows($LoadMoreNotices);

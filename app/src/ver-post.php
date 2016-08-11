@@ -160,7 +160,7 @@
                             <span class="totalComments"><?php echo $totalRows_GetCommentsCount; ?></span>
                         </div>
 
-                        <?php include_once("pages/posts/comments.php");?>
+                        <?php include_once("pages/web/posts/comments.php");?>
 
                         <div class="randomNotices">
                             <ul>
@@ -299,7 +299,7 @@
                             <span class="totalComments"><?php echo $totalRows_GetCommentsCount; ?></span>
                         </div>
 
-                        <?php include_once("pages/posts/comments.php");?>
+                        <?php include_once("pages/web/posts/comments.php");?>
                     </div>
                 <?php } ?>
 
@@ -368,7 +368,7 @@
                             <span class="totalComments"><?php echo $totalRows_GetCommentsCount; ?></span>
                         </div>
 
-                        <?php include_once("pages/posts/comments.php");?>
+                        <?php include_once("pages/web/posts/comments.php");?>
                     </div>
                 <?php } ?>
                 
@@ -383,7 +383,7 @@
         <script type="text/javascript">
             // ···> Likes
             function likePage(id){
-                $.post( url + 'pages/posts/likes.php', {iddelpost: id})
+                $.post( url + 'pages/web/posts/likes.php', {iddelpost: id})
                 .done(function(respuesta) {
                     if(respuesta=='Added'){
                         var total = parseInt($('.totalLikes').html()) + 1;
@@ -411,7 +411,7 @@
                 if (comment !== "") {
                     $.ajax({
                         type: "POST",
-                        url: url + 'pages/posts/new-comment.php',
+                        url: url + 'pages/web/posts/new-comment.php',
                         data: 'comment=' + comment + '&page=' + page,
                         success: function(htmlrespuesta) {
                             tabla = $('#carsComments');
@@ -432,7 +432,7 @@
                 console.log('-->', valor, idPost);
                 $.ajax({
                     type: 'POST',
-                    url: url + 'pages/posts/delete-comment.php',
+                    url: url + 'pages/web/posts/delete-comment.php',
                     data: 'id=' + valor + '&idPost=' + idPost,
                     success: function(respuesta) {
                         $('#comentariosPostId' + valor).fadeOut(300);
@@ -447,7 +447,7 @@
             function moreComments(cantidad, idPage) {
                 $.ajax({
                     type: 'POST',
-                    url: url + 'pages/posts/more-comments.php',
+                    url: url + 'pages/web/posts/more-comments.php',
                     data: 'cantidad=' + cantidad + '&idPage=' + idPage,
                     success: function(respuesta) {
                         console.log('RES:', respuesta);

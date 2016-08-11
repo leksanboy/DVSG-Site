@@ -54,13 +54,14 @@
 					<?php include("images/svg/circles.php"); ?>
 				</div>
 
-				<div class="buttonAction" onclick="uploadSong(1)">
+				<div class="buttonAction" onclick="uploadFile(1)">
 					<?php include("images/svg/add.php");?>
 				</div>
 				
 				<div class="title">
 					<?php echo traducir(53,$_COOKIE['idioma'])?>
 				</div>
+				
 				<div class="playerBox">
 					<div class="buttons">
 						<div class="previous" onclick="playPausePrevNext(2)">

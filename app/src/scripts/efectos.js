@@ -625,6 +625,10 @@ function clickThePage(type) {
             document.location.href = url + "friends";
         } else if (type === 15) {
             document.location.href = url + "music";
+        } else if (type === 16) {
+            document.location.href = url + "videos";
+        } else if (type === 17) {
+            document.location.href = url + "photos";
         }
     }, 350);
 }

@@ -27,7 +27,7 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageRegister">
-					<?php include_once("pages/register/content.php");?>
+					<?php include_once("pages/web/register/content.php");?>
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>

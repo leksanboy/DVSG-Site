@@ -46,8 +46,8 @@
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageBlog">
-					<?php include_once("pages/blog/content.php");?>
-					<?php include_once("pages/blog/allPosts.php");?>
+					<?php include_once("pages/web/blog/content.php");?>
+					<?php include_once("pages/web/blog/allPosts.php");?>
 				</div>
 				<?php include_once("includes/footer.php");?>
 			</div>
