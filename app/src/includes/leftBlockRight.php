@@ -1,44 +1,22 @@
-<?php if (isset($_SESSION['MM_Id'])){ ?>
-	
-	<?php if (!isset($_SESSION['MM_Id'])){ 
-		header("Location: " . $urlWeb );
-	}?>
+<?php 
+	if (isset($_SESSION['MM_Id'])){ 
+		if (!isset($_SESSION['MM_Id'])){ 
+			header("Location: " . $urlWeb);
+		}
 
-	<?php
-		$iddelperfil= $_SESSION['MM_Id'];
+		$userId = $_SESSION['MM_Id'];
 		mysql_select_db($database_conexion, $conexion);
-		$query_SacarMiNombreUser = sprintf("SELECT * FROM z_users WHERE id=%s",$iddelperfil,"int");
+		$query_SacarMiNombreUser = sprintf("SELECT * FROM z_users WHERE id=%s",$userId ,"int");
 		$SacarMiNombreUser = mysql_query($query_SacarMiNombreUser, $conexion) or die(mysql_error());
 		$row_SacarMiNombreUser = mysql_fetch_assoc($SacarMiNombreUser);
 		$totalRows_SacarMiNombreUser = mysql_num_rows($SacarMiNombreUser);
-
-		mysql_select_db($database_conexion, $conexion);
-		$query_SacarDefault = sprintf("SELECT * FROM z_users_default WHERE id=1","int");
-		$SacarDefault = mysql_query($query_SacarDefault, $conexion) or die(mysql_error());
-		$row_SacarDefault = mysql_fetch_assoc($SacarDefault);
-		$totalRows_SacarDefault = mysql_num_rows($SacarDefault);   
-	?>
-
+?>
 	<div class="leftSideBlock">
 		<div class="userBox">
 			<div class="images">
-				<?php if ($row_SacarMiNombreUser['avatar_bg1'] === null || $row_SacarMiNombreUser['avatar_bg1'] === '') { ?>
-				    <img src="<?php echo $row_SacarDefault['avatar_bg1_default']; ?>" class="fadeImage"/>
-				<?php } else { ?>
-				    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg1']; ?>" class="fadeImage"/>
-				<?php } ?>
-
-				<?php if ($row_SacarMiNombreUser['avatar_bg2'] === null || $row_SacarMiNombreUser['avatar_bg2'] === '') { ?>
-				    <img src="<?php echo $row_SacarDefault['avatar_bg2_default']; ?>" class="fadeImage"/>
-				<?php } else { ?>
-				    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg2']; ?>" class="fadeImage"/>
-				<?php } ?>
-
-				<?php if ($row_SacarMiNombreUser['avatar_bg3'] === null || $row_SacarMiNombreUser['avatar_bg3'] === '') { ?>
-				    <img src="<?php echo $row_SacarDefault['avatar_bg3_default']; ?>" class="fadeImage"/>
-				<?php } else { ?>
-				    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg3']; ?>" class="fadeImage"/>
-				<?php } ?>
+			    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg1']; ?>" class="fadeImage"/>
+			    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg2']; ?>" class="fadeImage"/>
+			    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg3']; ?>" class="fadeImage"/>
 			</div>
 
 			<div class="image">
@@ -138,9 +116,7 @@
 		<div class="button" onClick="location.href='<?php echo $logoutAction ?>'">Yes</div>
 	</div>
 	<div class="logOutWindowHidden" onClick="logOutFade()"></div>
-
-
-<?php } else {?>
+<?php } else { ?>
 	<div class="webAccess">
 		<div class="button" onClick="clickThePage(7)">Create an account</div>
 		<div class="button" onclick="singInAccess()">Sign in</div>
@@ -161,6 +137,5 @@
 		</form>
 	</div>
 	<div class="signInBoxHidden" onclick="singInAccess()"></div>
-<?php }?>
+<?php } ?>
 <?php mysql_free_result($SacarMiNombreUser);?>
-<?php mysql_free_result($SacarDefault);?>

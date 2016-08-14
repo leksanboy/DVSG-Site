@@ -20,14 +20,14 @@
 
 	//Inbox
 	mysql_select_db($database_conexion, $conexion);
-	$query_inboxMessages = sprintf("SELECT * FROM z_mensajes WHERE recibe=%s ORDER BY id DESC LIMIT 99",$_SESSION['MM_Id'],"int");
+	$query_inboxMessages = sprintf("SELECT * FROM z_messages WHERE recibe=%s ORDER BY id DESC LIMIT 99",$_SESSION['MM_Id'],"int");
 	$inboxMessages = mysql_query($query_inboxMessages, $conexion) or die(mysql_error());
 	$row_inboxMessages = mysql_fetch_assoc($inboxMessages);
 	$totalRows_inboxMessages = mysql_num_rows($inboxMessages);
 
 	//Outbox
 	mysql_select_db($database_conexion, $conexion);
-	$query_outboxMessages = sprintf("SELECT * FROM z_mensajes WHERE envia=%s ORDER BY id DESC LIMIT 99",$_SESSION['MM_Id'],"int");
+	$query_outboxMessages = sprintf("SELECT * FROM z_messages WHERE envia=%s ORDER BY id DESC LIMIT 99",$_SESSION['MM_Id'],"int");
 	$outboxMessages = mysql_query($query_outboxMessages, $conexion) or die(mysql_error());
 	$row_outboxMessages = mysql_fetch_assoc($outboxMessages);
 	$totalRows_outboxMessages = mysql_num_rows($outboxMessages);

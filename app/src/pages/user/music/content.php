@@ -46,7 +46,7 @@
 								<label for='fileUpload'>\
 									" + uploadIcon + " Upload\
 								</label>\
-								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadFile(4, event)' accept='audio/*'>\
+								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadFile(4, event)' accept='audio/mpeg'>\
 							</div>\
 							<div class='filesBox'></div>\
 							<div class='buttons'>\
@@ -93,10 +93,6 @@
       			file = event.currentTarget.files[i];
 				filesArray.push(file);
 
-				// id3(file, function(err, tags) {
-				// 	console.log('DT: ', err, tags);
-				// });
-	      		
 	      		var title = "\
 			      		<div class='fileStatus' id='fileStatus"+ i +"'>\
 							<div class='title' id='title'>" + file.name + "</div>\

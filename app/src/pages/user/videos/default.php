@@ -13,7 +13,7 @@
 	<ul class="videosListBox">
 		<?php do { ?>
 			<li class="song<?php echo $row_songsList['id'] ?>">
-				<video onclick="openVideo(1)">
+				<video onclick="openVideo(1, '<?php echo $row_songsList['name']?>')">
 					<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row_songsList['name']?>"/>
 				</video>
 				<div class="title">

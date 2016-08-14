@@ -50,7 +50,7 @@ http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration
 								<label for='fileUpload'>\
 									" + uploadIcon + " Upload\
 								</label>\
-								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadFile(4, event)' accept='video/*'>\
+								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadFile(4, event)' accept='video/*,.3gp,.avi,.flv,.m4v,.mkv,.mp4,.mpeg,.mpg,.m2ts,.mts,.mov,.ogv,.rm,.rmvb,.ts,.vob,.webm,.wmv'>\
 							</div>\
 							<div class='filesBox'></div>\
 							<div class='buttons'>\
@@ -224,7 +224,7 @@ http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration
 	defaultLoad();
 
 	//·····> Open video
-	function openVideo(type){
+	function openVideo(type, fileName){
 		console.log('OPEN');
 
 		if (type==1) { // Open
@@ -237,7 +237,10 @@ http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration
 			var box = "<div class='head'>\
 							OPEN VIDEO\
 						</div>\
-						<form>\
+						<form return false>\
+							<video width='400' controls>\
+								<source src='pages/user/videos/videos/" + fileName + "'>\
+							</video>\
 							<div class='buttons'>\
 								<button onClick='openVideo(2)'>CLOSE</button>\
 							</div>\

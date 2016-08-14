@@ -1,4 +1,5 @@
 <?php require_once('../../../Connections/conexion.php');
+    
 	class getDuration {
         protected $filename;
         public function __construct($filename)
@@ -172,9 +173,10 @@
         }
     }
 
-	$FILE_NAME = 		$_SESSION['MM_Id'].'_'.time().'_'.rand(); // File name
-	$FILE_TITLE = 		$_FILES["fileUpload"]["name"]; // File title
-	$fileTmpLoc = 		$_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
+	$FILE_NAME             = 		$_SESSION['MM_Id'].'_'.time().'_'.rand(); // File name
+	$FILE_TITLE            = 		$_FILES["fileUpload"]["name"]; // File title
+	$fileTmpLoc            = 		$_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
+    $locationPath          =        '/var/www/html/pages/user/music/songs';
 
 
     if ($FILE_TITLE == '' || $FILE_TITLE == undefined) {
@@ -192,6 +194,9 @@
 		$file = new getDuration("songs/$FILE_NAME");
 		$duration = $file->getDurationEstimate();
 		$FILE_DURATION = getDuration::formatTime($duration);
+
+        // $information = exec("id3v2 -l $locationPath/$FILE_NAME");
+        // echo $information;
 
 		//Insert in music
 	    $insertSQL = sprintf("INSERT INTO z_music (title, duration, name, user) VALUES (%s, %s, %s, %s)",

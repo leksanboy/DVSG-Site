@@ -799,7 +799,7 @@
 		
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT * FROM z_mensajes WHERE estado=0 AND recibe = %s", GetSQLValueString($idusuario, "int"));
+		$query_DatosFuncion = sprintf("SELECT * FROM z_messages WHERE estado=0 AND recibe = %s", GetSQLValueString($idusuario, "int"));
 		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
 		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
 		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
@@ -813,7 +813,7 @@
 
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT id FROM z_mensajes WHERE estado=0 AND recibe = %s", GetSQLValueString($usuario, "int"));
+		$query_DatosFuncion = sprintf("SELECT id FROM z_messages WHERE estado=0 AND recibe = %s", GetSQLValueString($usuario, "int"));
 		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
 		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
 		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);

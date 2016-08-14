@@ -29,7 +29,7 @@
 								<label for='fileUpload'>\
 									" + uploadIcon + " Upload\
 								</label>\
-								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadFile(4, event)' accept='image/*'>\
+								<input type='file' name='fileUpload[]' multiple id='fileUpload' onChange='uploadFile(4, event)' accept='image/jpeg,image/png,image/gif'>\
 							</div>\
 							<div class='filesBox'></div>\
 							<div class='buttons'>\

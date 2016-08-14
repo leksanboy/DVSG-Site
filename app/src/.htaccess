@@ -60,7 +60,7 @@ ErrorDocument 416 /error
 ErrorDocument 500 /error
 ErrorDocument 501 /error
 
-#Url amigables
+
 #Protegerse contra los ataques DOS limitando el tamaño de subida de archivos
 #LimitRequestBody 1024000000
 
@@ -93,9 +93,9 @@ SetEnvIfNoCase user-Agent ^Offline.Explorer [NC,OR]
 SetEnvIfNoCase user-Agent ^[Ww]eb[Bb]andit [NC,OR]
 SetEnvIfNoCase user-Agent ^Zeus [NC]
  
-Order Allow,Deny
-Allow from all
-Deny from env=bad_bot
+#Order Allow,Deny
+#Allow from all
+#Deny from env=bad_bot
 
 #Denegar acceso a carpetas
 #RewriteCond %{REQUEST_URI} ^.*/images/.*$

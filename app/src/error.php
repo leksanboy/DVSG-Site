@@ -28,6 +28,25 @@
 						<br><br><br><br><br><br>
 						<center> -ERROR- </center>
 						<br><br><br><br><br><br>
+						<!-- <?php phpinfo(); ?> -->
+
+						<!-- <?php 
+							// import('ffmpeg');
+							// $ffmpeg = '/usr/bin/ffmpeg';
+							// echo $ffmpeg;
+							$command = 'ffmpeg -version';
+							$path = '/tmp';
+
+							exec($command, $path, $returncode);
+							if ($returncode == 127)
+							{
+								echo 'ffmpeg is NOT available';
+								die();
+							}else{
+								echo 'ffmpeg is available';
+							}
+
+						?> -->
 					</div>
 				</div>
 				<?php include_once("includes/footer.php");?>
