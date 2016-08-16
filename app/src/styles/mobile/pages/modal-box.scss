@@ -829,6 +829,46 @@
 				}
 			}
 		}
+
+		.videoBox{
+            background: #1e1e1e;
+            position: relative;
+            overflow: hidden;
+            height: 56vw;
+			width: 100%;
+
+			video{
+				height: 100%;
+				width: 100%;
+			}
+
+			.title{
+	            background: rgba(0, 0, 0, 0.5);
+	            position: absolute;
+	            font-size: 14px;
+	            height: 48px;
+	            color: #fff;
+	            width: 100%;
+	            top:0;
+			}
+
+			.playPause{
+				position: absolute;
+	            background: #09f;
+	            margin: 100px;
+	            height: 64px;
+	            width: 64px;
+	            top: 0;
+			}
+
+			.controlPanel{
+				background: rgba(0, 0, 0, 0.5);
+				position: absolute;
+				height: 48px;
+				width: 100%;
+				bottom: 0;
+			}
+		}
 	}
 }
 

@@ -18,8 +18,8 @@
  * Domain URL
  */
 // var url = 'http://www.dvsg.co/';
-// var url = 'http://localhost/DVSG-site/app/dist/';
-var url = 'http://104.155.115.61/';
+// var url = 'http://104.155.115.61/';
+var url = 'http://localhost/DVSG-site/app/dist/';
 var $;
 var tabla;
 var loaderName = $(".estadoDeName span.loader"),

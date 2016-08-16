@@ -219,9 +219,8 @@
 	defaultLoad();
 
 	//·····> Open video
+	var videoPlayer;
 	function openVideo(type, fileName){
-		console.log('OPEN');
-
 		if (type==1) { // Open
 			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
@@ -229,22 +228,59 @@
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
-			var box = "<div class='head'>\
-							OPEN VIDEO\
-						</div>\
-						<form onSubmit='return false'>\
-							<video width='400' controls>\
-								<source src='pages/user/videos/videos/" + fileName + "'>\
-							</video>\
+			var box = "<form onSubmit='return false'>\
+							<div class='videoBox'>\
+								<video id='video_player' controls preload='auto'>\
+									<source src='pages/user/videos/videos/" + fileName + "'>\
+								</video>\
+								<div class='title'>Title of my video '+Add'-'xClose'</div>\
+								<div class='playPause' onClick='playerAction(1)'></div>\
+								<div class='controlPanel'>\
+									Time Progress fullScreen Volume\
+									<div class='fullScreen' onClick='playerAction(2)'>\
+										[·]\
+									</div>\
+								</div>\
+							</div>\
 							<div class='buttons'>\
 								<button onClick='openVideo(2)'>CLOSE</button>\
 							</div>\
 						</form>"
 
 			$('.modalBox .box').html(box);
+
+			videoPlayer = $('#video_player'); //declarate video player
+		    videoPlayer[0].removeAttribute("controls"); //remove default control when JS loaded
 		} else if (type==2) { //Close
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 		}
 	}
+
+	//·····> Video player
+	var playPauseButton = $('.videoBox .playPause');
+    function playerAction(type){
+    	if (type == 1) { //playPause
+    		if (!videoPlayer[0].paused)
+    			videoPlayer[0].pause();
+    		else
+    			videoPlayer[0].play();
+
+    		playPauseButton.toggle();
+    	} else if (type == 2) { //fullScreen
+    		if ($.isFunction(videoPlayer[0].webkitEnterFullscreen))
+                videoPlayer[0].webkitEnterFullscreen();
+            else if ($.isFunction(videoPlayer[0].mozRequestFullScreen))
+                videoPlayer[0].mozRequestFullScreen();
+            else
+                alert('Your browsers doesn\'t support fullscreen');
+    	} else if (type == 3) { //Sound mute
+    		//TODO: MUTE/SOUND
+    	} else if (type == 4) {
+    		//TODO: Show/Hide controls & title like youtube
+			// videoPlayer.on('click', function () {
+			// 	console.log('CLICK-VP');
+			// });
+    	}
+    }
 </script>
