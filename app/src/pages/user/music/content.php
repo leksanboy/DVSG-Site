@@ -32,16 +32,16 @@
 	var filesArray = [];
 	function uploadFile(type, event){
 		if (type==1) { // Open
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
 			var box = "<div class='head'>\
 							UPLOAD SONGS\
 						</div>\
-						<form enctype='multipart/form-data' method='post' onSubmit='return false' style='color:#000'>\
+						<form enctype='multipart/form-data' method='post' onSubmit='return false'>\
 							<div class='upload'>\
 								<label for='fileUpload'>\
 									" + uploadIcon + " Upload\
@@ -55,13 +55,13 @@
 							</div>\
 						</form>"
 
-			$('.messageModalWindow .box').html(box);
+			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 				$(".filesBox").html('');
 				filesArray = [];
 			}, 100);

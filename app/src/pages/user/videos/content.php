@@ -1,8 +1,3 @@
-<!-- TODO: http://jplayer.org/
-https://www.jwplayer.com/ 
-http://pecl.php.net/package/id3 
-http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration-in-minutes-with-php-->
-
 <div class="searchBox">
 	<form>
 		<input name="search" onKeyUp="searchButton(1, search.value)" placeholder="Search a video..."/>
@@ -36,16 +31,16 @@ http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration
 	var filesArray = [];
 	function uploadFile(type, event){
 		if (type==1) { // Open
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
 			var box = "<div class='head'>\
 							UPLOAD VIDEOS\
 						</div>\
-						<form enctype='multipart/form-data' method='post' onSubmit='return false' style='color:#000'>\
+						<form enctype='multipart/form-data' method='post' onSubmit='return false'>\
 							<div class='upload'>\
 								<label for='fileUpload'>\
 									" + uploadIcon + " Upload\
@@ -59,13 +54,13 @@ http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration
 							</div>\
 						</form>"
 
-			$('.messageModalWindow .box').html(box);
+			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 				$(".filesBox").html('');
 				filesArray = [];
 			}, 100);
@@ -228,16 +223,16 @@ http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration
 		console.log('OPEN');
 
 		if (type==1) { // Open
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
 			var box = "<div class='head'>\
 							OPEN VIDEO\
 						</div>\
-						<form return false>\
+						<form onSubmit='return false'>\
 							<video width='400' controls>\
 								<source src='pages/user/videos/videos/" + fileName + "'>\
 							</video>\
@@ -246,9 +241,9 @@ http://stackoverflow.com/questions/10043380/how-can-i-detect-video-file-duration
 							</div>\
 						</form>"
 
-			$('.messageModalWindow .box').html(box);
+			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 		}
 	}

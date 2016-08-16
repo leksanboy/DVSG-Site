@@ -12,7 +12,13 @@
 
 <div class="container">
 	<div class="boxPhoto">
-		<div class="counter"></div>
+		<div class="panel">
+			<div class="counter">
+			</div>
+			<div class="close" onclick="openPhoto(2)">
+				<?php include("../../../images/svg/close.php"); ?>
+			</div>
+		</div>
 		<div class="prev" onclick="prevNext(1)">
 			<?php include("../../../images/svg/arrow-left.php"); ?>
 		</div>
@@ -45,10 +51,10 @@
 						        ],
 
 	// ···> Set variables
-		imagePhoto 			= $('.messageModalWindow .box .slidePhotosBox .container .boxPhoto img'),
-		counterPhoto 		= $('.messageModalWindow .box .slidePhotosBox .container .boxPhoto .counter'),
-		datePhoto 			= $('.messageModalWindow .box .slidePhotosBox .container .boxData .user .name .date'),
-		commentsBoxPhoto	= $('.messageModalWindow .box .slidePhotosBox .container .boxData .comments');
+		imagePhoto 			= $('.modalBox .box .slidePhotosBox .container .boxPhoto img'),
+		counterPhoto 		= $('.modalBox .box .slidePhotosBox .container .boxPhoto .panel .counter'),
+		datePhoto 			= $('.modalBox .box .slidePhotosBox .container .boxData .user .name .date'),
+		commentsBoxPhoto	= $('.modalBox .box .slidePhotosBox .container .boxData .comments');
 
 	// ···> Set default
 	imagePhoto.attr("src","pages/user/photos/photos/" + photosDataList[position].name); // Default position image in view box
@@ -91,8 +97,8 @@
 
 	//·····> Like photo
 	function like(){
-		var countLikesPhoto 	= $('.messageModalWindow .box .slidePhotosBox .container .boxData .user .actions .analytics .likes .count'),
-			likeIconPhoto		= $('.messageModalWindow .box .slidePhotosBox .container .boxData .user .actions .analytics .likes .like'),
+		var countLikesPhoto 	= $('.modalBox .box .slidePhotosBox .container .boxData .user .actions .analytics .likes .count'),
+			likeIconPhoto		= $('.modalBox .box .slidePhotosBox .container .boxData .user .actions .analytics .likes .like'),
 			countLikes 			= parseInt(countLikesPhoto.html());
 
 		$.ajax({
@@ -117,10 +123,10 @@
 
 	//·····> New comment
 	function newComment(type, value){
-		var buttonSendCommentPhoto 	= $(".messageModalWindow .box .slidePhotosBox .container .boxData .comments .newComment .button svg"),
-			inputSendCommentPhoto 	= $(".messageModalWindow .box .slidePhotosBox .container .boxData .comments .newComment .inputBox"),
-			commentsList 			= $('.messageModalWindow .box .slidePhotosBox .container .boxData .comments .commentsList'),
-			countCommentsPhoto 		= $('.messageModalWindow .box .slidePhotosBox .container .boxData .user .actions .analytics .comments .count'),
+		var buttonSendCommentPhoto 	= $(".modalBox .box .slidePhotosBox .container .boxData .comments .newComment .button svg"),
+			inputSendCommentPhoto 	= $(".modalBox .box .slidePhotosBox .container .boxData .comments .newComment .inputBox"),
+			commentsList 			= $('.modalBox .box .slidePhotosBox .container .boxData .comments .commentsList'),
+			countCommentsPhoto 		= $('.modalBox .box .slidePhotosBox .container .boxData .user .actions .analytics .comments .count'),
 			countComments 			= parseInt(countCommentsPhoto.html());
 
 		if (type == 1) {
@@ -133,7 +139,7 @@
 			if (value != '') {
                 $.ajax({
                     type: "POST",
-                    url: '<?php echo $urlWeb ?>' + 'pages/user/photos/newComment.php',
+                    url: '<?php echo $urlWeb ?>' + 'pages/user/photos/comments/new.php',
                     data: 'commentText=' + value + '&photoId=' + photosDataList[position].id,
                     success: function(response) {
                         commentsList.prepend(response);
@@ -147,17 +153,17 @@
 
 	//·····> Delete comment
 	function deleteComment(type, id){
-		var countCommentsPhoto 	= $('.messageModalWindow .box .slidePhotosBox .container .boxData .user .actions .analytics .comments .count'),
+		var countCommentsPhoto 	= $('.modalBox .box .slidePhotosBox .container .boxData .user .actions .analytics .comments .count'),
 			countComments 		= parseInt(countCommentsPhoto.html()),
-			deleteComment		= $('.messageModalWindow .box .slidePhotosBox .container .boxData .comments .commentsList .item #delete' + id),
-			boxComment			= $('.messageModalWindow .box .slidePhotosBox .container .boxData .comments .commentsList #comment' + id);
+			deleteComment		= $('.modalBox .box .slidePhotosBox .container .boxData .comments .commentsList .item #delete' + id),
+			boxComment			= $('.modalBox .box .slidePhotosBox .container .boxData .comments .commentsList #comment' + id);
 
 		if (type == 1) {
 			deleteComment.toggle();
 		}else if (type==2) {
 			$.ajax({
 				type: 'POST',
-				url: '<?php echo $urlWeb ?>' + 'pages/user/photos/deleteComment.php',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/photos/comments/delete.php',
 				data: 'id=' + id,
 				success: function(response){
 					boxComment.fadeOut(300);
@@ -171,12 +177,12 @@
 
 	//·····> Load more comment
 	function loadMorecomments(photoId){
-		var commentsList 					= $('.messageModalWindow .box .slidePhotosBox .container .boxData .comments .commentsList'),
-			buttonLoadMoreCommentsPhoto 	= $('.messageModalWindow .box .slidePhotosBox .container .boxData .comments .loadMore');
+		var commentsList 					= $('.modalBox .box .slidePhotosBox .container .boxData .comments .commentsList'),
+			buttonLoadMoreCommentsPhoto 	= $('.modalBox .box .slidePhotosBox .container .boxData .comments .loadMore');
 
 		$.ajax({
             type: "POST",
-            url: '<?php echo $urlWeb ?>' + 'pages/user/photos/loadMoreComments.php',
+            url: '<?php echo $urlWeb ?>' + 'pages/user/photos/comments/loadMore.php',
             data: 'cuantity=' + 10 + '&photoId=' + photosDataList[position].id,
             success: function(response) {
             	if (response != '')

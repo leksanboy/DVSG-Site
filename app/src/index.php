@@ -69,9 +69,9 @@
 			<?php include_once("includes/cookies.php");?>
 		</div>
 		<div class="hiddenBody"></div>
+		<script type="text/javascript" src="<?php echo $urlWeb ?>scripts/efectos.min.js"></script>
 		<script type="text/javascript" src="<?php echo $urlWeb ?>scripts/swiper/swiper-slider.min.js"></script>
 		<script type="text/javascript" src="<?php echo $urlWeb ?>scripts/swiper/swiper-home.min.js"></script>
-		<script type="text/javascript" src="<?php echo $urlWeb ?>scripts/efectos.min.js"></script>
 	</body>
 	<?php include_once("includes/aplazarscripts.php");?>
 </html>

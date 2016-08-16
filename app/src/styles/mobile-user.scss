@@ -1,12 +1,4 @@
-/*USER*/
-@import 'mobile/pages/user/profile'; /*PROFILE Styles*/
-@import 'mobile/pages/user/settings'; /*SETTINGS Styles*/
-@import 'mobile/pages/user/messages'; /*MESSAGES Styles*/
-@import 'mobile/pages/user/friends'; /*FRIENDS Styles*/
-@import 'mobile/pages/user/music'; /*MUSIC Styles*/
-@import 'mobile/pages/user/videos'; /*VIDEOS Styles*/
-@import 'mobile/pages/user/photos'; /*VIDEOS Styles*/
-
+/*USER PAGES*/
 @media (max-width: 899px){
 	/*Fonts*/
 		@font-face {
@@ -123,13 +115,22 @@
 			}
 		}
 
+		@keyframes glitch {
+			0%	{
+				opacity: 0.1
+			} 50% {
+				opacity: 1
+			} 100% {
+				opacity:0.1
+			}
+		}
+
 	/*ScrollBar*/
 		::-webkit-scrollbar { 
 			display: none; 
 		}
 
 	/*Booleans*/
-		/*$bodyColor: #15191D;*/
 		$bodyColor: #132030;
 
 	body {
@@ -180,6 +181,41 @@
 			overflow: hidden;
 			transition: .3s;
 			width: 100%;
+
+			.header{
+				transform: translateX(0);
+				overflow: hidden;
+				position: fixed;
+				display: block;
+				height: 48px;
+				width: 100%;
+				z-index: 9;
+				right: 0;
+				left: 0;
+				top: 0;
+
+				&.scrolled {
+					box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+					background: rgba(#09f, 1);
+				}
+
+				.userName{
+					font-weight: normal;
+					line-height: 48px;
+					transition: .45s;
+					margin: 48px 0 0;
+					font-size: 15px;
+					float: left;
+					color: #fff;
+					opacity: 0;
+					top: 0;
+
+					&.showUserName{
+						opacity: 1;
+						margin: 0;
+					}
+				}
+			}
 
 			.headerUser{
 				box-shadow: 0 2px 5px rgba(0,0,0,0.26);
@@ -425,6 +461,160 @@
 				height: 112px;
 			}
 
+			.headerMusic{
+				height: 148px !important;
+				overflow: initial;
+
+				.playerBox{
+					float: left;
+					width: 100%;
+
+					.buttons{
+						margin: 0 auto 4px;
+						transition: .6s;
+						display: flex;
+						height: 52px;
+						width: 148px;
+
+						.previous,
+						.next{
+							border-radius: 3px;
+							margin: 8px 0;
+							height: 36px;
+							width: 36px;
+							float: left;
+
+							svg{
+								padding: 6px;
+								height: 24px;
+								width: 24px;
+								fill: #fff;
+							}
+
+							&:active{
+								background: rgba(255,255,255, 0.5);
+							}
+						}
+
+						.playPause{
+							box-sizing: border-box;
+							border: 2px solid #fff;
+							border-radius: 50%;
+							margin: 0 12px;
+							height: 52px;
+							width: 52px;
+
+							.play,
+							.pause{
+								svg{
+									padding: 8px;
+									height: 32px;
+									width: 32px;
+									fill: #fff;
+								}
+							}
+
+							.pause{
+								display: none;
+							}
+						}
+					}
+
+					.titleAndProgress{
+						width: 100%;
+						float: left;
+						height: 36px;
+
+						.titleDuration{
+							display: flex;
+							margin: 0 2%;
+							float: left;
+							width: 96%;
+
+							.text,
+							.duration{
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								line-height: 32px;
+								overflow: hidden;
+								text-align: left;
+								font-size: 13px;
+								height: 32px;
+								color: #fff;
+								width: 100%;
+								float: left;
+							}
+
+							.duration{
+								text-align: right;
+								width: 120px;
+							}
+						}
+
+						.progress{
+							background: rgba(255,255,255,.5);
+							width: 100%;
+							height: 4px;
+							float: left;
+
+							.buffer{
+								background-color: #fff;
+								position: relative;
+								margin: -4px 0 0 0;
+								opacity: .5;
+								float: left;
+								height: 4px;
+								z-index: -1;
+							}
+
+							input[type=range] {
+								background-color: transparent;
+								background-repeat: no-repeat;
+								-webkit-appearance: none;
+								background-size: 0 100%;
+								position: relative;
+								outline: none;
+								margin: auto;
+								width: 100%;
+								height: 4px;
+								float: left;
+								padding: 0;
+
+								&::-webkit-slider-runnable-track, 
+								&::-webkit-slider-thumb {
+									-webkit-appearance: none;
+								}
+
+								&::-webkit-slider-thumb {
+									position: relative;
+									margin: 0;
+									border: none;
+									width: 14px;
+									height: 14px;
+									transition: .3s;
+									border-radius: 50%;
+									background: #132030;
+									border: 4px solid #fff;
+									cursor: ew-resize;
+									box-shadow: 0 5px 10px 0 rgba(0,0,0,.29),0 13px 30px 0 rgba(0,0,0,.17);
+								}
+
+								&::-moz-range-thumb
+								&::-ms-thumb, {
+									border: none;
+									width: 16px;
+									height: 16px;
+									border-radius: 50%;
+									box-shadow: inset 1px 1px 3px #00cafc;
+									background: #fff;
+									cursor: ew-resize;
+								}
+							}
+						}
+					}
+				}
+			}
+
 			.innerBodyContent{
 				background: $bodyColor;
 				position: relative;
@@ -434,11 +624,1392 @@
 				z-index: 8;
 				top: 0;
 
-				.pageBody{
-					position: relative;
-					overflow: hidden;
-					z-index: 9;
+				.searchBox{ /*Search: songs & videos;*/
+					margin: 12px 2%;
+					float: left;
+					width: 96%;
+
+					form{
+						input{
+							box-sizing: border-box;
+							border-radius: 3px;
+							padding: 0px 36px;
+							background: #fff;
+							font-size: 14px;
+							color: #404040;
+							border: none;
+							height: 36px;
+							width: 100%;
+							float: left;
+							outline: 0;
+
+							&:focus{
+								border: 1px solid #09f;
+							}
+						}
+
+						.searchIcon,
+						.loaderIcon,
+						.clearIcon{
+							margin: -36px 0 0;
+							height: 36px;
+							width: 36px;
+							float: left;
+
+							svg{
+								padding: 6px;
+								height: 24px;
+								width: 24px;
+								fill:#aaa;
+							}
+						}
+
+						.clearIcon{
+							float: right;
+						}
+
+						.loaderIcon{
+							display: none;
+
+							svg{
+								padding: 10px;
+								height: 16px;
+								width: 16px;
+
+								.qp-circular-loader {
+									width: 64px;
+									height: 64px;
+									stroke-width: 3px;
+								}
+								.qp-circular-loader-path {
+									stroke-dasharray: 58.9;
+									stroke-dashoffset: 58.9;
+								}
+								.qp-circular-loader,
+								.qp-circular-loader * {
+									transform-origin: 50% 50%;
+								}	
+								.qp-circular-loader {
+									animation-iteration-count: infinite;
+									animation-timing-function: linear;
+									animation-name: rotatespinner;
+									animation-duration: 1568.63ms;
+								}
+								.qp-circular-loader-path {
+									animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+									animation-iteration-count: infinite, infinite, infinite;
+									animation-name: fillunfill, rotspinner, colorspinner;
+									animation-play-state: running, running, running;
+									animation-duration: 1333ms, 5332ms, 5332ms;
+									animation-fill-mode: forwards;
+								}
+							}
+						}
+					}
+				}
+
+				.noData{ /*If nothing is uploaded*/
+					text-transform: uppercase;
+					text-align: center;
+					padding: 48px 0;
+					float: left;
+					width: 100%;
+					color: #fff;
+				}
+
+				/*PROFILE - My page*/
+				.pageProfile{
 					margin: 0;
+
+					.userBox{
+						width: 100%;
+						position: relative;
+						overflow: hidden;
+
+						.backgroundImages{
+							position: relative;
+							height: 42.1875vw;
+							overflow: hidden;
+							background: #09f;
+							width: 100%;
+
+							.imgBox{
+								background-size: cover;
+								height: 100%;
+								width: 100%;
+								float: left;
+								
+								img.fadeImage{
+									position: absolute;
+									height: 56.25vw;
+									width: 100%;
+									
+									&:nth-child(1) {
+										animation: fade-background-images 24s 18s infinite;
+									}
+
+									&:nth-child(2) {
+										animation: fade-background-images 24s 12s infinite;
+									}
+
+									&:nth-child(3) {
+										animation: fade-background-images 24s 6s infinite; 
+									}
+								}
+
+								&:after {
+									position: absolute;
+									content: '';
+									top: 0;
+									left: 0;
+									width: 100%;
+									height: 100%;
+									background: rgba(#09f, 0);
+								}
+							}
+						}
+
+						.dataBox{
+							position: relative;
+							background: #fff;
+							height: 120px;
+							margin: 0;
+
+							img{
+								margin: -34px 0 0 -34px;
+								border: 2px solid #fff;
+								border-radius: 5px;
+								position: relative;
+								height: 64px;
+								width: 64px;
+								float: left;
+								left: 50%;
+							}
+
+							.name{
+								margin: 12px 0 0 0;
+								text-align: center;
+								font-weight: 700;
+								color: #404040;
+								width: 100%;
+								float: left;
+							}
+
+							ul.media{
+								text-transform: lowercase;
+								font-weight: normal;
+								list-style: none;
+								margin: 12px 2%;
+								font-size: 15px;
+								color: #404040;
+								display: flex;
+								float: left;
+								width: 96%;
+								padding: 0;
+
+								li{
+									text-transform: capitalize;
+									text-align: center;
+									border-radius: 3px;
+									line-height: 24px;
+									padding: 4px 6px;
+									cursor: pointer;
+									color: #404040;
+									height: 24px;
+									margin: 0 1%;
+									width: 18%;
+
+									span{
+										display: none;
+									}
+
+									svg{
+										margin: 0 0 -4px 0;
+										fill: #404040;
+										height: 20px;
+										width: 20px;
+									}
+
+									&:hover{
+										box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+									}
+								}
+							}
+						}
+					}
+
+					.photosBloque{
+						height: 48px;
+						width: 100%;
+						float: left;
+
+						ul{
+							display: -webkit-inline-box;
+							overflow-y: hidden;
+							overflow-x: scroll;
+							list-style: none;
+							width: 100%;
+							padding: 0;
+							margin: 0;
+							
+							li{
+								background: #004D8A;
+								height: 48px;
+								width: 23%;
+							}
+						}
+					}
+
+					.buttonCreate{
+						border-bottom: 2px solid #135988;
+						text-transform: uppercase;
+						text-align: center;
+						border-radius: 3px;
+						line-height: 36px;
+						background: #09f;
+						margin: 24px 2%;
+						height: 36px;
+						color: #fff;
+						float: left;
+						width: 96%;
+					}
+				}
+
+				/*VIDEOS*/
+				.pageVideos{
+					margin:  56px auto 0;
+
+					ul.videosListBox{
+						list-style: none;
+						padding: 0;
+						margin: 0;
+
+						li{
+							box-sizing: border-box;
+							margin: 6px 0 12px 2%;
+							position: relative;
+							border-radius: 3px;
+							overflow: hidden;
+							height: initial;
+							float: left;
+							width: 47%;
+
+							video{
+								width: 100%;
+								float: left;
+							}
+
+							.title{
+								width: 100%;
+								float: left;
+								
+								.text{
+									text-overflow: ellipsis;
+									white-space: nowrap;
+									line-height: 24px;
+									overflow: hidden;
+									text-align: left;
+									font-size: 13px;
+									width: 100%;
+									float: left;
+									color: #fff;
+								}
+
+								.duration{
+									background: rgba(0,0,0,.5);
+									margin: -18px 2px 0 0;
+									position: relative;
+									border-radius: 3px;
+									line-height: 12px;
+									text-align: right;
+									padding: 2px 6px;
+									font-size: 12px;
+									float: right;
+									height: 12px;
+									color: #fff;
+								}
+
+								.replays{
+									color: rgba(255,255,255,.5);
+									text-align: left;
+									font-size: 10px;
+									float: left;
+									width: 100%;
+								}
+							}
+
+
+							.actions{
+								position: relative;
+								width: 100%;
+								height: 0;
+
+								svg{
+									padding: 3px;
+									height: 18px;
+									width: 18px;
+									fill: #fff;
+								}
+
+								.delete{
+									background: rgba(0,0,0,.5);
+									border-radius: 3px;
+									position: absolute;
+									height: 24px;
+									width: 24px;
+									margin: 2px;
+									right: 0;
+
+									&:active{
+										background: rgba(255, 0, 0, 0.5);
+									}
+								}
+
+								.add{
+									border-radius: 3px;
+									height: 100%;
+									width: 100%;
+									
+									&:active{
+										background: rgba(0, 153, 255, 0.5);
+									}
+								}
+
+								.added{
+									display: none;
+
+									svg{
+										fill: #09f;
+									}
+								}
+							}
+
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								margin: 2px;
+								z-index: 9;
+								right: 0;
+
+								.text{
+									padding: 4px 6px 8px;
+									line-height: 24px;
+									color: #404040;
+									width: inherit;
+									height: 24px;
+									margin: 0;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				/*MUSIC*/
+				.pageMusic{
+					margin:  154px auto 0;
+
+					ul.songsListBox{
+						list-style: none;
+						padding: 0;
+						margin: 0;
+
+						li{
+							border-radius: 3px;
+							margin: 6px 2%;
+							display: flex;
+							height: 36px;
+							color: #fff;
+							float: left;
+							width: 96%;
+
+							.playPause{
+								box-sizing: border-box;
+								height: 36px;
+								width: 36px;
+
+								svg{
+									padding: 6px;
+									height: 24px;
+									width: 24px;
+									fill: #fff;
+								}
+							}
+
+							.text,
+							.duration{
+								text-overflow: ellipsis;
+								white-space: nowrap;
+								line-height: 36px;
+								overflow: hidden;
+								text-align: left;
+								font-size: 13px;
+								padding: 0 8px;
+								height: 36px;
+								width: 100%;
+								float: left;
+							}
+
+							.duration{
+								text-align: right;
+								width: 70px;
+							}
+
+							.actions{
+								box-sizing: border-box;
+								height: 36px;
+								width: 36px;
+
+								svg{
+									padding: 9px;
+									height: 18px;
+									width: 18px;
+									fill: #fff;
+								}
+
+								.delete{
+									border-radius: 3px;
+									height: 100%;
+									width: 100%;
+
+									&:active{
+										background: rgba(255, 0, 0, 0.5);
+									}
+								}
+
+								.add{
+									border-radius: 3px;
+									height: 100%;
+									width: 100%;
+									
+									&:active{
+										background: rgba(0, 153, 255, 0.5);
+									}
+								}
+
+								.added{
+									display: none;
+
+									svg{
+										fill: #09f;
+									}
+								}
+							}
+
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								margin: -36px 0 0;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								right: 2%;
+
+								.text{
+									padding: 4px 6px 8px;
+									line-height: 24px;
+									color: #404040;
+									width: inherit;
+									height: 24px;
+									margin: 0;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
+									}
+								}
+							}
+
+							&.active{
+								/*box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);*/
+								/*background-color: rgba(255, 255, 255, 0.07);*/
+								text-shadow: 0 3px 6px rgba(0,0,0,0.23);
+								color: #09f;
+
+								svg{
+									fill: #09f;
+								}
+							}
+						}
+					}
+				}
+
+				/*PHOTOS*/
+				.pagePhotos{
+					margin:  56px auto 0;
+
+					ul.photosListBox{
+						list-style: none;
+						padding: 0;
+						margin: 0;
+
+						li{
+							background-color: #404040;
+							box-sizing: border-box;
+							margin: 1vw 0 0 1%;
+							position: relative;
+							border-radius: 3px;
+							height: initial;
+							height: 32vw;
+							float: left;
+							width: 32%;
+
+							.image{
+								position: absolute;
+								overflow: hidden;
+								height: 100%;
+								width: 100%;
+
+								.img{
+									background-position: center 35%;
+									background-repeat: no-repeat;
+									transform: translate(0px);
+									box-sizing: border-box;
+									background-size: cover;
+									display: inline-block;
+								}
+							}
+
+							.actions{
+								position: relative;
+								width: 100%;
+								height: 0;
+
+								svg{
+									padding: 3px;
+									height: 18px;
+									width: 18px;
+									fill: #fff;
+								}
+
+								.delete{
+									background: rgba(0,0,0,.5);
+									border-radius: 3px;
+									position: absolute;
+									height: 24px;
+									width: 24px;
+									margin: 2px;
+									right: 0;
+
+									&:active{
+										background: rgba(255, 0, 0, 0.5);
+									}
+								}
+
+								.add{
+									border-radius: 3px;
+									height: 100%;
+									width: 100%;
+									
+									&:active{
+										background: rgba(0, 153, 255, 0.5);
+									}
+								}
+
+								.added{
+									display: none;
+
+									svg{
+										fill: #09f;
+									}
+								}
+							}
+
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								margin: 2px;
+								z-index: 9;
+								right: 0;
+
+								.text{
+									padding: 4px 6px 8px;
+									white-space: nowrap;
+									line-height: 24px;
+									color: #404040;
+									width: inherit;
+									height: 24px;
+									margin: 0;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+
+				/*FRIENDS*/
+				.pageFriends{
+					margin:  128px auto 0;
+
+					#formTwo,
+					#formThree{
+						display: none;
+					}
+
+					.friendBox{
+						border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+						padding: 12px 0;
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						&:last-child{
+							border: none;
+						}
+
+						.head{
+							float: left;
+							width: 100%;
+
+							.image{
+								box-sizing: border-box;
+								border: 1px solid #fff;
+								border-radius: 50%;
+								overflow: hidden;
+								height: 48px;
+								width: 48px;
+								float: left;
+
+								img{
+									height: 100%;
+									width: 100%;
+								}
+							}
+
+							.name{
+								margin: 0 0 0 12px;
+								font-size: 15px;
+								float: left;
+								color: #fff;
+
+								.date{
+									color: rgba(255, 255, 255, 0.5);
+									margin: 2px 0 0;
+									font-size: 11px;
+								}
+							}
+
+							.delete{
+								float: right;
+								height: 24px;
+								width: 24px;
+
+								svg{
+									height: 18px;
+									width: 18px;
+									margin: 3px;
+									fill: #fff;
+								}
+							}
+
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								margin: -18px 0 0;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								right: 2%;
+
+								.text{
+									padding: 4px 6px 8px;
+									color: #404040;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
+									}
+								}
+							}
+
+							.buttons{
+								margin: -26px 0 0 60px;
+								width: 100%;
+								float: left;
+
+								button{
+									border-radius: 3px;
+									margin: 0 8px 0 0;
+									background: #09f;
+									border: none;
+									height: 24px;
+									color: #fff;
+
+									&:first-child{
+										background: red;
+									}
+								}
+							}
+						}
+
+						.body{
+							-webkit-box-orient: vertical;
+							text-overflow: ellipsis;
+							-webkit-line-clamp: 2;
+							word-break: break-all;
+							display: -webkit-box;
+							margin: 0 0 0 60px;
+							overflow: hidden;
+							font-size: 14px;
+							float: left;
+						}
+					}
+				}
+
+				/*MESSAGES*/
+				.pageMessages{
+					margin:  128px auto 0;
+
+					#formTwo{
+						display: none;
+					}
+
+					.messageBox{
+						border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+						padding: 12px 0;
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						&:last-child{
+							border: none;
+						}
+
+						.head{
+							float: left;
+							width: 100%;
+
+							.image{
+								box-sizing: border-box;
+								border: 1px solid #fff;
+								border-radius: 50%;
+								overflow: hidden;
+								height: 48px;
+								width: 48px;
+								float: left;
+
+								img{
+									height: 100%;
+									width: 100%;
+								}
+							}
+
+							.imageSender{
+								margin: 28px 0 0 28px;
+								position: absolute;
+
+								svg{
+									filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.86));
+									margin: -10px -20px 0 -8px;
+									fill: #e5e5e5;
+									height: 20px;
+									width: 20px;
+									float: left;
+								}
+
+								.image{
+									box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+									box-sizing: border-box;
+									border: 1px solid #fff;
+									position: relative;
+									border-radius: 50%;
+									overflow: hidden;
+									height: 28px;
+									width: 28px;
+
+									img{
+										height: 100%;
+										width: 100%;
+									}
+								}
+							}
+
+							.name{
+								margin: 0 0 0 12px;
+								font-size: 15px;
+								float: left;
+								color: #fff;
+
+								.date{
+									color: rgba(255, 255, 255, 0.5);
+									margin: 2px 0 0;
+									font-size: 11px;
+								}
+							}
+
+							.delete{
+								float: right;
+								height: 24px;
+								width: 24px;
+
+								svg{
+									height: 18px;
+									width: 18px;
+									margin: 3px;
+									fill: #fff;
+								}
+							}
+
+							.glitch{
+								animation: glitch 1.3s infinite;
+								font-weight: normal;
+								margin: 56px 0 0 0;
+								border-radius: 3px;
+								text-align: center;
+								position: absolute;
+								line-height: 14px;
+								background: #fff;
+								font-size: 11px;
+								color: #404040;
+								height: 14px;
+								width: 46px;
+							}
+
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								margin: -18px 0 0;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								right: 2%;
+
+								.text{
+									padding: 4px 6px 8px;
+									color: #404040;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
+									}
+								}
+							}
+						}
+
+						.body{
+							-webkit-box-orient: vertical;
+							text-overflow: ellipsis;
+							-webkit-line-clamp: 2;
+							word-break: break-all;
+							display: -webkit-box;
+							margin: 0 0 0 60px;
+							overflow: hidden;
+							font-size: 14px;
+							float: left;
+						}
+					}
+				}
+
+				/*SETTINGS*/
+				.pageSettings{
+					margin:  128px auto 0;
+
+					#formTwo,
+					#formThree,
+					#formFour{
+						display: none;
+					}
+
+					.avatarBox{
+						margin: 12px auto 0;
+						display: block;
+
+						.avatar,
+						.background{
+						    box-shadow: 0 0 5px rgba(0,0,0,.15);
+						    border: 1px solid #fff;
+						    border-radius: 3px;
+						    position: relative;
+						    overflow: hidden;
+						    height: 112px;
+						    width: 112px;
+						    margin: auto;
+
+						    img{
+								height: 100%;
+								width: 100%;
+							}
+
+							svg{
+								filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.5));
+								fill: rgba(255, 255, 255, 0.66);
+								margin: 32px 0 0 -24px;
+								position: absolute;
+								height: 48px;
+								width: 48px;
+								left: 50%;
+							}
+						}
+
+						.background{
+						    height: 112px;
+						    width: 200px;
+						}
+
+						button{
+							text-transform: uppercase;
+							border-radius: 3px;
+							margin: 12px auto;
+							background: #09f;
+							font-size: 13px;
+							display: block;
+							outline: none;
+							height: 36px;
+							border: none;
+							color: #fff;
+						}
+					}
+
+					.colorBox{
+						float: left;
+						width: 100%;
+
+						.title{
+							color: rgba(255, 255, 255, 0.5);
+							padding: 8px 2%;
+							width: 100%;
+						}
+
+						.selector{
+							margin: 0 2%;
+							float: left;
+							width: 96%;
+
+							button{
+								text-transform: uppercase;
+								border-radius: 3px;
+								background: #fff;
+								font-size: 13px;
+								outline: none;
+								height: 36px;
+								border: none;
+								color: #fff;
+								float: left;
+								width: 20%;
+							}
+
+							label{
+								float: left;
+								height: 0;
+								width: 0;
+
+								svg{
+									margin: 11px 0 0 22px;
+									height: 14px;
+									width: 14px;
+									fill: #fff;
+								}
+							}
+
+							input{
+								background: transparent;
+								box-sizing: border-box;
+								border: 1px solid #fff;
+								border-radius: 3px;
+								margin: 0px 0 0 2%;
+								padding: 0 36px;
+								font-size: 14px;
+								outline: none;
+								height: 36px;
+								color: #fff;
+								float: left;
+								width: 78%;
+
+								&:focus{
+									border-color: #09f;
+								};
+							}
+						}
+
+						.box{
+							box-shadow: inset 0 8px 8px -8px #000, inset 0 -8px 8px -8px #000;
+							background: #123055;
+							overflow: hidden;
+							margin: 12px 0 0;
+							transition: .6s;
+							width: 100%;
+							float: left;
+							height: 0;
+
+							.btn{
+								box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+								border-radius: 3px;
+								margin: 6px 1%;
+								height: 36px;
+								float: left;
+								width: 18%;
+							}
+
+							.button-red{
+								background: #F44336;
+							}
+							.button-pink{
+								background: #FF4081;
+							}
+							.button-purple{
+								background: #9C27B0;
+							}
+							.button-deeppurple{
+								background: #7C4DFF;
+							}
+							.button-indigo{
+								background: #303F9F;
+							}
+							.button-blue{
+								background: #448AFF;
+							}
+							.button-lightblue{
+								background: #03A9F4;
+							}
+							.button-teal{
+								background: #009688;
+							}
+							.button-green{
+								background: #4CAF50;
+							}
+							.button-lightgreen{
+								background: #8BC34A;
+							}
+							.button-lime{
+								background: #CDDC39;
+							}
+							.button-yellow{
+								background: #FFEB3B;
+							}
+							.button-orange{
+								background: #FF9800;
+							}
+							.button-deeporange{
+								background: #FF5722;
+							}
+							.button-bluegrey{
+								background: #607D8B;
+							}
+						}
+
+						.showColorBox{
+							height: 146px;
+						}
+					}
+
+					.inputBox{
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						.title{
+							color: rgba(255, 255, 255, 0.5);
+							padding: 8px 2%;
+							width: 100%;
+						}
+
+						input{
+							background: transparent;
+							box-sizing: border-box;
+							border: 1px solid #fff;
+							border-radius: 3px;
+							font-size: 14px;
+							padding: 0 8px;
+							outline: none;
+							height: 36px;
+							color: #fff;
+							float: left;
+							width: 100%;
+							margin: 0;
+
+							&:focus{
+								border-color: #09f;
+							};
+						}
+
+						textarea{
+							background: transparent;
+							box-sizing: border-box;
+							border: 1px solid #fff;
+							border-radius: 3px;
+							padding: 6px 8px;
+							font-size: 14px;
+							outline: none;
+							color: #fff;
+							float: left;
+							width: 100%;
+							margin: 0;
+
+							&:focus{
+								border-color: #09f;
+							};
+						}
+
+						.select{
+							box-sizing: border-box;							
+							height: 36px;
+							float: left;
+							width: 100%;
+							margin: 0;
+							display: flex;
+
+							select{
+								background: transparent;
+								box-sizing: border-box;
+								border: 1px solid #fff;
+								border-radius: 3px;
+								margin: 0 0 0 1%;
+								font-size: 14px;
+								outline: none;
+								height: 36px;
+								color: #fff;
+								float: left;
+								width: 100%;
+
+								&:first-child{
+									margin: 0;
+								}
+							}
+						}
+
+						.status{
+							margin: 8px 12px 0 0;
+							position: absolute;
+							right: 2%;
+
+							.done{
+								display: none;
+
+								svg{
+									fill: #2196F3;
+									height: 20px;
+									width: 20px;
+								}
+							}
+
+							.bad{
+								display: none;
+
+								svg{
+									fill: #F44336;
+									height: 20px;
+									width: 20px;
+								}
+							}
+
+							.loader{
+								display: none;
+
+								svg{
+									height: 20px;
+									width: 20px;
+
+									.qp-circular-loader {
+										width: 64px;
+										height: 64px;
+										stroke-width: 3px;
+									}
+									.qp-circular-loader-path {
+										stroke-dasharray: 58.9;
+										stroke-dashoffset: 58.9;
+									}
+									.qp-circular-loader,
+									.qp-circular-loader * {
+										transform-origin: 50% 50%;
+									}	
+									.qp-circular-loader {
+										animation-iteration-count: infinite;
+										animation-timing-function: linear;
+										animation-name: rotatespinner;
+										animation-duration: 1568.63ms;
+									}
+									.qp-circular-loader-path {
+										animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+										animation-iteration-count: infinite, infinite, infinite;
+										animation-name: fillunfill, rotspinner, colorspinner;
+										animation-play-state: running, running, running;
+										animation-duration: 1333ms, 5332ms, 5332ms;
+										animation-fill-mode: forwards;
+									}
+								}
+							}
+						}
+					}
+
+					.languageBox{
+						width: 100%;
+						float: left;
+
+						a{
+							text-transform: uppercase;
+							font-weight: normal;
+							text-align: center;
+							border-radius: 3px;
+							line-height: 36px;
+							margin: 0 2% 24px;
+							background: #fff;
+							color: #404040;
+							height: 36px;
+							float: left;
+							width: 96%;
+
+							svg{
+								margin: 6px 6px -6px -30px;
+								height: 24px;
+								width: 24px;
+								fill: #fff;
+							}
+
+							&.selected{
+								color: #fff;
+
+								svg{
+									fill: #fff;
+								}
+							}
+
+							&:active{
+								background: #404040;
+								color: #fff;
+
+								svg{
+									fill: #fff;
+								}
+							}
+						}
+					}
+
+					.buttonSave{
+						text-transform: uppercase;
+						border-radius: 3px;
+						background: #09f;
+						margin: 36px 15%;
+						transition: .6s;
+						font-size: 13px;
+						display: block;
+						height: 36px;
+						border: none;
+						color: #fff;
+						float: left;
+						outline: 0;
+						width: 70%;
+					}
+
+					.errorButton{
+						background: #ff0000 !important;
+						margin: 36px 25% !important;
+						width: 50% !important;
+					}
+
+					.doneButton{
+						background: #0099ff !important;
+						margin: 36px 2% !important;
+						width: 96% !important;
+					}
 				}
 
 				.footer{

@@ -18,7 +18,8 @@
  * Domain URL
  */
 // var url = 'http://www.dvsg.co/';
-var url = 'http://localhost/DVSG-site/app/dist/';
+// var url = 'http://localhost/DVSG-site/app/dist/';
+var url = 'http://104.155.115.61/';
 var $;
 var tabla;
 var loaderName = $(".estadoDeName span.loader"),
@@ -618,17 +619,17 @@ function clickThePage(type) {
         } else if (type === 11) {
             document.location.href = url + "my";
         } else if (type === 12) {
-            document.location.href = url + "settings";
+            document.location.href = url + "settings.php";
         } else if (type === 13) {
-            document.location.href = url + "messages";
+            document.location.href = url + "messages.php";
         } else if (type === 14) {
-            document.location.href = url + "friends";
+            document.location.href = url + "friends.php";
         } else if (type === 15) {
-            document.location.href = url + "music";
+            document.location.href = url + "music.php";
         } else if (type === 16) {
-            document.location.href = url + "videos";
+            document.location.href = url + "videos.php";
         } else if (type === 17) {
-            document.location.href = url + "photos";
+            document.location.href = url + "photos.php";
         }
     }, 350);
 }
@@ -719,8 +720,8 @@ function singInAccess() {
 /**
  * Signin login form access
  */
-function loginAccess(nombre, password, checkbox) {
-    if (nombre === "" || password === "") {
+function loginAccess(name, password, checkbox) {
+    if (name == "" || password == "") {
         $('.error').fadeIn(300).html('Complete the Fields');
         setTimeout(function() {
             $('.error').fadeOut(500);
@@ -731,7 +732,7 @@ function loginAccess(nombre, password, checkbox) {
         $.ajax({
             type: 'POST',
             url: url + 'includes/arrancar.php',
-            data: 'nombre=' + nombre + '&password=' + password + '&recordar=' + checkbox,
+            data: 'name=' + name + '&password=' + password + '&recordar=' + checkbox,
             success: function(html) {
                 if (html != "false") {
                     $('.signInLoading').val("Loading...");

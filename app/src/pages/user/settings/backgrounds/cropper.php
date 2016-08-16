@@ -1,4 +1,4 @@
-<div class="cropperModalWindow cropperModalWindowBackgrounds">
+<div class="cropperModalBox cropperModalBoxBackgrounds">
 	<div class="box">
 		<div class="head">
 			<div class="title">
@@ -192,9 +192,9 @@
 
 
 		if (type==1) {
-			$('.cropperModalWindowBackgrounds').toggleClass('modalDisplay');
+			$('.cropperModalBoxBackgrounds').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.cropperModalWindowBackgrounds').toggleClass('showModal');
+				$('.cropperModalBoxBackgrounds').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 

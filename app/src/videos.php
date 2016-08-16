@@ -27,7 +27,7 @@
 		<title><?php echo traducir(51,$_COOKIE['idioma'])?></title>
 		<?php include("includes/favicons.php"); ?>
 		<meta name="theme-color" content="#<?php echo $row_userData['primary_color']; ?>">
-		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/mobile/pages/message-window.min.css"/>
+		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/mobile/pages/modal-box.min.css"/>
 		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/desktop-user.min.css"/>
 		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/mobile-user.min.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -68,7 +68,7 @@
 				</div>
 				<?php include("includes/footer.php");?>
 			</div>
-			<?php include("pages/user/videos/showUploadFileBox.php"); ?>
+			<?php include("pages/user/modal-box.php"); ?>
 			<?php include("includes/cookies.php");?>
 		</div>
 		<div class="hiddenBody"></div>

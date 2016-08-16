@@ -82,7 +82,7 @@
 		<div class="title">
 			<?php echo traducir(25,$_COOKIE['idioma'])?>
 		</div>
-		<input type="text" name="nombre" id="pass-change-nombre" value="<?php echo $row_userData['nombre']; ?>"/>
+		<input type="text" name="name" id="user-name" value="<?php echo $row_userData['name']; ?>"/>
 	</div>
 	<div class="inputBox">
 		<div class="title">
@@ -111,21 +111,21 @@
 		<div class="title">
 			<?php echo traducir(30,$_COOKIE['idioma'])?>
 		</div>
-		<input name="birthday" id="birthdayDate" type="hidden" value="<?php $partes = explode(" - ",$row_userData['birthday']); echo $partes['0']." - ".meses($partes['1'])." - ".$partes['2'] ?>"/>
+		<input name="birthday" id="birthdayDate" type="hidden" value="<?php $partes = explode(" - ",$row_userData['birthday']); echo $partes['0']." - ".monthsCaption($partes['1'])." - ".$partes['2'] ?>"/>
 		<div class="select">
-			<select name="llegada-dia" id="birthdayDay" class="form-control-date">
+			<select name="birthday-day" id="birthdayDay" class="form-control-date">
 				<?php $i = 1; do { ?>
 				 	<option value='<?php echo $i ?>' <?php if($partes['0'] == $i) echo 'selected'?>><?php echo $i ?></option>
 				<?php $i++; } while ($i <= 31); ?>
 			</select>
 
-			<select name="llegada-mes" id="birthdayMonth" class="form-control-date">
+			<select name="birthday-month" id="birthdayMonth" class="form-control-date">
 				<?php $i = 0; do { ?>
 				 	<option value='<?php echo $i ?>' <?php if($partes['1'] == $i) echo 'selected'?>><?php echo traducir(55 + $i,$_COOKIE['idioma'])?></option>
 				<?php $i++; } while ($i <= 11); ?>
 			</select>
 
-			<select name="llegada-ano" id="birthdayYear" class="form-control-date">
+			<select name="birthday-year" id="birthdayYear" class="form-control-date">
 				<?php $i = 1945; do { ?>
 				 	<option value='<?php echo $i ?>' <?php if($partes['2'] == $i) echo 'selected'?>><?php echo $i ?></option>
 				<?php $i++; } while ($i <= date("Y")); ?>
@@ -193,7 +193,7 @@
 	<input type="submit" onclick="saveBackgrounds();" value="<?php echo traducir(9,$_COOKIE['idioma'])?>" class="buttonSave" style="background:#<?php echo $row_userData['secondary_color']; ?>"/>
 </form>
 
-<form id="formThree"> <!-- Language -->
+<form id="formThree" onSubmit="return false"> <!-- Language -->
 	<div class="languageBox">
 		<?php do{ ?>
 			<a onClick="setLanguage('<?php echo $row_languages['pais']?>');"
@@ -317,9 +317,9 @@
 	$(function () {
 		months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'];
 		
-		var $ld = $('select[name=llegada-dia]');
-		var $lm = $('select[name=llegada-mes]');
-		var $ly = $('select[name=llegada-ano]');
+		var $ld = $('select[name=birthday-day]');
+		var $lm = $('select[name=birthday-month]');
+		var $ly = $('select[name=birthday-year]');
 		
 		function daysInMonth(month, year) {
 			return new Date(year, month, 0).getDate();
@@ -378,7 +378,7 @@
 
 	//// ACCOUNT
 	function saveAccount(){
-		var nombre = $("#pass-change-nombre").val();
+		var nombre = $("#user-name").val();
 
 		if (nombre=="" || nombre==null) {
 			$('#formOne .buttonSave').addClass('errorButton');

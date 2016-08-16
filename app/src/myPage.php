@@ -1,17 +1,17 @@
 <?php require_once('Connections/conexion.php');
-	$iddeluser = $_SESSION['MM_Id'];
+	$userId = $_SESSION['MM_Id'];
 	$_SESSION['indice']=0;
 
 	//Personal data
 	mysql_select_db($database_conexion, $conexion);
-	$query_SacarMiPerfil = sprintf("SELECT * FROM z_users WHERE id=%s",$iddeluser,"int");
+	$query_SacarMiPerfil = sprintf("SELECT * FROM z_users WHERE id=%s",$userId,"int");
 	$SacarMiPerfil = mysql_query($query_SacarMiPerfil, $conexion) or die(mysql_error());
 	$row_SacarMiPerfil = mysql_fetch_assoc($SacarMiPerfil);
 	$totalRows_SacarMiPerfil = mysql_num_rows($SacarMiPerfil);
 
 	//Photos
 	mysql_select_db($database_conexion, $conexion);
-	$query_SacarMisFotos = sprintf("SELECT * FROM z_my_photos WHERE autor=%s ORDER BY id DESC",$_SESSION['MM_Id'],"int");
+	$query_SacarMisFotos = sprintf("SELECT * FROM z_photos WHERE user=%s ORDER BY id DESC",$_SESSION['MM_Id'],"int");
 	$SacarMisFotos = mysql_query($query_SacarMisFotos, $conexion) or die(mysql_error());
 	$row_SacarMisFotos = mysql_fetch_assoc($SacarMisFotos);
 	$totalRows_SacarMisFotos = mysql_num_rows($SacarMisFotos);

@@ -1,4 +1,4 @@
-<div class="cropperModalWindow cropperModalWindowAccount">
+<div class="cropperModalBox cropperModalBoxAccount">
 	<div class="box">
 		<div class="head">
 			<div class="title">
@@ -128,9 +128,9 @@
 
 		if (type==1) {
 		    // Open/Close
-			$('.cropperModalWindowAccount').toggleClass('modalDisplay');
+			$('.cropperModalBoxAccount').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.cropperModalWindowAccount').toggleClass('showModal');
+				$('.cropperModalBoxAccount').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 		}else if (type==2) {

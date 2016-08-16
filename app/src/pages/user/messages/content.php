@@ -1,17 +1,17 @@
-<form id="formOne" onSubmit="return false"> <!-- Inbox -->
+<formbox id="formOne"> <!-- Inbox -->
 	<?php if ($totalRows_inboxMessages == 0){ ?>
 		<center>LA BANDEJA DE ENTRADA ESTA VACIA</center>
 	<?php } else { ?>
 		<?php do { ?>
 			<div class="messageBox" id="message<?php echo $row_inboxMessages['id'] ?>">
 				<div class="head">
-					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo id_user($row_inboxMessages['envia']); ?>'">
-						<img src="<?php echo avatar_user($row_inboxMessages['envia']); ?>"/>
+					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_inboxMessages['sender']); ?>'">
+						<img src="<?php echo userAvatar($row_inboxMessages['sender']); ?>"/>
 					</div>
-					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo id_user($row_inboxMessages['envia']); ?>'">
-						<?php  echo nombre($row_inboxMessages['envia']); ?>
+					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_inboxMessages['sender']); ?>'">
+						<?php  echo userName($row_inboxMessages['sender']); ?>
 						<div class="date">
-							<?php echo $row_inboxMessages['fecha']; ?>
+							<?php echo $row_inboxMessages['date']; ?>
 						</div>
 					</div>
 					<div class="delete" onClick="deleteMessage(1, '<?php echo $row_inboxMessages['id'] ?>')">
@@ -24,41 +24,41 @@
 							<button onClick="deleteMessage(2, <?php echo $row_inboxMessages['id'] ?>)">YES</button>
 						</div>
 					</div>
-					<?php if ($row_inboxMessages['estado'] == 0){ ?>
+					<?php if ($row_inboxMessages['status'] == 0){ ?>
 						<div class="glitch">
 							<?php echo traducir(48,$_COOKIE['idioma'])?>
 						</div>
 					<?php } ?>
 				</div>
 
-				<div class="body" onClick="showMessageInbox(1, <?php echo $row_inboxMessages['id'] ?>, <?php echo $row_inboxMessages['envia'] ?>, '<?php echo $row_inboxMessages['mensaje'] ?>', '<?php echo avatar_user($row_inboxMessages['envia']); ?>', '<?php echo nombre($row_inboxMessages['envia']); ?>', '<?php echo $row_inboxMessages['fecha'] ?>')">
-					<?php echo $row_inboxMessages['mensaje']; ?>
+				<div class="body" onClick="showMessageInbox(1, <?php echo $row_inboxMessages['id'] ?>, <?php echo $row_inboxMessages['sender'] ?>, '<?php echo $row_inboxMessages['message'] ?>', '<?php echo userAvatar($row_inboxMessages['sender']); ?>', '<?php echo userName($row_inboxMessages['sender']); ?>', '<?php echo $row_inboxMessages['date'] ?>')">
+					<?php echo $row_inboxMessages['message']; ?>
 				</div>
 			</div>
 		<?php } while ($row_inboxMessages = mysql_fetch_assoc($inboxMessages)); ?>
 	<?php }?>
-</form>
+</formbox>
 
-<form id="formTwo" onSubmit="return false"> <!-- Outbox -->
+<formbox id="formTwo"> <!-- Outbox -->
 	<?php if ($totalRows_outboxMessages == 0){ ?>
 		<center>LA BANDEJA DE SALIDA ESTA VACIA</center>
 	<?php } else { ?>
 		<?php do { ?>
 			<div class="messageBox" id="message<?php echo $row_outboxMessages['id'] ?>">
 				<div class="head">
-					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo id_user($row_outboxMessages['recibe']); ?>'">
-						<img src="<?php echo avatar_user($row_outboxMessages['recibe']); ?>"/>
+					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_outboxMessages['receiver']); ?>'">
+						<img src="<?php echo userAvatar($row_outboxMessages['receiver']); ?>"/>
 					</div>
 					<div class="imageSender">
 						<?php include("images/svg/send-to.php"); ?>
 						<div class="image">
-							<img src="<?php echo avatar_user($row_outboxMessages['envia']); ?>"/>
+							<img src="<?php echo userAvatar($row_outboxMessages['sender']); ?>"/>
 						</div>
 					</div>
-					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo id_user($row_outboxMessages['recibe']); ?>'">
-						<?php  echo nombre($row_outboxMessages['recibe']); ?>
+					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_outboxMessages['receiver']); ?>'">
+						<?php  echo userName($row_outboxMessages['receiver']); ?>
 						<div class="date">
-							<?php echo $row_outboxMessages['fecha']; ?>
+							<?php echo $row_outboxMessages['date']; ?>
 						</div>
 					</div>
 					<div class="delete" onClick="deleteMessage(1, '<?php echo $row_outboxMessages['id'] ?>')">
@@ -73,13 +73,13 @@
 					</div>
 				</div>
 
-				<div class="body" onClick="showMessageOutbox(1, <?php echo $row_outboxMessages['id'] ?>, <?php echo $row_outboxMessages['recibe'] ?>, '<?php echo $row_outboxMessages['mensaje'] ?>', '<?php echo avatar_user($row_outboxMessages['envia']); ?>', '<?php echo nombre($row_outboxMessages['envia']); ?>', '<?php echo $row_outboxMessages['fecha'] ?>')">
-					<?php echo $row_outboxMessages['mensaje']; ?>
+				<div class="body" onClick="showMessageOutbox(1, <?php echo $row_outboxMessages['id'] ?>, <?php echo $row_outboxMessages['receiver'] ?>, '<?php echo $row_outboxMessages['message'] ?>', '<?php echo userAvatar($row_outboxMessages['sender']); ?>', '<?php echo userName($row_outboxMessages['sender']); ?>', '<?php echo $row_outboxMessages['date'] ?>')">
+					<?php echo $row_outboxMessages['message']; ?>
 				</div>
 			</div>
 		<?php } while ($row_outboxMessages = mysql_fetch_assoc($outboxMessages)); ?>
 	<?php }?>
-</form>
+</formbox>
 
 <script type="text/javascript">
 	// MENU TABS
@@ -88,7 +88,7 @@
 	    var content = this.hash.replace('/', '');
 	    tabsInner.removeClass("active");
 	    $(this).addClass("active");
-	    $(".pageMessages").find('form').hide();
+	    $(".pageMessages").find('formbox').hide();
 	    $(content).fadeIn(600);
 	});
 
@@ -113,9 +113,9 @@
 	//·····> Show message on Inbox
 	function showMessageInbox(type, id, idSender, content, image, name, date){
 		if (type==1) { // Open
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
@@ -144,7 +144,7 @@
 							</div>\
 						</form>"
 
-			$('.messageModalWindow .box').html(box);
+			$('.modalBox .box').html(box);
 
 			// ···>Pasar a leido
 			$.ajax({ 
@@ -156,13 +156,13 @@
 				}
 			});
 		} else if (type==2) { //Close
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 		} else if (type==3) { //Answer
-			$('.messageModalWindow .box .answerBox').slideToggle();
+			$('.modalBox .box .answerBox').slideToggle();
 			$('#sendButton').toggle();
 		} else if (type==4) { //Send answer
 			$.ajax({ 
@@ -171,7 +171,7 @@
 				data: 'mensaje=' + content + '&destinatario=' + idSender,
 				success: function(response){
 					console.log('OK');
-					$('.messageModalWindow .box .answerBox').slideToggle();
+					$('.modalBox .box .answerBox').slideToggle();
 					setTimeout(function() {
 						showMessageInbox(2);
 					}, 1200);
@@ -183,9 +183,9 @@
 	//·····> Show message on Outbox
 	function showMessageOutbox(type, id, idReceiver, content, image, name, date){
 		if (type==1) { // Open
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
@@ -214,15 +214,15 @@
 							</div>\
 						</form>"
 
-			$('.messageModalWindow .box').html(box);
+			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 		} else if (type==3) { //Answer
-			$('.messageModalWindow .box .answerBox').slideToggle();
+			$('.modalBox .box .answerBox').slideToggle();
 			$('#sendButton').toggle();
 		} else if (type==4) { //Send answer
 			$.ajax({ 
@@ -231,7 +231,7 @@
 				data: 'mensaje=' + content + '&destinatario=' + idReceiver,
 				success: function(response){
 					console.log('OK');
-					$('.messageModalWindow .box .answerBox').slideToggle();
+					$('.modalBox .box .answerBox').slideToggle();
 					setTimeout(function() {
 						showMessageOutbox(2);
 					}, 1200);
@@ -244,9 +244,9 @@
 	var receiverId;
 	function newMessage(type, value1, value2){
 		if (type==1) { //Open
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
@@ -275,16 +275,16 @@
 							</div>\
 						</form>"
 
-			$('.messageModalWindow .box').html(box);
+			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
-			$('.messageModalWindow').toggleClass('modalDisplay');
+			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
-				$('.messageModalWindow').toggleClass('showModal');
+				$('.modalBox').toggleClass('showModal');
 			}, 100);
 			$('body').toggleClass('modalHidden');
 		} else if (type==3) { //Search
-			$('.messageModalWindow .box .head .search .searchIcon').hide();
-			$('.messageModalWindow .box .head .search .loaderIcon').show();
+			$('.modalBox .box .head .search .searchIcon').hide();
+			$('.modalBox .box .head .search .loaderIcon').show();
 
 			$.ajax({
 				type: 'POST',
@@ -295,29 +295,29 @@
 						$('.searchReceiverDataList').show();
 						$('.searchReceiverDataList').html(response);
 
-						$('.messageModalWindow .box .head .search .searchIcon').show();
-						$('.messageModalWindow .box .head .search .loaderIcon').hide();
+						$('.modalBox .box .head .search .searchIcon').show();
+						$('.modalBox .box .head .search .loaderIcon').hide();
 					}, 600);
 				}
 			});
 		} else if (type==4) { //Get name
 			receiverId = value1;
 			$('.searchReceiverDataList').hide();
-			$('.messageModalWindow .box .head .search form input').val(value2);
+			$('.modalBox .box .head .search form input').val(value2);
 		} else if (type==5) { //Send
 			$.ajax({ 
 				type: 'POST',
 				url: url + 'pages/user/messages/inbox/send.php',
 				data: 'mensaje=' + value1 + '&destinatario=' + receiverId,
 				success: function(response){
-					$('.messageModalWindow .box .answerBox').slideToggle();
+					$('.modalBox .box .answerBox').slideToggle();
 					setTimeout(function() {
 						newMessage(2);
 					}, 1200);
 				}
 			});
 		} else if (type==6) { //Clear input
-			$('.messageModalWindow .box .head .search form input').val('');
+			$('.modalBox .box .head .search form input').val('');
 			$('.searchReceiverDataList').hide();
 		}
 	}

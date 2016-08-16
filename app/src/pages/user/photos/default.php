@@ -18,7 +18,7 @@
 		?>
 			<li class="song<?php echo $row_photosList['id'] ?>">
 				<div class="image" onClick="openPhoto(1, <?php echo $contador ?>, <?php echo $row_photosList['id'] ?>)">
-					<img src="<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row_photosList['name']?>">
+					<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row_photosList['name']?>); width: 100%; height: 100%;"></div>
 				</div>
 				<div class="actions">
 					<div class="delete" onClick="deletePhoto(1, <?php echo $row_photosList['id'] ?>)">

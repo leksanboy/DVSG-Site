@@ -1,5 +1,5 @@
 <?php require_once('../../../../Connections/conexion.php');
-	$insertSQL = sprintf("INSERT INTO z_messages (envia, recibe, mensaje) VALUES (%s, %s, %s)",
+	$insertSQL = sprintf("INSERT INTO z_messages (sender, receiver, message) VALUES (%s, %s, %s)",
 	GetSQLValueString($_SESSION['MM_Id'], "int"),
 	GetSQLValueString($_POST['destinatario'], "int"),
 	GetSQLValueString($_POST['mensaje'], "text"));

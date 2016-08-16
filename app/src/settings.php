@@ -34,13 +34,11 @@
 		<title><?php echo traducir(5,$_COOKIE['idioma'])?></title>
 		<?php include_once("includes/favicons.php"); ?>
 		<meta name="theme-color" content="#<?php echo $row_userData['primary_color']; ?>">
-		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/mobile/pages/cropper-window.min.css"/>
+		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/mobile/pages/cropper-box.min.css"/>
 		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/desktop-user.min.css"/>
 		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/mobile-user.min.css"/>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-
 		<script type="text/javascript" src="<?php echo $urlWeb ?>scripts/cropper-account/cropper.js"></script>
-		<!-- <script type="text/javascript" src="<?php #echo $urlWeb ?>scripts/cropper-account/cropper-sets.js"></script> -->
 	</head>
 	<body>
 		<?php include_once("includes/analyticstracking.php");?>

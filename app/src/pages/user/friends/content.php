@@ -1,4 +1,21 @@
-<form id="formOne" onSubmit="return false"> <!-- my friends -->
+<div class="searchBox">
+	<form>
+		<input name="search" onKeyUp="searchButton(1, search.value)" placeholder="Search a friend..."/>
+		<div class="searchIcon">
+			<?php include("images/svg/search.php");?>
+		</div>
+		<div class="loaderIcon">
+			<?php include("images/svg/spinner.php");?>
+		</div>
+		<div class="clearIcon" onClick="searchButton(2)">
+			<?php include("images/svg/clear.php");?>
+		</div>
+	</form>
+</div>
+
+<div class="searchBoxDataList"></div>
+
+<formbox id="formOne"> <!-- my friends -->
 	<?php if ($totalRows_myFriends == 0){ ?>
 		<center>AÚN NO TIENES AMIGOS</center>
 	<?php } else { ?>
@@ -12,10 +29,10 @@
 			<div class="friendBox" id="friend<?php echo $row_myFriends['id'] ?>">
 				<div class="head">
 					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $receiver ?>'">
-						<img src="<?php echo avatar_user($receiver) ?>"/>
+						<img src="<?php echo userAvatar($receiver) ?>"/>
 					</div>
 					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $receiver ?>'">
-						<?php echo nombre($receiver) ?>
+						<?php echo userName($receiver) ?>
 					</div>
 					<div class="delete" onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">
 						<?php include("images/svg/close.php"); ?>
@@ -31,9 +48,9 @@
 			</div>
 		<?php } while ($row_myFriends = mysql_fetch_assoc($myFriends)); ?>
 	<?php }?>
-</form>
+</formbox>
 
-<form id="formTwo" onSubmit="return false"> <!-- pending received -->
+<formbox id="formTwo"> <!-- pending received -->
 	<?php if ($totalRows_pendingReceived == 0){ ?>
 		<center>NO TIENES SOLICITUDES PENDIENTES</center>
 	<?php } else { ?>
@@ -41,10 +58,10 @@
 			<div class="friendBox" id="friend<?php echo $row_pendingReceived['id'] ?>">
 				<div class="head">
 					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingReceived['sender'] ?>'">
-						<img src="<?php echo avatar_user($row_pendingReceived['sender']) ?>"/>
+						<img src="<?php echo userAvatar($row_pendingReceived['sender']) ?>"/>
 					</div>
 					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingReceived['sender'] ?>'">
-						<?php echo nombre($row_pendingReceived['sender']) ?>
+						<?php echo userName($row_pendingReceived['sender']) ?>
 					</div>
 					<div class="buttons">
 						<button onClick="statusFriend(<?php echo $row_pendingReceived['id'] ?>, 2)">CANCEL</button>
@@ -54,9 +71,9 @@
 			</div>
 		<?php } while ($row_pendingReceived = mysql_fetch_assoc($pendingReceived)); ?>
 	<?php }?>
-</form>
+</formbox>
 
-<form id="formThree" onSubmit="return false"> <!-- pending sent -->
+<formbox id="formThree"> <!-- pending sent -->
 	<?php if ($totalRows_pendingSent == 0){ ?>
 		<center>NO TIENES PETICIONES ENVIADAS</center>
 	<?php } else { ?>
@@ -64,10 +81,10 @@
 			<div class="friendBox" id="friend<?php echo $row_pendingSent['id'] ?>">
 				<div class="head">
 					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingSent['receiver'] ?>'">
-						<img src="<?php echo avatar_user($row_pendingSent['receiver']) ?>"/>
+						<img src="<?php echo userAvatar($row_pendingSent['receiver']) ?>"/>
 					</div>
 					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingSent['receiver'] ?>'">
-						<?php echo nombre($row_pendingSent['receiver']) ?>
+						<?php echo userName($row_pendingSent['receiver']) ?>
 					</div>
 					<div class="buttons">
 						<button onClick="statusFriend(<?php echo $row_pendingSent['id'] ?>, 2)">CANCEL PETITION</button>
@@ -76,7 +93,7 @@
 			</div>
 		<?php } while ($row_pendingSent = mysql_fetch_assoc($pendingSent)); ?>
 	<?php }?>
-</form>
+</formbox>
 
 <script type="text/javascript">
 	// MENU TABS
@@ -85,7 +102,7 @@
 	    var content = this.hash.replace('/', '');
 	    tabsInner.removeClass("active");
 	    $(this).addClass("active");
-	    $(".pageFriends").find('form').hide();
+	    $(".pageFriends").find('formbox').hide();
 	    $(content).fadeIn(600);
 	});
 
@@ -105,13 +122,6 @@
 		}
 	}
 
-	//·····> Search friends
-	function searchFriend(type){
-		if (type==1) {
-			console.log('searchFriend');
-		}
-	}
-
 	//·····> Status friends
 	function statusFriend(id, value){
 		$.ajax({
@@ -122,5 +132,41 @@
 				$('#friend'+id).fadeOut(300);
 			}
 		});
+	}
+
+	//·····> Search
+	function searchButton(type, value){
+		if (type==1 && value.trim().length > 0) { // Search
+			$('.searchBox .searchIcon').hide();
+			$('.searchBox .loaderIcon').show();
+
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/friends/search.php',
+				data: 'titleValue=' + value,
+				success: function(response) {
+					setTimeout(function() {
+						$('.searchBox .searchIcon').show();
+						$('.searchBox .loaderIcon').hide();
+
+						$(".pageFriends").find('formbox').hide();
+						$('.searchBoxDataList').show();
+						$('.searchBoxDataList').html(response);
+					}, 600);
+				}
+			});
+		} else if (type==2 || value.trim().length == 0) { // Reset
+			$('.searchBox .searchIcon').hide();
+			$('.searchBox .loaderIcon').show();
+			$('.searchBox form input').val('');
+			$('.searchBoxDataList').hide();
+
+			setTimeout(function() {
+				$('.searchBox .searchIcon').show();
+				$('.searchBox .loaderIcon').hide();
+
+				// $(content).fadeIn(600);
+			}, 600);
+		}
 	}
 </script>

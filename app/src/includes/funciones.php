@@ -110,12 +110,25 @@
 	function userName($idUser){
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_GetData = sprintf ("SELECT z_users.nombre FROM z_users WHERE z_users.id = %s", $idUser, "int");
+		$query_GetData = sprintf ("SELECT z_users.name FROM z_users WHERE z_users.id = %s", $idUser, "int");
 		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
 		$row_GetData = mysql_fetch_assoc($GetData);
 		$totalRows_GetData = mysql_num_rows($GetData);
 		
-		return $row_GetData['nombre'];
+		return $row_GetData['name'];
+		mysql_free_result($GetData);
+	}
+
+	// Get user id
+	function userId($iduser){
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_GetData = sprintf ("SELECT z_users.id FROM z_users WHERE z_users.id = %s", $iduser, "int");
+		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
+		$row_GetData = mysql_fetch_assoc($GetData);
+		$totalRows_GetData = mysql_num_rows($GetData);
+				
+		return $row_GetData['id'];
 		mysql_free_result($GetData);
 	}
 
@@ -173,7 +186,7 @@
 		mysql_free_result($GetCount);
 	}
 
-	//Tiempo trascurrido funcion
+	// Tiempo trascurrido
 	function timeAgo($time) {
 		$newetime = time() - $time;
 
@@ -205,6 +218,27 @@
 	        }
 	    }
 	}
+
+	// Transformar los meses de numerico a texto
+	function monthsCaption($valor){
+		if ($valor=='0') return traducir(55,$_COOKIE['idioma']);  
+		if ($valor=='1') return traducir(56,$_COOKIE['idioma']);  
+		if ($valor=='2') return traducir(57,$_COOKIE['idioma']);  
+		if ($valor=='3') return traducir(58,$_COOKIE['idioma']);  
+		if ($valor=='4') return traducir(59,$_COOKIE['idioma']);  
+		if ($valor=='5') return traducir(60,$_COOKIE['idioma']);  
+		if ($valor=='6') return traducir(61,$_COOKIE['idioma']);  
+		if ($valor=='7') return traducir(62,$_COOKIE['idioma']);  
+		if ($valor=='8') return traducir(63,$_COOKIE['idioma']);  
+		if ($valor=='9') return traducir(64,$_COOKIE['idioma']);  
+		if ($valor=='10') return traducir(65,$_COOKIE['idioma']); 
+		if ($valor=='11') return traducir(66,$_COOKIE['idioma']); 
+	}
+
+
+
+
+
 
 
 
@@ -272,22 +306,6 @@
 
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($updateSQL, $conexion) or die(mysql_error());
-	}
-
-	// MESES
-	function meses ($valor){
-		if ($valor=='0') return traducir(55,$_COOKIE['idioma']);  
-		if ($valor=='1') return traducir(56,$_COOKIE['idioma']);  
-		if ($valor=='2') return traducir(57,$_COOKIE['idioma']);  
-		if ($valor=='3') return traducir(58,$_COOKIE['idioma']);  
-		if ($valor=='4') return traducir(59,$_COOKIE['idioma']);  
-		if ($valor=='5') return traducir(60,$_COOKIE['idioma']);  
-		if ($valor=='6') return traducir(61,$_COOKIE['idioma']);  
-		if ($valor=='7') return traducir(62,$_COOKIE['idioma']);  
-		if ($valor=='8') return traducir(63,$_COOKIE['idioma']);  
-		if ($valor=='9') return traducir(64,$_COOKIE['idioma']);  
-		if ($valor=='10') return traducir(65,$_COOKIE['idioma']); 
-		if ($valor=='11') return traducir(66,$_COOKIE['idioma']); 
 	}
 
 	// SACAR EL AUTOR DE LA IMAGEN
@@ -799,7 +817,8 @@
 		
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT * FROM z_messages WHERE estado=0 AND recibe = %s", GetSQLValueString($idusuario, "int"));
+		$query_DatosFuncion = sprintf("SELECT * FROM z_messages WHERE status=0 AND receiver = %s",
+			GetSQLValueString($idusuario, "int"));
 		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
 		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
 		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
@@ -813,14 +832,16 @@
 
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT id FROM z_messages WHERE estado=0 AND recibe = %s", GetSQLValueString($usuario, "int"));
+		$query_DatosFuncion = sprintf("SELECT id FROM z_messages WHERE status=0 AND receiver = %s",
+			GetSQLValueString($usuario, "int"));
 		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
 		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
 		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
 		
-		if ($totalRows_DatosFuncion>0) return true;
+		if ($totalRows_DatosFuncion > 0)
+			return true;
 		else
-		return false;
+			return false;
 
 		mysql_free_result($DatosFuncion);
 
@@ -942,48 +963,7 @@
 		mail($para, $titulo, $mensaje, $cabeceras);
 
 	}
-	//Sacar nombre a partir de id usuario
-	function nombre ($iduser){
-		
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_ObtenerNombre = sprintf ("SELECT z_users.nombre FROM z_users WHERE z_users.id = %s",$iduser,"int");
-		$ObtenerNombre = mysql_query($query_ObtenerNombre, $conexion) or die(mysql_error());
-		$row_ObtenerNombre = mysql_fetch_assoc($ObtenerNombre);
-		$totalRows_ObtenerNombre = mysql_num_rows($ObtenerNombre);
 
-		return $row_ObtenerNombre['nombre'];
-		mysql_free_result($ObtenerNombre);
-		
-	}
-	//Sacar apellido a partir de id usuario
-	function apellido ($iduser){
-		
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_ObtenerNombre = sprintf ("SELECT z_users.apellido FROM z_users WHERE z_users.id = %s",$iduser,"int");
-		$ObtenerNombre = mysql_query($query_ObtenerNombre, $conexion) or die(mysql_error());
-		$row_ObtenerNombre = mysql_fetch_assoc($ObtenerNombre);
-		$totalRows_ObtenerNombre = mysql_num_rows($ObtenerNombre);
-				
-		return $row_ObtenerNombre['apellido'];
-		mysql_free_result($ObtenerNombre);
-		
-	}
-	//Sacar nombre y apellido a partir de id usuario
-	function nombreapellido ($iduser){
-		
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_ObtenerNombre = sprintf ("SELECT z_users.nombreapellido FROM z_users WHERE z_users.id = %s",$iduser,"int");
-		$ObtenerNombre = mysql_query($query_ObtenerNombre, $conexion) or die(mysql_error());
-		$row_ObtenerNombre = mysql_fetch_assoc($ObtenerNombre);
-		$totalRows_ObtenerNombre = mysql_num_rows($ObtenerNombre);
-
-		return $row_ObtenerNombre['nombreapellido'];
-		mysql_free_result($ObtenerNombre);
-		
-	}
 	//Sacar id a partir de id usuario
 	function id_user ($iduser){
 		
@@ -1017,12 +997,12 @@
 		
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_ObtenerNombre = sprintf ("SELECT z_users.rango FROM z_users WHERE z_users.id = %s",$iduser,"int");
+		$query_ObtenerNombre = sprintf ("SELECT z_users.category FROM z_users WHERE z_users.id = %s",$iduser,"int");
 		$ObtenerNombre = mysql_query($query_ObtenerNombre, $conexion) or die(mysql_error());
 		$row_ObtenerNombre = mysql_fetch_assoc($ObtenerNombre);
 		$totalRows_ObtenerNombre = mysql_num_rows($ObtenerNombre);
 		
-		return $row_ObtenerNombre['rango'];
+		return $row_ObtenerNombre['category'];
 		mysql_free_result($ObtenerNombre);
 		
 	}
@@ -1059,12 +1039,12 @@
 
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_ObtenerNombre = sprintf ("SELECT z_users.rango FROM z_users WHERE z_users.id = %s",$iduser,"int");
+		$query_ObtenerNombre = sprintf ("SELECT z_users.category FROM z_users WHERE z_users.id = %s",$iduser,"int");
 		$ObtenerNombre = mysql_query($query_ObtenerNombre, $conexion) or die(mysql_error());
 		$row_ObtenerNombre = mysql_fetch_assoc($ObtenerNombre);
 		$totalRows_ObtenerNombre = mysql_num_rows($ObtenerNombre);
 		
-		return $row_ObtenerNombre['rango'];
+		return $row_ObtenerNombre['category'];
 		mysql_free_result($ObtenerNombre);
 		
 	}
@@ -1125,7 +1105,7 @@
 	if (isset ($_COOKIE["pass"]) && isset ($_COOKIE["name"]) && isset ($_COOKIE["identificador"]) && !isset($_SESSION['MM_Id'])){
 		mysql_select_db($database_conexion, $conexion);
 
-		$LoginRS__query=sprintf("SELECT * FROM z_users WHERE password=%s AND nombre=%s OR password=%s AND email=%s",
+		$LoginRS__query=sprintf("SELECT * FROM z_users WHERE password=%s AND name=%s OR password=%s AND email=%s",
 		GetSQLValueString($_COOKIE["pass"], "text"),
 		GetSQLValueString($_COOKIE["name"], "text"),
 		GetSQLValueString($_COOKIE["pass"], "text"),

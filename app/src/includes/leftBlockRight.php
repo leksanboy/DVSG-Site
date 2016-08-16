@@ -23,7 +23,7 @@
 				<img src="<?php echo $row_SacarMiNombreUser['avatar']; ?>"/>
 			</div>
 			<ul>
-				<li><?php echo $row_SacarMiNombreUser['nombre']; ?></li>
+				<li><?php echo $row_SacarMiNombreUser['name']; ?></li>
 				<li><?php echo $row_SacarMiNombreUser['email']; ?></li>
 			</ul>
 		</div>
