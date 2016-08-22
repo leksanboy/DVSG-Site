@@ -37,7 +37,6 @@
 	top: 0;
 	display: none;
 
-
 	.box{
 		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 		box-sizing: border-box;
@@ -49,8 +48,8 @@
 
 		.head{
 			box-sizing: border-box;
-			padding: 12px 2.5%;
 			color: #404040;
+			padding: 12px;
 			float: left;
 			width: 100%;
 
@@ -88,33 +87,32 @@
 
 				form{
 					input{
-						border: 1px solid #404040;
+						border: none;
+						border-bottom: 1px solid #404040;
 						background: transparent;
 						box-sizing: border-box;
-						border-radius: 3px;
-						padding: 0px 36px;
+						padding: 12px 42px;
 						font-size: 15px;
 						color: #404040;
-						height: 36px;
 						width: 100%;
 						float: left;
 						outline: 0;
 
 						&:focus{
-							border: 1px solid #09f;
+							border-bottom: 1px solid #09f;
 						}
 					}
 
 					.searchIcon,
 					.loaderIcon,
 					.clearIcon{
-						margin: 0 0 -36px;
+						margin: 0 0 -42px;
 						height: 36px;
 						width: 36px;
 						float: left;
 
 						svg{
-							padding: 6px;
+							padding: 9px;
 							height: 24px;
 							width: 24px;
 							fill:#aaa;
@@ -122,7 +120,7 @@
 					}
 
 					.clearIcon{
-						margin: -36px 0 0;
+						margin: -42px 0 0;
 						float: right;
 					}
 
@@ -130,7 +128,7 @@
 						display: none;
 
 						svg{
-							padding: 10px;
+							padding: 13px;
 							height: 16px;
 							width: 16px;
 
@@ -168,7 +166,7 @@
 
 			.searchReceiverDataList{
 				box-shadow: 0 10px 20px rgba(0,0,0,.19),0 6px 6px rgba(0,0,0,.23);
-				margin: 39px 0px 0 0px;
+				margin: 42px 0px 0 0px;
 				border-radius: 3px;
 				position: absolute;
 				max-height: 220px;
@@ -213,6 +211,10 @@
 					&:active{
 						background: #09f;
 					}
+
+					&:last-child{
+						border: none;
+					}
 				}
 
 				.noData{
@@ -233,7 +235,7 @@
 			border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 			box-sizing: border-box;
 			word-break: break-all;
-			padding: 12px 8px;
+			padding: 0 12px 12px;
 			font-size: 14px;
 			color: #404040;
 			float: left;
@@ -241,27 +243,22 @@
 		}
 
 		.answerBox{
+			box-sizing: border-box;
+			padding: 12px;
 			display: none;
 			float: left;
 			width: 100%;
 
 			textarea{
-				border: 1px solid rgba(0, 0, 0, 0.5);
 				background: transparent;
-				box-sizing: border-box;
 				border-radius: 3px;
-				padding: 6px 8px;
 				min-height: 96px;
 				font-size: 14px;
 				color: #404040;
-				margin: 12px 0;
 				outline: none;
+				border: none;
 				float: left;
 				width: 100%;
-
-				&:focus{
-					border-color: #09f;
-				};
 			}
 		}
 
@@ -286,25 +283,27 @@
 
 			button{
 				background: transparent;
-				background: #404040;
 				border-radius: 3px;
 				line-height: 36px;
-				font-size: 13px;
+				font-size: 14px;
 				padding: 0 12px;
 				margin: 12px 2%;
 				outline: none;
 				float: right;
 				border: none;
 				height: 36px;
-				color: #fff;
+				color: #09f;
 
-				&:first-child{
-					color: #fff;
-					/*display: none;*/
+				&:last-child{
+					color: #404040;
 				}
 
 				&:active{
-					background: #e5e5e5;
+					box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+				}
+
+				&:disabled{
+					background: #999;
 				}
 			}
 		}
@@ -843,13 +842,27 @@
 			}
 
 			.title{
-	            background: rgba(0, 0, 0, 0.5);
+				background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%);
 	            position: absolute;
 	            font-size: 14px;
 	            height: 48px;
 	            color: #fff;
 	            width: 100%;
 	            top:0;
+
+	            .button{
+	            	position: relative;
+	            	float: right;
+	            	height: 36px;
+	            	width: 36px;
+
+	            	svg{
+	            		padding: 6px;
+	            		height: 24px;
+	            		width: 24px;
+	            		fill: #fff;
+	            	}
+	            }
 			}
 
 			.playPause{
@@ -862,7 +875,7 @@
 			}
 
 			.controlPanel{
-				background: rgba(0, 0, 0, 0.5);
+				background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%);
 				position: absolute;
 				height: 48px;
 				width: 100%;

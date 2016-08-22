@@ -1,3 +1,12 @@
+/*TODO:
+1. Quitar el limite de caraceres en SETTINGS
+2. Mirar el responder menaje
+3. Buscar amigos y hacer el [add firnd]
+4. Add song hacer el toggle +/√ y lo smimo en videos
+5. En backgrounds cropper mirar por que no funciona el rotate 	------> [√]
+*/
+
+
 /*USER PAGES*/
 @media (max-width: 899px){
 	/*Fonts*/
@@ -1472,11 +1481,13 @@
 							.image{
 								box-sizing: border-box;
 								border: 1px solid #fff;
+								position: relative;
 								border-radius: 50%;
 								overflow: hidden;
 								height: 48px;
 								width: 48px;
 								float: left;
+								z-index: 1;
 
 								img{
 									height: 100%;
@@ -1491,10 +1502,12 @@
 								svg{
 									filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.86));
 									margin: -10px -20px 0 -8px;
+									position: relative;
 									fill: #e5e5e5;
 									height: 20px;
 									width: 20px;
 									float: left;
+									z-index: 2;
 								}
 
 								.image{
@@ -1506,6 +1519,7 @@
 									overflow: hidden;
 									height: 28px;
 									width: 28px;
+									z-index: 2;
 
 									img{
 										height: 100%;
@@ -1520,14 +1534,31 @@
 								float: left;
 								color: #fff;
 
+								.glitch{
+									animation: glitch 1.3s infinite;
+									font-weight: normal;
+									margin: 2px 8px 0 0;
+									border-radius: 3px;
+									text-align: center;
+									line-height: 14px;
+									background: #fff;
+									font-size: 11px;
+									color: #404040;
+									padding: 0 8px;
+									height: 14px;
+									float: left;
+								}
+
 								.date{
 									color: rgba(255, 255, 255, 0.5);
-									margin: 2px 0 0;
-									font-size: 11px;
+									margin: 6px 0 0 8px;
+									font-size: 10px;
+									float: right;
 								}
 							}
 
 							.delete{
+								position: relative;
 								float: right;
 								height: 24px;
 								width: 24px;
@@ -1538,21 +1569,6 @@
 									margin: 3px;
 									fill: #fff;
 								}
-							}
-
-							.glitch{
-								animation: glitch 1.3s infinite;
-								font-weight: normal;
-								margin: 56px 0 0 0;
-								border-radius: 3px;
-								text-align: center;
-								position: absolute;
-								line-height: 14px;
-								background: #fff;
-								font-size: 11px;
-								color: #404040;
-								height: 14px;
-								width: 46px;
 							}
 
 							.deleteBoxConfirmation{
@@ -1598,12 +1614,15 @@
 						.body{
 							-webkit-box-orient: vertical;
 							text-overflow: ellipsis;
+							padding: 6px 0 2px 60px;
+							box-sizing: border-box;
 							-webkit-line-clamp: 2;
 							word-break: break-all;
 							display: -webkit-box;
-							margin: 0 0 0 60px;
+							margin: -30px 0 0 0;
 							overflow: hidden;
 							font-size: 14px;
+							width: 100%;
 							float: left;
 						}
 					}

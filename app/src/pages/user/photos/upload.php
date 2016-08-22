@@ -1,7 +1,8 @@
 <?php require_once('../../../Connections/conexion.php');
-	$FILE_NAME = 		$_SESSION['MM_Id'].'_'.time().'_'.rand(); // File name
-    $FILE_TITLE =       $_FILES["fileUpload"]["name"]; // File title
-	$fileTmpLoc = 		$_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
+	$FILE_NAME 		= $_SESSION['MM_Id'].'_'.time().'_'.rand(); // File name
+    $FILE_TITLE 	= $_FILES["fileUpload"]["name"]; // File title
+	$fileTmpLoc 	= $_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
+	$time 			= time();
 
 	if ($FILE_TITLE == '' || $FILE_TITLE == undefined) {
 		$FILE_TITLE = 'Untitled';
@@ -15,11 +16,11 @@
 	}
 
 	if(move_uploaded_file($fileTmpLoc, "photos/$FILE_NAME")){
-
 		//Insert in music
-	    $insertSQL = sprintf("INSERT INTO z_photos (name, user) VALUES (%s, %s)",
+	    $insertSQL = sprintf("INSERT INTO z_photos (name, user, time) VALUES (%s, %s, %s)",
 		GetSQLValueString($FILE_NAME, "text"),
-		GetSQLValueString($_SESSION['MM_Id'], "int"));
+		GetSQLValueString($_SESSION['MM_Id'], "int"),
+		GetSQLValueString($time, "text"));
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
 

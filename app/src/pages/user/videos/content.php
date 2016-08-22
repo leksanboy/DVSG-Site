@@ -18,9 +18,10 @@
 
 <script type="text/javascript">
 	//·····> SVG icons
-	var uploadIcon 	= '<svg viewBox="0 0 48 48"><path d="M18 32h12V20h8L24 6 10 20h8zm-8 4h28v4H10z"/></svg>';
-	var arrowUpIcon = '<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>';
-	var progressIcon = '<svg><circle fill="none"/></svg>';
+	var uploadIcon 	= '<svg><path d="M18 32h12V20h8L24 6 10 20h8zm-8 4h28v4H10z"/></svg>',
+		arrowUpIcon = '<svg><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>',
+		progressIcon = '<svg><circle fill="none"/></svg>',
+		addIcon = '<svg><path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z"/></svg>';
 	
 	//·····> Get id element
 	function getFile(el){
@@ -49,13 +50,16 @@
 							</div>\
 							<div class='filesBox'></div>\
 							<div class='buttons'>\
-								<button onClick='uploadFile(3)'>UPLOAD</button>\
+								<button onClick='uploadFile(3, this)'>UPLOAD</button>\
 								<button onClick='uploadFile(2)'>CLOSE</button>\
 							</div>\
 						</form>"
 
 			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
+			if (filesArray.length > 0)
+				defaultLoad();
+
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 
@@ -84,6 +88,9 @@
 				ajax.open("POST", "pages/user/videos/upload.php");
 				ajax.send(formdata);
 			}
+
+			if (filesArray.length > 0) // Disable button after upload
+				$(event).attr("disabled", "disabled");
 		} else if (type==4) { //Get song data
 			var	file,
 				i = 0;
@@ -120,10 +127,10 @@
 		if (percent == 100){
 			$('#fileStatus' + i + ' .operations #status .loading').show();
 			$('#fileStatus' + i + ' .operations #status .percentage').hide();
-			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  0);
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset', 0);
 		}else{
 			$('#fileStatus' + i + ' #status .percentage').html(percent + '%');
-			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  107 - percent);
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset', 100 - percent*93/100);
 		}
 	}
 	function completeHandler(event, i){
@@ -233,7 +240,10 @@
 								<video id='video_player' controls preload='auto'>\
 									<source src='pages/user/videos/videos/" + fileName + "'>\
 								</video>\
-								<div class='title'>Title of my video '+Add'-'xClose'</div>\
+								<div class='title'>\
+									Title of my video\
+									<div class='button'>"+ addIcon +"</div>\
+								</div>\
 								<div class='playPause' onClick='playerAction(1)'></div>\
 								<div class='controlPanel'>\
 									Time Progress fullScreen Volume\

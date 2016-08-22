@@ -1307,7 +1307,6 @@ var addRippleEffect = function(e) {
 document.addEventListener('click', addRippleEffect, false);
 
 
-
 function createTimedLink(element, callback, timeout) {
     setTimeout(function() {
         callback(element);

@@ -5,15 +5,6 @@
 				Change avatar
 			</div>
 		</div>
-
-		<!-- <div class="uploadFileButton">
-			<label for="inputImage">
-				<?php #include("images/svg/photos.php"); ?>
-				<?php #echo traducir(93,$_COOKIE['idioma'])?>
-			</label>
-			<input type="file" name="file" id="inputImage" accept="image/*">
-		</div> -->
-
 		<div class="container">
 		    <div class="inner">
 				<div class="wrapper">
@@ -39,12 +30,7 @@
 			        	<?php include("images/svg/rotate-right.php"); ?>
 			        </button>
 			    </div>
-
-				<!-- <div class="render">
-					<div class="preview"></div>
-				</div> -->
 		    </div>
-		       
 			<div class="actions">
 				<button type="button" onclick="openModalAccount(1)">Close</button>
 				<button type="button" onclick="openModalAccount(2)">Save</button>
@@ -72,7 +58,6 @@
 	            width: 640,
 	            height: 360
 	        },
-	        preview: ".preview",
 
 	        done: function(data) {
 	            $dataX.val(data.x);

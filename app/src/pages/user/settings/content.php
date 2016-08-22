@@ -88,7 +88,7 @@
 		<div class="title">
 			<?php echo traducir(27,$_COOKIE['idioma'])?>
 		</div>
-		<input name="car" id="pass-change-1" type="text" value="<?php echo $row_userData['car']; ?>" maxlength="27" />
+		<input name="car" id="pass-change-1" type="text" value="<?php echo $row_userData['car']; ?>"/>
 	</div>
 	<div class="inputBox">
 		<div class="title">
@@ -157,7 +157,7 @@
 		<div class="title">
 			<?php echo traducir(32,$_COOKIE['idioma'])?>
 		</div>
-		<textarea name="other" id="pass-change-other" cols="30" maxlength="1200" rows="5">
+		<textarea name="other" id="pass-change-other" cols="30" rows="5">
 			<?php echo $row_userData['other']; ?>
 		</textarea>
 	</div>

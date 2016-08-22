@@ -1,12 +1,7 @@
 <?php require_once('Connections/conexion.php');
 	if (!isset ($_SESSION['MM_Id'])){
 		header("Location: " . $urlWeb );
-	}
-
-	error_reporting(0);
-	$userId = "0";
-
-	if (isset($_SESSION['MM_Id'])) {
+	} else {
 		$userId = $_SESSION['MM_Id'];
 	}
 

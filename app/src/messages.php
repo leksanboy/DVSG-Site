@@ -1,12 +1,7 @@
 <?php require_once('Connections/conexion.php');
 	if (!isset ($_SESSION['MM_Id'])){
 		header("Location: " . $urlWeb );
-	}
-
-	error_reporting(0);
-	$userId = "0";
-
-	if (isset($_SESSION['MM_Id'])) {
+	} else {
 		$userId = $_SESSION['MM_Id'];
 	}
 
@@ -17,20 +12,6 @@
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
 	$totalRows_userData = mysql_num_rows($userData);
-
-	//Inbox
-	mysql_select_db($database_conexion, $conexion);
-	$query_inboxMessages = sprintf("SELECT * FROM z_messages WHERE receiver=%s ORDER BY id DESC LIMIT 99",$_SESSION['MM_Id'],"int");
-	$inboxMessages = mysql_query($query_inboxMessages, $conexion) or die(mysql_error());
-	$row_inboxMessages = mysql_fetch_assoc($inboxMessages);
-	$totalRows_inboxMessages = mysql_num_rows($inboxMessages);
-
-	//Outbox
-	mysql_select_db($database_conexion, $conexion);
-	$query_outboxMessages = sprintf("SELECT * FROM z_messages WHERE sender=%s ORDER BY id DESC LIMIT 99",$_SESSION['MM_Id'],"int");
-	$outboxMessages = mysql_query($query_outboxMessages, $conexion) or die(mysql_error());
-	$row_outboxMessages = mysql_fetch_assoc($outboxMessages);
-	$totalRows_outboxMessages = mysql_num_rows($outboxMessages);
 ?>
 <!DOCTYPE html>
 	<?php include("includes/fuckoff.php"); ?>
@@ -114,5 +95,3 @@
 	<?php include("includes/aplazarscripts.php");?>
 </html>
 <?php mysql_free_result($userData); ?>
-<?php mysql_free_result($inboxMessages); ?>
-<?php mysql_free_result($outboxMessages); ?>

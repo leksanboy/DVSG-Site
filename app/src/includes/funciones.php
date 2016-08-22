@@ -186,36 +186,38 @@
 		mysql_free_result($GetCount);
 	}
 
+	// Get date from user photo id
+	function timeUserPhoto($idphoto){
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_GetData = sprintf ("SELECT z_photos.time FROM z_photos WHERE z_photos.id = %s", $idphoto, "int");
+		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
+		$row_GetData = mysql_fetch_assoc($GetData);
+		$totalRows_GetData = mysql_num_rows($GetData);
+				
+		return $row_GetData['time'];
+		mysql_free_result($GetData);
+	}
+
 	// Tiempo trascurrido
 	function timeAgo($time) {
-		$newetime = time() - $time;
+	    $time = time() - $time;
 
-	    if ($newetime < 1) {
-	        return '1 second ago';
-	    }
+	    $time = ($time<1)? 1 : $time;
+	    $tokens = array (
+	        31536000 => 'year',
+	        2592000 => 'month',
+	        604800 => 'week',
+	        86400 => 'day',
+	        3600 => 'hour',
+	        60 => 'minute',
+	        1 => 'second'
+	    );
 
-	    $a = array( 365 * 24 * 60 * 60  =>  'year',
-	                 30 * 24 * 60 * 60  =>  'month',
-	                      24 * 60 * 60  =>  'day',
-	                           60 * 60  =>  'hour',
-	                                60  =>  'minute',
-	                                 1  =>  'second'
-	                );
-	    $a_plural = array( 'year'   => 'years',
-	                       'month'  => 'months',
-	                       'day'    => 'days',
-	                       'hour'   => 'hours',
-	                       'minute' => 'minutes',
-	                       'second' => 'seconds'
-	                );
-
-	    foreach ($a as $secs => $str) {
-	        $d = $newetime / $secs;
-
-	        if ($d >= 1) {
-	            $r = round($d);
-	            return $r . ' ' . ($r > 1 ? $a_plural[$str] : $str) . ' ago';
-	        }
+	    foreach ($tokens as $unit => $text) {
+	        if ($time < $unit) continue;
+	        $numberOfUnits = floor($time / $unit);
+	        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s ago':' ago');
 	    }
 	}
 

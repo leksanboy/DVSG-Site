@@ -3,6 +3,12 @@
 	$photoId = $_POST['photoId'];
 	$_SESSION['moreComments'] = 0;
 
+	// Update views
+	$updateSQL = sprintf("UPDATE z_photos SET replays = replays+1 WHERE id = %s",
+    GetSQLValueString($photoId, "int"));
+    mysql_select_db($database_conexion, $conexion);
+    $Result1 = mysql_query($updateSQL, $conexion) or die(mysql_error());
+
 	// Likes user photo
 	mysql_select_db($database_conexion, $conexion);
 	$query_GetLikes = sprintf ("SELECT * FROM z_photos_likes WHERE photo = %s",
@@ -24,7 +30,7 @@
 	<div class="avatar"><img src="<?php echo userAvatar($userId); ?>"></div>
 	<div class="name"><?php echo userName($userId); ?></div>
 	<div class="actions">
-		<div class="date">Date from photoId</div>
+		<div class="date"><?php echo timeAgo(timeUserPhoto($photoId)); ?></div>
     	<div class="analytics">
 			<div class='comments'>
 				<?php include('../../../images/svg/comments.php'); ?>
@@ -75,7 +81,7 @@
 	                    <a href="<?php echo $urlWeb ?>id<?php echo $row_GetComments['user']; ?>">
 	                        <?php echo userName($row_GetComments['user']); ?>
 	                    </a>
-	                    <font size="-2"><?php echo timeAgo($row_GetComments['date']);?></font>
+	                    <font size="-2"><?php echo timeAgo(timeUserPhoto($row_GetComments['time']));?></font>
 	                </div>
 
 	                <?php if (isset ($_SESSION['MM_Id'])){ ?> 

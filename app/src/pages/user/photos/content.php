@@ -33,13 +33,16 @@
 							</div>\
 							<div class='filesBox'></div>\
 							<div class='buttons'>\
-								<button onClick='uploadFile(3)'>UPLOAD</button>\
+								<button onClick='uploadFile(3, this)'>UPLOAD</button>\
 								<button onClick='uploadFile(2)'>CLOSE</button>\
 							</div>\
 						</form>"
 
 			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
+			if (filesArray.length > 0)
+				defaultLoad();
+
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 
@@ -68,6 +71,9 @@
 				ajax.open("POST", "pages/user/photos/upload.php");
 				ajax.send(formdata);
 			}
+
+			if (filesArray.length > 0) // Disable button after upload
+				$(event).attr("disabled", "disabled");
 		} else if (type==4) { //Get song data
 			var	file,
 				i = 0;
@@ -104,10 +110,10 @@
 		if (percent == 100){
 			$('#fileStatus' + i + ' .operations #status .loading').show();
 			$('#fileStatus' + i + ' .operations #status .percentage').hide();
-			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  0);
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset', 0);
 		}else{
 			$('#fileStatus' + i + ' #status .percentage').html(percent + '%');
-			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  107 - percent);
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset', 100 - percent*93/100);
 		}
 	}
 	function completeHandler(event, i){

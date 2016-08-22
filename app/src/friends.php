@@ -3,9 +3,6 @@
 		header("Location: " . $urlWeb );
 	}
 
-	error_reporting(0);
-	$userId = "0";
-
 	if (isset($_SESSION['MM_Id'])) {
 		$userId = $_SESSION['MM_Id'];
 	}

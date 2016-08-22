@@ -3,20 +3,20 @@
 	$userId = $_SESSION['MM_Id'];
 	$photoId = $_POST['photoId'];
 	$commentText = $_POST['commentText'];
-	$date = time();
+	$time = time();
 
 	// Insert new one
-	$insertSQL = sprintf("INSERT INTO z_photos_comments (user, photo, comment, date) VALUES (%s, %s, %s, %s)",
+	$insertSQL = sprintf("INSERT INTO z_photos_comments (user, photo, comment, time) VALUES (%s, %s, %s, %s)",
 		GetSQLValueString($userId, "int"),
 		GetSQLValueString($photoId, "int"),
 		GetSQLValueString($commentText, "text"),
-		GetSQLValueString($date, "text"));
+		GetSQLValueString($time, "text"));
 	mysql_select_db($database_conexion, $conexion);
 	$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
 
 	// Get this new one
 	mysql_select_db($database_conexion, $conexion);
-	$query_GetNewComment = sprintf("SELECT * FROM z_photos_comments WHERE date = $date");
+	$query_GetNewComment = sprintf("SELECT * FROM z_photos_comments WHERE time = $time");
 	$GetNewComment = mysql_query($query_GetNewComment, $conexion) or die(mysql_error());
 	$row_GetNewComment = mysql_fetch_assoc($GetNewComment);
 	$totalRows_GetNewComment = mysql_num_rows($GetNewComment);
@@ -32,7 +32,7 @@
         <a href="<?php echo $urlWeb ?>id<?php echo $row_GetNewComment['user']; ?>">
             <?php echo userName($row_GetNewComment['user']); ?>
         </a>
-        <font size="-2"><?php echo timeAgo($row_GetNewComment['date']);?></font>
+        <font size="-2"><?php echo timeAgo($row_GetNewComment['time']);?></font>
     </div>
 
     <?php if (isset ($_SESSION['MM_Id'])){ ?> 

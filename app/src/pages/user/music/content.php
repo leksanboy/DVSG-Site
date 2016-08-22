@@ -50,13 +50,16 @@
 							</div>\
 							<div class='filesBox'></div>\
 							<div class='buttons'>\
-								<button onClick='uploadFile(3)'>UPLOAD</button>\
+								<button onClick='uploadFile(3, this)'>UPLOAD</button>\
 								<button onClick='uploadFile(2)'>CLOSE</button>\
 							</div>\
 						</form>"
 
 			$('.modalBox .box').html(box);
 		} else if (type==2) { //Close
+			if (filesArray.length > 0)
+				defaultLoad();
+
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 
@@ -85,6 +88,9 @@
 				ajax.open("POST", "pages/user/music/upload.php");
 				ajax.send(formdata);
 			}
+
+			if (filesArray.length > 0) // Disable button after upload
+				$(event).attr("disabled", "disabled");
 		} else if (type==4) { //Get song data
 			var	file,
 				i = 0;
@@ -121,10 +127,10 @@
 		if (percent == 100){
 			$('#fileStatus' + i + ' .operations #status .loading').show();
 			$('#fileStatus' + i + ' .operations #status .percentage').hide();
-			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  0);
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset', 0);
 		}else{
 			$('#fileStatus' + i + ' #status .percentage').html(percent + '%');
-			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset',  107 - percent);
+			$('#fileStatus' + i + ' #status .progress svg circle').css('stroke-dashoffset', 100 - percent*93/100);
 		}
 	}
 	function completeHandler(event, i){
@@ -139,16 +145,28 @@
 	}
 
 	//·····> Add song
-	function addSong(id){
-		$.ajax({
-			type: 'POST',
-			url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
-			data: 'id=' + id,
-			success: function(response){
-				$('.songSearch'+id + ' .actions .add').hide();
-				$('.songSearch'+id + ' .actions .added').show();
-			}
-		});
+	function addSong(type, id, position){
+		if (type==1) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
+				data: 'type=add' + '&id=' + id + '&position=' + position,
+				success: function(response){
+					$('.songSearch'+ id + ' .actions .add').hide();
+					$('.songSearch'+ id + ' .actions .added').show();
+				}
+			});
+		} else if (type==2) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
+				data: 'type=delete' + '&id=' + id + '&position=' + position,
+				success: function(response){
+					$('.songSearch'+ id + ' .actions .add').show();
+					$('.songSearch'+ id + ' .actions .added').hide();
+				}
+			});
+		}
 	}
 
 	//·····> Delete song

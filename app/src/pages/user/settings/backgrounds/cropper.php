@@ -7,10 +7,9 @@
 		</div>
 		<div class="container" id="backgroundImageOne">
 		    <div class="inner">
-				<div class="wrapper" >
+				<div class="wrapper">
 					<img class="cropperBackground1" src="<?php echo $row_userData['avatar_bg1']; ?>" alt="">
 				</div>
-
 				<div class="panel">
 					<button type="button">
 						<label for="inputImageBackground1">
@@ -18,21 +17,20 @@
 			        	</label>
 						<input type="file" name="file" id="inputImageBackground1" accept="image/*">
 			        </button>
-			        <button id="zoomIn" type="button">
+			        <button id="zoomIn1" type="button">
 			        	<?php include("images/svg/zoom-in.php"); ?>
 			        </button>
-			        <button id="zoomOut" type="button">
+			        <button id="zoomOut1" type="button">
 			        	<?php include("images/svg/zoom-out.php"); ?>
 			        </button>
-			        <button id="rotateLeft" type="button">
+			        <button id="rotateLeft1" type="button">
 			        	<?php include("images/svg/rotate-left.php"); ?>
 			        </button>
-			        <button id="rotateRight" type="button">
+			        <button id="rotateRight1" type="button">
 			        	<?php include("images/svg/rotate-right.php"); ?>
 			        </button>
 			    </div>
 		    </div>
-		       
 			<div class="actions">
 				<button type="button" onclick="openModalBackground(1)">Close</button>
 				<button type="button" onclick="openModalBackground(2, 1)">Save</button>
@@ -40,10 +38,9 @@
 	  	</div>
 	  	<div class="container" id="backgroundImageTwo">
 		    <div class="inner">
-				<div class="wrapper" >
+				<div class="wrapper">
 					<img class="cropperBackground2" src="<?php echo $row_userData['avatar_bg2']; ?>" alt="">
 				</div>
-
 				<div class="panel">
 					<button id="zoomIn" type="button">
 						<label for="inputImageBackground2">
@@ -51,21 +48,20 @@
 			        	</label>
 						<input type="file" name="file" id="inputImageBackground2" accept="image/*">
 			        </button>
-			        <button id="zoomIn" type="button">
+			        <button id="zoomIn2" type="button">
 			        	<?php include("images/svg/zoom-in.php"); ?>
 			        </button>
-			        <button id="zoomOut" type="button">
+			        <button id="zoomOut2" type="button">
 			        	<?php include("images/svg/zoom-out.php"); ?>
 			        </button>
-			        <button id="rotateLeft" type="button">
+			        <button id="rotateLeft2" type="button">
 			        	<?php include("images/svg/rotate-left.php"); ?>
 			        </button>
-			        <button id="rotateRight" type="button">
+			        <button id="rotateRight2" type="button">
 			        	<?php include("images/svg/rotate-right.php"); ?>
 			        </button>
 			    </div>
 		    </div>
-		       
 			<div class="actions">
 				<button type="button" onclick="openModalBackground(1)">Close</button>
 				<button type="button" onclick="openModalBackground(2, 2)">Save</button>
@@ -73,10 +69,9 @@
 	  	</div>
 	  	<div class="container" id="backgroundImageThree">
 		    <div class="inner">
-				<div class="wrapper" >
+				<div class="wrapper">
 					<img class="cropperBackground3" src="<?php echo $row_userData['avatar_bg3']; ?>" alt="">
 				</div>
-
 				<div class="panel">
 					<button id="zoomIn" type="button">
 						<label for="inputImageBackground3">
@@ -84,21 +79,20 @@
 			        	</label>
 						<input type="file" name="file" id="inputImageBackground3" accept="image/*">
 			        </button>
-			        <button id="zoomIn" type="button">
+			        <button id="zoomIn3" type="button">
 			        	<?php include("images/svg/zoom-in.php"); ?>
 			        </button>
-			        <button id="zoomOut" type="button">
+			        <button id="zoomOut3" type="button">
 			        	<?php include("images/svg/zoom-out.php"); ?>
 			        </button>
-			        <button id="rotateLeft" type="button">
+			        <button id="rotateLeft3" type="button">
 			        	<?php include("images/svg/rotate-left.php"); ?>
 			        </button>
-			        <button id="rotateRight" type="button">
+			        <button id="rotateRight3" type="button">
 			        	<?php include("images/svg/rotate-right.php"); ?>
 			        </button>
 			    </div>
 		    </div>
-		       
 			<div class="actions">
 				<button type="button" onclick="openModalBackground(1)">Close</button>
 				<button type="button" onclick="openModalBackground(2, 3)">Save</button>
@@ -117,8 +111,6 @@
 
 <script type="text/javascript">
 	function openModalBackground(type, value){
-		console.log('value', value);
-
 	    var $imageBackground = $(".cropperBackground"+value),
 	        $dataX = $("#dataX"),
 	        $dataY = $("#dataY"),
@@ -146,19 +138,19 @@
 
 	    cropper = $imageBackground.data("cropper");
 
-	    $("#zoomIn").click(function() {
+	    $("#zoomIn"+value).click(function() {
 	        $imageBackground.cropper("zoom", 0.1);
 	    });
 
-	    $("#zoomOut").click(function() {
+	    $("#zoomOut"+value).click(function() {
 	        $imageBackground.cropper("zoom", -0.1);
 	    });
 
-	    $("#rotateLeft").click(function() {
+	    $("#rotateLeft"+value).click(function() {
 	        $imageBackground.cropper("rotate", -90);
 	    });
 
-	    $("#rotateRight").click(function() {
+	    $("#rotateRight"+value).click(function() {
 	        $imageBackground.cropper("rotate", 90);
 	    });
 
@@ -180,7 +172,6 @@
 
 	                    blobURLBackground = URL.createObjectURL(file);
 
-	                    console.log('blobURLBackground', blobURLBackground);
 	                    $imageBackground.cropper("reset", true).cropper("replace", blobURLBackground);
 	                    $inputImageBackgroundOne.val("");
 	                }
@@ -189,7 +180,6 @@
 	    } else {
 	        $inputImageBackgroundOne.parent().remove();
 	    }
-
 
 		if (type==1) {
 			$('.cropperModalBoxBackgrounds').toggleClass('modalDisplay');
