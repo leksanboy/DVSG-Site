@@ -1,13 +1,13 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_SESSION['MM_Id'];
+	$userId = $_POST['userId'];
 	$photoId = $_POST['photoId'];
 	$_SESSION['moreComments'] = 0;
 
 	// Update views
-	$updateSQL = sprintf("UPDATE z_photos SET replays = replays+1 WHERE id = %s",
-    GetSQLValueString($photoId, "int"));
-    mysql_select_db($database_conexion, $conexion);
-    $Result1 = mysql_query($updateSQL, $conexion) or die(mysql_error());
+	// $updateSQL = sprintf("UPDATE z_photos SET replays = replays+1 WHERE id = %s",
+ //    GetSQLValueString($photoId, "int"));
+ //    mysql_select_db($database_conexion, $conexion);
+ //    $Result1 = mysql_query($updateSQL, $conexion) or die(mysql_error());
 
 	// Likes user photo
 	mysql_select_db($database_conexion, $conexion);
@@ -27,8 +27,12 @@
 ?>
 
 <div class="user">
-	<div class="avatar"><img src="<?php echo userAvatar($userId); ?>"></div>
-	<div class="name"><?php echo userName($userId); ?></div>
+	<div class="avatar" onclick="userPage(<?php echo $userId ?>)">
+		<img src="<?php echo userAvatar($userId); ?>">
+	</div>
+	<div class="name" onclick="userPage(<?php echo $userId ?>)">
+		<?php echo userName($userId); ?>
+	</div>
 	<div class="actions">
 		<div class="date"><?php echo timeAgo(timeUserPhoto($photoId)); ?></div>
     	<div class="analytics">
@@ -36,9 +40,9 @@
 				<?php include('../../../images/svg/comments.php'); ?>
 				<span class='count'><?php echo $totalRows_GetComments ?></span>
 			</div>
-			<div class='likes' onClick='like()'>
+			<div class='likes' <?php  if (isset($_SESSION['MM_Id'])) { ?> onClick='like(<?php echo $photoId ?>)' <?php } ?>>
 				<span class='like'>
-					<?php if (checkLikeUserPhoto($userId, $photoId) == true ){ ?>
+					<?php if (checkLikeUserPhoto($_SESSION['MM_Id'], $photoId) == true ){ ?>
 						<?php include('../../../images/svg/unlike.php'); ?>
 					<?php } else {?>
 						<?php include('../../../images/svg/like.php'); ?>
@@ -53,9 +57,9 @@
 	<?php  if (isset($_SESSION['MM_Id'])) {?>
 	    <div class="newComment">
 	        <form onsubmit="return false">
-	            <textarea name="comment" id="comentario" class="inputBox" onkeyup="newComment(1, this.value)" placeholder="Write a comment..."></textarea>
+	            <textarea name="comment" id="comentario" class="inputBox" onkeyup="newComment(1, this.value, <?php echo $photoId ?>)" placeholder="Write a comment..."></textarea>
 	            <input type="hidden" name="page" value="<?php echo $photoId; ?>" />
-	            <input type="button" style="display:none" onclick="newComment(2, comment.value);" id="btn_comentario">
+	            <input type="button" style="display:none" onclick="newComment(2, comment.value, <?php echo $photoId ?>)" id="btn_comentario">
 	            <label for="btn_comentario">
 	                <div class="button">
 	                    <?php include("../../../images/svg/send.php");?>
@@ -71,17 +75,13 @@
     	<?php if ($row_GetComments != '') {?>
 	        <?php do { $countComments++; ?>
 	            <div class="item" id="comment<?php echo $row_GetComments['id'] ?>">
-	                <div class="avatar">
-	                    <a href="<?php echo $urlWeb ?>id<?php echo $row_GetComments['user']; ?>">
-	                        <img src="<?php echo userAvatar($row_GetComments["user"]); ?>" width="36px" height="36px" style="border-radius: 50%"/>
-	                    </a>
+	                <div class="avatar" onclick="userPage(<?php echo $row_GetComments['user'] ?>)">
+	                    <img src="<?php echo userAvatar($row_GetComments["user"]); ?>" width="36px" height="36px" style="border-radius: 50%"/>
 	                </div>
 
-	                <div class="name">
-	                    <a href="<?php echo $urlWeb ?>id<?php echo $row_GetComments['user']; ?>">
-	                        <?php echo userName($row_GetComments['user']); ?>
-	                    </a>
-	                    <font size="-2"><?php echo timeAgo(timeUserPhoto($row_GetComments['time']));?></font>
+	                <div class="name" onclick="userPage(<?php echo $row_GetComments['user'] ?>)">
+	                    <?php echo userName($row_GetComments['user']); ?>
+	                    <font size="-2"><?php echo timeAgo($row_GetComments['time']);?></font>
 	                </div>
 
 	                <?php if (isset ($_SESSION['MM_Id'])){ ?> 

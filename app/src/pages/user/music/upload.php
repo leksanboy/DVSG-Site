@@ -1,5 +1,5 @@
 <?php require_once('../../../Connections/conexion.php');
-    
+
 	class getDuration {
         protected $filename;
         public function __construct($filename)
@@ -173,10 +173,12 @@
         }
     }
 
-	$FILE_NAME             = 		$_SESSION['MM_Id'].'_'.time().'_'.rand(); // File name
-	$FILE_TITLE            = 		$_FILES["fileUpload"]["name"]; // File title
-	$fileTmpLoc            = 		$_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
-    $locationPath          =        '/var/www/html/pages/user/music/songs';
+    $time               = time();
+    $userId             = $_SESSION['MM_Id'];
+	$FILE_NAME          = $userId.'_'.$time.'_'.rand(); // File name
+	$FILE_TITLE         = $_FILES["fileUpload"]["name"]; // File title
+	$fileTmpLoc         = $_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
+    $locationPath       = '/var/www/html/pages/user/music/songs';
 
 
     if ($FILE_TITLE == '' || $FILE_TITLE == undefined) {
@@ -203,22 +205,15 @@
 		GetSQLValueString($FILE_TITLE, "text"),
 		GetSQLValueString($FILE_DURATION, "text"),
 		GetSQLValueString($FILE_NAME, "text"),
-		GetSQLValueString($_SESSION['MM_Id'], "int"));
+		GetSQLValueString($userId, "int"));
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
-
-		//Get Inserted music id
-		mysql_select_db($database_conexion, $conexion);
-		$query_userData = sprintf("SELECT id FROM z_music WHERE z_music.name = %s", 
-		GetSQLValueString($FILE_NAME, "text"));
-		$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
-		$row_userData = mysql_fetch_assoc($userData);
-		$totalRows_userData = mysql_num_rows($userData);
+        $insertId = mysql_insert_id();
 
 		//Insert to user music
 		$insertSQL = sprintf("INSERT INTO z_music_favorites (song, user) VALUES (%s, %s)",
-		GetSQLValueString($row_userData['id'], "int"),
-		GetSQLValueString($_SESSION['MM_Id'], "int"));
+		GetSQLValueString($insertId, "int"),
+		GetSQLValueString($userId, "int"));
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
 

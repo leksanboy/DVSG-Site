@@ -1,9 +1,11 @@
 <?php require_once('../../../Connections/conexion.php');
 
-	$FILE_NAME             = 		$_SESSION['MM_Id'].'_'.time().'_'.rand(); // File name
-    $FILE_TITLE            =        $_FILES["fileUpload"]["name"]; // File title
-	$fileTmpLoc            = 		$_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
-    $locationPath          =        '/var/www/html/pages/user/videos/videos';
+    $time               = time();
+    $userId             = $_SESSION['MM_Id'];
+	$FILE_NAME          = $userId.'_'.$time.'_'.rand(); // File name
+    $FILE_TITLE         = $_FILES["fileUpload"]["name"]; // File title
+	$fileTmpLoc         = $_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
+    $locationPath       = '/var/www/html/pages/user/videos/videos';
 
     if ($FILE_TITLE == '' || $FILE_TITLE == undefined) {
         $FILE_TITLE = 'Untitled';
@@ -38,22 +40,24 @@
 		GetSQLValueString($FILE_TITLE, "text"),
 		GetSQLValueString($FILE_DURATION, "text"),
 		GetSQLValueString($FILE_NAME_MP4, "text"),
-		GetSQLValueString($_SESSION['MM_Id'], "int"));
+		GetSQLValueString($userId, "int"));
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
+        $insertId = mysql_insert_id();
 
-		//Get Inserted videos id
-		mysql_select_db($database_conexion, $conexion);
-		$query_userData = sprintf("SELECT id FROM z_videos WHERE z_videos.name = %s", 
-		GetSQLValueString($FILE_NAME_MP4, "text"));
-		$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
-		$row_userData = mysql_fetch_assoc($userData);
-		$totalRows_userData = mysql_num_rows($userData);
+		// //Get Inserted videos id
+		// mysql_select_db($database_conexion, $conexion);
+		// $query_userData = sprintf("SELECT id FROM z_videos WHERE z_videos.name = %s", 
+		// GetSQLValueString($FILE_NAME_MP4, "text"));
+		// $userData = mysql_query($query_userData, $conexion) or die(mysql_error());
+		// $row_userData = mysql_fetch_assoc($userData);
+		// $totalRows_userData = mysql_num_rows($userData);
 
 		//Insert to user videos
-		$insertSQL = sprintf("INSERT INTO z_videos_favorites (video, user) VALUES (%s, %s)",
-		GetSQLValueString($row_userData['id'], "int"),
-		GetSQLValueString($_SESSION['MM_Id'], "int"));
+		$insertSQL = sprintf("INSERT INTO z_videos_favorites (video, user, time) VALUES (%s, %s, %s)",
+		GetSQLValueString($insertId, "int"),
+		GetSQLValueString($userId, "int"),
+        GetSQLValueString($time, "int"));
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
 

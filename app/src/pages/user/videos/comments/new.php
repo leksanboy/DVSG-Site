@@ -1,14 +1,14 @@
 <?php require_once('../../../../Connections/conexion.php');
 	// Parameters
 	$userId = $_SESSION['MM_Id'];
-	$photoId = $_POST['photoId'];
+	$videoId = $_POST['videoId'];
 	$commentText = $_POST['commentText'];
 	$time = time();
 
 	// Insert new one
-	$insertSQL = sprintf("INSERT INTO z_photos_comments (user, photo, comment, time) VALUES (%s, %s, %s, %s)",
+	$insertSQL = sprintf("INSERT INTO z_videos_comments (user, video, comment, time) VALUES (%s, %s, %s, %s)",
 		GetSQLValueString($userId, "int"),
-		GetSQLValueString($photoId, "int"),
+		GetSQLValueString($videoId, "int"),
 		GetSQLValueString($commentText, "text"),
 		GetSQLValueString($time, "text"));
 	mysql_select_db($database_conexion, $conexion);
@@ -16,18 +16,22 @@
 
 	// Get this new one
 	mysql_select_db($database_conexion, $conexion);
-	$query_GetNewComment = sprintf("SELECT * FROM z_photos_comments WHERE time = $time");
+	$query_GetNewComment = sprintf("SELECT * FROM z_videos_comments WHERE time = $time");
 	$GetNewComment = mysql_query($query_GetNewComment, $conexion) or die(mysql_error());
 	$row_GetNewComment = mysql_fetch_assoc($GetNewComment);
 	$totalRows_GetNewComment = mysql_num_rows($GetNewComment);
 ?>
 <div class="item" id="comment<?php echo $row_GetNewComment['id'] ?>">
-    <div class="avatar" onclick="userPage(<?php echo $row_GetNewComment['user']; ?>)">
-        <img src="<?php echo userAvatar($row_GetNewComment['user']); ?>" width="36px" height="36px" style="border-radius: 50%"/>
+    <div class="avatar">
+        <a href="<?php echo $urlWeb ?>id<?php echo $row_GetNewComment['user']; ?>">
+            <img src="<?php echo userAvatar($row_GetNewComment['user']); ?>" width="36px" height="36px" style="border-radius: 50%"/>
+        </a>
     </div>
 
-    <div class="name" onclick="userPage(<?php echo $row_GetNewComment['user']; ?>)">
-        <?php echo userName($row_GetNewComment['user']); ?>
+    <div class="name">
+        <a href="<?php echo $urlWeb ?>id<?php echo $row_GetNewComment['user']; ?>">
+            <?php echo userName($row_GetNewComment['user']); ?>
+        </a>
         <font size="-2"><?php echo timeAgo($row_GetNewComment['time']);?></font>
     </div>
 

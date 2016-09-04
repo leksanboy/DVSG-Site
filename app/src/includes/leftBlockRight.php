@@ -81,7 +81,7 @@
 				</li>
 				<li onClick="logOut()">
 					<?php include("images/svg/logout.php");?>
-					Log Out
+					Sign out
 				</li>
 			</ul>
 		</div>
@@ -109,7 +109,6 @@
 
 	<div class="rightSideClose" onclick="toggleRightSide(0)"></div>
 
-
 	<div class="logOutWindow">
 		<div class="text">You sure to want to leave the page ?</div>
 		<div class="button" onClick="logOutFade()">No</div>
@@ -118,8 +117,8 @@
 	<div class="logOutWindowHidden" onClick="logOutFade()"></div>
 <?php } else { ?>
 	<div class="webAccess">
-		<div class="button" onClick="clickThePage(7)">Create an account</div>
-		<div class="button" onclick="singInAccess()">Sign in</div>
+		<div class="button" onClick="clickThePage(7)">Sign up</div>
+		<div class="button" onclick="loginAccess(2)">Sign in</div>
 	</div>
 
 	<div class="signInBox">
@@ -133,9 +132,9 @@
 			<label for="signin-remember-check" data-role="none" class="check">Remember me</label>
 
 			<input type="button" onClick="location.href='<?php echo $urlWeb ?>forgot-password'" class="button" value="Forgot password ?"/>
-			<input type="submit" onClick="loginAccess(nombre.value,password.value,recordar.value);" class="button signInLoading" value="Sign in"/>
+			<input type="submit" onClick="loginAccess(1, nombre.value, password.value, recordar.value);" class="button signInLoading" value="Sign in"/>
 		</form>
 	</div>
-	<div class="signInBoxHidden" onclick="singInAccess()"></div>
+	<div class="signInBoxHidden" onclick="loginAccess(2)"></div>
 <?php } ?>
 <?php mysql_free_result($SacarMiNombreUser);?>

@@ -23,7 +23,7 @@ if (isset($_POST['name'])) {
 		$_SESSION['MM_Username'] 	= $name;
 		$_SESSION['MM_Id'] 			= $row_signInAccess['id'];
 
-		if (isset ($_POST['recordar']) && $_POST['recordar']=="on"){
+		if (isset ($_POST['recordar']) && $_POST['recordar'] == "on"){
 			recordar_sesion($password,
 			$_SESSION['MM_Username'],
 			$_SESSION['MM_Id']);

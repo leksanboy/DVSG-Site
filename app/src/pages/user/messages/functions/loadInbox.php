@@ -14,10 +14,10 @@
 	<?php do { ?>
 		<div class="messageBox" id="message<?php echo $row_inboxMessages['id'] ?>">
 			<div class="head">
-				<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_inboxMessages['sender']); ?>'">
+				<div class="image" onclick="userPage(<?php echo $row_inboxMessages['sender']; ?>)">
 					<img src="<?php echo userAvatar($row_inboxMessages['sender']); ?>"/>
 				</div>
-				<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_inboxMessages['sender']); ?>'">
+				<div class="name" onclick="userPage(<?php echo $row_inboxMessages['sender']; ?>)">
 					<?php if ($row_inboxMessages['status'] == 0){ ?>
 						<div class="glitch" style="background:#<?php echo $row_userData['primary_color']; ?>">
 							<?php echo traducir(48,$_COOKIE['idioma'])?>

@@ -17,11 +17,21 @@
 <div class="defaultDataList"></div>
 
 <script type="text/javascript">
+	var userId = <?php echo $userPageId ?>;
+	console.log('userId', userId);
+
 	//·····> SVG icons
-	var uploadIcon 	= '<svg><path d="M18 32h12V20h8L24 6 10 20h8zm-8 4h28v4H10z"/></svg>',
-		arrowUpIcon = '<svg><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>',
-		progressIcon = '<svg><circle fill="none"/></svg>',
-		addIcon = '<svg><path d="M38 26H26v12h-4V26H10v-4h12V10h4v12h12v4z"/></svg>';
+	var uploadIcon 			= '<?php include('images/svg/upload.php'); ?>',
+		arrowUpIcon 		= '<?php include('images/svg/arrow-up.php'); ?>',
+		progressIcon 		= '<?php include('images/svg/progress.php'); ?>',
+		addIcon 			= '<?php include('images/svg/add.php'); ?>',
+		closeIcon 			= '<?php include('images/svg/close.php'); ?>',
+		playIcon 			= '<?php include('images/svg/play.php'); ?>',
+		pauseIcon 			= '<?php include('images/svg/pause.php'); ?>',
+		moreIcon 			= '<?php include('images/svg/dots.php'); ?>',
+		fullscreenIcon 		= '<?php include('images/svg/fullscreen.php'); ?>',
+		likeIcon 			= "<?php include('images/svg/like.php'); ?>",
+		unlikeIcon 			= "<?php include('images/svg/unlike.php'); ?>";
 	
 	//·····> Get id element
 	function getFile(el){
@@ -145,16 +155,29 @@
 	}
 
 	//·····> Add video
-	function addVideo(id){
-		$.ajax({
-			type: 'POST',
-			url: '<?php echo $urlWeb ?>' + 'pages/user/videos/add.php',
-			data: 'id=' + id,
-			success: function(response){
-				$('.songSearch'+id + ' .actions .add').hide();
-				$('.songSearch'+id + ' .actions .added').show();
-			}
-		});
+	function addVideo(type, id, videoId){
+		if (type==1) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/videos/add.php',
+				data: 'type=add' + '&videoId=' + videoId,
+				success: function(response){
+					$('.video'+ id + ' .actions .add').hide();
+					$('.video'+ id + ' .actions .added').show();
+					$('.video'+ id + ' .actions .added').attr("onclick","addVideo(2, "+id+", "+response+");");
+				}
+			});
+		} else if (type==2) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/videos/add.php',
+				data: 'type=delete' + '&videoId=' + videoId,
+				success: function(response){
+					$('.video'+ id + ' .actions .add').show();
+					$('.video'+ id + ' .actions .added').hide();
+				}
+			});
+		}
 	}
 
 	//·····> Delete video
@@ -167,7 +190,7 @@
 				url: '<?php echo $urlWeb ?>' + 'pages/user/videos/delete.php',
 				data: 'id=' + id,
 				success: function(response){
-					$('.song'+id).fadeOut(300);
+					$('.video'+id).fadeOut(300);
 					$('#delete'+id).fadeOut(300);
 				}
 			});
@@ -214,8 +237,9 @@
 	//·····> Default
 	function defaultLoad(){
 		$.ajax({
-			type: 'GET',
+			type: 'POST',
 			url: '<?php echo $urlWeb ?>' + 'pages/user/videos/default.php',
+			data: 'userId=' + userId,
 			success: function(response) {
 				$('.defaultDataList').show();
 				$('.defaultDataList').html(response);
@@ -227,7 +251,7 @@
 
 	//·····> Open video
 	var videoPlayer;
-	function openVideo(type, fileName){
+	function openVideo(type, fileName, title, id){
 		if (type==1) { // Open
 			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
@@ -235,22 +259,41 @@
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
+			$.ajax({
+		        type: 'POST',
+		        url: '<?php echo $urlWeb ?>' + 'pages/user/videos/setData.php',
+		        data: 'videoId=' + id + '&userId=' + userId,
+		        success: function(response){
+		        	$('.videoBox .boxData').html(response);
+		        }
+		    });
+
 			var box = "<form onSubmit='return false'>\
 							<div class='videoBox'>\
-								<video id='video_player' controls preload='auto'>\
-									<source src='pages/user/videos/videos/" + fileName + "'>\
-								</video>\
-								<div class='title'>\
-									Title of my video\
-									<div class='button'>"+ addIcon +"</div>\
-								</div>\
-								<div class='playPause' onClick='playerAction(1)'></div>\
-								<div class='controlPanel'>\
-									Time Progress fullScreen Volume\
-									<div class='fullScreen' onClick='playerAction(2)'>\
-										[·]\
+								<div class='boxContent'>\
+									<video id='video_player' controls preload='auto' onClick='playerAction(4)'>\
+										<source src='pages/user/videos/videos/" + fileName + "'>\
+									</video>\
+									<div class='title'>\
+										<div class='action' onClick='openVideo(2)'>"+ closeIcon +"</div>\
+										<div class='action' onClick='openVideo(3)'>"+ moreIcon +"</div>\
+									</div>\
+									<div class='playPause' onClick='playerAction(1, this)'>\
+										"+ playIcon +"\
+									</div>\
+									<div class='controlPanel'>\
+										<div class='time'>\
+											<div class='current'>00:00</div>\
+											<div class='total'>00:00</div>\
+										</div>\
+										<div class='fullScreen' onClick='playerAction(2)'>"+ fullscreenIcon +"</div>\
+									</div>\
+									<div class='progress'>\
+										<input type='range' id='playerBoxVideoProgress' min='0' max='1000' value='0' onchange='setProgressBar(event.target)'/>\
+										<div class='buffer' id='playerBoxVideoBuffering'></div>\
 									</div>\
 								</div>\
+								<div class='boxData'></div>\
 							</div>\
 							<div class='buttons'>\
 								<button onClick='openVideo(2)'>CLOSE</button>\
@@ -259,8 +302,40 @@
 
 			$('.modalBox .box').html(box);
 
-			videoPlayer = $('#video_player'); //declarate video player
-		    videoPlayer[0].removeAttribute("controls"); //remove default control when JS loaded
+			// ·····> declarate video player
+			videoPlayer = document.getElementById('video_player');
+		    
+			// ·····> remove default control when JS loaded
+		    videoPlayer.removeAttribute("controls");
+
+		    // ·····> video buffer
+		    videoPlayer.addEventListener('progress', function() {
+		    	var buffering = videoPlayer.buffered.length;
+		    	$('#playerBoxVideoBuffering').width(buffering * 100 +'%');
+		    });
+
+		    // ·····> video time duration
+		    videoPlayer.addEventListener('timeupdate', function() {
+				var duration =  ((videoPlayer.currentTime / videoPlayer.duration) * 1000);
+
+				if (videoPlayer.duration > 0) {
+					$('#playerBoxVideoProgress').val(duration);
+
+					$('#playerBoxVideoProgress').css({
+						'backgroundSize': (duration / 10) + '% 100%',
+						'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+					});
+				}
+		    });
+
+		    // ·····> video time current -/- total
+			setInterval(function(){
+				$('.videoBox .player .controlPanel .time .total').text(formatTime(videoPlayer.duration));
+				$('.videoBox .player .controlPanel .time .current').text(formatTime(videoPlayer.currentTime));
+
+				if(videoPlayer.duration == videoPlayer.currentTime)
+					$('.videoBox .player .playPause').html(playIcon);
+			}, 1000);
 		} else if (type==2) { //Close
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
@@ -268,29 +343,171 @@
 	}
 
 	//·····> Video player
-	var playPauseButton = $('.videoBox .playPause');
-    function playerAction(type){
+    function playerAction(type, button){
     	if (type == 1) { //playPause
-    		if (!videoPlayer[0].paused)
-    			videoPlayer[0].pause();
-    		else
-    			videoPlayer[0].play();
-
-    		playPauseButton.toggle();
+    		if (!videoPlayer.paused){
+    			videoPlayer.pause();
+    			$(button).html(playIcon);
+    		} else {
+    			videoPlayer.play();
+    			$(button).html(pauseIcon);
+    		}
     	} else if (type == 2) { //fullScreen
-    		if ($.isFunction(videoPlayer[0].webkitEnterFullscreen))
-                videoPlayer[0].webkitEnterFullscreen();
-            else if ($.isFunction(videoPlayer[0].mozRequestFullScreen))
-                videoPlayer[0].mozRequestFullScreen();
+    		if ($.isFunction(videoPlayer.webkitEnterFullscreen))
+                videoPlayer.webkitEnterFullscreen();
+            else if ($.isFunction(videoPlayer.mozRequestFullScreen))
+                videoPlayer.mozRequestFullScreen();
             else
                 alert('Your browsers doesn\'t support fullscreen');
-    	} else if (type == 3) { //Sound mute
+    	} else if (type == 3) { //More
+    		alert('DVSG');
+    	} else if (type == 4) { //Video click to show/Hide
+    		$('.videoBox .player .playPause').fadeToggle();
+    		$('.videoBox .player .title').fadeToggle();
+    		$('.videoBox .player .controlPanel').fadeToggle();
+    	} else if (type == 5) { //Sound mute
     		//TODO: MUTE/SOUND
-    	} else if (type == 4) {
+    	} else if (type == 6) {
     		//TODO: Show/Hide controls & title like youtube
 			// videoPlayer.on('click', function () {
 			// 	console.log('CLICK-VP');
 			// });
     	}
     }
+
+    // ·····> format time
+    function formatTime(time){
+		var duration = time,
+			hours = Math.floor(duration / 3600),
+			minutes = Math.floor((duration % 3600) / 60),
+			seconds = Math.floor(duration % 60),
+			time = [];
+
+		if (hours) {
+			time.push(hours)
+		}
+
+		time.push(((hours ? "0" : "") + minutes).substr(-2));
+		time.push(("0" + seconds).substr(-2));
+		return time.join(":");
+	};
+
+	// ·····> Set video progress
+    function setProgressBar(target) {
+    	var min = target.min,
+		    max = target.max,
+		    val = target.value;
+
+    	var duration = Math.round(val / 1000 * videoPlayer.duration);
+    	videoPlayer.currentTime = duration;
+    }
+    $('input[type=range]').on('input', function(e){
+		var min = e.target.min,
+			max = e.target.max,
+			val = e.target.value;
+
+		$(e.target).css({
+			'backgroundSize': (val - min) * 100 / (max - min) + '% 100%',
+			'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+		});
+	}).trigger('input');
+
+	//·····> Like photo
+	function like(id){
+		var countLikesVideo 	= $('.modalBox .box .videoBox .boxData .user .actions .analytics .likes .count'),
+			likeIconVideo		= $('.modalBox .box .videoBox .boxData .user .actions .analytics .likes .like'),
+			countLikes 			= parseInt(countLikesVideo.html());
+
+		$.ajax({
+	        type: 'POST',
+	        url: '<?php echo $urlWeb ?>' + 'pages/user/videos/like.php',
+	        data: 'videoId=' + id,
+	        success: function(response){
+	            if (response == 'like'){ // Like
+	            	countLikes = countLikes +1;
+
+	            	countLikesVideo.html(countLikes);
+	            	likeIconVideo.html(likeIcon);
+	        	} else { // Unlike
+	            	countLikes = countLikes -1;
+
+	            	countLikesVideo.html(countLikes);
+	            	likeIconVideo.html(unlikeIcon);
+	        	}
+	        }
+	    });
+	}
+
+	//·····> New comment
+	function newComment(type, value, id){
+		var buttonSendCommentVideo 	= $(".modalBox .box .videoBox .boxData .comments .newComment .button svg"),
+			inputSendCommentVideo 	= $(".modalBox .box .videoBox .boxData .comments .newComment .inputBox"),
+			commentsList 			= $('.modalBox .box .videoBox .boxData .comments .commentsList'),
+			countCommentsVideo 		= $('.modalBox .box .videoBox .boxData .user .actions .analytics .comments .count'),
+			countComments 			= parseInt(countCommentsVideo.html());
+
+		if (type == 1) {
+            if(value != ''){
+                buttonSendCommentVideo.css("fill","#09f");
+            }else{
+                buttonSendCommentVideo.css("fill","#333");
+            }
+		} else if (type == 2) {
+			if (value != '') {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $urlWeb ?>' + 'pages/user/videos/comments/new.php',
+                    data: 'commentText=' + value + '&videoId=' + id,
+                    success: function(response) {
+                        commentsList.prepend(response);
+                        inputSendCommentVideo.val('');
+                        countCommentsVideo.html(countComments + 1);
+                    }
+                });
+            }
+		}
+	}
+
+	//·····> Delete comment
+	function deleteComment(type, id){
+		var countCommentsVideo 	= $('.modalBox .box .videoBox .boxData .user .actions .analytics .comments .count'),
+			countComments 		= parseInt(countCommentsVideo.html()),
+			deleteComment		= $('.modalBox .box .videoBox .boxData .comments .commentsList .item #delete' + id),
+			boxComment			= $('.modalBox .box .videoBox .boxData .comments .commentsList #comment' + id);
+
+		if (type == 1) {
+			deleteComment.toggle();
+		}else if (type==2) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/videos/comments/delete.php',
+				data: 'id=' + id,
+				success: function(response){
+					boxComment.fadeOut(300);
+					deleteComment.fadeOut(300);
+
+					countCommentsVideo.html(countComments - 1);
+				}
+			});
+		}
+	}
+
+	//·····> Load more comment
+	function loadMorecomments(id){
+		var commentsList 					= $('.modalBox .box .videoBox .boxData .comments .commentsList'),
+			buttonLoadMoreCommentsVideo 	= $('.modalBox .box .videoBox .boxData .comments .loadMore');
+
+		$.ajax({
+            type: "POST",
+            url: '<?php echo $urlWeb ?>' + 'pages/user/videos/comments/loadMore.php',
+            data: 'cuantity=' + 10 + '&videoId=' + id,
+            success: function(response) {
+            	if (response != '')
+                	commentsList.append(response);
+                else
+                	buttonLoadMoreCommentsVideo.hide();
+
+            }
+        });
+	}
 </script>

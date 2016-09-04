@@ -28,6 +28,7 @@ Step-4: Create redirecting file to bower_components
 Step-5: Open project folder (Console, Terminal)
 -----------------------------------------------
 	--> npm install
+	--> npm rebuild node-sass
 	--> npm install bower -g
 	--> npm install gulp -g
 	--> bower install

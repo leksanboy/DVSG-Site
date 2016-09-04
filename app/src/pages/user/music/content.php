@@ -17,12 +17,14 @@
 <div class="defaultDataList"></div>
 
 <script type="text/javascript">
+	var userId = <?php echo $userPageId ?>;
+	console.log('userId', userId);
+
 	//·····> SVG icons
-	var uploadIcon 	= '<svg viewBox="0 0 48 48"><path d="M18 32h12V20h8L24 6 10 20h8zm-8 4h28v4H10z"/></svg>';
-	var loadingIcon = '<svg viewBox="0 0 28 28"><g class="qp-circular-loader"><path class="qp-circular-loader-path" fill="none" d="M 14,1.5 A 12.5,12.5 0 1 1 1.5,14" stroke-linecap="round" /></g></svg>';
-	var arrowUpIcon = '<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>';
-	var progressIcon = '<svg><circle fill="none"/></svg>';
-	
+	var uploadIcon 			= '<?php include('images/svg/upload.php'); ?>',
+		arrowUpIcon 		= '<?php include('images/svg/arrow-up.php'); ?>',
+		progressIcon 		= '<?php include('images/svg/progress.php'); ?>';
+
 	//·····> Get id element
 	function getFile(el){
 		return document.getElementById(el);
@@ -145,25 +147,26 @@
 	}
 
 	//·····> Add song
-	function addSong(type, id, position){
+	function addSong(type, id, songId){
 		if (type==1) {
 			$.ajax({
 				type: 'POST',
 				url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
-				data: 'type=add' + '&id=' + id + '&position=' + position,
+				data: 'type=add' + '&songId=' + songId,
 				success: function(response){
-					$('.songSearch'+ id + ' .actions .add').hide();
-					$('.songSearch'+ id + ' .actions .added').show();
+					$('.song'+ id + ' .actions .add').hide();
+					$('.song'+ id + ' .actions .added').show();
+					$('.song'+ id + ' .actions .added').attr("onclick","addSong(2, "+id+", "+response+");");
 				}
 			});
 		} else if (type==2) {
 			$.ajax({
 				type: 'POST',
 				url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
-				data: 'type=delete' + '&id=' + id + '&position=' + position,
+				data: 'type=delete' + '&songId=' + songId,
 				success: function(response){
-					$('.songSearch'+ id + ' .actions .add').show();
-					$('.songSearch'+ id + ' .actions .added').hide();
+					$('.song'+ id + ' .actions .add').show();
+					$('.song'+ id + ' .actions .added').hide();
 				}
 			});
 		}
@@ -226,8 +229,9 @@
 	//·····> Default
 	function defaultLoad(){
 		$.ajax({
-			type: 'GET',
+			type: 'POST',
 			url: '<?php echo $urlWeb ?>' + 'pages/user/music/default.php',
+			data: 'userId=' + userId,
 			success: function(response) {
 				$('.defaultDataList').show();
 				$('.defaultDataList').html(response);

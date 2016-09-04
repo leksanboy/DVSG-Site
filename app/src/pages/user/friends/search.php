@@ -1,7 +1,7 @@
 <?php require_once('../../../Connections/conexion.php');
 	$titleValue = $_POST['titleValue'];
 
-	//All users
+	//Search - All users
 	mysql_select_db($database_conexion, $conexion);
 	$query_friendsListSearch = sprintf("SELECT * FROM z_users WHERE name LIKE %s ORDER BY name DESC", 
 		GetSQLValueString("%" . $titleValue . "%", "text"));
@@ -14,10 +14,10 @@
 	<?php do { ?>
 		<div class="friendBox" id="friend<?php echo $row_friendsListSearch['id'] ?>">
 			<div class="head">
-				<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_friendsListSearch['id'] ?>'">
+				<div class="image" onclick="userPage(<?php echo $row_friendsListSearch['id']; ?>)">
 					<img src="<?php echo userAvatar($row_friendsListSearch['id']) ?>"/>
 				</div>
-				<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_friendsListSearch['id'] ?>'">
+				<div class="name" onclick="userPage(<?php echo $row_friendsListSearch['id']; ?>)">
 					<?php echo userName($row_friendsListSearch['id']) ?>
 				</div>
 				<div class="delete" onClick="deleteFriend(1, <?php echo $row_friendsListSearch['id'] ?>)">
@@ -35,7 +35,7 @@
 	<?php } while ($row_friendsListSearch = mysql_fetch_assoc($friendsListSearch)); ?>
 <?php } else { ?>
 	<div class="noData">
-		No result friends
+		No results
 	</div>
 <?php } ?>
 <?php mysql_free_result($friendsListSearch); ?>

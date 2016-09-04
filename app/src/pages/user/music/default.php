@@ -1,14 +1,14 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_SESSION['MM_Id'];
+	$userId = $_POST['userId'];
 
-	//User music  --> songsList
+	// User music  --> songsList
 	mysql_select_db($database_conexion, $conexion);
-	$query_songsList = sprintf("SELECT f.id, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
+	$query_songsList = sprintf("SELECT f.id, f.song, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
 	$songsList = mysql_query($query_songsList, $conexion) or die(mysql_error());
 	$row_songsList = mysql_fetch_assoc($songsList);
 	$totalRows_songsList = mysql_num_rows($songsList);
 
-	//User music  --> songsListJS
+	// User music  --> songsListJS
 	mysql_select_db($database_conexion, $conexion);
 	$query_songsListJS = sprintf("SELECT f.id, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
 	$songsListJS = mysql_query($query_songsListJS, $conexion) or die(mysql_error());
@@ -23,7 +23,7 @@
 			do { 
 			$contador = $contador+1;
 		?>
-			<li id="song<?php echo $contador ?>" class="song<?php echo $row_songsList['id'] ?>">
+			<li class="song<?php echo $row_songsList['id'] ?>" id="song<?php echo $contador ?>">
 				<div class="playPause" onClick="playTrack(<?php echo $contador ?>)">
 					<div class="play" style="display:block;">
 						<?php include("../../../images/svg/play.php"); ?>
@@ -34,18 +34,30 @@
 				</div>
 				<div class="text" onClick="playTrack(<?php echo $contador ?>)"><?php echo $row_songsList['title']?></div>
 				<div class="duration"><?php echo $row_songsList['duration']?></div>
-				<div class="actions">
-					<div class="delete" onClick="deleteSong(1, <?php echo $row_songsList['id'] ?>)">
-						<?php include("../../../images/svg/clear.php"); ?>
-					</div>
-				</div>
-				<div class="deleteBoxConfirmation" id="delete<?php echo $row_songsList['id'] ?>">
-					<div class="text">Delete this song?</div>
-					<div class="buttons">
-						<button onClick="deleteSong(1, <?php echo $row_songsList['id'] ?>)">NO</button>
-						<button onClick="deleteSong(2, <?php echo $row_songsList['id'] ?>)">YES</button>
-					</div>
-				</div>
+
+                <?php  if (isset($_SESSION['MM_Id'])) { ?>
+                    <div class="actions">
+                        <?php if ($userId == $_SESSION['MM_Id']) { ?>
+                            <div class="delete" onClick="deleteSong(1, <?php echo $row_songsList['id'] ?>)">
+                                <?php include("../../../images/svg/clear.php"); ?>
+                            </div>
+                        <?php } else { ?>
+                            <div class="add" onClick="addSong(1, <?php echo $row_songsList['id'] ?>, <?php echo $row_songsList['song'] ?>)">
+                                <?php include("../../../images/svg/add.php"); ?>
+                            </div>
+                            <div class="add added">
+                                <?php include("../../../images/svg/check.php"); ?>
+                            </div>
+                        <?php } ?>
+                    </div>
+                    <div class="deleteBoxConfirmation" id="delete<?php echo $row_songsList['id'] ?>">
+                        <div class="text">Delete this song?</div>
+                        <div class="buttons">
+                            <button onClick="deleteSong(1, <?php echo $row_songsList['id'] ?>)">NO</button>
+                            <button onClick="deleteSong(2, <?php echo $row_songsList['id'] ?>)">YES</button>
+                        </div>
+                    </div>
+                <?php } ?>
 			</li>
 		<?php } while ($row_songsList = mysql_fetch_assoc($songsList)); ?>
 	</ul>

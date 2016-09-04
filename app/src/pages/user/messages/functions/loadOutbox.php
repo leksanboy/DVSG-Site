@@ -14,7 +14,7 @@
 	<?php do { ?>
 		<div class="messageBox" id="message<?php echo $row_outboxMessages['id'] ?>">
 			<div class="head">
-				<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_outboxMessages['receiver']); ?>'">
+				<div class="image" onclick="userPage(<?php echo $row_outboxMessages['receiver']; ?>)">
 					<img src="<?php echo userAvatar($row_outboxMessages['receiver']); ?>"/>
 				</div>
 				<div class="imageSender">
@@ -23,7 +23,7 @@
 						<img src="<?php echo userAvatar($row_outboxMessages['sender']); ?>"/>
 					</div>
 				</div>
-				<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo userId($row_outboxMessages['receiver']); ?>'">
+				<div class="name" onclick="userPage(<?php echo $row_outboxMessages['receiver']; ?>)">
 					<?php  echo userName($row_outboxMessages['receiver']); ?>
 					<div class="date">
 						<?php echo timeAgo($row_outboxMessages['time']); ?>

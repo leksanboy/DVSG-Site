@@ -227,7 +227,7 @@
 							</div>\
 							<div class='searchReceiverDataList'></div>\
 						</div>\
-						<form onSubmit='return false' class='newMessageForm'>\
+						<form onSubmit='return false' class='newMessageBox'>\
 							<div class='answerBox'>\
 								<textarea name='answer' placeholder='Write the message...'></textarea>\
 							</div>\

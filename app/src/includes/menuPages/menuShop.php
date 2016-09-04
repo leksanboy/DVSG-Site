@@ -40,13 +40,5 @@
 				</span>
 			</a>
 		</li>
-		<li>
-			<a onClick="clickThePage(6)">
-				SOCIAL NETWORK
-				<span class="paperripple">
-					<span class="circleNav"></span>
-				</span>
-			</a>
-		</li>
 	</ul>
 </nav>

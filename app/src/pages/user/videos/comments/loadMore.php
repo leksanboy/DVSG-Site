@@ -1,12 +1,12 @@
 <?php require_once('../../../../Connections/conexion.php');
-	$photoId = $_POST['photoId'];
+	$videoId = $_POST['videoId'];
 	$cuantity = $_POST['cuantity'];
 	$_SESSION['moreComments'] = $_SESSION['moreComments'] + $cuantity;
 
-	// More comments user photo
+	// More comments user video
 	mysql_select_db($database_conexion, $conexion);
-	$query_GetMoreComments = sprintf ("SELECT * FROM z_photos_comments WHERE photo = %s ORDER BY date DESC LIMIT %s,  10",
-		GetSQLValueString($photoId, "int"),
+	$query_GetMoreComments = sprintf ("SELECT * FROM z_videos_comments WHERE video = %s ORDER BY date DESC LIMIT %s,  10",
+		GetSQLValueString($videoId, "int"),
 		GetSQLValueString($_SESSION['moreComments'], "int"));
 	$GetMoreComments = mysql_query($query_GetMoreComments, $conexion) or die(mysql_error());
 	$row_GetMoreComments = mysql_fetch_assoc($GetMoreComments);
@@ -16,12 +16,16 @@
 <?php if ($row_GetMoreComments != ''){?>
 	<?php do { ?>
 	    <div class="item" id="comment<?php echo $row_GetMoreComments['id'] ?>">
-	        <div class="avatar" onclick="userPage(<?php echo $row_GetMoreComments['user']; ?>)">
-	            <img src="<?php echo userAvatar($row_GetMoreComments["user"]); ?>" width="36px" height="36px" style="border-radius: 50%"/>
+	        <div class="avatar">
+	            <a href="<?php echo $urlWeb ?>id<?php echo $row_GetMoreComments['user']; ?>">
+	                <img src="<?php echo userAvatar($row_GetMoreComments["user"]); ?>" width="36px" height="36px" style="border-radius: 50%"/>
+	            </a>
 	        </div>
 
-	        <div class="name" onclick="userPage(<?php echo $row_GetMoreComments['user']; ?>)">
-	            <?php echo userName($row_GetMoreComments['user']); ?>
+	        <div class="name">
+	            <a href="<?php echo $urlWeb ?>id<?php echo $row_GetMoreComments['user']; ?>">
+	                <?php echo userName($row_GetMoreComments['user']); ?>
+	            </a>
 	            <font size="-2"><?php echo timeAgo($row_GetMoreComments['date']);?></font>
 	        </div>
 

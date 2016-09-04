@@ -1,17 +1,20 @@
 <div class="defaultDataList"></div>
 
 <script type="text/javascript">
+	var userId = <?php echo $userPageId ?>;
+	console.log('userId', userId);
+
 	//·····> SVG icons
-	var uploadIcon 	= '<svg viewBox="0 0 48 48"><path d="M18 32h12V20h8L24 6 10 20h8zm-8 4h28v4H10z"/></svg>';
-	var arrowUpIcon = '<svg viewBox="0 0 24 24"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>';
-	var progressIcon = '<svg><circle fill="none"/></svg>';
-	
+	var uploadIcon 			= '<?php include('images/svg/upload.php'); ?>',
+		arrowUpIcon 		= '<?php include('images/svg/arrow-up.php'); ?>',
+		progressIcon 		= '<?php include('images/svg/progress.php'); ?>';
+
 	//·····> Get id element
 	function getFile(el){
 		return document.getElementById(el);
 	}
 
-	//·····> Add new song
+	//·····> Add new photo
 	var filesArray = [];
 	function uploadFile(type, event){
 		if (type==1) { // Open
@@ -74,7 +77,7 @@
 
 			if (filesArray.length > 0) // Disable button after upload
 				$(event).attr("disabled", "disabled");
-		} else if (type==4) { //Get song data
+		} else if (type==4) { //Get photo data
 			var	file,
 				i = 0;
 
@@ -100,7 +103,7 @@
 		}
 	}
 
-	//·····> Add new song uploading progress bar
+	//·····> Add new photo uploading progress bar
 	/* https://www.developphp.com/video/JavaScript/File-
 	Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP */
 	function progressHandler(event, i){
@@ -137,7 +140,7 @@
 				url: '<?php echo $urlWeb ?>' + 'pages/user/photos/delete.php',
 				data: 'id=' + id,
 				success: function(response){
-					$('.song'+id).fadeOut(300);
+					$('.photo'+id).fadeOut(300);
 					$('#delete'+id).fadeOut(300);
 				}
 			});
@@ -147,8 +150,9 @@
 	//·····> Default
 	function defaultLoad(){
 		$.ajax({
-			type: 'GET',
+			type: 'POST',
 			url: '<?php echo $urlWeb ?>' + 'pages/user/photos/default.php',
+			data: 'userId=' + userId,
 			success: function(response) {
 				$('.defaultDataList').show();
 				$('.defaultDataList').html(response);
@@ -158,7 +162,7 @@
 	}
 	defaultLoad();
 
-	//·····> Open video
+	//·····> Open photo
 	function openPhoto(type, position, photoId){
 		if (type==1) { // Open
 			$('.modalBox').toggleClass('modalDisplay');
@@ -170,7 +174,7 @@
 			$.ajax({
                 type: 'POST',
                 url: '<?php echo $urlWeb ?>' + 'pages/user/photos/slidePhotos.php',
-                data: 'position=' + position + '&photoId=' + photoId,
+                data: 'position=' + position + '&photoId=' + photoId + '&userId=' + userId,
                 success: function(response){
                     $('.slidePhotosBox').html(response);
                 } 

@@ -97,7 +97,7 @@
 	function userAvatar($idUser){
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_GetData = sprintf ("SELECT z_users.avatar FROM z_users WHERE z_users.id = %s", $idUser, "int");
+		$query_GetData = sprintf ("SELECT avatar FROM z_users WHERE id = %s", $idUser, "int");
 		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
 		$row_GetData = mysql_fetch_assoc($GetData);
 		$totalRows_GetData = mysql_num_rows($GetData);
@@ -110,7 +110,7 @@
 	function userName($idUser){
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_GetData = sprintf ("SELECT z_users.name FROM z_users WHERE z_users.id = %s", $idUser, "int");
+		$query_GetData = sprintf ("SELECT name FROM z_users WHERE id = %s", $idUser, "int");
 		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
 		$row_GetData = mysql_fetch_assoc($GetData);
 		$totalRows_GetData = mysql_num_rows($GetData);
@@ -123,7 +123,7 @@
 	function userId($iduser){
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_GetData = sprintf ("SELECT z_users.id FROM z_users WHERE z_users.id = %s", $iduser, "int");
+		$query_GetData = sprintf ("SELECT id FROM z_users WHERE id = %s", $iduser, "int");
 		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
 		$row_GetData = mysql_fetch_assoc($GetData);
 		$totalRows_GetData = mysql_num_rows($GetData);
@@ -137,8 +137,8 @@
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
 		$query_CheckData = sprintf ("SELECT * FROM z_photos_likes WHERE user = %s AND photo = %s", 
-				GetSQLValueString($iduser, "int"),
-				GetSQLValueString($idphoto, "int"));
+			GetSQLValueString($iduser, "int"),
+			GetSQLValueString($idphoto, "int"));
 		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
 		$row_CheckData = mysql_fetch_assoc($CheckData);
 		$totalRows_CheckData = mysql_num_rows($CheckData);
@@ -152,45 +152,44 @@
 		mysql_free_result($CheckData);
 	}
 
-	// Count likes user photo
-	function countLikesUserPhoto($idphoto) {
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_GetCount = sprintf ("SELECT * FROM z_photos_likes WHERE photo = %s",
-			GetSQLValueString($idphoto, "int"));
-		$GetCount = mysql_query($query_GetCount, $conexion) or die(mysql_error());
-		$row_GetCount = mysql_fetch_assoc($GetCount);
-		$totalRows_GetCount = mysql_num_rows($GetCount);
-
-		if ($totalRows_GetCount == '')
-			$totalRows_GetCount = 0;
-
-		return $totalRows_GetCount;
-		mysql_free_result($GetCount);
-	}
-
-	// Count comments user photo
-	function countCommentsUserPhoto($idphoto) {
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_GetCount = sprintf ("SELECT * FROM z_photos_comments WHERE photo = %s",
-			GetSQLValueString($idphoto, "int"));
-		$GetCount = mysql_query($query_GetCount, $conexion) or die(mysql_error());
-		$row_GetCount = mysql_fetch_assoc($GetCount);
-		$totalRows_GetCount = mysql_num_rows($GetCount);
-
-		if ($totalRows_GetCount == '')
-			$totalRows_GetCount = 0;
-
-		return $totalRows_GetCount;
-		mysql_free_result($GetCount);
-	}
-
 	// Get date from user photo id
 	function timeUserPhoto($idphoto){
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_GetData = sprintf ("SELECT z_photos.time FROM z_photos WHERE z_photos.id = %s", $idphoto, "int");
+		$query_GetData = sprintf ("SELECT z_photos.time FROM z_photos WHERE id = %s", $idphoto, "int");
+		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
+		$row_GetData = mysql_fetch_assoc($GetData);
+		$totalRows_GetData = mysql_num_rows($GetData);
+				
+		return $row_GetData['time'];
+		mysql_free_result($GetData);
+	}
+
+	// Check if user like photo
+	function checkLikeUserVideo($iduser, $idvideo) {
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_CheckData = sprintf ("SELECT * FROM z_videos_likes WHERE user = %s AND video = %s", 
+			GetSQLValueString($iduser, "int"),
+			GetSQLValueString($idvideo, "int"));
+		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
+		$row_CheckData = mysql_fetch_assoc($CheckData);
+		$totalRows_CheckData = mysql_num_rows($CheckData);
+
+		if ($totalRows_CheckData==0) {
+			return true;
+		} else{
+			return false;
+		}
+
+		mysql_free_result($CheckData);
+	}
+
+	// Get date from user photo id
+	function timeUserVideo($idvideo){
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_GetData = sprintf ("SELECT z_videos.time FROM z_videos WHERE id = %s", $idvideo, "int");
 		$GetData = mysql_query($query_GetData, $conexion) or die(mysql_error());
 		$row_GetData = mysql_fetch_assoc($GetData);
 		$totalRows_GetData = mysql_num_rows($GetData);

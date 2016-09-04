@@ -18,7 +18,7 @@
  * Domain URL
  */
 // var url = 'http://www.dvsg.co/';
-// var url = 'http://104.155.115.61/';
+// var url = 'http://104.155.93.126/';
 var url = 'http://localhost/DVSG-site/app/dist/';
 var $;
 var tabla;
@@ -50,6 +50,64 @@ function cerrar_cookie(valor) {
     $('.cookieBox').addClass('hideCookieBox');
 }
 
+
+/**
+ * Go to user page
+ */
+function userPage(id) {
+    document.location.href = url + "id" + id;
+}
+
+
+/**
+ * Go to menu pages
+ */
+function clickThePage(type) {
+    setTimeout(function() {
+        if (type === 1) {
+            document.location.href = url;
+        } else if (type === 2) {
+            document.location.href = url + "cars";
+        } else if (type === 3) {
+            document.location.href = url + "shop";
+        } else if (type === 4) {
+            document.location.href = url + "versus";
+        } else if (type === 5) {
+            document.location.href = url + "blog";
+        } else if (type === 7) {
+            document.location.href = url + "register";
+        } else if (type === 8) {
+            document.location.href = url + "notice-post";
+        } else if (type === 9) {
+            document.location.href = url + "shop-post";
+        } else if (type === 10) {
+            document.location.href = url + "blog-post";
+        } else if (type === 11) {
+            document.location.href = url + "id";
+        } else if (type === 12) {
+            document.location.href = url + "settings";
+        } else if (type === 13) {
+            document.location.href = url + "messages";
+        } else if (type === 14) {
+            document.location.href = url + "friends";
+        } else if (type === 15) {
+            document.location.href = url + "audios";
+        } else if (type === 16) {
+            document.location.href = url + "videos";
+        } else if (type === 17) {
+            document.location.href = url + "photos";
+        }
+    }, 350);
+}
+
+
+
+
+
+
+
+
+
 /**
  * Header Background color changing
  */
@@ -67,34 +125,6 @@ $(window).bind('scroll', function() {
     }
     fadingTop.css('background', 'rgba(33, 150, 243, ' + opacity + ')');
     fadingBottom.css('background', 'rgba(255, 255, 255, ' + opacity + ')');
-});
-
-/**
- * Header scroll on user page
- */
-var $imagesBox = $('.backgroundImages .imgBox'),
-    $dataBox = $('.dataBox'),
-    $header = $('.header'),
-    navHeight = 48;
-
-$(window).scroll(function() {
-    var scrollTop = $(this).scrollTop(),
-        headlineHeight = $imagesBox.outerHeight() - navHeight,
-        navOffset = $header.offset().top;
-
-    $imagesBox.css({
-        'opacity': (1 - scrollTop / headlineHeight)
-    });
-    $dataBox.children().css({
-        'transform': 'translateY(' + scrollTop * 0.4 + 'px)'
-    });
-    if (navOffset > headlineHeight) {
-        $header.addClass('scrolled');
-        $('.userName').addClass('showUserName');
-    } else {
-        $header.removeClass('scrolled');
-        $('.userName').removeClass('showUserName');
-    }
 });
 
 
@@ -121,15 +151,6 @@ function toggleLeftSide(type) {
     }
 }
 
-
-/**
- * Open/Close UserDataBox
- */
-function openUserDataBox() {
-    $('.userDataBox').toggle();
-}
-
-
 /**
  * Open/Close Right menu
  */
@@ -152,6 +173,20 @@ function toggleRightSide(type) {
         }, 600);
     }
 }
+
+/**
+ * Open/Close UserDataBox
+ */
+function openUserDataBox() {
+    $('.userDataBox').toggle();
+}
+
+
+
+
+
+
+
 
 
 /**
@@ -584,58 +619,6 @@ Sketch.init();
 
 
 /**
- * Menu location links
- *  - Home
- *  - Cars
- *  - Shop
- *  - Versus
- *  - Blog
- *  - Social network
- *  - Register page
- *  - Create notice post
- */
-function clickThePage(type) {
-    setTimeout(function() {
-        if (type === 1) {
-            document.location.href = url;
-        } else if (type === 2) {
-            document.location.href = url + "cars/";
-        } else if (type === 3) {
-            document.location.href = url + "shop/";
-        } else if (type === 4) {
-            document.location.href = url + "versus/";
-        } else if (type === 5) {
-            document.location.href = url + "blog/";
-        } else if (type === 6) {
-            document.location.href = url + "social-network/";
-        } else if (type === 7) {
-            document.location.href = url + "register";
-        } else if (type === 8) {
-            document.location.href = url + "notice-post";
-        } else if (type === 9) {
-            document.location.href = url + "shop-post";
-        } else if (type === 10) {
-            document.location.href = url + "blog-post";
-        } else if (type === 11) {
-            document.location.href = url + "my";
-        } else if (type === 12) {
-            document.location.href = url + "settings.php";
-        } else if (type === 13) {
-            document.location.href = url + "messages.php";
-        } else if (type === 14) {
-            document.location.href = url + "friends.php";
-        } else if (type === 15) {
-            document.location.href = url + "music.php";
-        } else if (type === 16) {
-            document.location.href = url + "videos.php";
-        } else if (type === 17) {
-            document.location.href = url + "photos.php";
-        }
-    }, 350);
-}
-
-
-/**
  * MENU NAV Splash menu bar click effect
  */
 $(function() {
@@ -709,45 +692,41 @@ function logOutFade() {
 
 
 /**
- * Show/Hide Signin access window
- */
-function singInAccess() {
-    $('.signInBox').toggleClass('signInBoxActive');
-    $('.signInBoxHidden').toggleClass('signInBoxHiddenActive');
-}
-
-
-/**
  * Signin login form access
  */
-function loginAccess(name, password, checkbox) {
-    if (name == "" || password == "") {
-        $('.error').fadeIn(300).html('Complete the Fields');
-        setTimeout(function() {
-            $('.error').fadeOut(500);
-        }, 3000);
+function loginAccess(type, name, password, checkbox) {
+    if (type == 1) {
+        if (name == "" || password == "") {
+            $('.error').fadeIn(300).html('Complete the Fields');
+            setTimeout(function() {
+                $('.error').fadeOut(300);
+            }, 3000);
 
-        return false;
-    } else {
-        $.ajax({
-            type: 'POST',
-            url: url + 'includes/arrancar.php',
-            data: 'name=' + name + '&password=' + password + '&recordar=' + checkbox,
-            success: function(html) {
-                if (html != "false") {
-                    $('.signInLoading').val("Loading...");
-                    location.reload();
-                    return true;
-                } else if (html == "false") {
-                    $('.error').fadeIn(300);
-                    setTimeout(function() {
-                        $('.error').fadeOut(500);
-                    }, 3000);
-                    $('.error').html('Email or Password is incorrect');
-                    return false;
+            return false;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: url + 'includes/arrancar.php',
+                data: 'name=' + name + '&password=' + password + '&recordar=' + checkbox,
+                success: function(html) {
+                    if (html != "false") {
+                        $('.signInLoading').val("Loading...");
+                        location.reload();
+                        return true;
+                    } else if (html == "false") {
+                        $('.error').fadeIn(300);
+                        setTimeout(function() {
+                            $('.error').fadeOut(500);
+                        }, 3000);
+                        $('.error').html('Email or Password is incorrect');
+                        return false;
+                    }
                 }
-            }
-        });
+            });
+        }
+    } else if (type == 2) {
+        $('.signInBox').toggleClass('signInBoxActive');
+        $('.signInBoxHidden').toggleClass('signInBoxHiddenActive');
     }
 }
 

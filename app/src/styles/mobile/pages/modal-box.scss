@@ -242,40 +242,6 @@
 			width: 100%;
 		}
 
-		.answerBox{
-			box-sizing: border-box;
-			padding: 12px;
-			display: none;
-			float: left;
-			width: 100%;
-
-			textarea{
-				background: transparent;
-				border-radius: 3px;
-				min-height: 96px;
-				font-size: 14px;
-				color: #404040;
-				outline: none;
-				border: none;
-				float: left;
-				width: 100%;
-			}
-		}
-
-		.newMessageForm{
-			.answerBox{
-				display: block;
-			}
-
-			.buttons{
-				button{
-					&:last-child{
-						display: block;
-					}
-				}
-			}
-		}
-
 		.buttons{
 			border-top: 1px solid #c6c6c6;
 			width: 100%;
@@ -304,6 +270,43 @@
 
 				&:disabled{
 					background: #999;
+				}
+			}
+
+			.actions{
+				margin: 12px 0 0 6px;
+				float: left;
+
+				.action{
+					border-radius: 3px;
+					margin: 0 0 0 6px;
+					height: 36px;
+					width: 36px;
+					float: left;
+
+					input{
+						display: none;
+					}
+
+					label{
+						height: 100%;
+						width: 100%;
+						
+						svg{
+							fill: #404040;
+							padding: 8px;
+							height: 20px;
+							width: 20px;
+						}
+
+						&:active{
+							background-color: #09f;
+
+							svg{
+								fill: #fff;
+							}
+						}
+					}
 				}
 			}
 		}
@@ -348,6 +351,40 @@
 
 			input{
 				display: none;
+			}
+		}
+
+		.answerBox{
+			box-sizing: border-box;
+			padding: 12px;
+			display: none;
+			float: left;
+			width: 100%;
+
+			textarea{
+				background: transparent;
+				border-radius: 3px;
+				min-height: 96px;
+				font-size: 14px;
+				color: #404040;
+				outline: none;
+				border: none;
+				float: left;
+				width: 100%;
+			}
+		}
+
+		.newMessageBox{
+			.answerBox{
+				display: block;
+			}
+
+			.buttons{
+				button{
+					&:last-child{
+						display: block;
+					}
+				}
 			}
 		}
 
@@ -481,405 +518,818 @@
 			width: 100%;
 			float: left;
 
-			.container{
+			.boxContent{
+				background: #1e1e1e;
+				position: relative;
+				height: 360px;
 				width: 100%;
 				float: left;
 
-				.boxPhoto{
-					background: #1e1e1e;
-					position: relative;
-					height: 360px;
+				.panel{
+					position: absolute;
+					height: 36px;
 					width: 100%;
-					float: left;
 
-					.panel{
+					.counter{
+						text-shadow: 1px 1px 3px #000;
 						position: absolute;
+						text-align: center;
+						line-height: 36px;
 						height: 36px;
 						width: 100%;
-
-						.counter{
-							text-shadow: 1px 1px 3px #000;
-							position: absolute;
-							text-align: center;
-							line-height: 36px;
-							height: 36px;
-							width: 100%;
-							color: #fff;
-						}
-
-						.close{
-							position: absolute;
-							height: 36px;
-							width: 36px;
-							right: 0;
-
-							svg{
-								filter: drop-shadow(0px 1px 7px rgba(0,0,0,0.333));
-								padding: 8px;
-								height: 20px;
-								width: 20px;
-								fill: #fff;
-							}
-						}
+						color: #fff;
 					}
 
-
-					.image{
-						display: flex;
-						height: 360px;
-						width: 100%;
-
-						img{
-							max-height: 100%;
-							max-width: 100%;
-							margin: auto;
-						}
-					}
-
-
-					.prev,
-					.next{
+					.close{
 						position: absolute;
-						margin-top: 100px;
-						height: 160px;
-						width: 86px;
-
-						svg{
-							filter: drop-shadow(0px 4px 2px rgba(0,0,0,.5));
-							padding: 64px 49px 64px 5px;
-							height: 32px;
-							width: 32px;
-							fill: #fff;
-						}
-					}
-
-					.next{
+						height: 36px;
+						width: 36px;
 						right: 0;
 
 						svg{
-							padding: 64px 5px 64px 49px;
+							filter: drop-shadow(0px 1px 7px rgba(0,0,0,0.333));
+							padding: 8px;
+							height: 20px;
+							width: 20px;
+							fill: #fff;
 						}
 					}
 				}
 
-				.boxData{
-					position: relative;
-					background: #fff;
+
+				.image{
+					display: flex;
+					height: 360px;
+					width: 100%;
+
+					img{
+						max-height: 100%;
+						max-width: 100%;
+						margin: auto;
+					}
+				}
+
+
+				.prev,
+				.next{
+					position: absolute;
+					margin-top: 100px;
+					height: 160px;
+					width: 86px;
+
+					svg{
+						filter: drop-shadow(0px 4px 2px rgba(0,0,0,.5));
+						padding: 64px 49px 64px 5px;
+						height: 32px;
+						width: 32px;
+						fill: #fff;
+					}
+				}
+
+				.next{
+					right: 0;
+
+					svg{
+						padding: 64px 5px 64px 49px;
+					}
+				}
+			}
+
+			.boxData{
+				position: relative;
+				background: #fff;
+				width: 100%;
+				float: left;
+
+				.user{
+					border-bottom: 1px solid #c6c6c6;
+					border-top: 1px solid #c6c6c6;
+					height: 54px;
 					width: 100%;
 					float: left;
 
-					.user{
-						border-bottom: 1px solid #c6c6c6;
-						border-top: 1px solid #c6c6c6;
-						height: 54px;
-						width: 100%;
+					.avatar{
+						border: 1px solid #404040;
+						border-radius: 50%;
+						margin: 10px 12px;
+						height: 36px;
+						width: 36px;
 						float: left;
 
-						.avatar{
-							border: 1px solid #404040;
+						img{
 							border-radius: 50%;
-							margin: 10px 12px;
-							height: 36px;
-							width: 36px;
-							float: left;
-
-							img{
-								border-radius: 50%;
-								background: #09f;
-								height: 100%;
-								width: 100%;
-							}
+							background: #09f;
+							height: 100%;
+							width: 100%;
 						}
+					}
 
-						.name{
-							line-height: 14px;
-							margin: 16px 0 0;
-							font-size: 14px;
+					.name{
+						line-height: 14px;
+						margin: 16px 0 0;
+						font-size: 14px;
+						color: #404040;
+						height: 14px;
+						float: left;
+						width: 80%;
+					}
+
+					.actions{
+						margin: 4px 0 0;
+						float: left;
+						width: 80%;
+
+						.date{
+							line-height: 10px;
+							font-size: 10px;
 							color: #404040;
-							height: 14px;
+							height: 10px;
 							float: left;
-							width: 80%;
+							margin: 0;
 						}
 
-						.actions{
-							margin: 4px 0 0;
-							float: left;
-							width: 80%;
+						.analytics{
+							margin: -8px 0 0;
+							float: right;
 
-							.date{
-								line-height: 10px;
-								font-size: 10px;
-								color: #404040;
-								height: 10px;
+							.comments,
+							.likes {
+								float: right;
+								height: 24px;
+								width: 64px;
+								color: #09f;
+
+								svg{
+									margin: 2px 4px -2px 4px;
+									height: 20px;
+									width: 20px;
+									fill: #09f;
+								}
+							}
+						}
+					}
+				}
+
+				.comments{
+					float: left;
+					width: 100%;
+
+					.commentsList{
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						.item{
+							margin: 2px 0;
+							width: 100%;
+							float: left;
+
+							.avatar{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 50%;
+								margin: 0 0 0 4px;
+								overflow: hidden;
+								height: 36px;
+								width: 36px;
 								float: left;
-								margin: 0;
 							}
 
-							.analytics{
-								margin: -8px 0 0;
+							.name{
+								padding: 2px 12px;
+								font-size: 13px;
+								color: #404040;
+								float: left;
+
+								&:hover,
+								&:active{
+									color: #09f;
+								}
+							}
+
+							.content{
+								text-overflow: ellipsis;
+								word-break: break-word;
+								margin: -12px 0 0 50px;
+								line-height: 15px;
+								min-height: 15px;
+								font-size: 13px;
+								float: left;
+								color: #999;
+								width: 100%;
+
+								.inner{
+									padding: 0 56px 12px 0;
+								}
+							}
+
+							.delete{
+								margin: 0 4px 0 0;
 								float: right;
 
-								.comments,
-								.likes {
-									float: right;
-									height: 24px;
-									width: 64px;
-									color: #09f;
+								svg{
+									fill: #404040;
+									height: 20px;
+									width: 20px;
+								}
+							}
 
-									svg{
-										margin: 2px 4px -2px 4px;
-										height: 20px;
-										width: 20px;
-										fill: #09f;
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								margin: 2px;
+								z-index: 9;
+								right: 0;
+
+								.text{
+									padding: 4px 6px 8px;
+									line-height: 24px;
+									color: #404040;
+									width: inherit;
+									height: 24px;
+									margin: 0;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
 									}
 								}
 							}
 						}
 					}
 
-					.comments{
-						float: left;
+					.noComents{
+						text-align: center;
+						padding: 12px 0;
+						color: #404040;
+					}
+
+					.newComment{
 						width: 100%;
+						float: left;
 
-						.commentsList{
-							padding: 12px 0;
-							margin: 0 2%;
-							float: left;
-							width: 96%;
-
-							.item{
-								margin: 2px 0;
-								width: 100%;
-								float: left;
-
-								.avatar{
-									box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-									border-radius: 50%;
-									margin: 0 0 0 4px;
-									overflow: hidden;
-									height: 36px;
-									width: 36px;
-									float: left;
-								}
-
-								.name{
-									padding: 2px 12px;
-									font-size: 13px;
-									color: #404040;
-									float: left;
-
-									a{
-										text-decoration: none;
-										color: #404040;
-										
-										&:hover,
-										&:active{
-											color: #09f;
-										}
-									}
-								}
-
-								.content{
-									text-overflow: ellipsis;
-									word-break: break-word;
-									margin: -12px 0 0 50px;
-									line-height: 15px;
-									min-height: 15px;
-									font-size: 13px;
-									float: left;
-									color: #999;
-									width: 100%;
-
-									.inner{
-										padding: 0 56px 12px 0;
-									}
-								}
-
-								.delete{
-									margin: 0 4px 0 0;
-									float: right;
-
-									svg{
-										fill: #404040;
-										height: 20px;
-										width: 20px;
-									}
-								}
-
-								.deleteBoxConfirmation{
-									box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-									border-radius: 3px;
-									position: absolute;
-									background: #fff;
-									display: none;
-									padding: 6px;
-									float: right;
-									margin: 2px;
-									z-index: 9;
-									right: 0;
-
-									.text{
-										padding: 4px 6px 8px;
-										line-height: 24px;
-										color: #404040;
-										width: inherit;
-										height: 24px;
-										margin: 0;
-									}
-
-									.buttons{
-										text-align: center;
-										display: flex;
-										width: 100%;
-										margin: 0;
-
-										button{
-											border-radius: 3px;
-											background: #f00;
-											outline: none;
-											margin: 0 4px;
-											border: none;
-											height: 28px;
-											color: #fff;
-											width: 100%;
-
-											&:last-child{
-												background: #09f;
-											}
-										}
-									}
-								}
-							}
-						}
-
-						.noComents{
-							text-align: center;
-							padding: 12px 0;
+						.inputBox{
+							box-shadow: inset 0 -1px 0 0 #333;
+							padding: 8px 13% 8px 3%;
+							margin: 18px 3% 12px;
+							background: none;
+							font-size: 13px;
+							transform: none;
 							color: #404040;
-						}
+							outline: none;
+							border: none;
+							resize: none;
+							height: 18px;
+							width: 78%;
 
-						.newComment{
-							width: 100%;
-							float: left;
-
-							.inputBox{
-								box-shadow: inset 0 -1px 0 0 #333;
-								padding: 8px 13% 8px 3%;
-								margin: 18px 3% 12px;
-								background: none;
-								font-size: 13px;
-								transform: none;
-								color: #404040;
-								outline: none;
-								border: none;
-								resize: none;
-								height: 18px;
-								width: 78%;
-
-								&:focus{
-									box-shadow: inset 0 -1px 0 0 #09f;
-								}
-							}
-
-							.button{
-								padding: 6px 7% 2px 3%;
-								border-radius: 3px;
-								position: relative;
-								margin: -50px 0 0;
-								float: right;
-								height: 26px;
-								color: #fff;
-								width: 3%;
-
-								svg{
-									height: 22px;
-									width: 22px;
-									fill: #333;
-								}
+							&:focus{
+								box-shadow: inset 0 -1px 0 0 #09f;
 							}
 						}
 
-						.loadMore{
-							text-align: center;
+						.button{
+							padding: 6px 7% 2px 3%;
 							border-radius: 3px;
-							line-height: 36px;
-							background: #fff;
-							margin: 12px 10%;
-							color: #404040;
-							height: 36px;
-							float: left;
-							width: 80%;
+							position: relative;
+							margin: -50px 0 0;
+							float: right;
+							height: 26px;
+							color: #fff;
+							width: 3%;
 
-							&:active{
-								background: #09f;
-								color: #fff;
+							svg{
+								height: 22px;
+								width: 22px;
+								fill: #333;
 							}
 						}
+					}
 
-						.registerToComment{
-							text-transform: uppercase;
-							text-align: center;
-							padding: 12px 0;
-							float: left;
-							color: #09f;
-							width: 100%;
+					.loadMore{
+						text-align: center;
+						border-radius: 3px;
+						margin: 0 10% 12px;
+						line-height: 36px;
+						background: #fff;
+						color: #404040;
+						height: 36px;
+						float: left;
+						width: 80%;
+
+						&:active{
+							background: #09f;
+							color: #fff;
 						}
+					}
+
+					.registerToComment{
+						text-transform: uppercase;
+						padding: 24px 0 12px;
+						text-align: center;
+						float: left;
+						color: #09f;
+						width: 100%;
 					}
 				}
 			}
 		}
 
 		.videoBox{
-            background: #1e1e1e;
-            position: relative;
-            overflow: hidden;
-            height: 56vw;
+            float: left;
 			width: 100%;
 
-			video{
-				height: 100%;
+			.boxContent{
+				background: #1e1e1e;
+	            position: relative;
+	            height: 56vw;
 				width: 100%;
+
+				video{
+					height: 100%;
+					width: 100%;
+				}
+
+				.title{
+					background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%);
+					box-sizing: border-box;
+		            position: absolute;
+		            height: 48px;
+		            width: 100%;
+		            top:0;
+
+		            .action{
+						float: right;
+						height: 36px;
+						width: 36px;
+						margin: 6px;
+
+		            	svg{
+		            		padding: 6px;
+		            		height: 24px;
+		            		width: 24px;
+		            		fill: #fff;
+		            	}
+		            }
+				}
+
+				.playPause{
+		            margin: -43px 0 0 -43px;
+					position: absolute;
+		            height: 86px;
+		            width: 86px;
+		            left: 50%;
+		            top: 50%;
+
+		            svg{
+		            	height: 100%;
+		            	width: 100%;
+		            	fill: #fff;
+		            }
+				}
+
+				.controlPanel{
+					background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%);
+					position: absolute;
+					height: 48px;
+					width: 100%;
+					bottom: 0;
+					display: flex;
+
+					.time{
+						box-sizing: border-box;
+						line-height: 48px;
+						padding: 0 12px;
+						font-size: 12px;
+						width: 100%;
+						float: left;
+						color: #fff;
+
+						.current{
+							float: left;
+						}
+
+						.total{
+							float: right;
+						}
+					}
+
+					.fullScreen{
+						float: left;
+						height: 36px;
+						width: 36px;
+						margin: 6px;
+
+		            	svg{
+		            		padding: 6px;
+		            		height: 24px;
+		            		width: 24px;
+		            		fill: #fff;
+		            	}
+					}
+				}
+
+				.progress{
+					background: rgba(255,255,255,.5);
+					position: absolute;
+					width: 100%;
+					height: 3px;
+					z-index: 1;
+					bottom: 0;
+
+					.buffer{
+						background-color: #fff;
+						position: relative;
+						margin: -3px 0 0 0;
+						opacity: .5;
+						float: left;
+						height: 3px;
+						z-index: -1;
+					}
+
+					input[type=range] {
+						background-color: transparent;
+						background-repeat: no-repeat;
+						-webkit-appearance: none;
+						background-size: 0 100%;
+						position: relative;
+						outline: none;
+						margin: auto;
+						width: 100%;
+						height: 3px;
+						float: left;
+						padding: 0;
+
+						&::-webkit-slider-runnable-track, 
+						&::-webkit-slider-thumb {
+							-webkit-appearance: none;
+						}
+
+						&::-webkit-slider-thumb {
+							position: relative;
+							margin: 0;
+							border: none;
+							width: 14px;
+							height: 14px;
+							transition: .3s;
+							border-radius: 50%;
+							background: #132030;
+							border: 3px solid #fff;
+							cursor: ew-resize;
+							box-shadow: 0 5px 10px 0 rgba(0,0,0,.29),0 13px 30px 0 rgba(0,0,0,.17);
+						}
+
+						&::-moz-range-thumb
+						&::-ms-thumb, {
+							border: none;
+							width: 16px;
+							height: 16px;
+							border-radius: 50%;
+							box-shadow: inset 1px 1px 3px #00cafc;
+							background: #fff;
+							cursor: ew-resize;
+						}
+					}
+				}
 			}
 
-			.title{
-				background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0) 100%);
-	            position: absolute;
-	            font-size: 14px;
-	            height: 48px;
-	            color: #fff;
-	            width: 100%;
-	            top:0;
-
-	            .button{
-	            	position: relative;
-	            	float: right;
-	            	height: 36px;
-	            	width: 36px;
-
-	            	svg{
-	            		padding: 6px;
-	            		height: 24px;
-	            		width: 24px;
-	            		fill: #fff;
-	            	}
-	            }
-			}
-
-			.playPause{
-				position: absolute;
-	            background: #09f;
-	            margin: 100px;
-	            height: 64px;
-	            width: 64px;
-	            top: 0;
-			}
-
-			.controlPanel{
-				background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.75) 100%);
-				position: absolute;
-				height: 48px;
+			.boxData{
+				position: relative;
+				background: #fff;
 				width: 100%;
-				bottom: 0;
+				float: left;
+
+				.user{
+					border-bottom: 1px solid #c6c6c6;
+					border-top: 1px solid #c6c6c6;
+					height: 54px;
+					width: 100%;
+					float: left;
+
+					.avatar{
+						border: 1px solid #404040;
+						border-radius: 50%;
+						margin: 10px 12px;
+						height: 36px;
+						width: 36px;
+						float: left;
+
+						img{
+							border-radius: 50%;
+							background: #09f;
+							height: 100%;
+							width: 100%;
+						}
+					}
+
+					.name{
+						line-height: 14px;
+						margin: 16px 0 0;
+						font-size: 14px;
+						color: #404040;
+						height: 14px;
+						float: left;
+						width: 80%;
+					}
+
+					.actions{
+						margin: 4px 0 0;
+						float: left;
+						width: 80%;
+
+						.date{
+							line-height: 10px;
+							font-size: 10px;
+							color: #404040;
+							height: 10px;
+							float: left;
+							margin: 0;
+						}
+
+						.analytics{
+							margin: -8px 0 0;
+							float: right;
+
+							.comments,
+							.likes {
+								float: right;
+								height: 24px;
+								width: 64px;
+								color: #09f;
+
+								svg{
+									margin: 2px 4px -2px 4px;
+									height: 20px;
+									width: 20px;
+									fill: #09f;
+								}
+							}
+						}
+					}
+				}
+
+				.comments{
+					float: left;
+					width: 100%;
+
+					.commentsList{
+						margin: 0 2%;
+						float: left;
+						width: 96%;
+
+						.item{
+							margin: 2px 0;
+							width: 100%;
+							float: left;
+
+							.avatar{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 50%;
+								margin: 0 0 0 4px;
+								overflow: hidden;
+								height: 36px;
+								width: 36px;
+								float: left;
+							}
+
+							.name{
+								padding: 2px 12px;
+								font-size: 13px;
+								color: #404040;
+								float: left;
+
+								&:hover,
+								&:active{
+									color: #09f;
+								}
+							}
+
+							.content{
+								text-overflow: ellipsis;
+								word-break: break-word;
+								margin: -12px 0 0 50px;
+								line-height: 15px;
+								min-height: 15px;
+								font-size: 13px;
+								float: left;
+								color: #999;
+								width: 100%;
+
+								.inner{
+									padding: 0 56px 12px 0;
+								}
+							}
+
+							.delete{
+								margin: 0 4px 0 0;
+								float: right;
+
+								svg{
+									fill: #404040;
+									height: 20px;
+									width: 20px;
+								}
+							}
+
+							.deleteBoxConfirmation{
+								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+								border-radius: 3px;
+								position: absolute;
+								background: #fff;
+								display: none;
+								padding: 6px;
+								float: right;
+								margin: 2px;
+								z-index: 9;
+								right: 0;
+
+								.text{
+									padding: 4px 6px 8px;
+									line-height: 24px;
+									color: #404040;
+									width: inherit;
+									height: 24px;
+									margin: 0;
+								}
+
+								.buttons{
+									text-align: center;
+									display: flex;
+									width: 100%;
+									margin: 0;
+
+									button{
+										border-radius: 3px;
+										background: #f00;
+										outline: none;
+										margin: 0 4px;
+										border: none;
+										height: 28px;
+										color: #fff;
+										width: 100%;
+
+										&:last-child{
+											background: #09f;
+										}
+									}
+								}
+							}
+						}
+					}
+
+					.noComents{
+						text-align: center;
+						padding: 12px 0;
+						color: #404040;
+					}
+
+					.newComment{
+						width: 100%;
+						float: left;
+
+						.inputBox{
+							box-shadow: inset 0 -1px 0 0 #333;
+							padding: 8px 13% 8px 3%;
+							margin: 18px 3% 12px;
+							background: none;
+							font-size: 13px;
+							transform: none;
+							color: #404040;
+							outline: none;
+							border: none;
+							resize: none;
+							height: 18px;
+							width: 78%;
+
+							&:focus{
+								box-shadow: inset 0 -1px 0 0 #09f;
+							}
+						}
+
+						.button{
+							padding: 6px 7% 2px 3%;
+							border-radius: 3px;
+							position: relative;
+							margin: -50px 0 0;
+							float: right;
+							height: 26px;
+							color: #fff;
+							width: 3%;
+
+							svg{
+								height: 22px;
+								width: 22px;
+								fill: #333;
+							}
+						}
+					}
+
+					.loadMore{
+						text-align: center;
+						border-radius: 3px;
+						margin: 0 10% 12px;
+						line-height: 36px;
+						background: #fff;
+						color: #404040;
+						height: 36px;
+						float: left;
+						width: 80%;
+
+						&:active{
+							background: #09f;
+							color: #fff;
+						}
+					}
+
+					.registerToComment{
+						text-transform: uppercase;
+						padding: 24px 0 12px;
+						text-align: center;
+						float: left;
+						color: #09f;
+						width: 100%;
+					}
+				}
+			}
+		}
+
+		.createPostBox{
+			float: left;
+			width: 100%;
+
+			.text{
+				border-top: 1px solid #c6c6c6;
+				box-sizing: border-box;
+				padding: 12px;
+				float: left;
+				width: 100%;
+
+				textarea{
+					background: transparent;
+					border-radius: 3px;
+					min-height: 96px;
+					font-size: 14px;
+					color: #404040;
+					outline: none;
+					border: none;
+					float: left;
+					width: 100%;
+				}
+			}
+
+			.addedFiles{
+				background-color: #333;
+				overflow-x: scroll;
+				overflow-y: hidden;
+				width: 100%;
+				float: left;
+
+				.photos{
+					display: -webkit-inline-box;
+					display: inline-box;
+					position: relative;
+					list-style: none;
+					height: 100%;
+					width: 100%;
+					float: left;
+
+					.image{
+						overflow: hidden;
+						height: 64px;
+						width: 64px;
+
+						.img{
+							background-position: center 35%;
+							background-repeat: no-repeat;
+							transform: translate(0px);
+							box-sizing: border-box;
+							background-size: cover;
+							display: inline-block;
+							height: 100%;
+							width: 100%;
+						}
+					}
+				}
 			}
 		}
 	}

@@ -17,50 +17,52 @@
 
 <formbox id="formOne"> <!-- my friends -->
 	<?php if ($totalRows_myFriends == 0){ ?>
-		<center>AÚN NO TIENES AMIGOS</center>
+		<center>Search a friend</center>
 	<?php } else { ?>
 		<?php do { 
-			if ($row_myFriends['sender'] == $_SESSION['MM_Id']){ 
+			if ($row_myFriends['sender'] == $userPageId){ 
 				$receiver = $row_myFriends['receiver'];
-			} else if ($row_myFriends['receiver'] == $_SESSION['MM_Id']){ 
+			} else if ($row_myFriends['receiver'] == $userPageId){ 
 				$receiver = $row_myFriends['sender'];
 			} ?>
 
 			<div class="friendBox" id="friend<?php echo $row_myFriends['id'] ?>">
 				<div class="head">
-					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $receiver ?>'">
+					<div class="image" onclick="userPage(<?php echo $receiver ?>)">
 						<img src="<?php echo userAvatar($receiver) ?>"/>
 					</div>
-					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $receiver ?>'">
+					<div class="name" onclick="userPage(<?php echo $receiver ?>)">
 						<?php echo userName($receiver) ?>
 					</div>
-					<div class="delete" onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">
-						<?php include("images/svg/close.php"); ?>
-					</div>
-					<div class="deleteBoxConfirmation" id="delete<?php echo $row_myFriends['id'] ?>">
-						<div class="text">Delete from friends?</div>
-						<div class="buttons">
-							<button onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">NO</button>
-							<button onClick="deleteFriend(2, <?php echo $row_myFriends['id'] ?>)">YES</button>
+					<?php if ($row_userData['id'] == $_SESSION['MM_Id']) { ?>
+						<div class="delete" onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">
+							<?php include("images/svg/close.php"); ?>
 						</div>
-					</div>
+						<div class="deleteBoxConfirmation" id="delete<?php echo $row_myFriends['id'] ?>">
+							<div class="text">Delete from friends?</div>
+							<div class="buttons">
+								<button onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">NO</button>
+								<button onClick="deleteFriend(2, <?php echo $row_myFriends['id'] ?>)">YES</button>
+							</div>
+						</div>
+					<?php } ?>
 				</div>
 			</div>
 		<?php } while ($row_myFriends = mysql_fetch_assoc($myFriends)); ?>
-	<?php }?>
+	<?php } ?>
 </formbox>
 
 <formbox id="formTwo"> <!-- pending received -->
 	<?php if ($totalRows_pendingReceived == 0){ ?>
-		<center>NO TIENES SOLICITUDES PENDIENTES</center>
+		<center>Have not received requests</center>
 	<?php } else { ?>
 		<?php do { ?>
 			<div class="friendBox" id="friend<?php echo $row_pendingReceived['id'] ?>">
 				<div class="head">
-					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingReceived['sender'] ?>'">
+					<div class="image" onclick="userPage(<?php echo $row_pendingReceived['sender'] ?>)">
 						<img src="<?php echo userAvatar($row_pendingReceived['sender']) ?>"/>
 					</div>
-					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingReceived['sender'] ?>'">
+					<div class="name" onclick="userPage(<?php echo $row_pendingReceived['sender'] ?>)">
 						<?php echo userName($row_pendingReceived['sender']) ?>
 					</div>
 					<div class="buttons">
@@ -75,15 +77,15 @@
 
 <formbox id="formThree"> <!-- pending sent -->
 	<?php if ($totalRows_pendingSent == 0){ ?>
-		<center>NO TIENES PETICIONES ENVIADAS</center>
+		<center>Have not sent requests</center>
 	<?php } else { ?>
 		<?php do { ?>
 			<div class="friendBox" id="friend<?php echo $row_pendingSent['id'] ?>">
 				<div class="head">
-					<div class="image" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingSent['receiver'] ?>'">
+					<div class="image" onclick="userPage(<?php echo $row_pendingSent['receiver'] ?>)">
 						<img src="<?php echo userAvatar($row_pendingSent['receiver']) ?>"/>
 					</div>
-					<div class="name" onClick="location.href='<?php echo $urlWeb ?>id<?php echo $row_pendingSent['receiver'] ?>'">
+					<div class="name" onclick="userPage(<?php echo $row_pendingSent['receiver'] ?>)">
 						<?php echo userName($row_pendingSent['receiver']) ?>
 					</div>
 					<div class="buttons">

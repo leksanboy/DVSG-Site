@@ -1,24 +1,25 @@
 <?php require_once('Connections/conexion.php');
-	if (!isset ($_SESSION['MM_Id'])){
-		header("Location: " . $urlWeb );
-	}
+	if (isset($_GET['id'])) {
+		$userPageId = $_GET['id'];
 
-	if (isset($_SESSION['MM_Id'])) {
-		$userId = $_SESSION['MM_Id'];
+		if ($userPageId == '')
+			$userPageId = $_SESSION['MM_Id'];
+	} else if (!isset($_GET['id'])){
+		$userPageId = $_SESSION['MM_Id'];
 	}
 
 	//User data
 	mysql_select_db($database_conexion, $conexion);
 	$query_userData = sprintf("SELECT * FROM z_users WHERE id = %s", 
-	GetSQLValueString($userId, "int"));
+	GetSQLValueString($userPageId, "int"));
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
 	$totalRows_userData = mysql_num_rows($userData);
 
 	//My friends
 	$query_myFriends = sprintf("SELECT * FROM z_friends WHERE receiver = %s AND status = 1 OR sender = %s AND status = 1",
-	GetSQLValueString($_SESSION['MM_Id'],"int"),
-	GetSQLValueString($_SESSION['MM_Id'],"int"));
+	GetSQLValueString($userPageId,"int"),
+	GetSQLValueString($userPageId,"int"));
 	$myFriends = mysql_query($query_myFriends, $conexion) or die(mysql_error());
 	$row_myFriends = mysql_fetch_assoc($myFriends);
 	$totalRows_myFriends = mysql_num_rows($myFriends);
@@ -59,51 +60,59 @@
 				<div class="headerEffect">
 					<canvas id="headerEffect"></canvas>
 				</div>
-				
-				<div class="menuLeft" onclick="toggleLeftSide(1)">
-					<?php include_once("images/svg/menu.php"); ?>
-				</div>
 
-				<div class="userName">
-						<?php echo $row_SacarMiPerfil['name']; ?>
+				<?php  if (isset($_SESSION['MM_Id'])) { ?>
+					<div class="menuLeft" onclick="toggleLeftSide(1)">
+						<?php include("images/svg/menu.php"); ?>
 					</div>
-
-				<div class="menuRight" onclick="toggleRightSide(1)">
-					<?php include_once("images/svg/circles.php"); ?>
-				</div>
+					<div class="userName">
+						<?php echo $row_userData['name']; ?>
+					</div>
+					<div class="menuRight" onclick="toggleRightSide(1)">
+						<?php include("images/svg/circles.php"); ?>
+					</div>
+					<?php if ($row_userData['id'] == $_SESSION['MM_Id']) { ?>
+						<div class="buttonAction" onclick="uploadFile(1)">
+							<?php include("images/svg/add.php");?>
+						</div>
+					<?php } ?>
+				<?php } ?>
 				
 				<div class="title">
 					<?php echo traducir(89,$_COOKIE['idioma'])?>
 				</div>
+
 				<nav id="navItemTabs">
 					<ul class="papertabs">
 						<li>
 							<a href="#/formOne" class="active">
 								<?php include("images/svg/friends.php"); ?>
-								MIS AMIGOS
+								Friends
 								<span class="paperripple">
 									<span class="circleNav"></span>
 								</span>
 							</a>
 						</li>
-						<li>
-							<a href="#/formTwo">
-								<?php include("images/svg/friends-received.php"); ?>
-								RECIBIDAS
-								<span class="paperripple">
-									<span class="circleNav"></span>
-								</span>
-							</a>
-						</li>
-						<li>
-							<a href="#/formThree">
-								<?php include("images/svg/friends-sent.php"); ?>
-								ENVIADAS
-								<span class="paperripple">
-									<span class="circleNav"></span>
-								</span>
-							</a>
-						</li>
+						<?php if ($row_userData['id'] == $_SESSION['MM_Id']) { ?>
+							<li>
+								<a href="#/formTwo">
+									<?php include("images/svg/friends-received.php"); ?>
+									Received
+									<span class="paperripple">
+										<span class="circleNav"></span>
+									</span>
+								</a>
+							</li>
+							<li>
+								<a href="#/formThree">
+									<?php include("images/svg/friends-sent.php"); ?>
+									Sent
+									<span class="paperripple">
+										<span class="circleNav"></span>
+									</span>
+								</a>
+							</li>
+						<?php } ?>
 					</ul>
 				</nav>
 			</div>
