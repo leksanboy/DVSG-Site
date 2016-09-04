@@ -37,10 +37,10 @@
 				<div class="text" onClick="playTrack(<?php echo $contador ?>)"><?php echo $row_songsListSearch['title']?></div>
 				<div class="duration"><?php echo $row_songsListSearch['duration']?></div>
 				<div class="actions">
-					<div class="add" onClick="addSong(1, <?php echo $row_songsListSearch['id'] ?>, <?php echo $contador ?>)">
+					<div class="add" onClick="addSongSearch(1, <?php echo $row_songsListSearch['id'] ?>)">
 						<?php include("../../../images/svg/add.php"); ?>
 					</div>
-					<div class="added" onClick="addSong(2, <?php echo $row_songsListSearch['id'] ?>, <?php echo $contador ?>)">
+					<div class="add added">
 						<?php include("../../../images/svg/check.php"); ?>
 					</div>
 					

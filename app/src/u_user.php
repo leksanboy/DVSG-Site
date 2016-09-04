@@ -29,7 +29,7 @@
 		<meta charset="utf-8">
 		<meta name="Author" content="Diesel vs. Gasoline" />
 		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7, IE=9" />
-		<title><?php echo $row_userData['nombre']; ?></title>
+		<title><?php echo $row_userData['name']; ?></title>
 		<?php include_once("includes/favicons.php"); ?>
 		<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/mobile/pages/modal-box.min.css"/>
 	 	<link rel="stylesheet" type="text/css" href="<?php echo $urlWeb ?>styles/desktop-user.min.css"/>

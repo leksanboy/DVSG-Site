@@ -71,11 +71,6 @@
 					<div class="menuRight" onclick="toggleRightSide(1)">
 						<?php include("images/svg/circles.php"); ?>
 					</div>
-					<?php if ($row_userData['id'] == $_SESSION['MM_Id']) { ?>
-						<div class="buttonAction" onclick="uploadFile(1)">
-							<?php include("images/svg/add.php");?>
-						</div>
-					<?php } ?>
 				<?php } ?>
 				
 				<div class="title">

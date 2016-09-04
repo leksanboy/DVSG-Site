@@ -154,6 +154,21 @@
 		$('#fileStatus' + i + ' .operations #status .result').html('Aborted');
 	}
 
+	//·····> Default
+	function defaultLoad(){
+		$.ajax({
+			type: 'POST',
+			url: '<?php echo $urlWeb ?>' + 'pages/user/videos/default.php',
+			data: 'userId=' + userId,
+			success: function(response) {
+				$('.defaultDataList').show();
+				$('.defaultDataList').html(response);
+				$('.searchBoxDataList').hide();
+			}
+		});
+	}
+	defaultLoad();
+
 	//·····> Add video
 	function addVideo(type, id, videoId){
 		if (type==1) {
@@ -234,20 +249,31 @@
 		}
 	}
 
-	//·····> Default
-	function defaultLoad(){
-		$.ajax({
-			type: 'POST',
-			url: '<?php echo $urlWeb ?>' + 'pages/user/videos/default.php',
-			data: 'userId=' + userId,
-			success: function(response) {
-				$('.defaultDataList').show();
-				$('.defaultDataList').html(response);
-				$('.searchBoxDataList').hide();
-			}
-		});
+	//·····> Add video
+	function addVideoSearch(type, id, videoId){
+		if (type==1) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/videos/add.php',
+				data: 'type=add' + '&videoId=' + id,
+				success: function(response){
+					$('.videoSearch'+ id + ' .actions .add').hide();
+					$('.videoSearch'+ id + ' .actions .added').show();
+					$('.videoSearch'+ id + ' .actions .added').attr("onclick","addVideoSearch(2, "+ id +", "+ response +");");
+				}
+			});
+		} else if (type==2) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/videos/add.php',
+				data: 'type=delete' + '&videoId=' + videoId,
+				success: function(response){
+					$('.videoSearch'+ id + ' .actions .add').show();
+					$('.videoSearch'+ id + ' .actions .added').hide();
+				}
+			});
+		}
 	}
-	defaultLoad();
 
 	//·····> Open video
 	var videoPlayer;

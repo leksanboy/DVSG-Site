@@ -13,7 +13,7 @@
 <?php if ($totalRows_songsListSearch != 0){ ?>
 	<ul class="videosListBox">
 		<?php do { ?>
-			<li class="song<?php echo $row_songsListSearch['id'] ?>">
+			<li class="videoSearch<?php echo $row_songsListSearch['id'] ?>">
 				<video>
 					<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row_songsListSearch['name']?>"/>
 				</video>
@@ -24,10 +24,10 @@
 				</div>
 				
 				<div class="actions">
-					<div class="add" onClick="addVideo(<?php echo $row_songsListSearch['id'] ?>)">
+					<div class="add" onClick="addVideoSearch(1, <?php echo $row_songsListSearch['id'] ?>)">
 						<?php include("../../../images/svg/add.php"); ?>
 					</div>
-					<div class="added">
+					<div class="add added">
 						<?php include("../../../images/svg/check.php"); ?>
 					</div>
 				</div>

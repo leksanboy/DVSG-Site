@@ -68,7 +68,8 @@
 
 	var photoIcon 		= '<?php include('images/svg/photos.php'); ?>',
 		musicIcon 		= '<?php include('images/svg/music.php'); ?>',
-		videoIcon 		= '<?php include('images/svg/videos.php'); ?>';
+		videoIcon 		= '<?php include('images/svg/videos.php'); ?>',
+		closeIcon		= '<?php include('images/svg/close.php'); ?>';
 
 	//·····> Header scrolling transparent to color
 	var imagesBox = $('.backgroundImages .imgBox'),
@@ -153,44 +154,14 @@
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
-			var box = "<div class='createPostBox'>\
-							<div class='head'>\
-								<div class='image'>\
-									<img src='"+ userAvatar +"'/>\
-								</div>\
-								<div class='name'>\
-									"+ userName +"\
-								</div>\
-							</div>\
-							<div class='text'>\
-								<textarea name='content' placeholder='Write here...'></textarea>\
-							</div>\
-							<div class='addedFiles'>\
-								<div class='photos'></div>\
-								<div class='music'></div>\
-								<div class='videos'></div>\
-							</div>\
-						</div>\
-						<div class='buttons'>\
-							<div class='actions'>\
-								<div class='action'>\
-									<input id='photoFiles' type='file' name='fileUpload[]' multiple id='fileUpload' onChange='createPost(3, event)' accept='image/jpeg,image/png,image/gif'>\
-									<label for='photoFiles'>"+ photoIcon +"</label>\
-								</div>\
-								<div class='action'>\
-									<input id='musicFiles' type='file'>\
-									<label for='musicFiles'>"+ musicIcon +"</label>\
-								</div>\
-								<div class='action'>\
-									<input id='videosFiles' type='file'>\
-									<label for='videosFiles'>"+ videoIcon +"</label>\
-								</div>\
-							</div>\
-							<button onClick='createPost(6)'>POST</button>\
-							<button onClick='createPost(2)'>CLOSE</button>\
-						</div>"
-
-			$('.modalBox .box').html(box);
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/user/createPost.php',
+				data: 'userId=' + userId,
+				success: function(response){
+					$('.modalBox .box').html(response);
+				}
+			});
 		} else if (type==2) { //Close
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
@@ -198,7 +169,7 @@
 			var i = 0,
 				reader,
 				file,
-				filesArray = [];
+				photoArray = [];
 
 			for (;i < event.currentTarget.files.length; i++) {
 				file = event.currentTarget.files[i];
@@ -207,20 +178,38 @@
 				
 				reader.onload = function (e) {
 	                var a = e.target.result;
-	                filesArray.push(a);
+	                photoArray.push(a);
 
-	                var b = "<div class='image'><div class='img' style='background-image: url("+ a +");'></div></div>";
-	                $(".addedFiles .photos").append(b);
+	                var b = "<div class='image'>\
+	                			<div class='img' style='background-image: url("+ a +");'></div>\
+	                			<div class='delete'>"+ closeIcon +"</div>\
+	                		</div>";
+	                $(".addedFiles .files .container .photoFiles").prepend(b);
 	            }
 			}
 
-			console.log('filesArray', filesArray);
+			console.log('photoArray', photoArray);
+		} else if (type==4) { //Publicate
+		}
+	}
 
-		} else if (type==4) { //Upload music
+	//·····> attach audio files
+	var arraySong = [];
+	function attachAudioFiles(type, id, song){
+		if (type==1) {
+			$('.audioFilesBox').toggle();
+		} else if (type==2) { //Add
+			if (arraySong.indexOf(song) == -1){
+				arraySong.push(song);
+				$('.song'+ id + ' .actions .add').hide();
+				$('.song'+ id + ' .actions .added').show();
+			} else{
+				arraySong.splice(arraySong.indexOf(song),1);
+				$('.song'+ id + ' .actions .add').show();
+				$('.song'+ id + ' .actions .added').hide();
+			}
 
-		} else if (type==5) { //Upload videos
-
-		} else if (type==6) { //Publicate
+			console.log('SongS', arraySong);
 		}
 	}
 </script>

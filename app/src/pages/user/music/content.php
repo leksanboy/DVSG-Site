@@ -146,7 +146,22 @@
 		$('#fileStatus' + i + ' .operations #status .result').html('Aborted');
 	}
 
-	//·····> Add song
+	//·····> Default
+	function defaultLoad(){
+		$.ajax({
+			type: 'POST',
+			url: '<?php echo $urlWeb ?>' + 'pages/user/music/default.php',
+			data: 'userId=' + userId,
+			success: function(response) {
+				$('.defaultDataList').show();
+				$('.defaultDataList').html(response);
+				$('.searchBoxDataList').hide();
+			}
+		});
+	}
+	defaultLoad();
+
+	//·····> Add song form another User
 	function addSong(type, id, songId){
 		if (type==1) {
 			$.ajax({
@@ -154,9 +169,9 @@
 				url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
 				data: 'type=add' + '&songId=' + songId,
 				success: function(response){
-					$('.song'+ id + ' .actions .add').hide();
-					$('.song'+ id + ' .actions .added').show();
-					$('.song'+ id + ' .actions .added').attr("onclick","addSong(2, "+id+", "+response+");");
+					$('.song'+ id +' .actions .add').hide();
+					$('.song'+ id +' .actions .added').show();
+					$('.song'+ id +' .actions .added').attr("onclick","addSong(2, "+ id +", "+ response +");");
 				}
 			});
 		} else if (type==2) {
@@ -226,20 +241,31 @@
 		}
 	}
 
-	//·····> Default
-	function defaultLoad(){
-		$.ajax({
-			type: 'POST',
-			url: '<?php echo $urlWeb ?>' + 'pages/user/music/default.php',
-			data: 'userId=' + userId,
-			success: function(response) {
-				$('.defaultDataList').show();
-				$('.defaultDataList').html(response);
-				$('.searchBoxDataList').hide();
-			}
-		});
+	//·····> Add song form search
+	function addSongSearch(type, id, songId){
+		if (type==1) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
+				data: 'type=add' + '&songId=' + id,
+				success: function(response){
+					$('.songSearch'+ id +' .actions .add').hide();
+					$('.songSearch'+ id +' .actions .added').show();
+					$('.songSearch'+ id +' .actions .added').attr("onclick","addSongSearch(2, "+ id +", "+ response +");");
+				}
+			});
+		} else if (type==2) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
+				data: 'type=delete' + '&songId=' + songId,
+				success: function(response){
+					$('.songSearch'+ id + ' .actions .add').show();
+					$('.songSearch'+ id + ' .actions .added').hide();
+				}
+			});
+		}
 	}
-	defaultLoad();
 </script>
 <script type="text/javascript">
     var player = document.getElementById('playerBoxAudio');
