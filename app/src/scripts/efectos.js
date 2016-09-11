@@ -96,6 +96,8 @@ function clickThePage(type) {
             document.location.href = url + "videos";
         } else if (type === 17) {
             document.location.href = url + "photos";
+        } else if (type === 18) {
+            document.location.href = url + "news";
         }
     }, 350);
 }
@@ -696,7 +698,7 @@ function logOutFade() {
  */
 function loginAccess(type, name, password, checkbox) {
     if (type == 1) {
-        if (name == "" || password == "") {
+        if (name === "" || password === "") {
             $('.error').fadeIn(300).html('Complete the Fields');
             setTimeout(function() {
                 $('.error').fadeOut(300);
@@ -1087,7 +1089,6 @@ if ($('#uploadImagesNoticePost').length > 0) {
  */
 // focus at the end off image
 if ($('#imagenEditCreateNoticePost').length > 0) {
-
     function focus_final(el) {
         el.focus();
         if (typeof window.getSelection != "undefined" && typeof document.createRange != "undefined") {

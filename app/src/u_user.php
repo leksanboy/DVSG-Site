@@ -42,10 +42,20 @@
 		<div class="innerBody">
 			<?php include_once("includes/leftBlockRight.php"); ?>
 			<div class="header headerUser headerMyPage">
-				<?php include_once("includes/headerUser/profile.php");?>
+				<div class="menuLeft" onclick="toggleLeftSide(1)">
+					<?php include("images/svg/menu.php"); ?>
+				</div>
+
+				<div class="userName">
+						<?php echo $row_userData['name']; ?>
+					</div>
+
+				<div class="menuRight" onclick="toggleRightSide(1)">
+					<?php include("images/svg/circles.php"); ?>
+				</div>
 			</div>
 			<div class="innerBodyContent">
-				<div class="pageBody pageProfile">
+				<div class="pageBody pageUser">
 					<?php include_once("pages/user/user/content.php");?>
 				</div>
 				<?php include_once("includes/footer.php");?>

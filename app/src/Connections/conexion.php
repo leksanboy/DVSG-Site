@@ -5,11 +5,11 @@
 
 //TAMBIEN ES PARA GOOGLE CLOUD
 $hostname_conexion = "localhost";
-$database_conexion = "DVSG-Site";	//cambiar por DVSG -/- "DVSG-Site"
+$database_conexion = "DVSG-Site";
 $username_conexion = "root";
 $password_conexion = "root";	//cambiar pass por "Rafalskyy1991@" -/- "root"
 
-$conexion = mysql_pconnect($hostname_conexion, $username_conexion, $password_conexion) or trigger_error(mysql_error(),E_USER_ERROR); 
+$conexion = mysql_pconnect($hostname_conexion, $username_conexion, $password_conexion) or trigger_error(mysql_error(),E_USER_ERROR);
 
 if (is_file("includes/funciones.php")){
 	include_once("includes/funciones.php");

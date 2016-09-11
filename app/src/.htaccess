@@ -79,6 +79,7 @@
 	RewriteRule ^videos(.*) 	u_videos.php?id=$1
 	RewriteRule ^messages 		u_messages.php
 	RewriteRule ^settings 		u_settings.php
+	RewriteRule ^news 			u_news.php
 	
 	RewriteRule ^cars cars.php
 	RewriteRule ^brands/(.+) brand-models.php?marca=$1

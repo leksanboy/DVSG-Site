@@ -2,13 +2,13 @@
 	if (!isset ($_SESSION['MM_Id'])){
 		header("Location: " . $urlWeb );
 	} else {
-		$userId = $_SESSION['MM_Id'];
+		$userPageId = $_SESSION['MM_Id'];
 	}
 
 	//User data
 	mysql_select_db($database_conexion, $conexion);
 	$query_userData = sprintf("SELECT * FROM z_users WHERE z_users.id = %s", 
-	GetSQLValueString($userId, "int"));
+	GetSQLValueString($userPageId, "int"));
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
 	$totalRows_userData = mysql_num_rows($userData);
@@ -50,7 +50,7 @@
 				</div>
 
 				<div class="userName">
-						<?php echo $row_SacarMiPerfil['nombre']; ?>
+						<?php echo $row_SacarMiPerfil['name']; ?>
 					</div>
 
 				<div class="menuRight" onclick="toggleRightSide(1)">

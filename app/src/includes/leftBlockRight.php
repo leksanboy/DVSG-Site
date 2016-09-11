@@ -33,7 +33,7 @@
 					<?php include("images/svg/home.php");?>
 					My Page
 				</li>
-				<li style="opacity:0.35">
+				<li onClick="clickThePage(18)">
 					<?php include("images/svg/news.php");?>
 					My News
 				</li>
