@@ -63,13 +63,15 @@
 
 <script type="text/javascript">
 	var userId 			= <?php echo $userPageId ?>,
-			userName 		= "<?php echo $row_userData['name'] ?>",
-			userAvatar 		= "<?php echo $row_userData['avatar'] ?>";
+		userName 		= "<?php echo $row_userData['name'] ?>",
+		userAvatar 		= "<?php echo $row_userData['avatar'] ?>";
 
 	var photoIcon 		= '<?php include('images/svg/photos.php'); ?>',
-			musicIcon 		= '<?php include('images/svg/music.php'); ?>',
-			videoIcon 		= '<?php include('images/svg/videos.php'); ?>',
-			closeIcon		= '<?php include('images/svg/close.php'); ?>';
+		musicIcon 		= '<?php include('images/svg/music.php'); ?>',
+		videoIcon 		= '<?php include('images/svg/videos.php'); ?>',
+		closeIcon		= '<?php include('images/svg/close.php'); ?>',
+		playIcon 		= '<?php include('images/svg/play.php'); ?>',
+		removeIcon 		= '<?php include('images/svg/close.php'); ?>';
 
 	//·····> Header scrolling transparent to color
 	var imagesBox = $('.backgroundImages .imgBox'),
@@ -149,7 +151,7 @@
 	function defaultLoad(){
 		$.ajax({
 			type: 'POST',
-			url: '<?php echo $urlWeb ?>' + 'pages/user/user/loadNews.php',
+			url: '<?php echo $urlWeb ?>' + 'pages/user/user/loadPosts.php',
 			data: 'userId=' + userId,
 			success: function(response) {
 				$('#userPosts').html(response);
@@ -157,6 +159,24 @@
 		});
 	};
 	defaultLoad();
+
+	//·····> Delete message on Inbox
+	function deleteNews(type, id){
+		if (type==1) {
+			$('#delete'+id).toggle();
+		}else if (type==2) {
+			console.log('DELETED', id);
+
+			$.ajax({
+				type: 'POST',
+				url: url + 'pages/user/user/delete.php',
+				data: 'id=' + id,
+				success: function(response){
+					$('#news'+id).fadeOut(300);
+				}
+			});
+		}
+	}
 
 	//·····> create post
 	var photosArray = [],
@@ -185,93 +205,143 @@
 			$.ajax({
 				type: 'POST',
 				url: url + 'pages/user/user/publicatePost.php',
-				data: 'content=' + data + '&photos=' + photosArray + '&songs=' + songsArray + '&videos=' + videosArray,
+				data: 'content=' + data + '&photos=' + JSON.stringify(photosArray) + '&audios=' + JSON.stringify(songsArray) + '&videos=' + JSON.stringify(videosArray),
 				success: function(response) {
 					defaultLoad();
 					
 					$('.modalBox').toggleClass('modalDisplay');
 					$('body').toggleClass('modalHidden');
+
+					photosArray = [];
+					songsArray = [];
+					videosArray = [];
 				}
 			});
+		}
+	}
+
+	//·····> find object in array
+	function arrayObjectIndexOf(myArray, searchTerm, property){
+		for(var i = 0, len = myArray.length; i < len; i++) {
+	        if (myArray[i][property] === searchTerm) return i;
+	    }
+	    return -1;
+	}
+
+	//·····> attach audio files
+	function attachAudioFiles(type, data){
+		if (type==1) {
+			$('.audioFilesBox').toggle();
+		} else if (type==2) { //Add
+			var dataPosition = arrayObjectIndexOf(songsArray, data.song, "song");
+
+			if (dataPosition == -1){
+				songsArray.push(data);
+				$('.song'+ data.song + ' .actions .add').hide();
+				$('.song'+ data.song + ' .actions .added').show();
+			} else{
+				songsArray.splice(dataPosition,1);
+				$('.song'+ data.song + ' .actions .add').show();
+				$('.song'+ data.song + ' .actions .added').hide();
+
+				$('.songsListBoxAdded .song'+ data.song).fadeOut();
+			}
+
+			console.log('Songs:', songsArray);
+		} else if (type==3) { //Done
+			var bodySongs = '<ul class="songsListBoxAdded">';
+					songsArray.forEach(function(item){
+						// var itemArray = JSON.stringify(item);
+						var itemArray = JSON.stringify(item);
+						itemArray = itemArray.replace(/'/g, '');
+						console.log('itemArray', itemArray);
+
+						bodySongs += 	"<li class='song"+ item.song +"'>\
+											<div class='playPause'>\
+												<div class='play' style='display:block;'>"+ playIcon +"</div>\
+											</div>\
+											<div class='text'>"+ item.title +"</div>\
+											<div class='duration'>"+ item.duration +"</div>\
+											<div class='actions' onClick='attachAudioFiles(2,"+ itemArray +")'>\
+					                            <div class='remove'>"+ removeIcon +"</div>\
+					                        </div>\
+										</li>";
+					});
+				bodySongs += '</ul>';
+
+			$('.audioFilesBox').toggle();
+			$('.createPostBox .addedFiles .audioFiles').html(bodySongs);
 		}
 	}
 
 	//·····> attach photo files
 	function attachPhotoFiles(type, data){
 		if (type==1) {
-			var i = 0,
-				reader,
-				file,
-				photoArray = [];
-
-			for (;i < data.currentTarget.files.length; i++) {
-				file = data.currentTarget.files[i];
-				reader = new FileReader();
-				reader.readAsDataURL(file);
-
-				reader.onload = function (e) {
-					var a = e.target.result;
-					photoArray.push(a);
-
-					var b = "<div class='image'>\
-						<div class='img' style='background-image: url("+ a +");'></div>\
-						<div class='delete'>"+ closeIcon +"</div>\
-						</div>";
-				
-					$(".addedFiles .files .container .photoFiles").prepend(b);
-				}
-			}
-
-			console.log('photoArray', photoArray);
+			$('.photoFilesBox').toggle();
 		} else if (type==2) { //Add
-			// if (arraySong.indexOf(song) == -1){
-			// 	arraySong.push(song);
-			// 	$('.song'+ id + ' .actions .add').hide();
-			// 	$('.song'+ id + ' .actions .added').show();
-			// } else{
-			// 	arraySong.splice(arraySong.indexOf(song),1);
-			// 	$('.song'+ id + ' .actions .add').show();
-			// 	$('.song'+ id + ' .actions .added').hide();
-			// }
+			var dataPosition = arrayObjectIndexOf(photosArray, data.photo, "photo");
 
-			// console.log('SongS', arraySong);
-		}
-	}
-
-	//·····> attach audio files
-	function attachAudioFiles(type, id){
-		if (type==1) {
-			$('.audioFilesBox').toggle();
-		} else if (type==2) { //Add
-			if (songsArray.indexOf(id) == -1){
-				songsArray.push(id);
-				$('.song'+ id + ' .actions .add').hide();
-				$('.song'+ id + ' .actions .added').show();
+			if (dataPosition == -1){
+				photosArray.push(data);
+				$('.photo'+ data.photo + ' .actions .add').hide();
+				$('.photo'+ data.photo + ' .actions .added').show();
 			} else{
-				songsArray.splice(songsArray.indexOf(id),1);
-				$('.song'+ id + ' .actions .add').show();
-				$('.song'+ id + ' .actions .added').hide();
+				photosArray.splice(dataPosition,1);
+				$('.photo'+ data.photo + ' .actions .add').show();
+				$('.photo'+ data.photo + ' .actions .added').hide();
+
+				$('.photosListBoxAdded .photo'+ data.photo).fadeOut();
 			}
 
-			console.log('SongS', songsArray);
+			console.log('Photos:', photosArray);
+		} else if (type==3) { //Done
+			var bodyPhotos = '<ul class="photosListBoxAdded">';
+					photosArray.forEach(function(item){
+						// var itemArray = JSON.stringify(item);
+						var itemArray = JSON.stringify(item);
+						itemArray = itemArray.replace(/'/g, '');
+						console.log('itemArray', itemArray);
+
+						bodyPhotos += 	"<li class='photo"+ item.photo +"'>\
+											<div class='image'>\
+												<div class='img' style='background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/"+ item.name +"); width: 100%; height: 100%;'></div>\
+											</div>\
+											<div class='actions' onClick='attachPhotoFiles(2,"+ itemArray +")'>\
+					                            <div class='remove'>"+ removeIcon +"</div>\
+					                        </div>\
+										</li>";
+					});
+				bodyPhotos += '</ul>';
+
+			$('.photoFilesBox').toggle();
+			$('.createPostBox .addedFiles .photoFiles').html(bodyPhotos);
 		}
+		// if (type==1) {
+		// 	var i = 0,
+		// 		reader,
+		// 		file,
+		// 		photoArray = [];
+
+		// 	for (;i < data.currentTarget.files.length; i++) {
+		// 		file = data.currentTarget.files[i];
+		// 		reader = new FileReader();
+		// 		reader.readAsDataURL(file);
+
+		// 		reader.onload = function (e) {
+		// 			var a = e.target.result;
+		// 			photoArray.push(a);
+
+		// 			var b = "<div class='image'>\
+		// 				<div class='img' style='background-image: url("+ a +");'></div>\
+		// 				<div class='delete'>"+ closeIcon +"</div>\
+		// 				</div>";
+				
+		// 			$(".addedFiles .files .container .photoFiles").prepend(b);
+		// 		}
+		// 	}
+
+		// 	console.log('photoArray', photoArray);
+		// }
 	}
 
-	//·····> Delete message on Inbox
-	function deleteNews(type, id){
-		if (type==1) {
-			$('#delete'+id).toggle();
-		}else if (type==2) {
-			console.log('DELETED', id);
-
-			$.ajax({
-				type: 'POST',
-				url: url + 'pages/user/user/delete.php',
-				data: 'id=' + id,
-				success: function(response){
-					$('#news'+id).fadeOut(300);
-				}
-			});
-		}
-	}
 </script>

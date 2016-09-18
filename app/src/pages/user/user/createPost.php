@@ -15,6 +15,13 @@
     $songsList = mysql_query($query_songsList, $conexion) or die(mysql_error());
     $row_songsList = mysql_fetch_assoc($songsList);
     $totalRows_songsList = mysql_num_rows($songsList);
+
+    //User photos
+	mysql_select_db($database_conexion, $conexion);
+	$query_photosList = sprintf("SELECT f.photo, p.name FROM z_photos_favorites f INNER JOIN z_photos p ON p.id = f.photo WHERE f.user = $userId ORDER BY f.date DESC");
+	$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
+	$row_photosList = mysql_fetch_assoc($photosList);
+	$totalRows_photosList = mysql_num_rows($photosList);
 ?>
 <form onSubmit="return false">
 	<div class="createPostBox">
@@ -31,24 +38,23 @@
 		</div>
 		<div class="addedFiles">
 			<div class="files">
-				<div class="title">Photos</div>
 				<div class="container">
 					<div class="photoFiles"></div>
 				</div>
 			</div>
 			<div class="files">
-				<div class="title">Songs</div>
 				<div class="container">
 					<div class="audioFiles"></div>
 				</div>
 			</div>
 			<div class="files">
-				<div class="title">Videos</div>
 				<div class="container">
 					<div class="videoFiles"></div>
 				</div>
 			</div>
 		</div>
+
+		<!-- Audios Box -->
 		<div class="audioFilesBox">
 			<div class="container">
 				<div class="title">
@@ -59,8 +65,8 @@
 					<?php if ($totalRows_songsList != 0) { ?>
 						<ul class="songsListBox">
 							<?php $contador = -1;
-										do {
-										$contador = $contador + 1;
+								do {
+								$contador = $contador + 1;
 							?>
 								<li class="song<?php echo $row_songsList['song'] ?>" id="song<?php echo $contador ?>">
 									<div class="playPause" onClick="playTrack(<?php echo $contador ?>)">
@@ -73,16 +79,14 @@
 									</div>
 									<div class="text" onClick="playTrack(<?php echo $contador ?>)"><?php echo $row_songsList['title']?></div>
 									<div class="duration"><?php echo $row_songsList['duration']?></div>
-			                <?php  if (isset($_SESSION['MM_Id'])) { ?>
-			                    <div class="actions" onClick="attachAudioFiles(2, <?php echo $row_songsList['song'] ?>)">
-		                            <div class="add">
-		                                <?php include '../../../images/svg/add.php'; ?>
-		                            </div>
-		                            <div class="add added">
-		                                <?php include '../../../images/svg/check.php'; ?>
-		                            </div>
-			                    </div>
-			                <?php } ?>
+				                    <div class="actions" onClick='attachAudioFiles(2, <?php echo htmlspecialchars(json_encode($row_songsList), ENT_QUOTES, "UTF-8"); ?>)'>
+			                            <div class="add">
+			                                <?php include '../../../images/svg/add.php'; ?>
+			                            </div>
+			                            <div class="add added">
+			                                <?php include '../../../images/svg/check.php'; ?>
+			                            </div>
+				                    </div>
 								</li>
 							<?php } while ($row_songsList = mysql_fetch_assoc($songsList)); ?>
 						</ul>
@@ -93,16 +97,59 @@
 					<?php } ?>
 				</div>
 				<div class="buttons">
-					<button onClick="attachAudioFiles(1)">DONE</button>
+					<button onClick="attachAudioFiles(3)">DONE</button>
 					<button onClick="attachAudioFiles(1)">CLOSE</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- Photos Box -->
+		<div class="photoFilesBox">
+			<div class="container">
+				<div class="title">
+					Add photos
+					<div class="close" onClick="attachPhotoFiles(1)"><?php include '../../../images/svg/close.php'; ?></div>
+				</div>
+				<div class="content">
+					<?php if ($totalRows_photosList != 0) { ?>
+						<ul class="photosListBox">
+							<?php 
+								$contador = - 1; 
+								do { 
+								$contador = $contador + 1;
+							?>
+								<li class="photo<?php echo $row_photosList['photo'] ?>">
+									<div class="image">
+										<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row_photosList['name']?>); width: 100%; height: 100%;"></div>
+									</div>
+									<div class="actions" onClick='attachPhotoFiles(2, <?php echo htmlspecialchars(json_encode($row_photosList), ENT_QUOTES, "UTF-8"); ?>)'>
+			                            <div class="add">
+			                                <?php include '../../../images/svg/add.php'; ?>
+			                            </div>
+			                            <div class="add added">
+			                                <?php include '../../../images/svg/check.php'; ?>
+			                            </div>
+				                    </div>
+								</li>
+							<?php } while ($row_photosList = mysql_fetch_assoc($photosList)); ?>
+						</ul>
+					<?php } else { ?>
+						<div class="noData">
+							No photos
+						</div>
+					<?php } ?>
+				</div>
+				<div class="buttons">
+					<button onClick="attachPhotoFiles(3)">DONE</button>
+					<button onClick="attachPhotoFiles(1)">CLOSE</button>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="buttons">
 		<div class="actions">
-			<div class="action">
-				<input id="photoFiles" type="file" name="fileUpload[]" multiple id="fileUpload" onChange="attachPhotoFiles(1, event)" accept="image/jpeg,image/png,image/gif">
+			<div class="action" onClick="attachPhotoFiles(1)">
+				<!-- <input id="photoFiles" type="file" name="fileUpload[]" multiple id="fileUpload" onChange="attachPhotoFiles(1, event)" accept="image/jpeg,image/png,image/gif"> -->
 				<label for="photoFiles"><?php include '../../../images/svg/photos.php'; ?></label>
 			</div>
 			<div class="action" onClick="attachAudioFiles(1)">
@@ -118,3 +165,4 @@
 </form>
 <?php mysql_free_result($userData); ?>
 <?php mysql_free_result($songsList); ?>
+<?php mysql_free_result($photosList); ?>

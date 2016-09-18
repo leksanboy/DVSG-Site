@@ -1,4 +1,3 @@
-/*USER PAGES*/
 @media (max-width: 899px) {
 	/*Fonts*/
 	@font-face {
@@ -953,8 +952,8 @@
 							box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 							box-sizing: border-box;
 							position: relative;
+							margin: 12px 2% 0;
 							height: initial;
-							margin: 12px 2%;
 							float: left;
 							width: 96%;
 
@@ -982,7 +981,7 @@
 								}
 
 								.name {
-									margin: 0 0 0 12px;
+									margin: 8px 0 0 12px;
 									font-size: 15px;
 									color: #404040;
 									float: left;
@@ -1048,17 +1047,131 @@
 							}
 
 							.body {
-								-webkit-box-orient: vertical;
-								text-overflow: ellipsis;
-								-webkit-line-clamp: 2;
+								box-sizing: border-box;
 								word-break: break-all;
-								display: -webkit-box;
-								margin: 0 0 0 60px;
-								overflow: hidden;
+								min-height: 60px;
+								background: #fff;
+								color: #404040;
 								float: left;
+								width: 100%;
+
+								ul.songsListBoxNews{
+									list-style: none;
+									padding: 0;
+									margin: 0;
+
+									li{
+										border-radius: 3px;
+										box-shadow: none;
+										margin: 6px 2%;
+										color: #404040;
+										display: flex;
+										height: 36px;
+										float: left;
+										width: 96%;
+
+										.playPause{
+											box-sizing: border-box;
+											height: 36px;
+											width: 36px;
+
+											svg{
+												fill: #404040;
+												padding: 6px;
+												height: 24px;
+												width: 24px;
+											}
+										}
+
+										.text,
+										.duration{
+											text-overflow: ellipsis;
+											white-space: nowrap;
+											line-height: 36px;
+											overflow: hidden;
+											text-align: left;
+											font-size: 13px;
+											padding: 0 8px;
+											height: 36px;
+											width: 100%;
+											float: left;
+										}
+
+										.duration{
+											text-align: right;
+											width: 70px;
+										}
+
+										.actions{
+											box-sizing: border-box;
+											height: 36px;
+											width: 36px;
+
+											svg{
+												fill: #404040;
+												padding: 9px;
+												height: 18px;
+												width: 18px;
+											}
+
+											.add{
+												border-radius: 3px;
+												height: 100%;
+												width: 100%;
+												
+												&:active{
+													background: rgba(0, 153, 255, 0.5);
+												}
+											}
+
+											.added{
+												display: none;
+
+												svg{
+													fill: #09f;
+												}
+											}
+										}
+
+										&.active{
+											text-shadow: 0 3px 6px rgba(0,0,0,0.23);
+											color: #09f;
+
+											svg{
+												fill: #09f;
+											}
+										}
+									}
+								}
+
+								ul.photosListBoxNews{
+									list-style: none;
+									padding: 0;
+									margin: 0;
+
+									li{
+										border-radius: 3px;
+										box-shadow: none;
+										margin: 6px 2%;
+										color: #404040;
+										display: block;
+										float: left;
+										width: 96%;
+
+										.image{
+											width: 100%;
+
+											img{
+												max-height: 500px;
+												max-width: 100%;
+											}
+										}
+									}
+								}
 							}
 
 							.foot{
+								border-top: 1px solid rgba(0, 0, 0, 0.25);
 								border-radius: 0 0 3px 3px;
 								box-sizing: border-box;
 								background: #fff;
@@ -1066,6 +1179,28 @@
 								padding: 6px;
 								float: left;
 								width: 100%;
+								color: #404040;
+								text-align: right;
+
+								.analytics{
+									margin: 6px 0 0;
+									float: right;
+
+									.comments,
+									.likes {
+										color: #404040;
+										float: right;
+										height: 24px;
+										width: 64px;
+
+										svg{
+											margin: 2px 4px -4px;
+											fill: #404040;
+											height: 20px;
+											width: 20px;
+										}
+									}
+								}
 							}
 						}
 					}
