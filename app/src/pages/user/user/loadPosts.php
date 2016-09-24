@@ -57,26 +57,22 @@
 								echo '<br>VID:'.$row['id'];
 							}
 						}
-
-						echo '<br>';
-
-						?>
+					?>
 
 						<ul class="photosListBoxNews">
 							<?php
+								$contador = - 1;
 								mysql_data_seek( $newsFiles, 0 );
 								while($row = mysql_fetch_array( $newsFiles )){
 									if ($row['type'] == 'photo') { ?>
-										<li>
-											<div class="image">
-												<img src="<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row['name']?>"/>
+										<li <?php $contador = $contador + 1; ?>>
+											<div class="image" onclick="openPhotoPost(1, <?php echo $contador ?>, <?php echo $postId ?>, <?php echo $row['file'] ?>)" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row['name']?>)">
 											</div>
 										</li>
 									<?php }
 								}
 							?>
 						</ul>
-
 
 						<ul class="songsListBoxNews">
 							<?php
@@ -128,4 +124,39 @@
 		No news
 	</div>
 <?php } ?>
+<script type="text/javascript">
+	var userId = <?php echo $userId ?>;
+
+
+	function openPhotoPost(type, position, postId, photoId){
+		console.log('type', type, 'position', position, 'postId', postId, 'photoId', photoId);
+
+		if (type==1) { // Open
+			$('.modalBox').toggleClass('modalDisplay');
+			setTimeout(function() {
+				$('.modalBox').toggleClass('showModal');
+			}, 100);
+			$('body').toggleClass('modalHidden');
+
+			$.ajax({
+                type: 'POST',
+                url: '<?php echo $urlWeb ?>' + 'pages/user/user/slidePhotosPost.php',
+                data: 'position=' + position + '&postId=' + postId + '&photoId=' + photoId + '&userId=' + userId,
+                success: function(response){
+                    $('.slidePhotosBox').html(response);
+                }
+            });
+
+			var box = "<div class='slidePhotosBox'></div>\
+						<div class='buttons'>\
+							<button onClick='openPhoto(2)'>CLOSE</button>\
+						</div>"
+
+			$('.modalBox .box').html(box);
+		} else if (type==2) { //Close
+			$('.modalBox').toggleClass('modalDisplay');
+			$('body').toggleClass('modalHidden');
+		}
+	}
+</script>
 <?php mysql_free_result($newsList); ?>

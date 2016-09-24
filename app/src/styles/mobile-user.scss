@@ -1015,6 +1015,7 @@
 									display: none;
 									padding: 6px;
 									float: right;
+									z-index: 1;
 									right: 2%;
 
 									.text {
@@ -1150,21 +1151,36 @@
 									margin: 0;
 
 									li{
-										border-radius: 3px;
 										box-shadow: none;
-										margin: 6px 2%;
 										color: #404040;
-										display: block;
 										float: left;
-										width: 96%;
+										height: 64px;
+										width: 20%;
+										box-sizing: border-box;
+										margin: 0;
+										padding: 2px;
+										position: relative;
+
+										&:first-child{
+											height: 200px;
+											width: 100%;
+											padding: 0;
+										}
 
 										.image{
+											background-position: center 35%;
+											background-repeat: no-repeat;
+											transform: translate(0px);
+											box-sizing: border-box;
+											background-size: cover;
+											display: inline-block;
+											height: 100%;
 											width: 100%;
 
-											img{
+											/*img{
 												max-height: 500px;
 												max-width: 100%;
-											}
+											}*/
 										}
 									}
 								}
@@ -2814,6 +2830,7 @@
 				}
 
 				.button {
+					box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 					margin: 46px 26px 0 0;
 					text-align: center;
 					border-radius: 3px;

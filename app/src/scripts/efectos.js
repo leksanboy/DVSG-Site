@@ -17,8 +17,8 @@
 /**
  * Domain URL
  */
-// var url = 'http://www.dvsg.co/';
 // var url = 'http://104.155.93.126/';
+// var url = 'http://www.dvsg.co/';
 var url = 'http://localhost/DVSG-site/app/dist/';
 var $;
 var tabla;

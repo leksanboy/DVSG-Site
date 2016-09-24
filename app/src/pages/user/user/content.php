@@ -49,7 +49,7 @@
 			?>
 				<li class="photo<?php echo $row_photosList['photo'] ?>">
 					<div class="image" onClick="openPhoto(1, <?php echo $contador ?>, <?php echo $row_photosList['photo'] ?>)">
-						<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row_photosList['name']?>);"></div>
+						<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row_photosList['name']?>)"></div>
 					</div>
 				</li>
 			<?php } while ($row_photosList = mysql_fetch_assoc($photosList)); ?>
