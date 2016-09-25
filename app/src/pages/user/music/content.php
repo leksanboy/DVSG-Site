@@ -270,6 +270,7 @@
 <script type="text/javascript">
     var player = document.getElementById('playerBoxAudio');
     var idSong = parseInt($("#playerBoxAudioCounter").html());
+    var idSongPlaying;
 
     // ·····> Auto playing
     var audio = $('#playerBoxAudio')
@@ -281,6 +282,7 @@
     })
     .bind('ended', function () {
     	playPausePrevNext(3); // Next (auto)
+    	idSongPlaying = idSong;
     }).get(0);
 
     // ·····> Song buffering

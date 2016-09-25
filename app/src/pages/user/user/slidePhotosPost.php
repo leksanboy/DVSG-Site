@@ -5,8 +5,8 @@
 
 	// User photos  --> photosList
 	mysql_select_db($database_conexion, $conexion);
-	$query_photosList = sprintf("SELECT * FROM z_news_files WHERE post=%s AND type=%s ORDER by id DESC",
-	GetSQLValueString($postId, "int"),
+	$query_photosList = sprintf("SELECT * FROM z_news_files WHERE user=%s AND type=%s ORDER by id DESC",
+	GetSQLValueString($userId, "int"),
    	GetSQLValueString("photo", "text"));
 	$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
 	$row_photosList = mysql_fetch_assoc($photosList);

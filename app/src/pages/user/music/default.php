@@ -146,6 +146,7 @@
         	nowPlayingTitle.text(tracks[idSong].name);
         	nowPlayingDuration.text(tracks[idSong].duration);
         	audio.src = mediaPath + tracks[idSong].file;
+            idSongPlaying = idSong;
             player.play();
     	} else if (type==3) { //Next
     		if ((idSong+1) < trackCount) {
@@ -171,12 +172,12 @@
         	nowPlayingTitle.text(tracks[idSong].name);
         	nowPlayingDuration.text(tracks[idSong].duration);
         	audio.src = mediaPath + tracks[idSong].file;
+            idSongPlaying = idSong;
             player.play();
     	}
     }
 
     // ·····> Play·pause track
-    var idSongPlaying;
     function playTrack(id) {
     	idSong = id;
     	songDuration();
