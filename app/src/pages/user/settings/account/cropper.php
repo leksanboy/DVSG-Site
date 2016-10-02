@@ -124,8 +124,8 @@
 	        $("#formOne .avatarBox .avatar input[name='avatar_original']").attr('value', dataURLOriginal);
 
 			var dataURLLittle = $imageAccount.cropper("getDataURL", {
-	            width: 50,
-	            height: 50
+	            width: 100,
+	            height: 100
 	        });
 	        $("#formOne .avatarBox .avatar input[name='avatar']").attr('value', dataURLLittle);
 

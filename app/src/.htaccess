@@ -90,8 +90,8 @@
 	RewriteRule ^blog blog.php
 
 
+RewriteCond %{HTTP_HOST} ^dvsg\.co$ [NC]
 
-##RewriteCond %{HTTP_HOST} ^dvsg\.co$ [NC]
 ##RewriteRule ^(.*)$ http://www.dvsg.co/$1 [L,R=301]
 ##RewriteRule ^(.+).html ver-post.php?date=$1
 #RewriteRule ^feed news/feed/index.php

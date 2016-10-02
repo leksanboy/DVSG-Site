@@ -141,6 +141,12 @@
     		$('.videoBox .boxContent .title').fadeToggle();
     		$('.videoBox .boxContent .playPause').fadeToggle();
     		$('.videoBox .boxContent .controlPanel').fadeToggle();
+    	} else if (type == 5) { //Close
+    		$('.modalBox').toggleClass('modalDisplay');
+			$('body').toggleClass('modalHidden');
+
+			videoPlayer.pause();
+    		$(button).html(playIcon);
     	}
     }
 

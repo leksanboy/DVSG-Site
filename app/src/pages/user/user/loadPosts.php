@@ -1,6 +1,14 @@
 <?php require_once '../../../Connections/conexion.php';
     $userId = $_POST['userId'];
 
+    //User data
+	mysql_select_db($database_conexion, $conexion);
+	$query_userData = sprintf("SELECT id, primary_color, secondary_color FROM z_users WHERE id = %s", 
+	GetSQLValueString($userId, "int"));
+	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
+	$row_userData = mysql_fetch_assoc($userData);
+	$totalRows_userData = mysql_num_rows($userData);
+
 	//User news
 	mysql_select_db($database_conexion, $conexion);
 	$query_newsList = sprintf("SELECT * FROM z_news WHERE user=%s ORDER BY id DESC LIMIT 99", $userId, "int");
@@ -51,19 +59,41 @@
 				</div>
 
 				<div class="body">
-					<?php echo $row_newsList['content'] ?>
+					<?php if ($row_newsList['content']) { ?>
+						<div class="content">
+							<?php echo $row_newsList['content'] ?>
+						</div>
+					<?php } ?>
 
 					<?php
 						$postId = $row_newsList['id'];
 						
 						//Files
 						mysql_select_db($database_conexion, $conexion);
-				        $query_newsFiles = sprintf("SELECT * FROM z_news_files WHERE post=%s ORDER BY id DESC", $postId, "int");
+				        $query_newsFiles = sprintf("SELECT * FROM z_news_files WHERE post=%s ORDER BY id ASC", $postId, "int");
 				        $newsFiles = mysql_query($query_newsFiles, $conexion) or die(mysql_error());
 				        $row_newsFiles = mysql_fetch_assoc($newsFiles);
 				        $totalRows_newsFiles = mysql_num_rows($newsFiles);
 					?>
-						<ul class="videosListBox">
+						<?php
+							//Videos count MAX=3
+							mysql_data_seek( $newsFiles, 0 ); $counterVideo = 0;
+							while($row = mysql_fetch_array( $newsFiles )){
+								if ($row['type'] == 'video') { $counterVideo++; }
+							}
+
+							//Photos count MAX=9
+							mysql_data_seek( $newsFiles, 0 ); $counterPhoto = 0;
+							while($row = mysql_fetch_array( $newsFiles )){
+								if ($row['type'] == 'photo') { $counterPhoto++; }
+							}
+						?>
+						<ul <?php if($counterVideo == 1 && $counterPhoto == 1){ ?>
+								class="videosListBox onevp"
+							<?php } else { ?>
+								class="videosListBox <?php echo 'vlb'.$counterVideo ?>"
+							<?php } ?>
+						>
 							<?php
 								mysql_data_seek( $newsFiles, 0 );
 								while($row = mysql_fetch_array( $newsFiles )){
@@ -86,7 +116,14 @@
 							?>
 						</ul>
 
-						<ul class="photosListBox">
+						<ul <?php if($counterVideo == 1 && $counterPhoto == 1){ ?>
+								class="photosListBox onevp"
+							<?php } else if($counterVideo >= 1 && $counterPhoto > 1){ ?>
+								class="photosListBox allvp"
+							<?php } else { ?>
+								class="photosListBox <?php echo 'plb'.$counterPhoto ?>"
+							<?php } ?>
+						>
 							<?php
 								mysql_data_seek( $newsFiles, 0 );
 								while($row = mysql_fetch_array( $newsFiles )){
@@ -116,11 +153,7 @@
 											</div>
 											<div class="text" onClick="playTrack(<?php echo $contadorAudios ?>)"><?php echo $row['title'] ?></div>
 											<div class="duration"><?php echo $row['duration'] ?></div>
-
-											<div class="progress">
-												<!-- <input type="range" id="playerBoxAudioProgress" min="0" max="1000" value="0" onchange="setProgressBar(event.target)"/>
-												<div class="buffer" id="playerBoxAudioBuffering"></div> -->
-											</div>
+											<div class="progress"></div>
 										</li>
 									<?php }
 								}
@@ -158,8 +191,8 @@
 <script type="text/javascript">
 	var userId = <?php echo $userId ?>;
 
+	// ·····> open photo slider
 	function openPhotoPost(type, position, postId, photoId){
-		// console.log('type', type, 'position', position, 'postId', postId, 'photoId', photoId);
 		if (type==1) { // Open
 			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
@@ -188,20 +221,8 @@
 		}
 	}
 
+	// ·····> open video to play
 	function openVideoPost(type, videoId, fileName){
-		//·····> SVG icons
-		var uploadIcon 			= '<?php include('images/svg/upload.php'); ?>',
-		arrowUpIcon 		= '<?php include('images/svg/arrow-up.php'); ?>',
-		progressIcon 		= '<?php include('images/svg/progress.php'); ?>',
-		addIcon 			= '<?php include('images/svg/add.php'); ?>',
-		closeIcon 			= '<?php include('images/svg/close.php'); ?>',
-		playIcon 			= '<?php include('images/svg/play.php'); ?>',
-		pauseIcon 			= '<?php include('images/svg/pause.php'); ?>',
-		moreIcon 			= '<?php include('images/svg/dots.php'); ?>',
-		fullscreenIcon 		= '<?php include('images/svg/fullscreen.php'); ?>',
-		likeIcon 			= '<?php include('images/svg/like.php'); ?>',
-		unlikeIcon 			= '<?php include('images/svg/unlike.php'); ?>';
-
 		if (type==1) { // Open
 			$('.modalBox').toggleClass('modalDisplay');
 			setTimeout(function() {
@@ -225,7 +246,7 @@
 										<source src='pages/user/videos/videos/" + fileName + "'>\
 									</video>\
 									<div class='title'>\
-										<div class='action' onClick='openVideoPost(2)'>"+ closeIcon +"</div>\
+										<div class='action' onClick='playerAction(5)'>"+ closeIcon +"</div>\
 										<div class='action' onClick='playerAction(3)'>"+ moreIcon +"</div>\
 									</div>\
 									<div class='playPause' onClick='playerAction(1, this)'>\
@@ -246,7 +267,7 @@
 								<div class='boxData'></div>\
 							</div>\
 							<div class='buttons'>\
-								<button onClick='openVideoPost(2)'>CLOSE</button>\
+								<button onClick='playerAction(5)'>CLOSE</button>\
 							</div>\
 						</form>"
 
@@ -261,6 +282,8 @@
 		    // ·····> video buffer
 		    videoPlayer.addEventListener('progress', function() {
 		    	var buffering = videoPlayer.buffered.length;
+		    	if (buffering > 1)
+		    		buffering = 1;
 		    	$('#playerBoxVideoBuffering').width(buffering * 100 +'%');
 		    });
 
@@ -280,9 +303,9 @@
 
 		    // ·····> video end
 		    videoPlayer.addEventListener('ended', function() {
-		    	$('.videoBox .boxContent .title').fadeToggle();
-	    		$('.videoBox .boxContent .playPause').html(playIcon).fadeToggle();
-	    		$('.videoBox .boxContent .controlPanel').fadeToggle();
+		    	$('.videoBox .boxContent .title').fadeIn();
+	    		$('.videoBox .boxContent .playPause').html(playIcon).fadeIn();
+	    		$('.videoBox .boxContent .controlPanel').fadeIn();
 		    });
 
 		    // ·····> video time current -/- total
@@ -299,7 +322,6 @@
 		}
 	}
 </script>
-
 <script type="text/javascript">
     var player = document.getElementById('playerBoxAudio');
     var idSong = parseInt($("#playerBoxAudioCounter").html());
@@ -333,7 +355,7 @@
 
 			$('#playerBoxAudioProgress').css({
 				'backgroundSize': (duration / 10) + '% 100%',
-				'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+				'background-image': "linear-gradient(#09f, #09f)"
 			});
 		}
     });
@@ -396,7 +418,7 @@
 		}).trigger('input');
 	}
 
-    //////PLAY TRACK
+    // ·····> Play truck default set
 	$('.playerBox .buttons .playPause .play').show();
     $('.playerBox .buttons .playPause .pause').hide();
 
@@ -551,5 +573,6 @@
         }
     };
 </script>
+<?php mysql_free_result($userData); ?>
 <?php mysql_free_result($newsList); ?>
 <?php mysql_free_result($audiosList); ?>

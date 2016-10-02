@@ -71,7 +71,16 @@
 		videoIcon 		= '<?php include('images/svg/videos.php'); ?>',
 		closeIcon		= '<?php include('images/svg/close.php'); ?>',
 		playIcon 		= '<?php include('images/svg/play.php'); ?>',
-		removeIcon 		= '<?php include('images/svg/close.php'); ?>';
+		removeIcon 		= '<?php include('images/svg/close.php'); ?>',
+		uploadIcon 		= '<?php include('images/svg/upload.php'); ?>',
+		arrowUpIcon 	= '<?php include('images/svg/arrow-up.php'); ?>',
+		progressIcon 	= '<?php include('images/svg/progress.php'); ?>',
+		addIcon 		= '<?php include('images/svg/add.php'); ?>',
+		pauseIcon 		= '<?php include('images/svg/pause.php'); ?>',
+		moreIcon 		= '<?php include('images/svg/dots.php'); ?>',
+		fullscreenIcon 	= '<?php include('images/svg/fullscreen.php'); ?>',
+		likeIcon 		= '<?php include('images/svg/like.php'); ?>',
+		unlikeIcon 		= '<?php include('images/svg/unlike.php'); ?>';
 
 	//·····> Header scrolling transparent to color
 	var imagesBox = $('.backgroundImages .imgBox'),

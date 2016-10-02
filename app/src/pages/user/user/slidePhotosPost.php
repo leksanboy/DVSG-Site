@@ -36,8 +36,8 @@
 
 <script type="text/javascript">
 	// ···> SVG Icons
-	var likeIcon 			= "<?php include('../../../images/svg/like.php'); ?>",
-		unlikeIcon 			= "<?php include('../../../images/svg/unlike.php'); ?>",
+	var likeIcon 			= '<?php include('../../../images/svg/like.php'); ?>',
+		unlikeIcon 			= '<?php include('../../../images/svg/unlike.php'); ?>',
 	
 	// ···> Init
 		userId				= <?php echo $_POST['userId']; ?>,

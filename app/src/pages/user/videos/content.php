@@ -30,8 +30,8 @@
 		pauseIcon 			= '<?php include('images/svg/pause.php'); ?>',
 		moreIcon 			= '<?php include('images/svg/dots.php'); ?>',
 		fullscreenIcon 		= '<?php include('images/svg/fullscreen.php'); ?>',
-		likeIcon 			= "<?php include('images/svg/like.php'); ?>",
-		unlikeIcon 			= "<?php include('images/svg/unlike.php'); ?>";
+		likeIcon 			= '<?php include('images/svg/like.php'); ?>',
+		unlikeIcon 			= '<?php include('images/svg/unlike.php'); ?>';
 	
 	//·····> Get id element
 	function getFile(el){
@@ -300,7 +300,7 @@
 										<source src='pages/user/videos/videos/" + fileName + "'>\
 									</video>\
 									<div class='title'>\
-										<div class='action' onClick='openVideo(2)'>"+ closeIcon +"</div>\
+										<div class='action' onClick='playerAction(5)'>"+ closeIcon +"</div>\
 										<div class='action' onClick='playerAction(3)'>"+ moreIcon +"</div>\
 									</div>\
 									<div class='playPause' onClick='playerAction(1, this)'>\
@@ -321,7 +321,7 @@
 								<div class='boxData'></div>\
 							</div>\
 							<div class='buttons'>\
-								<button onClick='openVideo(2)'>CLOSE</button>\
+								<button onClick='playerAction(5)'>CLOSE</button>\
 							</div>\
 						</form>"
 
@@ -336,6 +336,8 @@
 		    // ·····> video buffer
 		    videoPlayer.addEventListener('progress', function() {
 		    	var buffering = videoPlayer.buffered.length;
+		    	if (buffering > 1)
+		    		buffering = 1;
 		    	$('#playerBoxVideoBuffering').width(buffering * 100 +'%');
 		    });
 
@@ -355,9 +357,9 @@
 
 		    // ·····> video end
 		    videoPlayer.addEventListener('ended', function() {
-		    	$('.videoBox .boxContent .title').fadeToggle();
-	    		$('.videoBox .boxContent .playPause').html(playIcon).fadeToggle();
-	    		$('.videoBox .boxContent .controlPanel').fadeToggle();
+		    	$('.videoBox .boxContent .title').fadeIn();
+	    		$('.videoBox .boxContent .playPause').html(playIcon).fadeIn();
+	    		$('.videoBox .boxContent .controlPanel').fadeIn();
 		    });
 
 		    // ·····> video time current -/- total

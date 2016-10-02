@@ -19,6 +19,7 @@
 				<video onclick="openVideo(1, '<?php echo $row_videosList['name']?>', '<?php echo $row_videosList['title']?>', '<?php echo $row_videosList['video']?>')">
 					<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row_videosList['name']?>"/>
 				</video>
+
 				<div class="title">
 					<div class="duration"><?php echo $row_videosList['duration']?></div>
 					<div class="text"><?php echo $row_videosList['title']?></div>
