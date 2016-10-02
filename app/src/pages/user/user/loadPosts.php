@@ -70,7 +70,7 @@
 						
 						//Files
 						mysql_select_db($database_conexion, $conexion);
-				        $query_newsFiles = sprintf("SELECT * FROM z_news_files WHERE post=%s ORDER BY id ASC", $postId, "int");
+				        $query_newsFiles = sprintf("SELECT * FROM z_news_files WHERE post=%s ORDER BY id DESC", $postId, "int");
 				        $newsFiles = mysql_query($query_newsFiles, $conexion) or die(mysql_error());
 				        $row_newsFiles = mysql_fetch_assoc($newsFiles);
 				        $totalRows_newsFiles = mysql_num_rows($newsFiles);

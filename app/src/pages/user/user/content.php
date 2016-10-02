@@ -211,9 +211,9 @@
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 		} else if (type==3) { //Publicate
-			photosArray = 	JSON.stringify(photosArray).replace(/[&\/\\~*?<>]/g,'');
-			songsArray = 	JSON.stringify(songsArray).replace(/[&\/\\~*?<>]/g,'');
-			videosArray = 	JSON.stringify(videosArray).replace(/[&\/\\~*?<>]/g,'');
+			photosArray = 	JSON.stringify(photosArray.reverse()).replace(/[&\/\\~*?<>]/g,'');
+			songsArray = 	JSON.stringify(songsArray.reverse()).replace(/[&\/\\~*?<>]/g,'');
+			videosArray = 	JSON.stringify(videosArray.reverse()).replace(/[&\/\\~*?<>]/g,'');
 			$.ajax({
 				type: 'POST',
 				url: url + 'pages/user/user/publicatePost.php',
