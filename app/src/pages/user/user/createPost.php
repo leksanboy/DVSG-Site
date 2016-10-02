@@ -11,17 +11,24 @@
 
     //User music
     mysql_select_db($database_conexion, $conexion);
-    $query_songsList = sprintf("SELECT DISTINCT f.song, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
+    $query_songsList = sprintf("SELECT DISTINCT f.song, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC LIMIT 20");
     $songsList = mysql_query($query_songsList, $conexion) or die(mysql_error());
     $row_songsList = mysql_fetch_assoc($songsList);
     $totalRows_songsList = mysql_num_rows($songsList);
 
     //User photos
 	mysql_select_db($database_conexion, $conexion);
-	$query_photosList = sprintf("SELECT f.photo, p.name FROM z_photos_favorites f INNER JOIN z_photos p ON p.id = f.photo WHERE f.user = $userId ORDER BY f.date DESC");
+	$query_photosList = sprintf("SELECT f.photo, p.name FROM z_photos_favorites f INNER JOIN z_photos p ON p.id = f.photo WHERE f.user = $userId ORDER BY f.date DESC LIMIT 12");
 	$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
 	$row_photosList = mysql_fetch_assoc($photosList);
 	$totalRows_photosList = mysql_num_rows($photosList);
+
+	//User videos
+    mysql_select_db($database_conexion, $conexion);
+    $query_videosList = sprintf("SELECT DISTINCT f.video, v.name, v.title, v.duration FROM z_videos_favorites f INNER JOIN z_videos v ON v.id = f.video WHERE f.user = $userId ORDER BY f.date DESC LIMIT 8");
+    $videosList = mysql_query($query_videosList, $conexion) or die(mysql_error());
+    $row_videosList = mysql_fetch_assoc($videosList);
+    $totalRows_videosList = mysql_num_rows($videosList);
 ?>
 <form onSubmit="return false">
 	<div class="createPostBox">
@@ -39,17 +46,17 @@
 		<div class="addedFiles">
 			<div class="files">
 				<div class="container">
+					<div class="videoFiles"></div>
+				</div>
+			</div>
+			<div class="files">
+				<div class="container">
 					<div class="photoFiles"></div>
 				</div>
 			</div>
 			<div class="files">
 				<div class="container">
 					<div class="audioFiles"></div>
-				</div>
-			</div>
-			<div class="files">
-				<div class="container">
-					<div class="videoFiles"></div>
 				</div>
 			</div>
 		</div>
@@ -145,17 +152,63 @@
 				</div>
 			</div>
 		</div>
+
+		<!-- Videos Box -->
+		<div class="videoFilesBox">
+			<div class="container">
+				<div class="title">
+					Add videos
+					<div class="close" onClick="attachVideoFiles(1)"><?php include '../../../images/svg/close.php'; ?></div>
+				</div>
+				<div class="content">
+					<?php if ($totalRows_videosList != 0) { ?>
+						<ul class="videosListBox">
+							<?php 
+								$contador = - 1; 
+								do { 
+								$contador = $contador + 1;
+							?>
+								<li class="video<?php echo $row_videosList['video'] ?>">
+									<div class="video">
+										<video>
+											<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row_videosList['name']?>"/>
+										</video>
+									</div>
+									<div class="actions" onClick='attachVideoFiles(2, <?php echo htmlspecialchars(json_encode($row_videosList), ENT_QUOTES, "UTF-8"); ?>)'>
+			                            <div class="add">
+			                                <?php include '../../../images/svg/add.php'; ?>
+			                            </div>
+			                            <div class="add added">
+			                                <?php include '../../../images/svg/check.php'; ?>
+			                            </div>
+				                    </div>
+								</li>
+							<?php } while ($row_videosList = mysql_fetch_assoc($videosList)); ?>
+						</ul>
+					<?php } else { ?>
+						<div class="noData">
+							No videos
+						</div>
+					<?php } ?>
+				</div>
+				<div class="buttons">
+					<button onClick="attachVideoFiles(3)">DONE</button>
+					<button onClick="attachVideoFiles(1)">CLOSE</button>
+				</div>
+			</div>
+		</div>
+
+
 	</div>
 	<div class="buttons">
 		<div class="actions">
 			<div class="action" onClick="attachPhotoFiles(1)">
-				<!-- <input id="photoFiles" type="file" name="fileUpload[]" multiple id="fileUpload" onChange="attachPhotoFiles(1, event)" accept="image/jpeg,image/png,image/gif"> -->
 				<label for="photoFiles"><?php include '../../../images/svg/photos.php'; ?></label>
 			</div>
 			<div class="action" onClick="attachAudioFiles(1)">
 				<label for="musicFiles"><?php include '../../../images/svg/music.php'; ?></label>
 			</div>
-			<div class="action">
+			<div class="action" onClick="attachVideoFiles(1)">
 				<label for="videosFiles"><?php include '../../../images/svg/videos.php'; ?></label>
 			</div>
 		</div>
@@ -166,3 +219,4 @@
 <?php mysql_free_result($userData); ?>
 <?php mysql_free_result($songsList); ?>
 <?php mysql_free_result($photosList); ?>
+<?php mysql_free_result($videosList); ?>

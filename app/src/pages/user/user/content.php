@@ -202,10 +202,13 @@
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 		} else if (type==3) { //Publicate
+			photosArray = 	JSON.stringify(photosArray).replace(/[&\/\\~*?<>]/g,'');
+			songsArray = 	JSON.stringify(songsArray).replace(/[&\/\\~*?<>]/g,'');
+			videosArray = 	JSON.stringify(videosArray).replace(/[&\/\\~*?<>]/g,'');
 			$.ajax({
 				type: 'POST',
 				url: url + 'pages/user/user/publicatePost.php',
-				data: 'content=' + data + '&photos=' + JSON.stringify(photosArray) + '&audios=' + JSON.stringify(songsArray) + '&videos=' + JSON.stringify(videosArray),
+				data: 'content=' + data + '&photos=' + photosArray + '&audios=' + songsArray + '&videos=' + videosArray,
 				success: function(response) {
 					defaultLoad();
 					
@@ -316,32 +319,54 @@
 			$('.photoFilesBox').toggle();
 			$('.createPostBox .addedFiles .photoFiles').html(bodyPhotos);
 		}
-		// if (type==1) {
-		// 	var i = 0,
-		// 		reader,
-		// 		file,
-		// 		photoArray = [];
+	}
 
-		// 	for (;i < data.currentTarget.files.length; i++) {
-		// 		file = data.currentTarget.files[i];
-		// 		reader = new FileReader();
-		// 		reader.readAsDataURL(file);
+	//·····> attach audio files
+	function attachVideoFiles(type, data){
+		if (type==1) {
+			$('.videoFilesBox').toggle();
+		} else if (type==2) { //Add
+			var dataPosition = arrayObjectIndexOf(videosArray, data.video, "video");
 
-		// 		reader.onload = function (e) {
-		// 			var a = e.target.result;
-		// 			photoArray.push(a);
+			if (dataPosition == -1){
+				videosArray.push(data);
+				$('.video'+ data.video + ' .actions .add').hide();
+				$('.video'+ data.video + ' .actions .added').show();
+			} else{
+				videosArray.splice(dataPosition,1);
+				$('.video'+ data.video + ' .actions .add').show();
+				$('.video'+ data.video + ' .actions .added').hide();
 
-		// 			var b = "<div class='image'>\
-		// 				<div class='img' style='background-image: url("+ a +");'></div>\
-		// 				<div class='delete'>"+ closeIcon +"</div>\
-		// 				</div>";
-				
-		// 			$(".addedFiles .files .container .photoFiles").prepend(b);
-		// 		}
-		// 	}
+				$('.videosListBoxAdded .video'+ data.video).fadeOut();
+			}
 
-		// 	console.log('photoArray', photoArray);
-		// }
+			console.log('Videos:', videosArray);
+		} else if (type==3) { //Done
+			var bodyVideos = '<ul class="videosListBoxAdded">';
+					videosArray.forEach(function(item){
+						// var itemArray = JSON.stringify(item);
+						var itemArray = JSON.stringify(item);
+						itemArray = itemArray.replace(/'/g, '');
+						console.log('itemArray', itemArray);
+
+						bodyVideos += 	"<li class='video"+ item.video +"'>\
+											<div class='video'>\
+												<div class='video'>\
+													<video>\
+														<source src='<?php echo $urlWeb ?>pages/user/videos/videos/"+item.name+"'/>\
+													</video>\
+												</div>\
+											</div>\
+											<div class='actions' onClick='attachVideoFiles(2,"+ itemArray +")'>\
+					                            <div class='remove'>"+ removeIcon +"</div>\
+					                        </div>\
+										</li>";
+					});
+				bodyVideos += '</ul>';
+
+			$('.videoFilesBox').toggle();
+			$('.createPostBox .addedFiles .videoFiles').html(bodyVideos);
+		}
 	}
 
 </script>

@@ -25,7 +25,6 @@
 	$row_GetComments = mysql_fetch_assoc($GetComments);
 	$totalRows_GetComments = mysql_num_rows($GetComments);
 ?>
-
 <div class="user">
 	<div class="avatar" onclick="userPage(<?php echo $userId ?>)">
 		<img src="<?php echo userAvatar($userId); ?>">
@@ -114,5 +113,172 @@
     	<div class="loadMore" onclick="loadMorecomments(<?php echo $videoId ?>);"> + LOAD MORE</div>
     <?php } ?>
 </div>
+<script type="text/javascript">
+	var videoPlayer = document.getElementById('video_player');
+
+	//·····> Video player
+    function playerAction(type, button){
+    	if (type == 1) { //playPause
+    		if (!videoPlayer.paused){
+    			videoPlayer.pause();
+    			$(button).html(playIcon);
+    		} else {
+    			videoPlayer.play();
+    			$(button).html(pauseIcon);
+
+    			playerAction(4, button);
+    		}
+    	} else if (type == 2) { //fullScreen
+    		if ($.isFunction(videoPlayer.webkitEnterFullscreen))
+                videoPlayer.webkitEnterFullscreen();
+            else if ($.isFunction(videoPlayer.mozRequestFullScreen))
+                videoPlayer.mozRequestFullScreen();
+            else
+                alert('Your browsers doesn\'t support fullscreen');
+    	} else if (type == 3) { //More
+    		alert('DVSG <br> More');
+    	} else if (type == 4) { //Video click to show/Hide
+    		$('.videoBox .boxContent .title').fadeToggle();
+    		$('.videoBox .boxContent .playPause').fadeToggle();
+    		$('.videoBox .boxContent .controlPanel').fadeToggle();
+    	}
+    }
+
+    // ·····> format time
+    function formatTime(time){
+		var duration = time,
+			hours = Math.floor(duration / 3600),
+			minutes = Math.floor((duration % 3600) / 60),
+			seconds = Math.floor(duration % 60),
+			time = [];
+
+		if (hours) {
+			time.push(hours)
+		}
+
+		time.push(((hours ? "0" : "") + minutes).substr(-2));
+		time.push(("0" + seconds).substr(-2));
+		return time.join(":");
+	};
+
+	// ·····> Set video progress
+    function setProgressBar(target) {
+    	var min = target.min,
+		    max = target.max,
+		    val = target.value;
+
+    	var duration = Math.round(val / 1000 * videoPlayer.duration);
+    	videoPlayer.currentTime = duration;
+    }
+    $('input[type=range]').on('input', function(e){
+		var min = e.target.min,
+			max = e.target.max,
+			val = e.target.value;
+
+		$(e.target).css({
+			'backgroundSize': (val - min) * 100 / (max - min) + '% 100%',
+			'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+		});
+	}).trigger('input');
+
+	//·····> Like photo
+	function like(id){
+		var countLikesVideo 	= $('.modalBox .box .videoBox .boxData .user .actions .analytics .likes .count'),
+			likeIconVideo		= $('.modalBox .box .videoBox .boxData .user .actions .analytics .likes .like'),
+			countLikes 			= parseInt(countLikesVideo.html());
+
+		$.ajax({
+	        type: 'POST',
+	        url: '<?php echo $urlWeb ?>' + 'pages/user/videos/like.php',
+	        data: 'videoId=' + id,
+	        success: function(response){
+	            if (response == 'like'){ // Like
+	            	countLikes = countLikes +1;
+
+	            	countLikesVideo.html(countLikes);
+	            	likeIconVideo.html(likeIcon);
+	        	} else { // Unlike
+	            	countLikes = countLikes -1;
+
+	            	countLikesVideo.html(countLikes);
+	            	likeIconVideo.html(unlikeIcon);
+	        	}
+	        }
+	    });
+	}
+
+	//·····> New comment
+	function newComment(type, value, id){
+		var buttonSendCommentVideo 	= $(".modalBox .box .videoBox .boxData .comments .newComment .button svg"),
+			inputSendCommentVideo 	= $(".modalBox .box .videoBox .boxData .comments .newComment .inputBox"),
+			commentsList 			= $('.modalBox .box .videoBox .boxData .comments .commentsList'),
+			countCommentsVideo 		= $('.modalBox .box .videoBox .boxData .user .actions .analytics .comments .count'),
+			countComments 			= parseInt(countCommentsVideo.html());
+
+		if (type == 1) {
+            if(value != ''){
+                buttonSendCommentVideo.css("fill","#09f");
+            }else{
+                buttonSendCommentVideo.css("fill","#333");
+            }
+		} else if (type == 2) {
+			if (value != '') {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $urlWeb ?>' + 'pages/user/videos/comments/new.php',
+                    data: 'commentText=' + value + '&videoId=' + id,
+                    success: function(response) {
+                        commentsList.prepend(response);
+                        inputSendCommentVideo.val('');
+                        countCommentsVideo.html(countComments + 1);
+                    }
+                });
+            }
+		}
+	}
+
+	//·····> Delete comment
+	function deleteComment(type, id){
+		var countCommentsVideo 	= $('.modalBox .box .videoBox .boxData .user .actions .analytics .comments .count'),
+			countComments 		= parseInt(countCommentsVideo.html()),
+			deleteComment		= $('.modalBox .box .videoBox .boxData .comments .commentsList .item #delete' + id),
+			boxComment			= $('.modalBox .box .videoBox .boxData .comments .commentsList #comment' + id);
+
+		if (type == 1) {
+			deleteComment.toggle();
+		}else if (type==2) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/videos/comments/delete.php',
+				data: 'id=' + id,
+				success: function(response){
+					boxComment.fadeOut(300);
+					deleteComment.fadeOut(300);
+
+					countCommentsVideo.html(countComments - 1);
+				}
+			});
+		}
+	}
+
+	//·····> Load more comment
+	function loadMorecomments(id){
+		var commentsList 					= $('.modalBox .box .videoBox .boxData .comments .commentsList'),
+			buttonLoadMoreCommentsVideo 	= $('.modalBox .box .videoBox .boxData .comments .loadMore');
+
+		$.ajax({
+            type: "POST",
+            url: '<?php echo $urlWeb ?>' + 'pages/user/videos/comments/loadMore.php',
+            data: 'cuantity=' + 10 + '&videoId=' + id,
+            success: function(response) {
+            	if (response != '')
+                	commentsList.append(response);
+                else
+                	buttonLoadMoreCommentsVideo.hide();
+
+            }
+        });
+	}
+</script>
 <?php mysql_free_result($GetLikes); ?>
 <?php mysql_free_result($GetComments); ?>

@@ -63,14 +63,28 @@
 				        $row_newsFiles = mysql_fetch_assoc($newsFiles);
 				        $totalRows_newsFiles = mysql_num_rows($newsFiles);
 					?>
-					<?php
-						mysql_data_seek( $newsFiles, 0 );
-							while($row = mysql_fetch_array( $newsFiles )){
-								if ($row['type'] == 'video') {
-									echo '<br>VID:'.$row['id'];
+						<ul class="videosListBox">
+							<?php
+								mysql_data_seek( $newsFiles, 0 );
+								while($row = mysql_fetch_array( $newsFiles )){
+									if ($row['type'] == 'video') { ?>
+										<li>
+											<div class="video" onclick="openVideoPost(1, <?php echo $row['file'] ?>, '<?php echo $row['name'] ?>')">
+												<video>
+													<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row['name'] ?>"/>
+												</video>
+												<div class="play">
+													<?php include('../../../images/svg/play.php'); ?>
+												</div>
+												<div class="duration">
+													<?php echo $row['duration'] ?>
+												</div>
+											</div>
+										</li>
+									<?php }
 								}
-							}
-						?>
+							?>
+						</ul>
 
 						<ul class="photosListBox">
 							<?php
@@ -168,6 +182,117 @@
 						</div>"
 
 			$('.modalBox .box').html(box);
+		} else if (type==2) { //Close
+			$('.modalBox').toggleClass('modalDisplay');
+			$('body').toggleClass('modalHidden');
+		}
+	}
+
+	function openVideoPost(type, videoId, fileName){
+		//·····> SVG icons
+		var uploadIcon 			= '<?php include('images/svg/upload.php'); ?>',
+		arrowUpIcon 		= '<?php include('images/svg/arrow-up.php'); ?>',
+		progressIcon 		= '<?php include('images/svg/progress.php'); ?>',
+		addIcon 			= '<?php include('images/svg/add.php'); ?>',
+		closeIcon 			= '<?php include('images/svg/close.php'); ?>',
+		playIcon 			= '<?php include('images/svg/play.php'); ?>',
+		pauseIcon 			= '<?php include('images/svg/pause.php'); ?>',
+		moreIcon 			= '<?php include('images/svg/dots.php'); ?>',
+		fullscreenIcon 		= '<?php include('images/svg/fullscreen.php'); ?>',
+		likeIcon 			= '<?php include('images/svg/like.php'); ?>',
+		unlikeIcon 			= '<?php include('images/svg/unlike.php'); ?>';
+
+		if (type==1) { // Open
+			$('.modalBox').toggleClass('modalDisplay');
+			setTimeout(function() {
+				$('.modalBox').toggleClass('showModal');
+			}, 100);
+			$('body').toggleClass('modalHidden');
+
+			$.ajax({
+		        type: 'POST',
+		        url: '<?php echo $urlWeb ?>' + 'pages/user/videos/setData.php',
+		        data: 'videoId=' + videoId + '&userId=' + userId,
+		        success: function(response){
+		        	$('.videoBox .boxData').html(response);
+		        }
+		    });
+
+			var box = "<form onSubmit='return false'>\
+							<div class='videoBox'>\
+								<div class='boxContent'>\
+									<video id='video_player' controls preload='auto' onClick='playerAction(4)'>\
+										<source src='pages/user/videos/videos/" + fileName + "'>\
+									</video>\
+									<div class='title'>\
+										<div class='action' onClick='openVideoPost(2)'>"+ closeIcon +"</div>\
+										<div class='action' onClick='playerAction(3)'>"+ moreIcon +"</div>\
+									</div>\
+									<div class='playPause' onClick='playerAction(1, this)'>\
+										"+ playIcon +"\
+									</div>\
+									<div class='controlPanel'>\
+										<div class='time'>\
+											<div class='current'>00:00</div>\
+											<div class='total'>00:00</div>\
+										</div>\
+										<div class='fullScreen' onClick='playerAction(2)'>"+ fullscreenIcon +"</div>\
+									</div>\
+									<div class='progress'>\
+										<input type='range' id='playerBoxVideoProgress' min='0' max='1000' value='0' onchange='setProgressBar(event.target)'/>\
+										<div class='buffer' id='playerBoxVideoBuffering'></div>\
+									</div>\
+								</div>\
+								<div class='boxData'></div>\
+							</div>\
+							<div class='buttons'>\
+								<button onClick='openVideoPost(2)'>CLOSE</button>\
+							</div>\
+						</form>"
+
+			$('.modalBox .box').html(box);
+
+			// ·····> declarate video player
+			var videoPlayer = document.getElementById('video_player');
+		    
+			// ·····> remove default control when JS loaded
+		    videoPlayer.removeAttribute("controls");
+
+		    // ·····> video buffer
+		    videoPlayer.addEventListener('progress', function() {
+		    	var buffering = videoPlayer.buffered.length;
+		    	$('#playerBoxVideoBuffering').width(buffering * 100 +'%');
+		    });
+
+		    // ·····> video time duration
+		    videoPlayer.addEventListener('timeupdate', function() {
+				var duration =  ((videoPlayer.currentTime / videoPlayer.duration) * 1000);
+
+				if (videoPlayer.duration > 0) {
+					$('#playerBoxVideoProgress').val(duration);
+
+					$('#playerBoxVideoProgress').css({
+						'backgroundSize': (duration / 10) + '% 100%',
+						'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+					});
+				}
+		    });
+
+		    // ·····> video end
+		    videoPlayer.addEventListener('ended', function() {
+		    	$('.videoBox .boxContent .title').fadeToggle();
+	    		$('.videoBox .boxContent .playPause').html(playIcon).fadeToggle();
+	    		$('.videoBox .boxContent .controlPanel').fadeToggle();
+		    });
+
+		    // ·····> video time current -/- total
+			setInterval(function(){
+				$('.videoBox .boxContent .controlPanel .time .total').text(formatTime(videoPlayer.duration));
+				$('.videoBox .boxContent .controlPanel .time .current').text(formatTime(videoPlayer.currentTime));
+
+				if(videoPlayer.duration == videoPlayer.currentTime)
+					$('.videoBox .controlPanel .playPause').html(playIcon);
+			}, 1000);
 		} else if (type==2) { //Close
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
