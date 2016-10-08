@@ -57,7 +57,9 @@
 	</div>
 <?php }?>
 
-<div class="buttonCreate" onclick="createPost(1)">Create post</div>
+<?php if ($userPageId == $_SESSION['MM_Id']) { ?>
+	<div class="buttonCreate" onclick="createPost(1)">Create post</div>
+<?php }?>
 
 <div id="userPosts"></div>
 
@@ -377,5 +379,4 @@
 			$('.createPostBox .addedFiles .videoFiles').html(bodyVideos);
 		}
 	}
-
 </script>

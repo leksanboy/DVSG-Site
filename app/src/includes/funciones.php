@@ -237,6 +237,41 @@
 	}
 
 
+	// Check if user like news-post
+	function checkLikeUserNews($iduser, $idpost) {
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_CheckData = sprintf ("SELECT * FROM z_news_likes WHERE user = %s AND post = %s", 
+			GetSQLValueString($iduser, "int"),
+			GetSQLValueString($idpost, "int"));
+		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
+		$row_CheckData = mysql_fetch_assoc($CheckData);
+		$totalRows_CheckData = mysql_num_rows($CheckData);
+
+		if ($totalRows_CheckData==0) {
+			return true;
+		} else{
+			return false;
+		}
+
+		mysql_free_result($CheckData);
+	}
+
+	//SacarNumero de photos($id)
+	function countCommentsUserNews($id) {
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_CommentsCount = sprintf ("SELECT * FROM z_news_comments WHERE post = %s",
+		GetSQLValueString($id, "int"));
+		$CommentsCount = mysql_query($query_CommentsCount, $conexion) or die(mysql_error());
+		$row_CommentsCount = mysql_fetch_assoc($CommentsCount);
+		$totalRows_CommentsCount = mysql_num_rows($CommentsCount);
+
+		return $totalRows_CommentsCount;
+		mysql_free_result($CommentsCount);
+	}
+
+
 
 
 

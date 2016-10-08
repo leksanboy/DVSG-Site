@@ -15,7 +15,15 @@
 
 	//User news
 	mysql_select_db($database_conexion, $conexion);
-	$query_newsList = sprintf("SELECT * FROM z_news WHERE user=%s ORDER BY id DESC LIMIT 99", $userPageId, "int");
+	$query_newsList = sprintf("
+		SELECT * FROM z_news
+			WHERE user IN (SELECT
+				CASE
+					WHEN f.receiver = $userPageId THEN f.sender
+					WHEN f.sender = $userPageId THEN f.receiver
+				END
+				FROM z_friends f WHERE f.receiver = $userPageId OR f.sender = $userPageId) OR user=%s 
+				ORDER BY id DESC LIMIT 100", $userPageId, "int");
 	$newsList = mysql_query($query_newsList, $conexion) or die(mysql_error());
 	$row_newsList = mysql_fetch_assoc($newsList);
 	$totalRows_newsList = mysql_num_rows($newsList);
@@ -54,11 +62,6 @@
 					<div class="menuRight" onclick="toggleRightSide(1)">
 						<?php include("images/svg/circles.php"); ?>
 					</div>
-					<?php if ($row_userData['id'] == $_SESSION['MM_Id']) { ?>
-						<div class="buttonAction" onclick="createPost(1)">
-							<?php include("images/svg/add.php");?>
-						</div>
-					<?php } ?>
 				<?php } ?>
 
 				<div class="title">

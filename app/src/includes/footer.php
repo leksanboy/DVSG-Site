@@ -6,7 +6,7 @@
 		<li>Contact</li>
 		<li>Careers</li>
 	</ul>
-	<div>&copy; <?php echo date("Y") ?> DVSG. All rights reserved.</div>
+	<div>DVSG &copy; <?php echo date("Y") ?></div>
 	<br>
 	<div onClick="location.href='<?php echo $urlWeb ?>id0'">
 		Sasá Rafalsky

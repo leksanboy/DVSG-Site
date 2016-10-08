@@ -1,7 +1,7 @@
 <?php require_once('../../../Connections/conexion.php');
 	$userId = $_POST['userId'];
 	$videoId = $_POST['videoId'];
-	$_SESSION['moreComments'] = 0;
+	$_SESSION['moreCommentsVideo'] = 0;
 
 	// Update views
 	$updateSQL = sprintf("UPDATE z_videos SET replays = replays+1 WHERE id = %s",

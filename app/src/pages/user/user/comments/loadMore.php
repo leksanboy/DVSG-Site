@@ -1,13 +1,13 @@
 <?php require_once('../../../../Connections/conexion.php');
-	$videoId = $_POST['videoId'];
+	$postId = $_POST['postId'];
 	$cuantity = $_POST['cuantity'];
-	$_SESSION['moreCommentsVideo'] = $_SESSION['moreCommentsVideo'] + $cuantity;
+	$_SESSION['moreCommentsNews'.$postId] = $_SESSION['moreCommentsNews'.$postId] + $cuantity;
 
-	// More comments user video
+	// More comments user photo
 	mysql_select_db($database_conexion, $conexion);
-	$query_GetMoreComments = sprintf ("SELECT * FROM z_videos_comments WHERE video = %s ORDER BY date DESC LIMIT %s,  10",
-		GetSQLValueString($videoId, "int"),
-		GetSQLValueString($_SESSION['moreCommentsVideo'], "int"));
+	$query_GetMoreComments = sprintf ("SELECT * FROM z_news_comments WHERE post = %s ORDER BY id DESC LIMIT %s,  5",
+		GetSQLValueString($postId, "int"),
+		GetSQLValueString($_SESSION['moreCommentsNews'.$postId], "int"));
 	$GetMoreComments = mysql_query($query_GetMoreComments, $conexion) or die(mysql_error());
 	$row_GetMoreComments = mysql_fetch_assoc($GetMoreComments);
 	$totalRows_GetMoreComments = mysql_num_rows($GetMoreComments);
@@ -16,29 +16,25 @@
 <?php if ($row_GetMoreComments != ''){?>
 	<?php do { ?>
 	    <div class="item" id="comment<?php echo $row_GetMoreComments['id'] ?>">
-	        <div class="avatar">
-	            <a href="<?php echo $urlWeb ?>id<?php echo $row_GetMoreComments['user']; ?>">
-	                <img src="<?php echo userAvatar($row_GetMoreComments["user"]); ?>" width="36px" height="36px" style="border-radius: 50%"/>
-	            </a>
+	        <div class="avatar" onclick="userPage(<?php echo $row_GetMoreComments['user']; ?>)">
+	            <img src="<?php echo userAvatar($row_GetMoreComments["user"]); ?>" width="28px" height="28px" style="border-radius: 50%"/>
 	        </div>
 
-	        <div class="name">
-	            <a href="<?php echo $urlWeb ?>id<?php echo $row_GetMoreComments['user']; ?>">
-	                <?php echo userName($row_GetMoreComments['user']); ?>
-	            </a>
+	        <div class="name" onclick="userPage(<?php echo $row_GetMoreComments['user']; ?>)">
+	            <?php echo userName($row_GetMoreComments['user']); ?>
 	            <font size="-2"><?php echo timeAgo($row_GetMoreComments['date']);?></font>
 	        </div>
 
 	        <?php if (isset ($_SESSION['MM_Id'])){ ?> 
 	            <?php  if (($row_GetMoreComments['user'] == $_SESSION['MM_Id']) || (rango_admin ($_SESSION['MM_Id']) ==4)) {?>
-					<div class="delete" onClick="deleteComment(1, <?php echo $row_GetMoreComments['id'] ?>)">
+					<div class="delete" onClick="deleteCommentNews(1, <?php echo $row_GetMoreComments['id'] ?>)">
 						<?php include("../../../../images/svg/clear.php"); ?>
 					</div>
 					<div class="deleteBoxConfirmation" id="delete<?php echo $row_GetMoreComments['id'] ?>">
 						<div class="text">Delete this comment?</div>
 						<div class="buttons">
-							<button onClick="deleteComment(1, <?php echo $row_GetMoreComments['id'] ?>)">NO</button>
-							<button onClick="deleteComment(2, <?php echo $row_GetMoreComments['id'] ?>)">YES</button>
+							<button onClick="deleteCommentNews(1, <?php echo $row_GetMoreComments['id'] ?>)">NO</button>
+							<button onClick="deleteCommentNews(2, <?php echo $row_GetMoreComments['id'] ?>)">YES</button>
 						</div>
 					</div>
 	            <?php }?>

@@ -1,13 +1,13 @@
 <?php require_once('../../../../Connections/conexion.php');
 	$photoId = $_POST['photoId'];
 	$cuantity = $_POST['cuantity'];
-	$_SESSION['moreComments'] = $_SESSION['moreComments'] + $cuantity;
+	$_SESSION['moreCommentsPhoto'] = $_SESSION['moreCommentsPhoto'] + $cuantity;
 
 	// More comments user photo
 	mysql_select_db($database_conexion, $conexion);
 	$query_GetMoreComments = sprintf ("SELECT * FROM z_photos_comments WHERE photo = %s ORDER BY date DESC LIMIT %s,  10",
 		GetSQLValueString($photoId, "int"),
-		GetSQLValueString($_SESSION['moreComments'], "int"));
+		GetSQLValueString($_SESSION['moreCommentsPhoto'], "int"));
 	$GetMoreComments = mysql_query($query_GetMoreComments, $conexion) or die(mysql_error());
 	$row_GetMoreComments = mysql_fetch_assoc($GetMoreComments);
 	$totalRows_GetMoreComments = mysql_num_rows($GetMoreComments);

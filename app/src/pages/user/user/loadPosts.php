@@ -32,7 +32,24 @@
 	<div id="playerBoxAudioCounter" style="display: none">0</div>
 	<audio id="playerBoxAudio" preload controls src="" style="display: none"></audio>
 	<ul class="newsListBox">
-		<?php do { ?>
+		<?php do {
+			$postId = $row_newsList['id'];
+			
+			//Files
+			mysql_select_db($database_conexion, $conexion);
+	        $query_newsFiles = sprintf("SELECT * FROM z_news_files WHERE post=%s ORDER BY id DESC", $postId, "int");
+	        $newsFiles = mysql_query($query_newsFiles, $conexion) or die(mysql_error());
+	        $row_newsFiles = mysql_fetch_assoc($newsFiles);
+	        $totalRows_newsFiles = mysql_num_rows($newsFiles);
+
+	        // Likes
+			mysql_select_db($database_conexion, $conexion);
+			$query_GetLikes = sprintf ("SELECT * FROM z_news_likes WHERE post = %s",
+				GetSQLValueString($postId, "int"));
+			$GetLikes = mysql_query($query_GetLikes, $conexion) or die(mysql_error());
+			$row_GetLikes = mysql_fetch_assoc($GetLikes);
+			$totalRows_GetLikes = mysql_num_rows($GetLikes);
+		?>
 			<li id="news<?php echo $row_newsList['id'] ?>">
 				<div class="head">
 					<div class="image" onclick="userPage(<?php echo $row_newsList['user']; ?>)">
@@ -64,17 +81,6 @@
 							<?php echo $row_newsList['content'] ?>
 						</div>
 					<?php } ?>
-
-					<?php
-						$postId = $row_newsList['id'];
-						
-						//Files
-						mysql_select_db($database_conexion, $conexion);
-				        $query_newsFiles = sprintf("SELECT * FROM z_news_files WHERE post=%s ORDER BY id DESC", $postId, "int");
-				        $newsFiles = mysql_query($query_newsFiles, $conexion) or die(mysql_error());
-				        $row_newsFiles = mysql_fetch_assoc($newsFiles);
-				        $totalRows_newsFiles = mysql_num_rows($newsFiles);
-					?>
 						<?php
 							//Videos count MAX=3
 							mysql_data_seek( $newsFiles, 0 ); $counterVideo = 0;
@@ -160,25 +166,101 @@
 							?>
 						</ul>
 					<?php mysql_free_result($newsFiles);?>
+					<?php mysql_free_result($GetLikes); ?>
+					<?php mysql_free_result($GetComments); ?>
 				</div>
 
 				<div class="foot">
 					<div class="analytics">
 						<div class='comments'>
 							<?php include('../../../images/svg/comments.php'); ?>
-							<span class='count'>01</span>
+							<span class='count'><?php echo countCommentsUserNews($postId); ?></span>
 						</div>
-						<div class='likes' <?php  if (isset($_SESSION['MM_Id'])) { ?> onClick='like(<?php echo $photoId ?>)' <?php } ?>>
+						<div class='likes' <?php  if (isset($_SESSION['MM_Id'])) { ?> onClick='likeNews(<?php echo $postId ?>)' <?php } ?>>
 							<span class='like'>
-								<?php if (checkLikeUserPhoto($_SESSION['MM_Id'], $photoId) == true ){ ?>
+								<?php if (checkLikeUserNews($_SESSION['MM_Id'], $postId) == true ){ ?>
 									<?php include('../../../images/svg/unlike.php'); ?>
 								<?php } else {?>
 									<?php include('../../../images/svg/like.php'); ?>
 								<?php } ?>
 							</span>
-							<span class='count'>02</span>
+							<span class='count'><?php echo $totalRows_GetLikes ?></span>
 						</div>
 			    	</div>
+				</div>
+
+				<div class="commentsBox">
+					<?php 
+						// Comments
+						mysql_select_db($database_conexion, $conexion);
+						$query_GetComments = sprintf ("SELECT * FROM z_news_comments WHERE post = %s ORDER BY id DESC",
+						GetSQLValueString($postId, "int"));
+						$GetComments = mysql_query($query_GetComments, $conexion) or die(mysql_error());
+						$row_GetComments = mysql_fetch_assoc($GetComments);
+						$totalRows_GetComments = mysql_num_rows($GetComments);
+						
+						$_SESSION['moreCommentsNews'.$postId] = 0;
+						if (isset($_SESSION['MM_Id'])) 
+					{ ?>
+					    <div class="newComment">
+					        <form onsubmit="return false">
+					            <textarea name="comment" id="comentario" class="inputBox" onkeyup="newCommentNews(1, this.value, <?php echo $postId ?>)" placeholder="Write a comment..."></textarea>
+					            <input type="hidden" name="page" value="<?php echo $postId; ?>" />
+					            <input type="button" style="display:none" onclick="newCommentNews(2, comment.value, <?php echo $postId ?>)" id="btn_comentario<?php echo $postId ?>">
+					            <label for="btn_comentario<?php echo $postId ?>">
+					                <div class="button">
+					                    <?php include("../../../images/svg/send.php");?>
+					                </div>
+					            </label>
+					        </form>
+					    </div>
+					<?php } else {?>
+					    <div class="registerToComment">to comment create an account</div>
+					<?php }?>
+
+					<div class="commentsList">
+				    	<?php if ($row_GetComments != '') {?>
+					        <?php do { $countComments[$postId]++; ?>
+					            <div class="item" id="comment<?php echo $row_GetComments['id'] ?>">
+					                <div class="avatar" onclick="userPage(<?php echo $row_GetComments['user'] ?>)">
+					                    <img src="<?php echo userAvatar($row_GetComments["user"]); ?>" width="28px" height="28px" style="border-radius: 50%"/>
+					                </div>
+
+					                <div class="name" onclick="userPage(<?php echo $row_GetComments['user'] ?>)">
+					                    <?php echo userName($row_GetComments['user']); ?>
+					                    <font size="-2"><?php echo timeAgo($row_GetComments['time']);?></font>
+					                </div>
+
+					                <?php if (isset ($_SESSION['MM_Id'])){ ?> 
+					                    <?php  if (($row_GetComments['user'] == $_SESSION['MM_Id']) || (rango_admin ($_SESSION['MM_Id']) ==4)) {?>
+											<div class="delete" onClick="deleteCommentNews(1, <?php echo $row_GetComments['id'] ?>, <?php echo $postId ?>)">
+												<?php include("../../../images/svg/clear.php"); ?>
+											</div>
+											<div class="deleteBoxConfirmation" id="delete<?php echo $row_GetComments['id'] ?>">
+												<div class="text">Delete this comment?</div>
+												<div class="buttons">
+													<button onClick="deleteCommentNews(1, <?php echo $row_GetComments['id'] ?>, <?php echo $postId ?>)">NO</button>
+													<button onClick="deleteCommentNews(2, <?php echo $row_GetComments['id'] ?>, <?php echo $postId ?>)">YES</button>
+												</div>
+											</div>
+					                    <?php } ?>
+					                <?php } ?>
+
+					                <div class="content">
+					                    <div class="inner">
+					                        <?php echo $row_GetComments["comment"];?>
+					                    </div>
+					                </div>
+					            </div>
+					        <?php } while ($countComments[$postId] < 5 && $row_GetComments = mysql_fetch_assoc($GetComments)); ?>
+					    <?php } else { ?>
+					    	<div class="noComents">NO COMMENTS</div>
+					    <?php } ?>
+					</div>
+
+				    <?php if ($totalRows_GetComments > 5) { ?>
+				    	<div class="loadMore" onclick="loadMorecommentsNews(<?php echo $postId ?>);"> + LOAD MORE</div>
+				    <?php } ?>
 				</div>
 			</li>
 		<?php } while ($row_newsList = mysql_fetch_assoc($newsList)); ?>
@@ -191,7 +273,7 @@
 <script type="text/javascript">
 	var userId = <?php echo $userId ?>;
 
-	// ·····> open photo slider
+	// ·····> Open photo slider
 	function openPhotoPost(type, position, postId, photoId){
 		if (type==1) { // Open
 			$('.modalBox').toggleClass('modalDisplay');
@@ -221,7 +303,7 @@
 		}
 	}
 
-	// ·····> open video to play
+	// ·····> Open video to play
 	function openVideoPost(type, videoId, fileName){
 		if (type==1) { // Open
 			$('.modalBox').toggleClass('modalDisplay');
@@ -320,6 +402,109 @@
 			$('.modalBox').toggleClass('modalDisplay');
 			$('body').toggleClass('modalHidden');
 		}
+	}
+
+	// ·····> Like
+	function likeNews(id){
+		var likeIcon 			= '<?php include('../../../images/svg/like.php'); ?>',
+			unlikeIcon 			= '<?php include('../../../images/svg/unlike.php'); ?>',
+			countLikesNews 		= $('#news'+ id +' .foot .analytics .likes .count'),
+			likeIconNews		= $('#news'+ id +' .foot .analytics .likes .like'),
+			countLikes 			= parseInt(countLikesNews.html());
+
+		$.ajax({
+	        type: 'POST',
+	        url: '<?php echo $urlWeb ?>' + 'pages/user/user/like.php',
+	        data: 'postId=' + id,
+	        success: function(response){
+	            if (response == 'like'){ // Like
+	            	countLikes = countLikes +1;
+
+	            	countLikesNews.html(countLikes);
+	            	likeIconNews.html(likeIcon);
+	        	} else { // Unlike
+	            	countLikes = countLikes -1;
+
+	            	countLikesNews.html(countLikes);
+	            	likeIconNews.html(unlikeIcon);
+	        	}
+	        }
+	    });
+	}
+
+	//·····> New comment
+	function newCommentNews(type, value, id){
+		var buttonSendCommentPhoto 	= $('#news'+id+' .commentsBox .newComment .button svg'),
+			inputSendCommentPhoto 	= $('#news'+id+' .commentsBox .newComment .inputBox'),
+			commentsList 			= $('#news'+id+' .commentsBox .commentsList'),
+			countCommentsPhoto 		= $('#news'+id+' .foot .analytics .comments .count'),
+			countComments 			= parseInt(countCommentsPhoto.html());
+
+		console.log(type, value, id);
+
+		if (type == 1) {
+            if(value != ''){
+                buttonSendCommentPhoto.css("fill","#09f");
+            }else{
+                buttonSendCommentPhoto.css("fill","#333");
+            }
+		} else if (type == 2) {
+			if (value != '') {
+                $.ajax({
+                    type: "POST",
+                    url: '<?php echo $urlWeb ?>' + 'pages/user/user/comments/new.php',
+                    data: 'commentText=' + value + '&postId=' + id,
+                    success: function(response) {
+                        commentsList.prepend(response);
+                        inputSendCommentPhoto.val('');
+                        countCommentsPhoto.html(countComments + 1);
+                    }
+                });
+            }
+		}
+	}
+
+	//·····> Delete comment
+	function deleteCommentNews(type, idComment, id){
+		var countCommentsPhoto 	= $('#news'+id+' .foot .analytics .comments .count'),
+			countComments 		= parseInt(countCommentsPhoto.html()),
+			deleteComment		= $('#news'+id+' .commentsBox .commentsList .item #delete' + idComment),
+			boxComment			= $('#news'+id+' .commentsBox .commentsList #comment' + idComment);
+
+		if (type == 1) {
+			deleteComment.toggle();
+		}else if (type==2) {
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/user/comments/delete.php',
+				data: 'id=' + id,
+				success: function(response){
+					boxComment.fadeOut(300);
+					deleteComment.fadeOut(300);
+
+					countCommentsPhoto.html(countComments - 1);
+				}
+			});
+		}
+	}
+
+	//·····> Load more comment
+	function loadMorecommentsNews(id){
+		var commentsList 					= $('#news'+id+' .commentsBox .commentsList'),
+			buttonLoadMoreCommentsPhoto 	= $('#news'+id+' .commentsBox .loadMore');
+
+		$.ajax({
+            type: "POST",
+            url: '<?php echo $urlWeb ?>' + 'pages/user/user/comments/loadMore.php',
+            data: 'cuantity=' + 5 + '&postId=' + id,
+            success: function(response) {
+            	if (response != '')
+                	commentsList.append(response);
+                else
+                	buttonLoadMoreCommentsPhoto.hide();
+
+            }
+        });
 	}
 </script>
 <script type="text/javascript">

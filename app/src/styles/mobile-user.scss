@@ -932,11 +932,11 @@
 					.buttonCreate {
 						border-bottom: 2px solid #135988;
 						text-transform: uppercase;
+						margin: 24px 2% 12px;
 						text-align: center;
 						border-radius: 3px;
 						line-height: 36px;
 						background: #09f;
-						margin: 24px 2%;
 						height: 36px;
 						color: #fff;
 						float: left;
@@ -952,16 +952,17 @@
 							box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 							box-sizing: border-box;
 							position: relative;
+							border-radius: 3px;
 							margin: 12px 2% 0;
+							background: #fff;
 							height: initial;
+							color: #404040;
 							float: left;
 							width: 96%;
 
 							.head {
 								border-bottom: 1px solid rgba(0,0,0,.25);
-								border-radius: 3px 3px 0 0;
 								box-sizing: border-box;
-								background: #fff;
 								padding: 6px;
 								float: left;
 								width: 100%;
@@ -984,7 +985,6 @@
 								.name {
 									margin: 8px 0 0 12px;
 									font-size: 15px;
-									color: #404040;
 									float: left;
 
 									.date {
@@ -1021,7 +1021,6 @@
 
 									.text {
 										padding: 4px 6px 8px;
-										color: #404040;
 									}
 
 									.buttons {
@@ -1052,8 +1051,6 @@
 								box-sizing: border-box;
 								word-break: break-all;
 								min-height: 60px;
-								background: #fff;
-								color: #404040;
 								float: left;
 								width: 100%;
 
@@ -1061,7 +1058,6 @@
 									word-break: break-word;
 									padding: 8px 6px;
 									font-size: 14px;
-									color: #404040;
 								}
 
 								ul.videosListBox{
@@ -1076,7 +1072,6 @@
 										position: relative;
 										box-shadow: none;
 										background: #ccc;
-										color: #404040;
 										height: 64px;
 										padding: 2px;
 										float: left;
@@ -1197,7 +1192,6 @@
 										box-sizing: border-box;
 										position: relative;
 										box-shadow: none;
-										color: #404040;
 										height: 64px;
 										padding: 2px;
 										float: left;
@@ -1400,7 +1394,6 @@
 										border-radius: 3px;
 										box-shadow: none;
 										margin: 6px 2%;
-										color: #404040;
 										display: flex;
 										height: 36px;
 										float: left;
@@ -1547,15 +1540,12 @@
 
 							.foot{
 								border-top: 1px solid rgba(0, 0, 0, 0.25);
-								border-radius: 0 0 3px 3px;
 								box-sizing: border-box;
-								background: #fff;
+								text-align: right;
 								height: 48px;
 								padding: 6px;
 								float: left;
 								width: 100%;
-								color: #404040;
-								text-align: right;
 
 								.analytics{
 									margin: 6px 0 0;
@@ -1563,7 +1553,6 @@
 
 									.comments,
 									.likes {
-										color: #404040;
 										float: right;
 										height: 24px;
 										width: 64px;
@@ -1575,6 +1564,184 @@
 											width: 20px;
 										}
 									}
+								}
+							}
+
+							.commentsBox{
+								border-top: 1px solid rgba(0, 0, 0, 0.25);
+								float: left;
+								width: 100%;
+
+								.commentsList{
+									margin: 0 2%;
+									float: left;
+									width: 96%;
+
+									.item{
+										margin: 2px 0;
+										width: 100%;
+										float: left;
+
+										.avatar{
+											box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+											border-radius: 50%;
+											margin: 0 0 0 4px;
+											overflow: hidden;
+											height: 28px;
+											width: 28px;
+											float: left;
+										}
+
+										.name{
+											padding: 2px 12px;
+											font-size: 13px;
+											float: left;
+
+											&:hover,
+											&:active{
+												color: #09f;
+											}
+										}
+
+										.content{
+											text-overflow: ellipsis;
+											word-break: break-word;
+											margin: -12px 0 0 50px;
+											line-height: 15px;
+											min-height: 15px;
+											font-size: 13px;
+											float: left;
+											width: 100%;
+
+											.inner{
+												padding: 0 56px 12px 0;
+											}
+										}
+
+										.delete{
+											margin: 0 4px 0 0;
+											float: right;
+
+											svg{
+												fill: #404040;
+												height: 20px;
+												width: 20px;
+											}
+										}
+
+										.deleteBoxConfirmation{
+											box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+											border-radius: 3px;
+											position: absolute;
+											background: #fff;
+											display: none;
+											padding: 6px;
+											float: right;
+											margin: 2px;
+											z-index: 9;
+											right: 0;
+
+											.text{
+												padding: 4px 6px 8px;
+												line-height: 24px;
+												width: inherit;
+												height: 24px;
+												margin: 0;
+											}
+
+											.buttons{
+												text-align: center;
+												display: flex;
+												width: 100%;
+												margin: 0;
+
+												button{
+													border-radius: 3px;
+													background: #f00;
+													outline: none;
+													margin: 0 4px;
+													border: none;
+													height: 28px;
+													color: #fff;
+													width: 100%;
+
+													&:last-child{
+														background: #09f;
+													}
+												}
+											}
+										}
+									}
+								}
+
+								.noComents{
+									text-align: center;
+									padding: 12px 0;
+								}
+
+								.newComment{
+									width: 100%;
+									float: left;
+
+									.inputBox{
+										box-shadow: inset 0 -1px 0 0 #333;
+										padding: 8px 13% 8px 3%;
+										margin: 18px 3% 12px;
+										background: none;
+										font-size: 13px;
+										transform: none;
+										outline: none;
+										border: none;
+										resize: none;
+										height: 18px;
+										width: 78%;
+
+										&:focus{
+											box-shadow: inset 0 -1px 0 0 #09f;
+										}
+									}
+
+									.button{
+										padding: 6px 7% 2px 3%;
+										border-radius: 3px;
+										position: relative;
+										margin: -50px 0 0;
+										float: right;
+										height: 26px;
+										color: #fff;
+										width: 3%;
+
+										svg{
+											height: 22px;
+											width: 22px;
+											fill: #333;
+										}
+									}
+								}
+
+								.loadMore{
+									text-align: center;
+									border-radius: 3px;
+									margin: 0 10% 12px;
+									line-height: 36px;
+									background: #fff;
+									height: 36px;
+									float: left;
+									width: 80%;
+
+									&:active{
+										background: #09f;
+										color: #fff;
+									}
+								}
+
+								.registerToComment{
+									text-transform: uppercase;
+									padding: 24px 0 12px;
+									text-align: center;
+									float: left;
+									color: #09f;
+									width: 100%;
 								}
 							}
 						}

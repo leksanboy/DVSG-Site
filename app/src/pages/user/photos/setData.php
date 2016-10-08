@@ -1,13 +1,13 @@
 <?php require_once('../../../Connections/conexion.php');
 	$userId = $_POST['userId'];
 	$photoId = $_POST['photoId'];
-	$_SESSION['moreComments'] = 0;
+	$_SESSION['moreCommentsPhoto'] = 0;
 
 	// Update views
 	// $updateSQL = sprintf("UPDATE z_photos SET replays = replays+1 WHERE id = %s",
- //    GetSQLValueString($photoId, "int"));
- //    mysql_select_db($database_conexion, $conexion);
- //    $Result1 = mysql_query($updateSQL, $conexion) or die(mysql_error());
+	// GetSQLValueString($photoId, "int"));
+	// mysql_select_db($database_conexion, $conexion);
+	// $Result1 = mysql_query($updateSQL, $conexion) or die(mysql_error());
 
 	// Likes user photo
 	mysql_select_db($database_conexion, $conexion);
