@@ -84,14 +84,16 @@
 	RewriteRule ^cars cars.php
 	RewriteRule ^brands/(.+) brand-models.php?marca=$1
 	RewriteRule ^model/(.+) brand-model-page.php?modelo=$1
-	
 	RewriteRule ^shop shop.php
 	RewriteRule ^versus versus.php
 	RewriteRule ^blog blog.php
+	RewriteRule ^register register.php
+
+RewriteCond %{HTTP_HOST} ^dvsg\.co [NC]
+RewriteRule ^(.*)$ http://www.dvsg.co/$1 [L,R=301]
 
 
-RewriteCond %{HTTP_HOST} ^dvsg\.co$ [NC]
-
+##RewriteCond %{HTTP_HOST} ^dvsg\.co$ [NC]
 ##RewriteRule ^(.*)$ http://www.dvsg.co/$1 [L,R=301]
 ##RewriteRule ^(.+).html ver-post.php?date=$1
 #RewriteRule ^feed news/feed/index.php

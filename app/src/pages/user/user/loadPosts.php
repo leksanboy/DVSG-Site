@@ -1,29 +1,56 @@
 <?php require_once '../../../Connections/conexion.php';
-    $userId = $_POST['userId'];
+    $userId 		= $_POST['userId'];
+    $pageLocation 	= $_POST['pageLocation'];
 
-    //User data
-	mysql_select_db($database_conexion, $conexion);
-	$query_userData = sprintf("SELECT id, primary_color, secondary_color FROM z_users WHERE id = %s", 
-	GetSQLValueString($userId, "int"));
-	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
-	$row_userData = mysql_fetch_assoc($userData);
-	$totalRows_userData = mysql_num_rows($userData);
+    if ($pageLocation == 'user') {
+		//User news
+		mysql_select_db($database_conexion, $conexion);
+		$query_newsList = sprintf("SELECT * FROM z_news WHERE user=%s ORDER BY id DESC LIMIT 99", $userId, "int");
+		$newsList = mysql_query($query_newsList, $conexion) or die(mysql_error());
+		$row_newsList = mysql_fetch_assoc($newsList);
+		$totalRows_newsList = mysql_num_rows($newsList);
 
-	//User news
-	mysql_select_db($database_conexion, $conexion);
-	$query_newsList = sprintf("SELECT * FROM z_news WHERE user=%s ORDER BY id DESC LIMIT 99", $userId, "int");
-	$newsList = mysql_query($query_newsList, $conexion) or die(mysql_error());
-	$row_newsList = mysql_fetch_assoc($newsList);
-	$totalRows_newsList = mysql_num_rows($newsList);
+		// User songs
+		mysql_select_db($database_conexion, $conexion);
+		$query_audiosList = sprintf("SELECT * FROM z_news_files WHERE user=%s AND type=%s ORDER by id DESC",
+		GetSQLValueString($userId, "int"),
+	   	GetSQLValueString("audio", "text"));
+		$audiosList = mysql_query($query_audiosList, $conexion) or die(mysql_error());
+		$row_audiosList = mysql_fetch_assoc($audiosList);
+		$totalRows_audiosList = mysql_num_rows($audiosList);
+	} else if ($pageLocation == 'news') {
+		//Users news
+		mysql_select_db($database_conexion, $conexion);
+		$query_newsList = sprintf("
+			SELECT * FROM z_news
+				WHERE user IN (SELECT
+					CASE
+						WHEN f.receiver = $userId THEN f.sender
+						WHEN f.sender = $userId THEN f.receiver
+					END
+					FROM z_friends f WHERE f.receiver = $userId OR f.sender = $userId) OR user=%s 
+					ORDER BY id DESC LIMIT 100", $userId, "int");
+		$newsList = mysql_query($query_newsList, $conexion) or die(mysql_error());
+		$row_newsList = mysql_fetch_assoc($newsList);
+		$totalRows_newsList = mysql_num_rows($newsList);
 
-	// User songs
-	mysql_select_db($database_conexion, $conexion);
-	$query_audiosList = sprintf("SELECT * FROM z_news_files WHERE user=%s AND type=%s ORDER by id DESC",
-	GetSQLValueString($userId, "int"),
-   	GetSQLValueString("audio", "text"));
-	$audiosList = mysql_query($query_audiosList, $conexion) or die(mysql_error());
-	$row_audiosList = mysql_fetch_assoc($audiosList);
-	$totalRows_audiosList = mysql_num_rows($audiosList);
+		// User songs
+		mysql_select_db($database_conexion, $conexion);
+		$query_audiosList = sprintf("
+			SELECT * FROM z_news_files
+				WHERE user IN (SELECT
+					CASE
+						WHEN f.receiver = $userId THEN f.sender
+						WHEN f.sender = $userId THEN f.receiver
+					END
+					FROM z_friends f WHERE f.receiver = $userId OR f.sender = $userId) OR user=%s AND type=%s
+					ORDER BY id DESC LIMIT 100",
+		GetSQLValueString($userId, "int"),
+	   	GetSQLValueString("audio", "text"));
+		$audiosList = mysql_query($query_audiosList, $conexion) or die(mysql_error());
+		$row_audiosList = mysql_fetch_assoc($audiosList);
+		$totalRows_audiosList = mysql_num_rows($audiosList);
+	}
 
 	$contadorPhotos = - 1;
 	$contadorAudios = - 1;
@@ -271,7 +298,10 @@
 	</div>
 <?php } ?>
 <script type="text/javascript">
-	var userId = <?php echo $userId ?>;
+	var userId 			= <?php echo $userId ?>,
+		pageLocation 	= '<?php echo $pageLocation ?>';
+
+		console.log('pageLocation', pageLocation);
 
 	// ·····> Open photo slider
 	function openPhotoPost(type, position, postId, photoId){
@@ -285,7 +315,7 @@
 			$.ajax({
                 type: 'POST',
                 url: '<?php echo $urlWeb ?>' + 'pages/user/user/slidePhotosPost.php',
-                data: 'position=' + position + '&postId=' + postId + '&photoId=' + photoId + '&userId=' + userId,
+                data: 'position=' + position + '&postId=' + postId + '&photoId=' + photoId + '&userId=' + userId + '&pageLocation='+pageLocation,
                 success: function(response){
                     $('.slidePhotosBox').html(response);
                 }
@@ -758,6 +788,5 @@
         }
     };
 </script>
-<?php mysql_free_result($userData); ?>
 <?php mysql_free_result($newsList); ?>
 <?php mysql_free_result($audiosList); ?>

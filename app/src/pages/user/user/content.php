@@ -163,7 +163,7 @@
 		$.ajax({
 			type: 'POST',
 			url: '<?php echo $urlWeb ?>' + 'pages/user/user/loadPosts.php',
-			data: 'userId=' + userId,
+			data: 'userId=' + userId + '&pageLocation=user',
 			success: function(response) {
 				$('#userPosts').html(response);
 			}

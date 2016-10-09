@@ -1,23 +1,43 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_POST['userId'];
-	$photoId = $_POST['photoId'];
-	$postId = $_POST['postId'];
+	$userId 		= $_POST['userId'];
+	$photoId 		= $_POST['photoId'];
+	$postId 		= $_POST['postId'];
+	$pageLocation 	= $_POST['pageLocation'];
 
-	// User photos  --> photosList
-	mysql_select_db($database_conexion, $conexion);
-	$query_photosList = sprintf("SELECT * FROM z_news_files WHERE user=%s AND type=%s ORDER by id DESC",
-	GetSQLValueString($userId, "int"),
-   	GetSQLValueString("photo", "text"));
-	$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
-	$row_photosList = mysql_fetch_assoc($photosList);
-	$totalRows_photosList = mysql_num_rows($photosList);
+	if ($pageLocation == 'user') {
+		// User photos  --> photosList
+		mysql_select_db($database_conexion, $conexion);
+		$query_photosList = sprintf("SELECT * FROM z_news_files WHERE user=%s AND type=%s ORDER by id DESC",
+		GetSQLValueString($userId, "int"),
+	   	GetSQLValueString("photo", "text"));
+		$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
+		$row_photosList = mysql_fetch_assoc($photosList);
+		$totalRows_photosList = mysql_num_rows($photosList);
+	} else if ($pageLocation == 'news') {
+		// NEWS photos  --> photosList
+		mysql_select_db($database_conexion, $conexion);
+		$query_photosList = sprintf("
+			SELECT * FROM z_news_files
+				WHERE user IN (SELECT
+					CASE
+						WHEN f.receiver = $userId THEN f.sender
+						WHEN f.sender = $userId THEN f.receiver
+					END
+					FROM z_friends f WHERE f.receiver = $userId OR f.sender = $userId) OR user=%s AND type=%s
+					ORDER BY id DESC LIMIT 100",
+		GetSQLValueString($userId, "int"),
+	   	GetSQLValueString("photo", "text"));
+		$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
+		$row_photosList = mysql_fetch_assoc($photosList);
+		$totalRows_photosList = mysql_num_rows($photosList);
+	}
 ?>
 
 <div class="boxContent">
 	<div class="panel">
 		<div class="counter">
 		</div>
-		<div class="close" onclick="openPhoto(2)">
+		<div class="close" onclick="openPhotoPost(2)">
 			<?php include("../../../images/svg/close.php"); ?>
 		</div>
 	</div>

@@ -1,17 +1,22 @@
-<?php if ($totalRows_newsList != 0){ ?>
-	<ul class="newsListBox">
-		<?php do { ?>
-			<li>
-				USER: <?php echo userName($row_newsList['user']) ?>
-				<br>
-				POST CONTENT: <?php echo $row_newsList['content'] ?>
-				<br>
-				<br>
-			</li>
-		<?php } while ($row_newsList = mysql_fetch_assoc($newsList)); ?>
-	</ul>
-<?php } else { ?>
-	<div class="noData">
-		No news
-	</div>
-<?php } ?>
+<!-- user/loadPosts -pageLocation- user·/·news -->
+<!-- user/slidePhotosPost -pageLocation- user·/·news -->
+
+<br><br><br>
+<div id="newsPosts"></div>
+
+<script type="text/javascript">
+	var userId 			= <?php echo $userPageId ?>;
+
+	//·····> load News
+	function defaultLoad(){
+		$.ajax({
+			type: 'POST',
+			url: '<?php echo $urlWeb ?>' + 'pages/user/user/loadPosts.php',
+			data: 'userId=' + userId + '&pageLocation=news',
+			success: function(response) {
+				$('#newsPosts').html(response);
+			}
+		});
+	};
+	defaultLoad();
+</script>

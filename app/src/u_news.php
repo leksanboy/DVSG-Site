@@ -7,26 +7,11 @@
 
 	//User data
 	mysql_select_db($database_conexion, $conexion);
-	$query_userData = sprintf("SELECT id, primary_color, secondary_color FROM z_users WHERE id = %s", 
+	$query_userData = sprintf("SELECT * FROM z_users WHERE id = %s", 
 	GetSQLValueString($userPageId, "int"));
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
 	$totalRows_userData = mysql_num_rows($userData);
-
-	//User news
-	mysql_select_db($database_conexion, $conexion);
-	$query_newsList = sprintf("
-		SELECT * FROM z_news
-			WHERE user IN (SELECT
-				CASE
-					WHEN f.receiver = $userPageId THEN f.sender
-					WHEN f.sender = $userPageId THEN f.receiver
-				END
-				FROM z_friends f WHERE f.receiver = $userPageId OR f.sender = $userPageId) OR user=%s 
-				ORDER BY id DESC LIMIT 100", $userPageId, "int");
-	$newsList = mysql_query($query_newsList, $conexion) or die(mysql_error());
-	$row_newsList = mysql_fetch_assoc($newsList);
-	$totalRows_newsList = mysql_num_rows($newsList);
 ?>
 <!DOCTYPE html>
 	<?php include("includes/fuckoff.php"); ?>
@@ -69,7 +54,7 @@
 				</div>
 			</div>
 			<div class="innerBodyContent">
-				<div class="pagePhotos">
+				<div class="pageBody pageUser">
 					<?php include("pages/user/news/content.php");?>
 				</div>
 				<?php include("includes/footer.php");?>
