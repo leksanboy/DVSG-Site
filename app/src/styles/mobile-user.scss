@@ -82,29 +82,20 @@
 		}
 	}
 	@keyframes colorspinner {
-		0% {
-			stroke: #754fa0;
-		}
-
-		20% {
-			stroke: #09b7bf;
-		}
-
-		40% {
-			stroke: #90d36b;
-		}
-
-		60% {
-			stroke: #f2d40d;
-		}
-
-		80% {
-			stroke: #fcb12b;
-		}
-
-		100% {
-			stroke: #ed1b72;
-		}
+		0% {stroke: #754fa0;}
+		20% {stroke: #09b7bf;}
+		40% {stroke: #90d36b;}
+		60% {stroke: #f2d40d;}
+		80% {stroke: #fcb12b;}
+		100% {stroke: #ed1b72;}
+	}
+	@keyframes colorspinnerwhite {
+		0% {stroke: #fff;}
+		20% {stroke: #fff;}
+		40% {stroke: #fff;}
+		60% {stroke: #fff;}
+		80% {stroke: #fff;}
+		100% {stroke: #fff;}
 	}
 	@keyframes rotatespinner {
 		from {
@@ -941,6 +932,51 @@
 						color: #fff;
 						float: left;
 						width: 96%;
+					}
+
+					.loaderNews{
+						text-align: center;
+						margin: 35vw auto;
+						width: 100%;
+						float: left;
+
+						svg {
+							height: 32px;
+							width: 32px;
+							margin: 0;
+
+							.qp-circular-loader {
+								width: 64px;
+								height: 64px;
+								stroke-width: 3px;
+							}
+
+							.qp-circular-loader-path {
+								stroke-dasharray: 58.9;
+								stroke-dashoffset: 58.9;
+							}
+
+							.qp-circular-loader,
+							.qp-circular-loader * {
+								transform-origin: 50% 50%;
+							}
+
+							.qp-circular-loader {
+								animation-iteration-count: infinite;
+								animation-timing-function: linear;
+								animation-name: rotatespinner;
+								animation-duration: 1568.63ms;
+							}
+
+							.qp-circular-loader-path {
+								animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+								animation-name: fillunfill, rotspinner, colorspinnerwhite;
+								animation-iteration-count: infinite, infinite, infinite;
+								animation-play-state: running, running, running;
+								animation-duration: 1333ms, 5332ms, 5332ms;
+								animation-fill-mode: forwards;
+							}
+						}
 					}
 
 					ul.newsListBox{
@@ -2960,9 +2996,9 @@
 						height: 100%;
 						width: 100%;
 
-						img.fadeImage {
+						.fadeImage {
 							position: absolute;
-							filter: blur(2px);
+							filter: blur(3px);
 							height: 44vw;
 							width: 100%;
 
@@ -3233,6 +3269,21 @@
 				z-index: 9999;
 				width: 100%;
 				left: 0;
+
+				.close{
+					margin: -28px 4px 0;
+					position: absolute;
+					height: 24px;
+					width: 24px;
+					right: 0;
+					top: 0;
+
+					svg{
+						fill: rgba(255, 255, 255, 0.5);
+						height: 24px;
+						width: 24px;
+					}
+				}
 
 				.error {
 					background: rgba(213, 0, 0,.3);

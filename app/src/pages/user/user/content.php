@@ -61,7 +61,11 @@
 	<div class="buttonCreate" onclick="createPost(1)">Create post</div>
 <?php }?>
 
-<div id="userPosts"></div>
+<div id="userPosts">
+	<div class="loaderNews">
+		<?php include("images/svg/spinner.php");?>
+	</div>
+</div>
 
 <script type="text/javascript">
 	var userId 			= <?php echo $userPageId ?>,

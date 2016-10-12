@@ -14,9 +14,9 @@
 	<div class="leftSideBlock">
 		<div class="userBox">
 			<div class="images">
-			    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg1']; ?>" class="fadeImage"/>
-			    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg2']; ?>" class="fadeImage"/>
-			    <img src="<?php echo $row_SacarMiNombreUser['avatar_bg3']; ?>" class="fadeImage"/>
+				<div class="fadeImage" style="background-image: url(<?php echo $row_SacarMiNombreUser['avatar_bg1']; ?>);"></div>
+				<div class="fadeImage" style="background-image: url(<?php echo $row_SacarMiNombreUser['avatar_bg2']; ?>);"></div>
+				<div class="fadeImage" style="background-image: url(<?php echo $row_SacarMiNombreUser['avatar_bg3']; ?>);"></div>
 			</div>
 
 			<div class="image">
@@ -103,7 +103,7 @@
 			<br>
 			Chat
 			<br>
-			© 2016 DVSG
+			DVSG © 2016
 		</center>
 	</div>
 
@@ -122,6 +122,9 @@
 	</div>
 
 	<div class="signInBox">
+		<div class="close" onclick="loginAccess(2)">
+			<?php include("images/svg/close.php");?>
+		</div>
 		<form onsubmit="return false"> 
 			<div class="error"></div>
 			<label for="signinWindowMail">Email</label>

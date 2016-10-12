@@ -1,4 +1,4 @@
-<?php require_once('../../Connections/conexion.php');
+<?php require_once('../../../Connections/conexion.php');
 if (isset ($_POST["email"])){
 	mysql_select_db($database_conexion, $conexion);
 	$query_Recordset1 = sprintf("SELECT email FROM z_users WHERE email=%s",
@@ -13,13 +13,10 @@ if ($totalRows_Recordset1!=0){
 	echo 'false';
 } else {
 	$avatar = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANwAAADcAAABJRU5ErkJggg==";
-	$insertSQL = sprintf("INSERT INTO z_users (name, email, password, avatar, range) VALUES (%s, %s, %s, %s, %s)",
+	$insertSQL = sprintf("INSERT INTO z_users (name, email, password) VALUES (%s, %s, %s)",
 	GetSQLValueString($_POST['name'], "text"),
 	GetSQLValueString($_POST['email'], "text"),
-	GetSQLValueString(md5($_POST['password']), "text"),
-	GetSQLValueString($avatar, "text"),
-	GetSQLValueString(1, "int"));
-
+	GetSQLValueString(md5($_POST['password']), "text"));
 	mysql_select_db($database_conexion, $conexion);
 	$Result1 = mysql_query($insertSQL, $conexion) or die(mysql_error());
   
@@ -38,7 +35,6 @@ if ($totalRows_Recordset1!=0){
     $_SESSION['MM_Id'] = $row_SacarMiPerfil['id'];	
     recordar_sesion($row_SacarMiPerfil['password'],$row_SacarMiPerfil['name'],$row_SacarMiPerfil['id']);
 	mysql_free_result($SacarMiPerfil);
-  
   
   	$para=$emailAdmin;
 		$titulo = 'New user in ' .$nombreWeb;

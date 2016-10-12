@@ -2,7 +2,11 @@
 <!-- user/slidePhotosPost -pageLocation- user·/·news -->
 
 <br><br><br>
-<div id="newsPosts"></div>
+<div id="newsPosts">
+	<div class="loaderNews">
+		<?php include("images/svg/spinner.php");?>
+	</div>
+</div>
 
 <script type="text/javascript">
 	var userId 			= <?php echo $userPageId ?>;

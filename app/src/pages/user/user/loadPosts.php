@@ -88,7 +88,7 @@
 							<?php echo timeAgo($row_newsList['time']); ?>
 						</div>
 					</div>
-					<?php if ($userId == $_SESSION['MM_Id']) { ?>
+					<?php if ($row_newsList['user'] == $_SESSION['MM_Id']) { ?>
 						<div class="delete" onClick="deleteNews(1, '<?php echo $row_newsList['id'] ?>')">
 							<?php include("../../../images/svg/close.php"); ?>
 						</div>
@@ -280,8 +280,6 @@
 					                </div>
 					            </div>
 					        <?php } while ($countComments[$postId] < 5 && $row_GetComments = mysql_fetch_assoc($GetComments)); ?>
-					    <?php } else { ?>
-					    	<div class="noComents">NO COMMENTS</div>
 					    <?php } ?>
 					</div>
 
