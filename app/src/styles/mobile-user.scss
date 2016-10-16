@@ -813,15 +813,23 @@
 							height: 120px;
 							margin: 0;
 
-							img {
-								margin: -34px 0 0 -34px;
+							.image{
+								margin: -43px 0 0 -43px;
+								box-sizing: border-box;
 								border: 2px solid #fff;
+								background: #1e1e1e;
 								border-radius: 5px;
 								position: relative;
-								height: 64px;
-								width: 64px;
+								overflow: hidden;
+								height: 86px;
+								width: 86px;
 								float: left;
 								left: 50%;
+
+								img {
+									height: 100%;
+									width: 100%;
+								}
 							}
 
 							.name {
@@ -932,6 +940,55 @@
 						color: #fff;
 						float: left;
 						width: 96%;
+
+						svg {
+							margin: 0 6px -3px 0;
+							height: 18px;
+							width: 18px;
+							fill: #fff;
+
+							.qp-circular-loader {
+								width: 64px;
+								height: 64px;
+								stroke-width: 3px;
+							}
+
+							.qp-circular-loader-path {
+								stroke-dasharray: 58.9;
+								stroke-dashoffset: 58.9;
+							}
+
+							.qp-circular-loader,
+							.qp-circular-loader * {
+								transform-origin: 50% 50%;
+							}
+
+							.qp-circular-loader {
+								animation-iteration-count: infinite;
+								animation-timing-function: linear;
+								animation-name: rotatespinner;
+								animation-duration: 1568.63ms;
+							}
+
+							.qp-circular-loader-path {
+								animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+								animation-name: fillunfill, rotspinner, colorspinnerwhite;
+								animation-iteration-count: infinite, infinite, infinite;
+								animation-play-state: running, running, running;
+								animation-duration: 1333ms, 5332ms, 5332ms;
+								animation-fill-mode: forwards;
+							}
+						}
+
+						&.buttonAccept,
+						&.buttonDecline{
+							width: 46%;
+						}
+
+						&.buttonDecline{
+							border-bottom: 2px solid #820101;
+							background: #f00;
+						}
 					}
 
 					.loaderNews{

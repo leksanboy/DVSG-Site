@@ -13,7 +13,7 @@
 		</span>
 	</div>
 	<label for="emailRegister">Email</label>
-	<input type="text" name="email" class="inputRegister" onkeyup="validateParameters(2, this.value)" id="emailRegister"/>
+	<input type="email" name="email" class="inputRegister" onkeyup="validateParameters(2, this.value)" id="emailRegister"/>
 	<div class="emailStatus">
 		<span class="yes">
 			<?php include("images/svg/check.php");?>

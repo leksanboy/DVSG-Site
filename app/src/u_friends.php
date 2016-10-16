@@ -15,28 +15,6 @@
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
 	$totalRows_userData = mysql_num_rows($userData);
-
-	//My friends
-	$query_myFriends = sprintf("SELECT * FROM z_friends WHERE receiver = %s AND status = 1 OR sender = %s AND status = 1",
-	GetSQLValueString($userPageId,"int"),
-	GetSQLValueString($userPageId,"int"));
-	$myFriends = mysql_query($query_myFriends, $conexion) or die(mysql_error());
-	$row_myFriends = mysql_fetch_assoc($myFriends);
-	$totalRows_myFriends = mysql_num_rows($myFriends);
-
-	//Pending friends 'sent'
-	$query_pendingSent = sprintf("SELECT * FROM z_friends WHERE sender = %s AND status = 0",
-	GetSQLValueString($_SESSION['MM_Id'],"int"));
-	$pendingSent = mysql_query($query_pendingSent, $conexion) or die(mysql_error());
-	$row_pendingSent = mysql_fetch_assoc($pendingSent);
-	$totalRows_pendingSent = mysql_num_rows($pendingSent);
-
-	//Pending friends 'received'
-	$query_pendingReceived = sprintf("SELECT * FROM z_friends WHERE receiver = %s AND status = 0",
-	GetSQLValueString($_SESSION['MM_Id'],"int"));
-	$pendingReceived = mysql_query($query_pendingReceived, $conexion) or die(mysql_error());
-	$row_pendingReceived = mysql_fetch_assoc($pendingReceived);
-	$totalRows_pendingReceived = mysql_num_rows($pendingReceived);
 ?>
 <!DOCTYPE html>
 	<?php include_once("includes/fuckoff.php"); ?>
@@ -125,6 +103,3 @@
 	<?php include_once("includes/aplazarscripts.php");?>
 </html>
 <?php mysql_free_result($userData); ?>
-<?php mysql_free_result($myFriends); ?>
-<?php mysql_free_result($pendingSent); ?>
-<?php mysql_free_result($pendingReceived); ?>

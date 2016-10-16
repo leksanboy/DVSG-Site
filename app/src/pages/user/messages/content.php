@@ -17,13 +17,11 @@
 
 	    if (content == '#formOne') {
 	    	if (clickedTab != 'inbox') {
-	    		console.log('in');
 	    		defaultLoad('inbox');
 	    		clickedTab = 'inbox';
 	    	}
 	    } else if (content == '#formTwo') {
 	    	if (clickedTab != 'outbox') {
-	    		console.log('out');
 	    		defaultLoad('outbox');
 	    		clickedTab = 'outbox';
 	    	}

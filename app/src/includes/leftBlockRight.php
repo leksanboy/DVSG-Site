@@ -40,8 +40,8 @@
 				<li onClick="clickThePage(14)">
 					<?php include("images/svg/friends.php");?>
 					My Friends
-					<?php if (AmigosPendientes($_SESSION['MM_Id'])){ ?>
-						<div class="pending">+<?php echo saber_cuantos_amigos_estan_sin_confirmar($_SESSION['MM_Id']) ?></div>
+					<?php if (pendingFriendsToConfirm($_SESSION['MM_Id']) > 0){ ?>
+						<div class="pending">+<?php echo pendingFriendsToConfirm($_SESSION['MM_Id']) ?></div>
 					<?php }?>
 				</li>
 				<li onClick="clickThePage(17)">

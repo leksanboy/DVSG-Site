@@ -28,8 +28,6 @@
 						<br><br><br><br><br><br>
 						<center> -ERROR- </center>
 						<br><br><br><br><br><br>
-						<!-- <?php phpinfo(); ?> -->
-
 						<!-- <?php 
 							// import('ffmpeg');
 							// $ffmpeg = '/usr/bin/ffmpeg';
@@ -47,6 +45,39 @@
 							}
 
 						?> -->
+
+						<?php
+							// $to = '"Sasá Rafalsky" <<a href="mailto:leksanboy@gmail.com">leksanboy@gmail.com</a>>';
+							// $subject = 'PHP mail tester';
+							// $message = 'This message was sent via PHP!' . PHP_EOL .
+							//            'Some other message text.' . PHP_EOL . PHP_EOL .
+							//            '-- signature' . PHP_EOL;
+							// $headers = 'From: "From Name" <<a href="mailto:from@email.dom">from@email.dom</a>>' . PHP_EOL .
+							//            'Reply-To: <a href="mailto:reply@email.com">reply@email.com</a>' . PHP_EOL .
+							//            'X-Mailer: PHP/' . phpversion();
+							// mail($to, $subject, $message, $headers);
+
+							// if (mail($to, $subject, $message, $headers)) {
+							//   echo 'mail() Success!';
+							// }
+							// else {
+							//   echo 'mail() Failed!';
+							// }
+
+							// $header = "From: noreply@example.com\r\n"; 
+							// $header.= "MIME-Version: 1.0\r\n"; 
+							// $header.= "Content-Type: text/html; charset=ISO-8859-1\r\n"; 
+							// $header.= "X-Priority: 1\r\n";
+
+							// $status = mail("sasarafalsky@gmail.com", "TITLE", "BODY MESSAGE", $header);
+
+							// if($status)
+							// { 
+							//     echo '<p>Your mail has been sent!</p>';
+							// } else { 
+							//     echo '<p>Something went wrong, Please try again!</p>'; 
+							// }
+						?>
 					</div>
 				</div>
 				<?php include_once("includes/footer.php");?>

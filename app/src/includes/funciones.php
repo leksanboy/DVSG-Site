@@ -198,7 +198,7 @@
 		mysql_free_result($GetData);
 	}
 
-	// Tiempo trascurrido
+	// Transcured time
 	function timeAgo($time) {
 	    $time = time() - $time;
 
@@ -220,7 +220,7 @@
 	    }
 	}
 
-	// Transformar los meses de numerico a texto
+	// Transform months numeric to text
 	function monthsCaption($valor){
 		if ($valor=='0') return traducir(55,$_COOKIE['idioma']);  
 		if ($valor=='1') return traducir(56,$_COOKIE['idioma']);  
@@ -235,7 +235,6 @@
 		if ($valor=='10') return traducir(65,$_COOKIE['idioma']); 
 		if ($valor=='11') return traducir(66,$_COOKIE['idioma']); 
 	}
-
 
 	// Check if user like news-post
 	function checkLikeUserNews($iduser, $idpost) {
@@ -257,7 +256,7 @@
 		mysql_free_result($CheckData);
 	}
 
-	//SacarNumero de photos($id)
+	// Count comments in user news
 	function countCommentsUserNews($id) {
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
@@ -270,6 +269,62 @@
 		return $totalRows_CommentsCount;
 		mysql_free_result($CommentsCount);
 	}
+
+	// Get friend status
+	function checkFriendStatus($idSender, $idReceiver) {
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_CheckData = sprintf("SELECT * FROM z_friends WHERE
+										(sender = %s AND receiver = %s) 
+										OR 
+										(sender = %s AND receiver = %s)",
+		$idSender, $idReceiver, $idReceiver, $idSender);
+		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
+		$row_CheckData = mysql_fetch_assoc($CheckData);
+		$totalRows_CheckData = mysql_num_rows($CheckData);
+
+		if ($totalRows_CheckData == 1)
+			return $row_CheckData['status'];
+		else
+			return '0';
+
+		mysql_free_result($CheckData);
+	}
+
+	// Check if I'm the sender
+	function checkIfImSender($idSender, $idReceiver){
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_CheckData = sprintf("SELECT * FROM z_friends WHERE (sender = %s AND receiver = %s)",
+		$idSender, $idReceiver);
+		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
+		$row_CheckData = mysql_fetch_assoc($CheckData);
+		$totalRows_CheckData = mysql_num_rows($CheckData);
+
+		if ($totalRows_CheckData == 1)
+			return 'true';
+		else
+			return 'false';
+	}
+
+	// Pending friends to confirm
+	function pendingFriendsToConfirm($idUser){
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_CheckData = sprintf("SELECT * FROM z_friends WHERE receiver = %s AND status = %s",
+		GetSQLValueString($idUser, "int"),
+		GetSQLValueString(1, "int"));
+		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
+		$row_CheckData = mysql_fetch_assoc($CheckData);
+		$totalRows_CheckData = mysql_num_rows($CheckData);
+
+		if ($totalRows_CheckData == 0)
+			return 0;
+		else
+			return $totalRows_CheckData;
+	}
+
+
 
 
 
@@ -993,7 +1048,7 @@
 		";
 		$cabeceras  = 'MIME-Version: 1.0' . "\r\n";
 		$cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$cabeceras .= "From: DvsG" . "\r\n" .
+		$cabeceras .= "From: DVSG" . "\r\n" .
 						'Reply-To: no_reply@dvsg.co' . "\r\n";
 
 		mail($para, $titulo, $mensaje, $cabeceras);
