@@ -234,8 +234,8 @@
 					line-height: 56px;
 					transition: 0.45s;
 					margin: 56px 0 0;
+					display: initial;
 					font-size: 15px;
-					float: left;
 					color: #fff;
 					opacity: 0;
 					top: 0;
@@ -251,8 +251,9 @@
 				box-shadow: 0 2px 5px rgba(0,0,0,0.26);
 				background: rgba(0,0,0,.666);
 				transform: translateX(0);
-				position: fixed;
+				text-align: center;
 				transition: 0.3s;
+				position: fixed;
 				display: block;
 				height: 56px;
 				width: 100%;
@@ -492,17 +493,36 @@
 			}
 
 			.headerMessages,
+			.headerFriends,
 			.headerSettings {
 				height: 112px;
+
+				.userName{
+					display: none;
+				}
+			}
+
+			.headerVideos,
+			.headerPhotos,
+			.headerNews{
+				.userName{
+					display: none;
+				}
 			}
 
 			.headerMusic {
 				height: 148px !important;
 				overflow: initial;
 
+				.userName{
+					display: none;
+				}
+
 				.playerBox {
-					float: left;
+					position: absolute;
 					width: 100%;
+					float: left;
+					bottom: 0;
 
 					.buttons {
 						margin: 0 auto 4px;
@@ -810,7 +830,7 @@
 						.dataBox {
 							position: relative;
 							background: #fff;
-							height: 120px;
+							height: 128px;
 							margin: 0;
 
 							.image{
@@ -2378,8 +2398,9 @@
 								float: left;
 
 								button {
+									text-transform: uppercase;
 									border-radius: 3px;
-									margin: 0 8px 0 0;
+									margin: 0 6px 0 0;
 									background: #09f;
 									border: none;
 									height: 24px;
@@ -2387,6 +2408,17 @@
 
 									&:first-child {
 										background: red;
+									}
+
+									svg{
+										margin: -2px 2px -5px 0;
+										height: 18px;
+										width: 18px;
+										fill: #fff;
+									}
+
+									&.blueButton{
+										background: #09f;
 									}
 								}
 							}
@@ -2993,7 +3025,7 @@
 				}
 
 				.footer {
-					background: $bodyColor;
+					/*background: $bodyColor;*/
 					padding: 64px 0 24px;
 					text-align: center;
 					position: relative;

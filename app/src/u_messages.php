@@ -40,19 +40,15 @@
 				<div class="menuLeft" onclick="toggleLeftSide(1)">
 					<?php include("images/svg/menu.php"); ?>
 				</div>
-
 				<div class="userName">
-						<?php echo $row_SacarMiPerfil['nombre']; ?>
-					</div>
-
+					<?php echo $row_userData['name']; ?>
+				</div>
 				<div class="menuRight" onclick="toggleRightSide(1)">
 					<?php include("images/svg/circles.php"); ?>
 				</div>
-
 				<div class="buttonAction" onclick="newMessage(1)">
 					<?php include("images/svg/add.php");?>
 				</div>
-				
 				<div class="title">
 					<?php echo traducir(41,$_COOKIE['idioma'])?>
 				</div>

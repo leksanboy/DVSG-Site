@@ -21,7 +21,10 @@
 					<?php echo userName($row_pendingSent['receiver']) ?>
 				</div>
 				<div class="buttons">
-					<button onClick="statusFriend(1, <?php echo $row_pendingSent['receiver'] ?>, <?php echo $row_pendingSent['id'] ?>)">Cancel Request</button>
+					<button onClick="statusFriend(1, <?php echo $row_pendingSent['receiver'] ?>, <?php echo $row_pendingSent['id'] ?>)">
+						<?php include("../../../../images/svg/close.php");?>
+						Cancel Request
+					</button>
 				</div>
 			</div>
 		</div>

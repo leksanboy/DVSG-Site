@@ -59,44 +59,46 @@
 	</div>
 <?php }?>
 
-<?php if ($userPageId == $_SESSION['MM_Id']) { ?>
-	<div class="buttonCreate" onclick="createPost(1)">Create post</div>
-<?php } else { ?>
-	<?php if(checkFriendStatus($userPageId, $_SESSION['MM_Id']) != 2){ ?>
-		<?php if (checkIfImSender($userPageId, $_SESSION['MM_Id']) == 'true') { ?>
-			<div class="buttonCreate buttonDecline" onclick="addToFriends(2, 1)"><?php include("images/svg/close.php");?>Decline</div>
-			<div class="buttonCreate buttonAccept" onclick="addToFriends(2, 2)"><?php include("images/svg/check.php");?>Accept</div>
-		<?php } else { ?>
-			<div class="buttonCreate addFriend" onclick="addToFriends(1)">
-				<span class="add" 
-					<?php if(checkFriendStatus($userPageId, $_SESSION['MM_Id']) == 0){ ?>
-						 style="display: block;" 
-					<?php } else { ?>
-						style="display: none;"
-					<?php } ?>
-				>
-					<?php include("images/svg/friends-sent.php"); ?>
-					Add as friend
-				</span>
+<?php if (isset ($_SESSION['MM_Id'])){ ?>
+	<?php if ($userPageId == $_SESSION['MM_Id']) { ?>
+		<div class="buttonCreate" onclick="createPost(1)">Create post</div>
+	<?php } else { ?>
+		<?php if(checkFriendStatus($userPageId, $_SESSION['MM_Id']) != 2){ ?>
+			<?php if (checkIfImSender($userPageId, $_SESSION['MM_Id']) == 'true') { ?>
+				<div class="buttonCreate buttonDecline" onclick="addToFriends(2, 1)"><?php include("images/svg/close.php");?>Decline</div>
+				<div class="buttonCreate buttonAccept" onclick="addToFriends(2, 2)"><?php include("images/svg/check.php");?>Accept</div>
+			<?php } else { ?>
+				<div class="buttonCreate addFriend" onclick="addToFriends(1)">
+					<span class="add" 
+						<?php if(checkFriendStatus($userPageId, $_SESSION['MM_Id']) == 0){ ?>
+							 style="display: block;" 
+						<?php } else { ?>
+							style="display: none;"
+						<?php } ?>
+					>
+						<?php include("images/svg/friends-sent.php"); ?>
+						Add as friend
+					</span>
 
-				<span class="load" style="display: none;">
-					<?php include("images/svg/spinner.php");?>
-				</span>
+					<span class="load" style="display: none;">
+						<?php include("images/svg/spinner.php");?>
+					</span>
 
-				<span class="cancel" 
-					<?php if(checkFriendStatus($userPageId, $_SESSION['MM_Id']) == 1){ ?>
-						 style="display: block;" 
-					<?php } else { ?>
-						style="display: none;"
-					<?php } ?>
-				>
-					<?php include("images/svg/close.php"); ?>
-					Cancel request
-				</span>
-			</div>
+					<span class="cancel" 
+						<?php if(checkFriendStatus($userPageId, $_SESSION['MM_Id']) == 1){ ?>
+							 style="display: block;" 
+						<?php } else { ?>
+							style="display: none;"
+						<?php } ?>
+					>
+						<?php include("images/svg/close.php"); ?>
+						Cancel request
+					</span>
+				</div>
+			<?php } ?>
 		<?php } ?>
-	<?php } ?>
-<?php }?>
+	<?php }?>
+<?php } ?>
 
 <div id="userPosts">
 	<div class="loaderNews">
@@ -161,46 +163,48 @@
 	});
 
 	//·····> Add to friends
-	var statusCheck = <?php echo checkFriendStatus($userPageId, $_SESSION['MM_Id']) ?>;
-	function addToFriends(type, status){
-		if (type==1) { // Send request
-			$('.addFriend .add').hide();
-			$('.addFriend .cancel').hide();
-	        $('.addFriend .load').show();
+	<?php if (isset($_SESSION['MM_Id'])){ ?>
+		var statusCheck = <?php echo checkFriendStatus($userPageId, $_SESSION['MM_Id']) ?>;
+		function addToFriends(type, status){
+			if (type==1) { // Send request
+				$('.addFriend .add').hide();
+				$('.addFriend .cancel').hide();
+		        $('.addFriend .load').show();
 
-	        console.log('status', statusCheck);
+		        console.log('status', statusCheck);
 
-			$.ajax({
-	            type: 'POST',
-	            url: '<?php echo $urlWeb ?>' + 'pages/user/friends/status.php',
-	            data: 'status=' + statusCheck + '&sender=' + <?php echo $_SESSION['MM_Id'] ?> + '&receiver=' + userId,
-	            success: function(response){
-	                if (statusCheck == 0) {
-	                	statusCheck = 1;
-	                	setTimeout(function() {
-							$('.addFriend .load').hide();
-							$('.addFriend .cancel').show();
-						}, 1200);
-	                } else {
-	                	statusCheck = 0;
-	                	setTimeout(function() {
-							$('.addFriend .load').hide();
-							$('.addFriend .add').show();
-						}, 1200);
-	                }
-	            }
-	        });
-		} else if (type==2) { // Decline/Accept
-			$.ajax({
-	            type: 'POST',
-	            url: '<?php echo $urlWeb ?>' + 'pages/user/friends/status.php',
-	            data: 'status=' + status + '&receiver=' + <?php echo $_SESSION['MM_Id'] ?> + '&sender=' + userId,
-	            success: function(response){
-	            	$('.buttonCreate').hide();
-	            }
-	        });
+				$.ajax({
+		            type: 'POST',
+		            url: '<?php echo $urlWeb ?>' + 'pages/user/friends/status.php',
+		            data: 'status=' + statusCheck + '&sender=' + <?php echo $_SESSION['MM_Id'] ?> + '&receiver=' + userId,
+		            success: function(response){
+		                if (statusCheck == 0) {
+		                	statusCheck = 1;
+		                	setTimeout(function() {
+								$('.addFriend .load').hide();
+								$('.addFriend .cancel').show();
+							}, 1200);
+		                } else {
+		                	statusCheck = 0;
+		                	setTimeout(function() {
+								$('.addFriend .load').hide();
+								$('.addFriend .add').show();
+							}, 1200);
+		                }
+		            }
+		        });
+			} else if (type==2) { // Decline/Accept
+				$.ajax({
+		            type: 'POST',
+		            url: '<?php echo $urlWeb ?>' + 'pages/user/friends/status.php',
+		            data: 'status=' + status + '&receiver=' + <?php echo $_SESSION['MM_Id'] ?> + '&sender=' + userId,
+		            success: function(response){
+		            	$('.buttonCreate').hide();
+		            }
+		        });
+			}
 		}
-	}
+	<?php } ?>
 
 	//·····> Info button
 	function infoButton(type){

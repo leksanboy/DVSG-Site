@@ -23,4 +23,22 @@
 		});
 	};
 	defaultLoad();
+
+	//·····> Delete message on Inbox
+	function deleteNews(type, id){
+		if (type==1) {
+			$('#delete'+id).toggle();
+		}else if (type==2) {
+			console.log('DELETED', id);
+
+			$.ajax({
+				type: 'POST',
+				url: url + 'pages/user/user/delete.php',
+				data: 'id=' + id,
+				success: function(response){
+					$('#news'+id).fadeOut(300);
+				}
+			});
+		}
+	}
 </script>

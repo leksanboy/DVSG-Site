@@ -36,15 +36,17 @@
 				</div>
 				<div class="text" onClick="playTrack(<?php echo $contador ?>)"><?php echo $row_songsListSearch['title']?></div>
 				<div class="duration"><?php echo $row_songsListSearch['duration']?></div>
-				<div class="actions">
-					<div class="add" onClick="addSongSearch(1, <?php echo $row_songsListSearch['id'] ?>)">
-						<?php include("../../../images/svg/add.php"); ?>
-					</div>
-					<div class="add added">
-						<?php include("../../../images/svg/check.php"); ?>
-					</div>
-					
-				</div>
+                <?php if (isset ($_SESSION['MM_Id'])){ ?>
+    				<div class="actions">
+    					<div class="add" onClick="addSongSearch(1, <?php echo $row_songsListSearch['id'] ?>)">
+    						<?php include("../../../images/svg/add.php"); ?>
+    					</div>
+    					<div class="add added">
+    						<?php include("../../../images/svg/check.php"); ?>
+    					</div>
+    					
+    				</div>
+                <?php } ?>
 			</li>
 		<?php } while ($row_songsListSearch = mysql_fetch_assoc($songsListSearch)); ?>
 	</ul>

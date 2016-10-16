@@ -2,8 +2,13 @@
 	if (isset($_GET['id'])) {
 		$userPageId = $_GET['id'];
 
-		if ($userPageId == '')
-			$userPageId = $_SESSION['MM_Id'];
+		if ($userPageId == ''){
+			if (isset ($_SESSION['MM_Id'])){
+				$userPageId = $_SESSION['MM_Id'];
+			}else{
+				header("Location: ".$urlWeb);
+			}
+		}
 	} else if (!isset($_GET['id'])){
 		$userPageId = $_SESSION['MM_Id'];
 	}
@@ -43,17 +48,19 @@
 		<div class="innerBody">
 			<?php include_once("includes/leftBlockRight.php"); ?>
 			<div class="header headerUser headerMyPage">
-				<div class="menuLeft" onclick="toggleLeftSide(1)">
-					<?php include("images/svg/menu.php"); ?>
-				</div>
-
-				<div class="userName">
-						<?php echo $row_userData['name']; ?>
+				<?php  if (isset($_SESSION['MM_Id'])) { ?>
+					<div class="menuLeft" onclick="toggleLeftSide(1)">
+						<?php include("images/svg/menu.php"); ?>
 					</div>
-
-				<div class="menuRight" onclick="toggleRightSide(1)">
-					<?php include("images/svg/circles.php"); ?>
+				<?php } ?>
+				<div class="userName">
+					<?php echo $row_userData['name']; ?>
 				</div>
+				<?php  if (isset($_SESSION['MM_Id'])) { ?>
+					<div class="menuRight" onclick="toggleRightSide(1)">
+						<?php include("images/svg/circles.php"); ?>
+					</div>
+				<?php } ?>
 			</div>
 			<div class="innerBodyContent">
 				<div class="pageBody pageUser">

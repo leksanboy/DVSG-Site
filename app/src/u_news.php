@@ -32,7 +32,7 @@
 		<?php include("includes/browsehappy.php");?>
 		<div class="innerBody">
 			<?php include("includes/leftBlockRight.php"); ?>
-			<div class="header headerUser" style="background:#<?php echo $row_userData['primary_color']; ?>">
+			<div class="header headerUser headerNews" style="background:#<?php echo $row_userData['primary_color']; ?>">
 				<div class="headerEffect">
 					<canvas id="headerEffect"></canvas>
 				</div>

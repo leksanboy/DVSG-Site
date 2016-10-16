@@ -1,11 +1,15 @@
 <?php require_once('Connections/conexion.php');
-	if (isset($_GET['id'])) {
-		$userPageId = $_GET['id'];
+	if (!isset ($_SESSION['MM_Id'])){
+		header("Location: " . $urlWeb );
+	} else {
+		if (isset($_GET['id'])) {
+			$userPageId = $_GET['id'];
 
-		if ($userPageId == '')
+			if ($userPageId == '')
+				$userPageId = $_SESSION['MM_Id'];
+		} else if (!isset($_GET['id'])){
 			$userPageId = $_SESSION['MM_Id'];
-	} else if (!isset($_GET['id'])){
-		$userPageId = $_SESSION['MM_Id'];
+		}
 	}
 
 	//User data
@@ -34,7 +38,7 @@
 		<?php include_once("includes/browsehappy.php");?>
 		<div class="innerBody">
 			<?php include_once("includes/leftBlockRight.php"); ?>
-			<div class="header headerUser headerSettings" style="background:#<?php echo $row_userData['primary_color']; ?>">
+			<div class="header headerUser headerFriends" style="background:#<?php echo $row_userData['primary_color']; ?>">
 				<div class="headerEffect">
 					<canvas id="headerEffect"></canvas>
 				</div>

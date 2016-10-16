@@ -7,7 +7,7 @@
 
 	//User data
 	mysql_select_db($database_conexion, $conexion);
-	$query_userData = sprintf("SELECT * FROM z_users WHERE z_users.id = %s", 
+	$query_userData = sprintf("SELECT * FROM z_users WHERE id = %s", 
 	GetSQLValueString($userPageId, "int"));
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
@@ -48,15 +48,12 @@
 				<div class="menuLeft" onclick="toggleLeftSide(1)">
 					<?php include_once("images/svg/menu.php"); ?>
 				</div>
-
 				<div class="userName">
-						<?php echo $row_SacarMiPerfil['name']; ?>
-					</div>
-
+					<?php echo $row_userData['name']; ?>
+				</div>
 				<div class="menuRight" onclick="toggleRightSide(1)">
 					<?php include_once("images/svg/circles.php"); ?>
 				</div>
-				
 				<div class="title">
 					<?php echo traducir(5,$_COOKIE['idioma'])?>
 				</div>

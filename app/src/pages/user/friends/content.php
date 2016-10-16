@@ -34,7 +34,7 @@
 	    tabsInner.removeClass("active");
 	    $(this).addClass("active");
 	    $(".pageFriends").find('formbox').hide();
-	    $(content).fadeIn(600);
+	    $(content).fadeIn();
 
 	    //Clear search box if click in tab
 	    $('.searchBoxDataList').html('');
@@ -90,6 +90,42 @@
 	};
 	defaultLoad('friends');
 
+	//·····> Search
+	function searchButton(type, value){
+		if (type==1 && value.trim().length > 0) { // Search
+			$('.searchBox .searchIcon').hide();
+			$('.searchBox .loaderIcon').show();
+
+			$.ajax({
+				type: 'POST',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/friends/search.php',
+				data: 'titleValue=' + value,
+				success: function(response) {
+					setTimeout(function() {
+						$('.searchBox .searchIcon').show();
+						$('.searchBox .loaderIcon').hide();
+
+						$(".pageFriends").find('formbox').hide();
+						$('.searchBoxDataList').show();
+						$('.searchBoxDataList').html(response);
+					}, 600);
+				}
+			});
+		} else if (type==2 || value.trim().length == 0) { // Reset
+			$('.searchBox .searchIcon').hide();
+			$('.searchBox .loaderIcon').show();
+			$('.searchBox form input').val('');
+			$('.searchBoxDataList').hide();
+
+			setTimeout(function() {
+				$('.searchBox .searchIcon').show();
+				$('.searchBox .loaderIcon').hide();
+
+				defaultLoad(clickedTab);
+			}, 600);
+		}
+	}
+
 	//·····> Delete a friend
 	function deleteFriend(type, id, sender, receiver){
 		if (type==1) {
@@ -134,39 +170,19 @@
 		});
 	}
 
-	//·····> Search
-	function searchButton(type, value){
-		if (type==1 && value.trim().length > 0) { // Search
-			$('.searchBox .searchIcon').hide();
-			$('.searchBox .loaderIcon').show();
-
-			$.ajax({
-				type: 'POST',
-				url: '<?php echo $urlWeb ?>' + 'pages/user/friends/search.php',
-				data: 'titleValue=' + value,
-				success: function(response) {
-					setTimeout(function() {
-						$('.searchBox .searchIcon').show();
-						$('.searchBox .loaderIcon').hide();
-
-						$(".pageFriends").find('formbox').hide();
-						$('.searchBoxDataList').show();
-						$('.searchBoxDataList').html(response);
-					}, 600);
+	//·····> Status friends
+	function statusFriendOtherUser(status, receiver, id){
+		$.ajax({
+			type: 'POST',
+			url: url + 'pages/user/friends/status.php',
+			data: 'status=' + status + '&sender=' + <?php echo $_SESSION['MM_Id'] ?> + '&receiver=' + receiver,
+			success: function(response){
+				if (status == 0) {
+					$('#formOne #friend'+ id +' .head .buttons button').attr("onclick","statusFriendSearch(1, "+receiver+", "+id+");").html('Remove');
+				} else {
+					$('#formOne #friend'+ id +' .head .buttons button').attr("onclick","statusFriendSearch(0, "+receiver+", "+id+");").html('+ Add');
 				}
-			});
-		} else if (type==2 || value.trim().length == 0) { // Reset
-			$('.searchBox .searchIcon').hide();
-			$('.searchBox .loaderIcon').show();
-			$('.searchBox form input').val('');
-			$('.searchBoxDataList').hide();
-
-			setTimeout(function() {
-				$('.searchBox .searchIcon').show();
-				$('.searchBox .loaderIcon').hide();
-
-				defaultLoad(clickedTab);
-			}, 600);
-		}
+			}
+		});
 	}
 </script>

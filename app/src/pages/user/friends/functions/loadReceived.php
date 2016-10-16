@@ -21,8 +21,14 @@
 					<?php echo userName($row_pendingReceived['sender']) ?>
 				</div>
 				<div class="buttons">
-					<button onClick="statusFriend(1, <?php echo $row_pendingReceived['sender'] ?>, <?php echo $row_pendingReceived['id'] ?>)">Cancel</button>
-					<button onClick="statusFriend(2, <?php echo $row_pendingReceived['sender'] ?>, <?php echo $row_pendingReceived['id'] ?>)">Accept</button>
+					<button onClick="statusFriend(1, <?php echo $row_pendingReceived['sender'] ?>, <?php echo $row_pendingReceived['id'] ?>)">
+						<?php include("../../../../images/svg/close.php");?>
+						Cancel
+					</button>
+					<button onClick="statusFriend(2, <?php echo $row_pendingReceived['sender'] ?>, <?php echo $row_pendingReceived['id'] ?>)">
+						<?php include("../../../../images/svg/check.php");?>
+						Accept
+					</button>
 				</div>
 			</div>
 		</div>

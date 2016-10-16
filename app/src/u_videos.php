@@ -10,7 +10,7 @@
 
 	//User data
 	mysql_select_db($database_conexion, $conexion);
-	$query_userData = sprintf("SELECT id, primary_color, secondary_color FROM z_users WHERE id = %s", 
+	$query_userData = sprintf("SELECT id, name, primary_color, secondary_color FROM z_users WHERE id = %s", 
 	GetSQLValueString($userPageId, "int"));
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
@@ -35,7 +35,7 @@
 		<?php include("includes/browsehappy.php");?>
 		<div class="innerBody">
 			<?php include("includes/leftBlockRight.php"); ?>
-			<div class="header headerUser" style="background:#<?php echo $row_userData['primary_color']; ?>">
+			<div class="header headerUser headerVideos" style="background:#<?php echo $row_userData['primary_color']; ?>">
 				<div class="headerEffect">
 					<canvas id="headerEffect"></canvas>
 				</div>
