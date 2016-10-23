@@ -125,7 +125,8 @@
 		moreIcon 		= '<?php include('images/svg/dots.php'); ?>',
 		fullscreenIcon 	= '<?php include('images/svg/fullscreen.php'); ?>',
 		likeIcon 		= '<?php include('images/svg/like.php'); ?>',
-		unlikeIcon 		= '<?php include('images/svg/unlike.php'); ?>';
+		unlikeIcon 		= '<?php include('images/svg/unlike.php'); ?>',
+		loaderIcon		= '<?php include('images/svg/spinner.php');?>';
 
 	//·····> Header scrolling transparent to color
 	var imagesBox = $('.backgroundImages .imgBox'),
@@ -233,7 +234,11 @@
                 }
             });
 
-			var box = "<div class='slidePhotosBox'></div>\
+			var box = "<div class='slidePhotosBox'>\
+							<div class='loader'>\
+								"+loaderIcon+"\
+							</div>\
+						</div>\
 						<div class='buttons'>\
 							<button onClick='openPhoto(2)'>CLOSE</button>\
 						</div>"

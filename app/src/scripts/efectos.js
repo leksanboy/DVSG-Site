@@ -1,18 +1,8 @@
 //-----------------------------------------------------------------------
-// <copyright file="efectos.js" company="DVSG">
-//     Copyright (c) 2015 DVSG. All rights reserved.
+// <copyright owner="Sasá Rafalsky" company="DVSG">
+//     Copyright (c) 2016 DVSG. All rights reserved.
 // </copyright>
 //-----------------------------------------------------------------------
-/* TODO: \/
- * √ - En CARS no aparece el footer
- * √ - En CARS añadir todas las marcas (IMG) en la BBDD
- * √ - NAV MENU corregir scroll, se queda pillado en movil
- * √ - CREATE POST hacer el cropper
- * ø - Buscador por palabras
- * ø - Buscador de Shop pasar una Cookie, cuando vuelvo atras no aparen los criterios del buscador
- * √ - Cuando creo un post se guardan mal las imagenes del contenido
- * √ - Crear: editar post
- */
 
 /**
  * Domain URL
@@ -83,9 +73,24 @@ function clickThePage(type) {
             document.location.href = url + "photos";
         } else if (type === 18) {
             document.location.href = url + "news";
+        } else if (type === 19) {
+            document.location.href = url + "forgot-password";
         }
     }, 350);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -678,44 +683,6 @@ function logOutFade() {
 }
 
 
-/**
- * Signin login form access
- */
-function loginAccess(type, name, password, checkbox) {
-    if (type == 1) {
-        if (name === "" || password === "") {
-            $('.error').fadeIn(300).html('Complete the Fields');
-            setTimeout(function() {
-                $('.error').fadeOut(300);
-            }, 3000);
-
-            return false;
-        } else {
-            $.ajax({
-                type: 'POST',
-                url: url + 'includes/arrancar.php',
-                data: 'name=' + name + '&password=' + password + '&recordar=' + checkbox,
-                success: function(html) {
-                    if (html != "false") {
-                        $('.signInLoading').val("Loading...");
-                        location.reload();
-                        return true;
-                    } else if (html == "false") {
-                        $('.error').fadeIn(300);
-                        setTimeout(function() {
-                            $('.error').fadeOut(500);
-                        }, 3000);
-                        $('.error').html('Email or Password is incorrect');
-                        return false;
-                    }
-                }
-            });
-        }
-    } else if (type == 2) {
-        $('.signInBox').toggleClass('signInBoxActive');
-        $('.signInBoxHidden').toggleClass('signInBoxHiddenActive');
-    }
-}
 
 
 

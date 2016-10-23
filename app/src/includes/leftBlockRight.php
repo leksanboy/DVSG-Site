@@ -6,25 +6,25 @@
 
 		$userId = $_SESSION['MM_Id'];
 		mysql_select_db($database_conexion, $conexion);
-		$query_SacarMiNombreUser = sprintf("SELECT * FROM z_users WHERE id=%s",$userId ,"int");
-		$SacarMiNombreUser = mysql_query($query_SacarMiNombreUser, $conexion) or die(mysql_error());
-		$row_SacarMiNombreUser = mysql_fetch_assoc($SacarMiNombreUser);
-		$totalRows_SacarMiNombreUser = mysql_num_rows($SacarMiNombreUser);
+		$query_getUserData = sprintf("SELECT * FROM z_users WHERE id = %s", $userId, "int");
+		$getUserData = mysql_query($query_getUserData, $conexion) or die(mysql_error());
+		$row_getUserData = mysql_fetch_assoc($getUserData);
+		$totalRows_getUserData = mysql_num_rows($getUserData);
 ?>
 	<div class="leftSideBlock">
 		<div class="userBox">
 			<div class="images">
-				<div class="fadeImage" style="background-image: url(<?php echo $row_SacarMiNombreUser['avatar_bg1']; ?>);"></div>
-				<div class="fadeImage" style="background-image: url(<?php echo $row_SacarMiNombreUser['avatar_bg2']; ?>);"></div>
-				<div class="fadeImage" style="background-image: url(<?php echo $row_SacarMiNombreUser['avatar_bg3']; ?>);"></div>
+				<div class="fadeImage" style="background-image: url(<?php echo $row_getUserData['avatar_bg1']; ?>);"></div>
+				<div class="fadeImage" style="background-image: url(<?php echo $row_getUserData['avatar_bg2']; ?>);"></div>
+				<div class="fadeImage" style="background-image: url(<?php echo $row_getUserData['avatar_bg3']; ?>);"></div>
 			</div>
 
 			<div class="image">
-				<img src="<?php echo $row_SacarMiNombreUser['avatar']; ?>"/>
+				<img src="<?php echo $row_getUserData['avatar']; ?>"/>
 			</div>
 			<ul>
-				<li><?php echo $row_SacarMiNombreUser['name']; ?></li>
-				<li><?php echo $row_SacarMiNombreUser['email']; ?></li>
+				<li><?php echo $row_getUserData['name']; ?></li>
+				<li><?php echo $row_getUserData['email']; ?></li>
 			</ul>
 		</div>
 		<div class="menu">
@@ -128,16 +128,53 @@
 		<form onsubmit="return false"> 
 			<div class="error"></div>
 			<label for="signinWindowMail">Email</label>
-			<input type="email" name="nombre" class="input" id="signinWindowMail"/>
+			<input type="email" name="email" class="input" id="signinWindowMail"/>
 			<label for="signinWindowPassword">Password</label>
 			<input type="password" name="password" class="input" id="signinWindowPassword"/>
 			<input id="signin-remember-check" data-role="none" type="checkbox" value="on" name="recordar" checked="checked" class="check">
 			<label for="signin-remember-check" data-role="none" class="check">Remember me</label>
 
-			<input type="button" onClick="location.href='<?php echo $urlWeb ?>forgot-password'" class="button" value="Forgot password ?"/>
-			<input type="submit" onClick="loginAccess(1, nombre.value, password.value, recordar.value);" class="button signInLoading" value="Sign in"/>
+			<input type="button" onClick="clickThePage(19)" class="button" value="Forgot password ?"/>
+			<input type="submit" onClick="loginAccess(1, email.value, password.value);" class="button signInLoading" value="Sign in"/>
 		</form>
 	</div>
 	<div class="signInBoxHidden" onclick="loginAccess(2)"></div>
 <?php } ?>
-<?php mysql_free_result($SacarMiNombreUser);?>
+<script type="text/javascript">
+	function loginAccess(type, email, password) {
+	    if (type == 1) {
+	        if (email === "" || password === "") {
+	            $('.error').fadeIn(300).html('Complete the Fields');
+	            setTimeout(function() {
+	                $('.error').fadeOut(300);
+	            }, 3000);
+
+	            return false;
+	        } else {
+	            $.ajax({
+	                type: 'POST',
+	                url: url + 'includes/arrancar.php',
+	                data: 'email=' + email + '&password=' + password,
+	                success: function(html) {
+	                    if (html != "false") {
+	                        $('.signInLoading').val("Loading...");
+	                        location.reload();
+	                        return true;
+	                    } else if (html == "false") {
+	                        $('.error').fadeIn(300);
+	                        setTimeout(function() {
+	                            $('.error').fadeOut(500);
+	                        }, 3000);
+	                        $('.error').html('Email or Password is incorrect');
+	                        return false;
+	                    }
+	                }
+	            });
+	        }
+	    } else if (type == 2) {
+	        $('.signInBox').toggleClass('signInBoxActive');
+	        $('.signInBoxHidden').toggleClass('signInBoxHiddenActive');
+	    }
+	}
+</script>
+<?php mysql_free_result($getUserData);?>

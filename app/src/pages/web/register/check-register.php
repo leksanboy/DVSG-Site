@@ -24,10 +24,8 @@ if ($totalRows_Recordset1!=0){
   
 	//Inicio de sesión automático
     mysql_select_db($database_conexion, $conexion);
-	$query_GetUserData = sprintf("SELECT * FROM z_users WHERE name=%s AND email=%s AND password=%s",
-	GetSQLValueString($_POST['name'],"text"),
-	GetSQLValueString($_POST['email'],"text"),
-	GetSQLValueString(md5($_POST['password']),"text"));
+	$query_GetUserData = sprintf("SELECT id, name, password FROM z_users WHERE email=%s",
+	GetSQLValueString($_POST['email'],"text"));
 	$GetUserData = mysql_query($query_GetUserData, $conexion) or die(mysql_error());
 	$row_GetUserData = mysql_fetch_assoc($GetUserData);
 	$totalRows_GetUserData = mysql_num_rows($GetUserData);
@@ -35,6 +33,7 @@ if ($totalRows_Recordset1!=0){
     $_SESSION['MM_Id'] = $row_GetUserData['id'];	
     recordar_sesion($row_GetUserData['password'],$row_GetUserData['name'],$row_GetUserData['id']);
 	mysql_free_result($GetUserData);
+	header("Location: " . $urlWeb.'/id'.$insertId);
 
 	//Welcome mail
 	emailWelcome($insertId, $_POST['name'], $_POST['email']);

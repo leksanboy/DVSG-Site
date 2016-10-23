@@ -7,7 +7,8 @@
 	//·····> SVG icons
 	var uploadIcon 			= '<?php include('images/svg/upload.php'); ?>',
 		arrowUpIcon 		= '<?php include('images/svg/arrow-up.php'); ?>',
-		progressIcon 		= '<?php include('images/svg/progress.php'); ?>';
+		progressIcon 		= '<?php include('images/svg/progress.php'); ?>',
+		loaderIcon			= '<?php include('images/svg/spinner.php');?>';
 
 	//·····> Get id element
 	function getFile(el){
@@ -180,7 +181,11 @@
                 } 
             });
 
-			var box = "<div class='slidePhotosBox'></div>\
+			var box = "<div class='slidePhotosBox'>\
+							<div class='loader'>\
+								"+loaderIcon+"\
+							</div>\
+						</div>\
 						<div class='buttons'>\
 							<button onClick='openPhoto(2)'>CLOSE</button>\
 						</div>"

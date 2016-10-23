@@ -328,28 +328,26 @@
 	// Email Register "Welcome"
 	function emailWelcome($idUser, $userName, $email){
 		$messageContent = '<div style="margin:0;padding:0">
-			<table border="0" 
+			<table width="100%" 
+					border="0" 
 					cellpadding="0" 
 					cellspacing="0" 
-					style="min-width:348px" 
-					width="100%">
+					style="margin:24px 0 0">
 				<tbody>
 					<tr align="center">
 						<td>
 							<table style="max-width:600px; 
+											min-width:75%; 
+											color: #212121; 
 											font-family:Roboto-Regular,Helvetica,Arial,sans-serif;">
-							<tbody>
+								<tbody>
 									<tr>
 										<td>
-											<table border="0" 
-													cellpadding="0"
-													width="100%"
-													cellspacing="0" style="min-width: 332px; 
-																			background: #2196F3; 
-																			max-width: 600px; 
-																			border: 1px solid #e0e0e0; 
-																			border-bottom: 0; 
-																			border-radius: 5px 5px 0 0;">
+											<table style="width: 100%; 
+														background: #2196F3;  
+														border: 1px solid #e0e0e0; 
+														border-bottom: 0; 
+														border-radius: 5px 5px 0 0;">
 												<tbody>
 													<tr>
 														<td style="font-size:72px; 
@@ -364,7 +362,6 @@
 													</tr>
 													<tr>
 														<td style="width: 100%; 
-																	color: #212121; 
 																	text-transform: uppercase; 
 																	text-align: center; 
 																	font-size: 11px; 
@@ -376,17 +373,14 @@
 													</tr>
 												</tbody>
 											</table>
-											<table style="min-width:332px; 
-															max-width:600px; 
-															border:1px solid #f0f0f0; 
-															border-bottom:1px solid #c0c0c0; 
-															padding:24px 32px; 
-															font-size:13px; 
-															color:#212121; 
-															line-height:1.5; 
-															background: #f5f5f5;
-															border-radius: 0 0 5px 5px;
-															width:100%;">
+											<table style="border:1px solid #f0f0f0; 
+														border-bottom:1px solid #c0c0c0; 
+														padding:24px 32px; 
+														font-size:13px; 
+														line-height:1.5; 
+														background: #f5f5f5;
+														width: 100%;
+														border-radius: 0 0 5px 5px;">
 												<tbody>
 													<tr>
 														<td>
@@ -401,7 +395,7 @@
 																			Confirm your email address.
 																			<br>
 																			<br>
-																			<a href="www.dvsg.co/id'.$idUser.'" 
+																			<a href="www.dvsg.co/login" 
 																				style="padding: 10px 12px; 
 																						text-transform: uppercase; 
 																						text-decoration: none;
@@ -462,6 +456,144 @@
 		$mail->FromName = 'DVSG';
 		$mail->AddAddress($email);
 		$mail->Subject = "Welcome";
+		$mail->IsHTML(true);
+		$mail->Body = $messageContent;
+		$mail->Send();
+	}
+
+	// Email Forgot password
+	function emailForgotPassword($userName, $email, $newPassword){
+		$messageContent = '<div style="margin:0;padding:0">
+			<table width="100%" 
+					border="0" 
+					cellpadding="0" 
+					cellspacing="0" 
+					style="margin:24px 0 0">
+				<tbody>
+					<tr align="center">
+						<td>
+							<table style="max-width:600px; 
+											min-width:75%; 
+											color: #212121; 
+											font-family:Roboto-Regular,Helvetica,Arial,sans-serif;">
+								<tbody>
+									<tr>
+										<td>
+											<table style="width: 100%; 
+														background: #2196F3;  
+														border: 1px solid #e0e0e0; 
+														border-bottom: 0; 
+														border-radius: 5px 5px 0 0;">
+												<tbody>
+													<tr>
+														<td style="font-size:72px; 
+																	font-weight:bold; 
+																	color:#fff; 
+																	line-height:64px; 
+																	padding:26px 26px 0; 
+																	text-align:center; 
+																	text-shadow: 0 3px 6px rgba(0,0,0,0.6);">
+															DVSG
+														</td>
+													</tr>
+													<tr>
+														<td style="width: 100%; 
+																	text-transform: uppercase; 
+																	text-align: center; 
+																	font-size: 11px; 
+																	padding: 6px 26px 16px; 
+																	letter-spacing: 5px; 
+																	text-indent: 8px;">
+															Recover password
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table style="border:1px solid #f0f0f0; 
+														border-bottom:1px solid #c0c0c0; 
+														padding:24px 32px; 
+														font-size:13px; 
+														line-height:1.5; 
+														background: #f5f5f5;
+														width: 100%;
+														border-radius: 0 0 5px 5px;">
+												<tbody>
+													<tr>
+														<td>
+															<table>
+																<tbody>
+																	<tr>
+																		<td>
+																			Hello '.$userName.', you forgot your password. We create a new one for you.
+																			<br>
+																			This is your new password: <b>'.$newPassword.'</b>
+																			<br>
+																			Then in Settings in tab Password you can change that.
+																			<br>
+																			<br>
+																			<a href="www.dvsg.co/login" 
+																				style="padding: 10px 12px; 
+																						text-transform: uppercase; 
+																						text-decoration: none;
+																						background: #2196f3; 
+																						color: #ffffff; 
+																						border-radius: 3px;">
+																				Log in</a>
+																			<br>
+																			<br>
+																		</td>
+																	</tr>
+																	<tr>
+																		<td style="color:#ccc;">
+																			If you have not requested this option, 
+																			<a href="/www.dvsg.co/technical-support" 
+																				style="color: #7bc7fa; text-decoration: none;">Click here</a>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<table style="font-size:11px; 
+															color:#666666; 
+															line-height:18px; 
+															padding:12px; 
+															width:100%; 
+															text-align:center;">
+												<td>DVSG © 2016</td>
+											</table>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>';
+
+		$mail = new PHPMailer();
+		$mail->isSMTP(true); // telling the class to use SMTP
+		$mail->SMTPOptions = array(
+			'ssl' => array(
+				'verify_peer' => false,
+				'verify_peer_name' => false,
+				'allow_self_signed' => true
+			)
+		);
+		$mail->SMTPSecure = 'tls';
+		$mail->Host = 'smtp.gmail.com';
+		$mail->Port = 587;
+		$mail->SMTPAuth = true;
+		$mail->Username = 'dvsg.noreply@gmail.com';
+		$mail->Password = 'Rafalskyy1991@DVSG';
+
+		$mail->setFrom('dvsg.noreply@gmail.com');
+		$mail->FromName = 'DVSG';
+		$mail->AddAddress($email);
+		$mail->Subject = "Recover password";
 		$mail->IsHTML(true);
 		$mail->Body = $messageContent;
 		$mail->Send();

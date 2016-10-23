@@ -87,8 +87,10 @@
 	RewriteRule ^shop shop.php
 	RewriteRule ^versus versus.php
 	RewriteRule ^blog blog.php
-	RewriteRule ^register register.php
 	RewriteRule ^error error.php
+	RewriteRule ^register register.php
+	RewriteRule ^login login.php
+	RewriteRule ^forgot-password forgot-password.php
 
 	RewriteCond %{HTTP_HOST} ^dvsg\.co [NC]
 	RewriteRule ^(.*)$ http://www.dvsg.co/$1 [L,R=301]

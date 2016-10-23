@@ -5,6 +5,16 @@
 				.pageRegister{
 					margin: 120px 0 0 0 !important;
 
+					.pageTitle{
+						text-transform: uppercase;
+						line-height: 36px;
+						margin: 12px 3%;
+						font-size: 32px;
+						padding: 0 2%;
+						color: #fff;
+						width: 90%;
+					}
+
 					label{
 						margin: 12px 5% 0;
 						font-size: 13px;
@@ -183,7 +193,7 @@
 					}
 
 					.registerPopup{
-						background: rgba(0, 0, 0, 0.5);
+						background: rgba(0, 0, 0, 0.75);
 						position: fixed;
 						z-index: 999;
 						height: 100%;

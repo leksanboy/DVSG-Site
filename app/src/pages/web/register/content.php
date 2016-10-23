@@ -1,4 +1,5 @@
 <form onSubmit="return false">
+	<div class="pageTitle">Create account</div>
 	<label for="nameRegister">Full name</label>
 	<input type="text" name="fullname" class="inputRegister" onkeyup="validateParameters(1, this.value)" id="nameRegister"/>
 	<div class="nameStatus">
@@ -46,6 +47,8 @@
 	<div class="inner">
 		<div class="text">
 			Created successfully!
+			<br>
+			<font style="text-transform: initial;">Check your email</font>
 			<?php include("images/svg/check.php");?>
 		</div>
 		<div class="button" onclick="createAccount(2)">Access</div>
