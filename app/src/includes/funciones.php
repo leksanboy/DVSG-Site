@@ -1,4 +1,7 @@
 <?php
+	// *EMAIL SENDER
+	// require '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php';
+
 	if (!function_exists("GetSQLValueString")) {
 		function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") {
 
@@ -291,7 +294,7 @@
 		mysql_free_result($CheckData);
 	}
 
-	// Check if I'm the sender
+	// Check if I'm the sender in friends
 	function checkIfImSender($idSender, $idReceiver){
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
@@ -311,7 +314,7 @@
 	function pendingFriendsToConfirm($idUser){
 		global $database_conexion, $conexion;
 		mysql_select_db($database_conexion, $conexion);
-		$query_CheckData = sprintf("SELECT * FROM z_friends WHERE receiver = %s AND status = %s",
+		$query_CheckData = sprintf("SELECT id FROM z_friends WHERE receiver = %s AND status = %s",
 		GetSQLValueString($idUser, "int"),
 		GetSQLValueString(1, "int"));
 		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
@@ -324,117 +327,133 @@
 			return $totalRows_CheckData;
 	}
 
-	require '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php';
+	// Pending messages to read
+	function pendingMessagesToRead($idUser){
+		global $database_conexion, $conexion;
+		mysql_select_db($database_conexion, $conexion);
+		$query_CheckData = sprintf("SELECT id FROM z_messages WHERE receiver = %s AND status = %s",
+		GetSQLValueString($idUser, "int"),
+		GetSQLValueString(0, "int"));
+		$CheckData = mysql_query($query_CheckData, $conexion) or die(mysql_error());
+		$row_CheckData = mysql_fetch_assoc($CheckData);
+		$totalRows_CheckData = mysql_num_rows($CheckData);
+
+		if ($totalRows_CheckData == 0)
+			return 0;
+		else
+			return $totalRows_CheckData;
+	}
+
 	// Email Register "Welcome"
 	function emailWelcome($idUser, $userName, $email){
 		$messageContent = '<div style="margin:0;padding:0">
-			<table width="100%" 
-					border="0" 
-					cellpadding="0" 
-					cellspacing="0" 
-					style="margin:24px 0 0">
-				<tbody>
-					<tr align="center">
-						<td>
-							<table style="max-width:600px; 
-											min-width:75%; 
-											color: #212121; 
-											font-family:Roboto-Regular,Helvetica,Arial,sans-serif;">
-								<tbody>
-									<tr>
-										<td>
-											<table style="width: 100%; 
-														background: #2196F3;  
-														border: 1px solid #e0e0e0; 
-														border-bottom: 0; 
-														border-radius: 5px 5px 0 0;">
-												<tbody>
-													<tr>
-														<td style="font-size:72px; 
-																	font-weight:bold; 
-																	color:#fff; 
-																	line-height:64px; 
-																	padding:26px 26px 0; 
-																	text-align:center; 
-																	text-shadow: 0 3px 6px rgba(0,0,0,0.6);">
-															DVSG
-														</td>
-													</tr>
-													<tr>
-														<td style="width: 100%; 
-																	text-transform: uppercase; 
-																	text-align: center; 
-																	font-size: 11px; 
-																	padding: 6px 26px 16px; 
-																	letter-spacing: 22px; 
-																	text-indent: 24px;">
-															Welcome
-														</td>
-													</tr>
-												</tbody>
-											</table>
-											<table style="border:1px solid #f0f0f0; 
-														border-bottom:1px solid #c0c0c0; 
-														padding:24px 32px; 
-														font-size:13px; 
-														line-height:1.5; 
-														background: #f5f5f5;
-														width: 100%;
-														border-radius: 0 0 5px 5px;">
-												<tbody>
-													<tr>
-														<td>
-															<table>
-																<tbody>
-																	<tr>
-																		<td>
-																			Hello '.$userName.', and welcome to the DVSG.
-																			<br>
-																			You have successfully created an account, you are now part of this community.
-																			<br>
-																			Confirm your email address.
-																			<br>
-																			<br>
-																			<a href="www.dvsg.co/login" 
-																				style="padding: 10px 12px; 
+								<table width="100%" 
+										border="0" 
+										cellpadding="0"
+										cellspacing="0" 
+										style="padding: 12px 0;
+												margin: 0;
+									 			background:#fff">
+									<tbody>
+										<tr align="center">
+											<td>
+												<table style="max-width:600px; 
+																min-width:75%; 
+																color: #404040; 
+																font-family:Roboto-Regular,Helvetica,Arial,sans-serif;">
+													<tbody>
+														<tr>
+															<td>
+																<table style="width: 100%; 
+																			background: #f5f5f5;
+																			border-radius: 5px 5px 0 0;">
+																	<tbody>
+																		<tr>
+																			<td style="font-size:36px; 
+																						font-weight:bold; 
+																						color:#999; 
+																						line-height:36px; 
+																						padding:26px 26px 0; 
+																						text-align:center; 
+																						text-shadow: 0 3px 6px rgba(0,0,0,0.42);">
+																				DVSG
+																			</td>
+																		</tr>
+																		<tr>
+																			<td style="width: 100%; 
 																						text-transform: uppercase; 
-																						text-decoration: none;
-																						background: #2196f3; 
-																						color: #ffffff; 
-																						border-radius: 3px;">
-																				Confirm now</a>
-																			<br>
-																			<br>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td style="color:#ccc;">
-																			This email address do not supports answers.
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-											<table style="font-size:11px; 
-															color:#666666; 
-															line-height:18px; 
-															padding:12px; 
-															width:100%; 
-															text-align:center;">
-												<td>DVSG © 2016</td>
-											</table>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>';
+																						text-align: center; 
+																						font-size: 10px; 
+																						padding: 6px 26px 16px; 
+																						letter-spacing: 2px; 
+																						text-indent: 2px;">
+																				Welcome
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+																<table style="border-bottom:1px solid #c0c0c0; 
+																			border-top: 1px solid #e9e9e9; 
+																			padding:24px 32px; 
+																			font-size:13px; 
+																			line-height:1.5; 
+																			background: #f5f5f5;
+																			width: 100%;
+																			border-radius: 0 0 5px 5px;">
+																	<tbody>
+																		<tr>
+																			<td>
+																				<table>
+																					<tbody>
+																						<tr>
+																							<h3 style="font-weight:normal;">
+																								Hello '.$userName.', and welcome to the DVSG.
+																								<br>
+																								You have successfully created an account, you are now part of this community.
+																								<br>
+																								Confirm your email address.
+																								<br>
+																								<br>
+																								<a href="www.dvsg.co/login" 
+																									style="padding: 10px 12px; 
+																											text-transform: uppercase; 
+																											text-decoration: none;
+																											background: #2196f3; 
+																											color: #ffffff; 
+																											border-radius: 3px;">
+																									Confirm now</a>
+																								<br>
+																								<br>
+																							</h3>
+																						</tr>
+																						<tr>
+																							<td style="color:#ccc;">
+																								This email address do not supports answers.
+																							</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+																<table style="font-size:11px; 
+																				color:#666666; 
+																				line-height:18px; 
+																				padding:12px; 
+																				width:100%; 
+																				text-align:center;">
+																	<td>DVSG © 2016</td>
+																</table>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>';
 
 		$mail = new PHPMailer();
 		$mail->isSMTP(true); // telling the class to use SMTP
@@ -464,115 +483,116 @@
 	// Email Forgot password
 	function emailForgotPassword($userName, $email, $newPassword){
 		$messageContent = '<div style="margin:0;padding:0">
-			<table width="100%" 
-					border="0" 
-					cellpadding="0" 
-					cellspacing="0" 
-					style="margin:24px 0 0">
-				<tbody>
-					<tr align="center">
-						<td>
-							<table style="max-width:600px; 
-											min-width:75%; 
-											color: #212121; 
-											font-family:Roboto-Regular,Helvetica,Arial,sans-serif;">
-								<tbody>
-									<tr>
-										<td>
-											<table style="width: 100%; 
-														background: #2196F3;  
-														border: 1px solid #e0e0e0; 
-														border-bottom: 0; 
-														border-radius: 5px 5px 0 0;">
-												<tbody>
-													<tr>
-														<td style="font-size:72px; 
-																	font-weight:bold; 
-																	color:#fff; 
-																	line-height:64px; 
-																	padding:26px 26px 0; 
-																	text-align:center; 
-																	text-shadow: 0 3px 6px rgba(0,0,0,0.6);">
-															DVSG
-														</td>
-													</tr>
-													<tr>
-														<td style="width: 100%; 
-																	text-transform: uppercase; 
-																	text-align: center; 
-																	font-size: 11px; 
-																	padding: 6px 26px 16px; 
-																	letter-spacing: 5px; 
-																	text-indent: 8px;">
-															Recover password
-														</td>
-													</tr>
-												</tbody>
-											</table>
-											<table style="border:1px solid #f0f0f0; 
-														border-bottom:1px solid #c0c0c0; 
-														padding:24px 32px; 
-														font-size:13px; 
-														line-height:1.5; 
-														background: #f5f5f5;
-														width: 100%;
-														border-radius: 0 0 5px 5px;">
-												<tbody>
-													<tr>
-														<td>
-															<table>
-																<tbody>
-																	<tr>
-																		<td>
-																			Hello '.$userName.', you forgot your password. We create a new one for you.
-																			<br>
-																			This is your new password: <b>'.$newPassword.'</b>
-																			<br>
-																			Then in Settings in tab Password you can change that.
-																			<br>
-																			<br>
-																			<a href="www.dvsg.co/login" 
-																				style="padding: 10px 12px; 
+								<table width="100%" 
+										border="0" 
+										cellpadding="0"
+										cellspacing="0" 
+										style="padding: 12px 0;
+												margin: 0;
+									 			background:#fff">
+									<tbody>
+										<tr align="center">
+											<td>
+												<table style="max-width:600px; 
+																min-width:75%; 
+																color: #404040; 
+																font-family:Roboto-Regular,Helvetica,Arial,sans-serif;">
+													<tbody>
+														<tr>
+															<td>
+																<table style="width: 100%; 
+																			background: #f5f5f5;
+																			border-radius: 5px 5px 0 0;">
+																	<tbody>
+																		<tr>
+																			<td style="font-size:36px; 
+																						font-weight:bold; 
+																						color:#999; 
+																						line-height:36px; 
+																						padding:26px 26px 0; 
+																						text-align:center; 
+																						text-shadow: 0 3px 6px rgba(0,0,0,0.42);">
+																				DVSG
+																			</td>
+																		</tr>
+																		<tr>
+																			<td style="width: 100%; 
 																						text-transform: uppercase; 
-																						text-decoration: none;
-																						background: #2196f3; 
-																						color: #ffffff; 
-																						border-radius: 3px;">
-																				Log in</a>
-																			<br>
-																			<br>
-																		</td>
-																	</tr>
-																	<tr>
-																		<td style="color:#ccc;">
-																			If you have not requested this option, 
-																			<a href="/www.dvsg.co/technical-support" 
-																				style="color: #7bc7fa; text-decoration: none;">Click here</a>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-											<table style="font-size:11px; 
-															color:#666666; 
-															line-height:18px; 
-															padding:12px; 
-															width:100%; 
-															text-align:center;">
-												<td>DVSG © 2016</td>
-											</table>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>';
+																						text-align: center; 
+																						font-size: 10px; 
+																						padding: 6px 26px 16px; 
+																						letter-spacing: 2px; 
+																						text-indent: 2px;">
+																				Recover password
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+																<table style="border-bottom:1px solid #c0c0c0; 
+																			border-top: 1px solid #e9e9e9; 
+																			padding:24px 32px;
+																			font-size:13px; 
+																			line-height:1.5; 
+																			background: #f5f5f5;
+																			width: 100%;
+																			border-radius: 0 0 5px 5px;">
+																	<tbody>
+																		<tr>
+																			<td>
+																				<table>
+																					<tbody>
+																						<tr>
+																							<h3 style="font-weight:normal;">
+																								Hello '.$userName.', you forgot your password. We create a new one for you.
+																								<br>
+																								This is your new password: <b>'.$newPassword.'</b>
+																								<br>
+																								Then in Settings in tab Password you can change that.
+																								<br>
+																								<br>
+																								<a href="www.dvsg.co/login" 
+																									style="padding: 10px 12px; 
+																											text-transform: uppercase; 
+																											text-decoration: none;
+																											background: #2196f3; 
+																											color: #ffffff; 
+																											border-radius: 3px;">
+																									Log in</a>
+																								<br>
+																								<br>
+																							</h3>
+																						</tr>
+																						<tr>
+																							<td style="color:#999;">
+																								If you have not requested this option, 
+																								<a href="/www.dvsg.co/technical-support" 
+																									style="color: #999; text-decoration: none;">Click here</a>
+																								.
+																							</td>
+																						</tr>
+																					</tbody>
+																				</table>
+																			</td>
+																		</tr>
+																	</tbody>
+																</table>
+																<table style="font-size:11px; 
+																				color:#666666; 
+																				line-height:18px; 
+																				padding:12px; 
+																				width:100%; 
+																				text-align:center;">
+																	<td>DVSG © 2016</td>
+																</table>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>';
 
 		$mail = new PHPMailer();
 		$mail->isSMTP(true); // telling the class to use SMTP
@@ -1178,71 +1198,71 @@
 		return utf8_encode($cadena);
 
 	}
+	// //Saber mensajes sin leer de cada user
+	// function saber_cuantos_estan_sin_leer ($idusuario) {
+		
+	// 	global $database_conexion, $conexion;
+	// 	mysql_select_db($database_conexion, $conexion);
+	// 	$query_DatosFuncion = sprintf("SELECT * FROM z_messages WHERE status=0 AND receiver = %s",
+	// 		GetSQLValueString($idusuario, "int"));
+	// 	$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
+	// 	$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
+	// 	$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
+		
+	// 	return $totalRows_DatosFuncion;
+	// 	mysql_free_result($DatosFuncion);
+
+	// }
+	// //Saber si hay un mensaje pendiente
+	// function MensajesPendientes($usuario){
+
+	// 	global $database_conexion, $conexion;
+	// 	mysql_select_db($database_conexion, $conexion);
+	// 	$query_DatosFuncion = sprintf("SELECT id FROM z_messages WHERE status=0 AND receiver = %s",
+	// 		GetSQLValueString($usuario, "int"));
+	// 	$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
+	// 	$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
+	// 	$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
+		
+	// 	if ($totalRows_DatosFuncion > 0)
+	// 		return true;
+	// 	else
+	// 		return false;
+
+	// 	mysql_free_result($DatosFuncion);
+
+	// }
 	//Saber mensajes sin leer de cada user
-	function saber_cuantos_estan_sin_leer ($idusuario) {
+	// function saber_cuantos_amigos_estan_sin_confirmar ($idusuario) {
 		
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT * FROM z_messages WHERE status=0 AND receiver = %s",
-			GetSQLValueString($idusuario, "int"));
-		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
-		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
-		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
+	// 	global $database_conexion, $conexion;
+	// 	mysql_select_db($database_conexion, $conexion);
+	// 	$query_DatosFuncion = sprintf("SELECT * FROM z_friends WHERE status=0 AND receiver = %s", GetSQLValueString($idusuario, "int"));
+	// 	$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
+	// 	$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
+	// 	$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
+
+	// 	return $totalRows_DatosFuncion;
+	// 	mysql_free_result($DatosFuncion);
+	// }
+
+	// /////Saber si hay un AMIGO pendiente
+	// function AmigosPendientes($usuario){
+
+	// 	global $database_conexion, $conexion;
+	// 	mysql_select_db($database_conexion, $conexion);
+	// 	$query_DatosFuncion = sprintf("SELECT id FROM z_friends WHERE status=0 AND receiver = %s", GetSQLValueString($usuario, "int"));
+	// 	$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
+	// 	$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
+	// 	$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
 		
-		return $totalRows_DatosFuncion;
-		mysql_free_result($DatosFuncion);
+	// 	if ($totalRows_DatosFuncion>0) return true;
+	// 	else
+	// 	return false;
 
-	}
-	//Saber si hay un mensaje pendiente
-	function MensajesPendientes($usuario){
+	// 	mysql_free_result($DatosFuncion);
 
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT id FROM z_messages WHERE status=0 AND receiver = %s",
-			GetSQLValueString($usuario, "int"));
-		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
-		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
-		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
-		
-		if ($totalRows_DatosFuncion > 0)
-			return true;
-		else
-			return false;
-
-		mysql_free_result($DatosFuncion);
-
-	}
-	//Saber mensajes sin leer de cada user
-	function saber_cuantos_amigos_estan_sin_confirmar ($idusuario) {
-		
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT * FROM z_friends WHERE status=0 AND receiver = %s", GetSQLValueString($idusuario, "int"));
-		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
-		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
-		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
-
-		return $totalRows_DatosFuncion;
-		mysql_free_result($DatosFuncion);
-	}
-
-	/////Saber si hay un AMIGO pendiente
-	function AmigosPendientes($usuario){
-
-		global $database_conexion, $conexion;
-		mysql_select_db($database_conexion, $conexion);
-		$query_DatosFuncion = sprintf("SELECT id FROM z_friends WHERE status=0 AND receiver = %s", GetSQLValueString($usuario, "int"));
-		$DatosFuncion = mysql_query($query_DatosFuncion, $conexion) or die(mysql_error());
-		$row_DatosFuncion = mysql_fetch_assoc($DatosFuncion);
-		$totalRows_DatosFuncion = mysql_num_rows($DatosFuncion);
-		
-		if ($totalRows_DatosFuncion>0) return true;
-		else
-		return false;
-
-		mysql_free_result($DatosFuncion);
-
-	}
+	// }
 	// Saber si hay notificaciones pendientes
 	function NotificacionesPendientes($usuario){
 
@@ -1261,74 +1281,74 @@
 
 	}
 	//Enviar un correo de mensaje nuevo
-	function notificar_por_correo ($emailderecibe,$urlWeb,$nombreWeb){
+	// function notificar_por_correo ($emailderecibe,$urlWeb,$nombreWeb){
 		
-		$para  = $emailderecibe; 
-		$titulo = 'Nueva message '.$nombreWeb;
-		$mensaje ="
-			<html>
-			<head>
-			<style type='text/css'>
-			@font-face {
-				font-family: 'Open Sans';
-				font-style: normal;
-				font-weight: 400;
-				src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
-			}
-			body {
-			 color: #333;
-			 font-family: 'Open Sans', sans-serif;
-			 margin: 0px;
-			 font-size: 16px;
-			}
-			.pie {
-			 font-size:12px;
-			 color:#999797;
-			}
-			.centro {
-			 font-size:16px;
-			}
-			.centro a{
-			 text-decoration:none;
-			 color: #0487b8;
-			}
-			.centro a:hover{
-			 text-decoration: underline;
-			 color: #0487b8;
-			}
-			</style>
-			</head>
-			<body>
-			<table width='593' height='324' border='0' align='center'>
-				<tr>
-					<td height='23'>&nbsp;</td>
-				</tr>
-				<tr>
-					<td height='88'><img src='http://i.imgur.com/K1Z4rP4.png' width='115' height='40' /></td>
-				</tr>
-				<tr>
-					<td height='97' valign='top' class='centro'><h3>Nueva actividad en ".$nombreWeb."
-					</h3>
-				 Alguien te a mencionado en un comentario <a href='".$urlWeb."'>".$urlWeb."</a></td>
-				</tr>
-				<tr>
-					<td height='17' ></td>
-				</tr>
-				<tr>
-					<td height='27' class='pie'>Este email es una notificaci&oacute;n autom&aacute;tica</td>
-				</tr>
-			</table>
-			</body>
-			</html>
-		";
-		$cabeceras  = 'MIME-Version: 1.0' . "\r\n";
-		$cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-		$cabeceras .= "From: DVSG" . "\r\n" .
-						'Reply-To: no_reply@dvsg.co' . "\r\n";
+	// 	$para  = $emailderecibe; 
+	// 	$titulo = 'Nueva message '.$nombreWeb;
+	// 	$mensaje ="
+	// 		<html>
+	// 		<head>
+	// 		<style type='text/css'>
+	// 		@font-face {
+	// 			font-family: 'Open Sans';
+	// 			font-style: normal;
+	// 			font-weight: 400;
+	// 			src: local('Open Sans'), local('OpenSans'), url(http://themes.googleusercontent.com/static/fonts/opensans/v6/cJZKeOuBrn4kERxqtaUH3T8E0i7KZn-EPnyo3HZu7kw.woff) format('woff');
+	// 		}
+	// 		body {
+	// 		 color: #333;
+	// 		 font-family: 'Open Sans', sans-serif;
+	// 		 margin: 0px;
+	// 		 font-size: 16px;
+	// 		}
+	// 		.pie {
+	// 		 font-size:12px;
+	// 		 color:#999797;
+	// 		}
+	// 		.centro {
+	// 		 font-size:16px;
+	// 		}
+	// 		.centro a{
+	// 		 text-decoration:none;
+	// 		 color: #0487b8;
+	// 		}
+	// 		.centro a:hover{
+	// 		 text-decoration: underline;
+	// 		 color: #0487b8;
+	// 		}
+	// 		</style>
+	// 		</head>
+	// 		<body>
+	// 		<table width='593' height='324' border='0' align='center'>
+	// 			<tr>
+	// 				<td height='23'>&nbsp;</td>
+	// 			</tr>
+	// 			<tr>
+	// 				<td height='88'><img src='http://i.imgur.com/K1Z4rP4.png' width='115' height='40' /></td>
+	// 			</tr>
+	// 			<tr>
+	// 				<td height='97' valign='top' class='centro'><h3>Nueva actividad en ".$nombreWeb."
+	// 				</h3>
+	// 			 Alguien te a mencionado en un comentario <a href='".$urlWeb."'>".$urlWeb."</a></td>
+	// 			</tr>
+	// 			<tr>
+	// 				<td height='17' ></td>
+	// 			</tr>
+	// 			<tr>
+	// 				<td height='27' class='pie'>Este email es una notificaci&oacute;n autom&aacute;tica</td>
+	// 			</tr>
+	// 		</table>
+	// 		</body>
+	// 		</html>
+	// 	";
+	// 	$cabeceras  = 'MIME-Version: 1.0' . "\r\n";
+	// 	$cabeceras .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+	// 	$cabeceras .= "From: DVSG" . "\r\n" .
+	// 					'Reply-To: no_reply@dvsg.co' . "\r\n";
 
-		mail($para, $titulo, $mensaje, $cabeceras);
+	// 	mail($para, $titulo, $mensaje, $cabeceras);
 
-	}
+	// }
 
 	//Sacar id a partir de id usuario
 	function id_user ($iduser){

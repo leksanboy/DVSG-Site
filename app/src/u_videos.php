@@ -8,6 +8,9 @@
 		$userPageId = $_SESSION['MM_Id'];
 	}
 
+	//Default data for LoadMore
+	$_SESSION['loadMoreVideos'.$userPageId] = 0;
+
 	//User data
 	mysql_select_db($database_conexion, $conexion);
 	$query_userData = sprintf("SELECT id, name, primary_color, secondary_color FROM z_users WHERE id = %s", 
@@ -41,13 +44,13 @@
 				</div>
 
 				<?php  if (isset($_SESSION['MM_Id'])) { ?>
-					<div class="menuLeft" onclick="toggleLeftSide(1)">
+					<div class="menuLeft" onclick="toggleMenu('left', 1)">
 						<?php include("images/svg/menu.php"); ?>
 					</div>
 					<div class="userName">
 						<?php echo $row_userData['name']; ?>
 					</div>
-					<div class="menuRight" onclick="toggleRightSide(1)">
+					<div class="menuRight" onclick="toggleMenu('right', 1)">
 						<?php include("images/svg/circles.php"); ?>
 					</div>
 					<?php if ($row_userData['id'] == $_SESSION['MM_Id']) { ?>

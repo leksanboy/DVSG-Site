@@ -7,11 +7,10 @@
 /**
  * Domain URL
  */
+// var url = 'http://www.dvsg.co/';
 // var url = 'http://104.155.93.126/';
 var url = 'http://localhost/DVSG-site/app/dist/';
-// var url = 'http://www.dvsg.co/';
 var $;
-var tabla;
 
 /**
  * Cookies
@@ -25,14 +24,12 @@ function cerrar_cookie(valor) {
     $('.cookieBox').addClass('hideCookieBox');
 }
 
-
 /**
  * Go to user page
  */
 function userPage(id) {
     document.location.href = url + "id" + id;
 }
-
 
 /**
  * Go to menu pages
@@ -79,29 +76,55 @@ function clickThePage(type) {
     }, 350);
 }
 
+/**
+ * Menu - click effect
+ */
+$(function() {
+    if ($('.papertabs .active').parent().position() != undefined) {
+        // Setup Line
+        $('.papertabs').append("<li id='papertabs-line'></li>");
+        var $line = $('#papertabs-line');
+        var $activeItem = $('.papertabs .active').parent();
+        var $activeX = $('.papertabs .active').parent().position().left;
+        $line.width($activeItem.width()).css("left", $activeX);
 
+        // Click Event
+        $('.papertabs a').click(function(e) {
 
+            var $el = $(this);
+            var $offset = $el.offset();
+            var $clickX = e.pageX - $offset.left;
+            var $clickY = e.pageY - $offset.top;
+            var $parentX = $el.parent().position().left;
+            var $elWidth = $el.parent().width();
 
+            e.preventDefault();
 
+            $('.papertabs .active').removeClass('active');
+            $el.addClass('pressed active');
 
+            $el.find('.circleNav').css({
+                left: $clickX + 'px',
+                top: $clickY + 'px'
+            });
 
+            $line.animate({
+                left: $parentX,
+                width: $elWidth
+            });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+            $el.on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
+                $el.removeClass('pressed').addClass('focused');
+                setTimeout(function() {
+                    $el.removeClass('focused');
+                }, 300);
+            });
+        });
+    }
+});
 
 /**
- * Header Background color changing
+ * Header Background color changing in web pages
  */
 var fadeStart = 0,
     fadeUntil = 420,
@@ -119,185 +142,10 @@ $(window).bind('scroll', function() {
     fadingBottom.css('background', 'rgba(255, 255, 255, ' + opacity + ')');
 });
 
-
 /**
- * Open/Close Left menu
- */
-function toggleLeftSide(type) {
-    // if (matchMedia('only screen and (max-width: 768px)').matches) {}
-    if (type === 1) {
-        $('.innerBodyContent, .header, .leftSideClose, .hiddenBody').toggleClass('moveToRight');
-        $('.leftSideBlock, .leftSideClose').toggleClass('activeBlock');
-        $('body').toggleClass('stopPage');
-        setTimeout(function() {
-            $('.leftSideClose').toggleClass('addShadowColor');
-        }, 300);
-    }
-    if (type === 0) {
-        $('.innerBodyContent, .header, .leftSideClose, .hiddenBody').toggleClass('moveToRight');
-        $('.leftSideClose').toggleClass('activeBlock addShadowColor');
-        $('body').toggleClass('stopPage');
-        setTimeout(function() {
-            $('.leftSideBlock').toggleClass('activeBlock');
-        }, 600);
-    }
-}
-
-/**
- * Open/Close Right menu
- */
-function toggleRightSide(type) {
-    // if (matchMedia('only screen and (max-width: 768px)').matches) {}
-    if (type === 1) {
-        $('.innerBodyContent, .header, .rightSideClose, .hiddenBody').toggleClass('moveToLeft');
-        $('.rightSideBlock, .rightSideClose').toggleClass('activeBlock');
-        $('body').toggleClass('stopPage');
-        setTimeout(function() {
-            $('.rightSideClose').toggleClass('addShadowColor');
-        }, 300);
-    }
-    if (type === 0) {
-        $('.innerBodyContent, .header, .rightSideClose, .hiddenBody').toggleClass('moveToLeft');
-        $('.rightSideClose').toggleClass('activeBlock addShadowColor');
-        $('body').toggleClass('stopPage');
-        setTimeout(function() {
-            $('.rightSideBlock').toggleClass('activeBlock');
-        }, 600);
-    }
-}
-
-/**
- * Open/Close UserDataBox
- */
-function openUserDataBox() {
-    $('.userDataBox').toggle();
-}
-
-
-
-
-
-
-
-
-
-/**
- * Search box
- *  - Input empty
- *  - Hide result box
- * Search on Input
- *  - call results
- * Search to Empty
- *  - remove text to empty input
- */
-function searchBox() {
-    $('.searchBox').toggleClass('expandBox');
-    $('.header').toggleClass('headerExpand');
-    $('.noticesWindow').html('');
-    $('.searchBoxInput').val('');
-}
-
-function searchNotices(valor) {
-    if (valor.length > 0) {
-        $.ajax({
-            type: 'POST',
-            url: url + 'includes/searchNotices/buscar.php',
-            data: 'cadena=' + valor,
-            success: function(htmlres) {
-                $('.noticesWindow').css("display", "block");
-                $('.noticesWindow').html(htmlres);
-            }
-        });
-    } else {
-        $('.noticesWindow').css("display", "none");
-        $('.noticesWindow').html('');
-    }
-}
-
-function searchBoxDelete() {
-    $('.noticesWindow').html('');
-    $('.searchBoxInput').val('');
-}
-
-
-/**
- * Load More Post on Index page
- */
-function loadMorePost(paginado) {
-    $.ajax({
-        type: 'POST',
-        url: url + 'pages/home/loadMoreNotices.php',
-        data: 'paginado=' + paginado,
-        success: function(response) {
-            if (response !== '') {
-                $('.loadMore').addClass('loadMoreSize');
-                setTimeout(function() {
-                    $('.loadingMore').addClass('loadingMoreSize');
-                }, 300);
-                setTimeout(function() {
-                    $('.loadMore').removeClass('loadMoreSize');
-                    $('.loadingMore').removeClass('loadingMoreSize');
-                    $('.loadMoreNotices').append(response);
-                }, 3000);
-            } else {
-                $('.loadMore').hide();
-            }
-        }
-    });
-}
-
-
-/**
- * Show/Hide webAccess bar
- */
-(function(document, window, index) {
-    'use strict';
-
-    var elSelector = '.webAccess',
-        element = document.querySelector(elSelector);
-
-    if (!element) return true;
-
-    var elHeight = 0,
-        elTop = 0,
-        dHeight = 0,
-        wHeight = 0,
-        wScrollCurrent = 0,
-        wScrollBefore = 0,
-        wScrollDiff = 0;
-
-    window.addEventListener('scroll', function() {
-        elHeight = element.offsetHeight;
-        dHeight = document.body.offsetHeight;
-        wHeight = window.innerHeight;
-        wScrollCurrent = window.pageYOffset;
-        wScrollDiff = wScrollBefore - wScrollCurrent;
-        elTop = parseInt(window.getComputedStyle(element).getPropertyValue('bottom')) + wScrollDiff;
-
-        if (wScrollCurrent <= 0)
-            element.style.bottom = '0px';
-
-        else if (wScrollDiff > 0)
-            element.style.bottom = (elTop > 0 ? 0 : elTop) + 'px';
-
-        else if (wScrollDiff < 0) {
-            if (wScrollCurrent + wHeight >= dHeight - elHeight)
-                element.style.bottom = ((elTop = wScrollCurrent + wHeight - dHeight) < 0 ? elTop : 0) + 'px';
-
-            else
-                element.style.bottom = (Math.abs(elTop) > elHeight ? -elHeight : elTop) + 'px';
-        }
-
-        wScrollBefore = wScrollCurrent;
-    });
-}(document, window, 0));
-
-
-/**
- * Header Effects
+ * Header Effects movement
  */
 var Delaunay;
-
 (function() {
     "use strict";
 
@@ -609,84 +457,181 @@ var Sketch = {
 };
 Sketch.init();
 
+/**
+ * Open/Close UserDataBox
+ */
+function openUserDataBox() {
+    $('.userDataBox').toggle();
+}
 
 /**
- * MENU NAV Splash menu bar click effect
+ * Open/Close Left menu
  */
-$(function() {
-    // Setup Line
-    $('.papertabs').append("<li id='papertabs-line'></li>");
-    var $line = $('#papertabs-line');
-    var $activeItem = $('.papertabs .active').parent();
-    var $activeX = $('.papertabs .active').parent().position().left;
-    $line.width($activeItem.width()).css("left", $activeX);
-
-    // Click Event
-    $('.papertabs a').click(function(e) {
-
-        var $el = $(this);
-        var $offset = $el.offset();
-        var $clickX = e.pageX - $offset.left;
-        var $clickY = e.pageY - $offset.top;
-        var $parentX = $el.parent().position().left;
-        var $elWidth = $el.parent().width();
-
-        e.preventDefault();
-
-        $('.papertabs .active').removeClass('active');
-        $el.addClass('pressed active');
-
-        $el.find('.circleNav').css({
-            left: $clickX + 'px',
-            top: $clickY + 'px'
-        });
-
-        $line.animate({
-            left: $parentX,
-            width: $elWidth
-        });
-
-        $el.on("animationend webkitAnimationEnd oAnimationEnd MSAnimationEnd", function() {
-            $el.removeClass('pressed').addClass('focused');
+function toggleMenu(side, type) {
+    if (side == 'left') {
+        if (type === 1) {
+            $('.innerBodyContent, .header, .leftSideClose, .hiddenBody').toggleClass('moveToRight');
+            $('.leftSideBlock, .leftSideClose').toggleClass('activeBlock');
+            $('body').toggleClass('stopPage');
             setTimeout(function() {
-                $el.removeClass('focused');
+                $('.leftSideClose').toggleClass('addShadowColor');
             }, 300);
-        });
-    });
+        } else if (type === 2) {
+            $('.innerBodyContent, .header, .leftSideClose, .hiddenBody').toggleClass('moveToRight');
+            $('.leftSideClose').toggleClass('activeBlock addShadowColor');
+            $('body').toggleClass('stopPage');
+            setTimeout(function() {
+                $('.leftSideBlock').toggleClass('activeBlock');
+            }, 600);
+        }
+    } else if (side == 'right') {
+        if (type === 1) {
+            $('.innerBodyContent, .header, .rightSideClose, .hiddenBody').toggleClass('moveToLeft');
+            $('.rightSideBlock, .rightSideClose').toggleClass('activeBlock');
+            $('body').toggleClass('stopPage');
+            setTimeout(function() {
+                $('.rightSideClose').toggleClass('addShadowColor');
+            }, 300);
+        } else if (type === 2) {
+            $('.innerBodyContent, .header, .rightSideClose, .hiddenBody').toggleClass('moveToLeft');
+            $('.rightSideClose').toggleClass('activeBlock addShadowColor');
+            $('body').toggleClass('stopPage');
+            setTimeout(function() {
+                $('.rightSideBlock').toggleClass('activeBlock');
+            }, 600);
+        }
+    }
+}
+
+/**
+ * Editable div
+ */
+$('div[contenteditable=true]').keydown(function(e) {
+    if (e.keyCode == 13) {
+        return true;
+    } else if (e.keyCode == 32) {
+        document.execCommand('insertHTML', false, '&nbsp;');
+        return false;
+    }
 });
 
 
+
+// corregir
+// de
+// aqui
+// para
+// abajo
+
+
 /**
- * Show/Hide Logout window & fade out effect
+ * Search box
+ *  - Input empty
+ *  - Hide result box
+ * Search on Input
+ *  - call results
+ * Search to Empty
+ *  - remove text to empty input
  */
-function logOut() {
-    $('.logOutWindow').toggleClass('logOutWindowActive');
-    $('.logOutWindowHidden').toggleClass('logOutWindowHiddenActive');
+function searchBox() {
+    $('.searchBox').toggleClass('expandBox');
+    $('.header').toggleClass('headerExpand');
+    $('.noticesWindow').html('');
+    $('.searchBoxInput').val('');
 }
 
-function logOutFade() {
-    $('.logOutWindow').addClass('logOutFadeOut');
-    $('.logOutWindowHidden').addClass('logOutFadeOut');
-
-    setTimeout(function() {
-        $('.logOutWindow').removeClass('logOutWindowActive');
-        $('.logOutWindowHidden').removeClass('logOutWindowHiddenActive');
-    }, 300);
-
-    setTimeout(function() {
-        $('.logOutWindow').removeClass('logOutFadeOut');
-        $('.logOutWindowHidden').removeClass('logOutFadeOut');
-    }, 1000);
-
-    $('.confirmationDeleteBox').removeClass('confirmationDeleteBoxShow');
-    $('body').removeClass('bodyFixed');
+function searchNotices(valor) {
+    if (valor.length > 0) {
+        $.ajax({
+            type: 'POST',
+            url: url + 'includes/searchNotices/buscar.php',
+            data: 'cadena=' + valor,
+            success: function(htmlres) {
+                $('.noticesWindow').css("display", "block");
+                $('.noticesWindow').html(htmlres);
+            }
+        });
+    } else {
+        $('.noticesWindow').css("display", "none");
+        $('.noticesWindow').html('');
+    }
 }
 
+function searchBoxDelete() {
+    $('.noticesWindow').html('');
+    $('.searchBoxInput').val('');
+}
 
+/**
+ * Load More Post on Index page
+ */
+function loadMorePost(paginado) {
+    $.ajax({
+        type: 'POST',
+        url: url + 'pages/home/loadMoreNotices.php',
+        data: 'paginado=' + paginado,
+        success: function(response) {
+            if (response !== '') {
+                $('.loadMore').addClass('loadMoreSize');
+                setTimeout(function() {
+                    $('.loadingMore').addClass('loadingMoreSize');
+                }, 300);
+                setTimeout(function() {
+                    $('.loadMore').removeClass('loadMoreSize');
+                    $('.loadingMore').removeClass('loadingMoreSize');
+                    $('.loadMoreNotices').append(response);
+                }, 3000);
+            } else {
+                $('.loadMore').hide();
+            }
+        }
+    });
+}
 
+/**
+ * Show/Hide webAccess bar
+ */
+(function(document, window, index) {
+    'use strict';
 
+    var elSelector = '.webAccess',
+        element = document.querySelector(elSelector);
 
+    if (!element) return true;
 
+    var elHeight = 0,
+        elTop = 0,
+        dHeight = 0,
+        wHeight = 0,
+        wScrollCurrent = 0,
+        wScrollBefore = 0,
+        wScrollDiff = 0;
+
+    window.addEventListener('scroll', function() {
+        elHeight = element.offsetHeight;
+        dHeight = document.body.offsetHeight;
+        wHeight = window.innerHeight;
+        wScrollCurrent = window.pageYOffset;
+        wScrollDiff = wScrollBefore - wScrollCurrent;
+        elTop = parseInt(window.getComputedStyle(element).getPropertyValue('bottom')) + wScrollDiff;
+
+        if (wScrollCurrent <= 0)
+            element.style.bottom = '0px';
+
+        else if (wScrollDiff > 0)
+            element.style.bottom = (elTop > 0 ? 0 : elTop) + 'px';
+
+        else if (wScrollDiff < 0) {
+            if (wScrollCurrent + wHeight >= dHeight - elHeight)
+                element.style.bottom = ((elTop = wScrollCurrent + wHeight - dHeight) < 0 ? elTop : 0) + 'px';
+
+            else
+                element.style.bottom = (Math.abs(elTop) > elHeight ? -elHeight : elTop) + 'px';
+        }
+
+        wScrollBefore = wScrollCurrent;
+    });
+}(document, window, 0));
 
 /**
  * Create post MultiUpload Images
@@ -897,7 +842,6 @@ function setEditTextColor(color) {
     }
 }
 
-
 //EDIT POST
 function editPost(id) {
     location.href = url + "edit-post.php?id=" + id;
@@ -913,7 +857,6 @@ function deletePost(type, id) {
         location.href = url + "remove-post.php?id=" + id;
     }
 }
-
 
 /**
  * Cars page click effect

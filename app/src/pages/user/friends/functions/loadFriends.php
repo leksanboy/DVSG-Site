@@ -33,7 +33,7 @@
 					</div>
 					<div class="deleteBoxConfirmation" id="delete<?php echo $row_myFriends['id'] ?>">
 						<div class="text">Delete from friends?</div>
-						<div class="buttons">
+						<div class="confirmation">
 							<button onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">NO</button>
 							<button onClick="deleteFriend(2, <?php echo $row_myFriends['id'] ?>, <?php echo $receiver ?>, <?php echo $_SESSION['MM_Id'] ?>)">YES</button>
 						</div>

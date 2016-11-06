@@ -24,7 +24,7 @@
 				<?php if ($row_friendsListSearch['id'] != $userId) { ?>
 					<?php if(checkFriendStatus($row_friendsListSearch['id'], $_SESSION['MM_Id']) == 0) { ?>
 						<div class="buttons">
-							<button class="blueButton" onClick="statusFriendSearch(0, <?php echo $row_friendsListSearch['id'] ?>, <?php echo $row_friendsListSearch['id'] ?>)">
+							<button class="acceptButton" onClick="statusFriendSearch(0, <?php echo $row_friendsListSearch['id'] ?>, <?php echo $row_friendsListSearch['id'] ?>)">
 								<?php include("../../../images/svg/add.php");?>
 								Add to friends
 							</button>
@@ -48,16 +48,12 @@
 							<?php } ?>
 						</div>
 					<?php } else if(checkFriendStatus($row_friendsListSearch['id'], $_SESSION['MM_Id']) == 2) { ?>
-						<!-- <button onClick="statusFriendSearch(1, <?php echo $row_friendsListSearch['id'] ?>, <?php echo $row_friendsListSearch['id'] ?>)">
-							Remove
-						</button> -->
-
 						<div class="delete" onClick="deleteFriend(1, <?php echo $row_friendsListSearch['id'] ?>)">
 							<?php include("../../../images/svg/close.php"); ?>
 						</div>
 						<div class="deleteBoxConfirmation" id="delete<?php echo $row_friendsListSearch['id'] ?>">
 							<div class="text">Delete from friends?</div>
-							<div class="buttons">
+							<div class="confirmation">
 								<button onClick="deleteFriend(1, <?php echo $row_friendsListSearch['id'] ?>)">NO</button>
 								<button onClick="deleteFriend(2, <?php echo $row_friendsListSearch['id'] ?>, <?php echo $row_friendsListSearch['id'] ?>, <?php echo $_SESSION['MM_Id'] ?>)">YES</button>
 							</div>

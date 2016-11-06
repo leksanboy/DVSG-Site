@@ -5,7 +5,7 @@
     if ($pageLocation == 'user') {
 		//User news
 		mysql_select_db($database_conexion, $conexion);
-		$query_newsList = sprintf("SELECT * FROM z_news WHERE user=%s ORDER BY id DESC LIMIT 99", $userId, "int");
+		$query_newsList = sprintf("SELECT * FROM z_news WHERE user=%s AND is_deleted = 0 ORDER BY id DESC LIMIT 99", $userId, "int");
 		$newsList = mysql_query($query_newsList, $conexion) or die(mysql_error());
 		$row_newsList = mysql_fetch_assoc($newsList);
 		$totalRows_newsList = mysql_num_rows($newsList);
@@ -255,7 +255,7 @@
 
 					                <div class="name" onclick="userPage(<?php echo $row_GetComments['user'] ?>)">
 					                    <?php echo userName($row_GetComments['user']); ?>
-					                    <font size="-2"><?php echo timeAgo($row_GetComments['time']);?></font>
+					                    <font><?php echo timeAgo($row_GetComments['time']);?></font>
 					                </div>
 
 					                <?php if (isset ($_SESSION['MM_Id'])){ ?> 
@@ -298,6 +298,7 @@
 <script type="text/javascript">
 	var userId 			= <?php echo $userId ?>,
 		pageLocation 	= '<?php echo $pageLocation ?>';
+		loaderIcon		= '<?php include('../../../images/svg/spinner.php');?>';
 
 		console.log('pageLocation', pageLocation);
 
@@ -319,7 +320,11 @@
                 }
             });
 
-			var box = "<div class='slidePhotosBox'></div>\
+			var box = "<div class='slidePhotosBox'>\
+							<div class='loader'>\
+								"+loaderIcon+"\
+							</div>\
+						</div>\
 						<div class='buttons'>\
 							<button onClick='openPhoto(2)'>CLOSE</button>\
 						</div>"
@@ -784,6 +789,39 @@
             $('.playerBox .buttons .playPause .play').hide();
         	$('.playerBox .buttons .playPause .pause').show();
         }
+
+        setInterval(function(){
+	        var current = player.currentTime,
+	        	total = player.duration,
+	        	duration = Math.round(total-current);
+
+	        if (duration <= 1){
+	    		countDown(total);
+	        }else{
+	        	countDown(duration);
+	        }
+	    }, 1000);
+
+	    var countDown = function(duration){
+	    	var time = formatTime(duration);
+	    	$('#song'+ idSong + ' .duration').html(time);
+	    };
+
+	    var formatTime = function(time){
+			var duration = time,
+				hours = Math.floor(duration / 3600),
+				minutes = Math.floor((duration % 3600) / 60),
+				seconds = Math.floor(duration % 60),
+				time = [];
+
+			if (hours) {
+				time.push(hours)
+			}
+
+			time.push(((hours ? "0" : "") + minutes).substr(-2));
+			time.push(("0" + seconds).substr(-2));
+			return time.join(":");
+		};
     };
 </script>
 <?php mysql_free_result($newsList); ?>

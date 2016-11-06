@@ -22,7 +22,7 @@
 
 	        <div class="name" onclick="userPage(<?php echo $row_GetMoreComments['user']; ?>)">
 	            <?php echo userName($row_GetMoreComments['user']); ?>
-	            <font size="-2"><?php echo timeAgo($row_GetMoreComments['date']);?></font>
+	            <font><?php echo timeAgo($row_GetMoreComments['date']);?></font>
 	        </div>
 
 	        <?php if (isset ($_SESSION['MM_Id'])){ ?> 

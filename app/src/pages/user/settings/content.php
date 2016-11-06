@@ -157,12 +157,16 @@
 		<div class="title">
 			<?php echo traducir(32,$_COOKIE['idioma'])?>
 		</div>
-		<textarea name="other" id="pass-change-other" cols="30" rows="5">
+		<input name="other" type="hidden" val="" id="aboutMeId"/>
+		<div class="aboutMe" id="aboutMe" contenteditable="true">
 			<?php echo $row_userData['other']; ?>
-		</textarea>
+		</div>
 	</div>
 
-	<input type="submit" onclick="saveAccount();" value="<?php echo traducir(9,$_COOKIE['idioma'])?>" class="buttonSave" style="background:#<?php echo $row_userData['secondary_color']; ?>"/>
+	<button type="submit" class="button buttonSave" onclick="saveAccount()">
+		<?php include("images/svg/spinner.php");?>
+		<?php echo traducir(9,$_COOKIE['idioma'])?>
+	</button>
 </form>
 
 <form id="formTwo" onSubmit="return false"> <!-- Backgrounds -->
@@ -190,7 +194,10 @@
 		</div>
 	</div>
 
-	<input type="submit" onclick="saveBackgrounds();" value="<?php echo traducir(9,$_COOKIE['idioma'])?>" class="buttonSave" style="background:#<?php echo $row_userData['secondary_color']; ?>"/>
+	<button type="submit" class="button buttonSave" onclick="saveBackgrounds()">
+		<?php include("images/svg/spinner.php");?>
+		<?php echo traducir(9,$_COOKIE['idioma'])?>
+	</button>
 </form>
 
 <form id="formThree" onSubmit="return false"> <!-- Language -->
@@ -251,7 +258,10 @@
 		</div>
 	</div>
 
-	<input type="submit" onclick="changePassword(4, currentPassword.value, newPassword.value, confirmPassword.value, '<?php echo $row_userData['id']; ?>');" value="<?php echo traducir(9,$_COOKIE['idioma'])?>" class="buttonSave" style="background:#<?php echo $row_userData['secondary_color']; ?>"/>
+	<button type="submit" class="button buttonSave" onclick="changePassword(4, currentPassword.value, newPassword.value, confirmPassword.value, '<?php echo $row_userData['id']; ?>')">
+		<?php include("images/svg/spinner.php");?>
+		<?php echo traducir(9,$_COOKIE['idioma'])?>
+	</button>
 </form>
 
 <script type="text/javascript">
@@ -274,6 +284,7 @@
 		("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
 		("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : orig;
 	}
+
 	// Color picker
 	function colorPicker(type, value){
 		var button = $('.avatarBox button');
@@ -313,6 +324,7 @@
 			inputSecondary.val(colorHex);
 		}
 	}
+	
 	// Birth form-control-date
 	$(function () {
 		months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -376,16 +388,16 @@
 		});
 	});
 
-	//// ACCOUNT
+	//···> ACCOUNT
 	function saveAccount(){
 		var nombre = $("#user-name").val();
 
 		if (nombre=="" || nombre==null) {
-			$('#formOne .buttonSave').addClass('errorButton');
+			$('.buttonSave').css('background','#F44336');
 
-			setTimeout(function(){
-				$('#formOne .buttonSave').removeClass('errorButton');
-			}, 600);
+			setTimeout(function() {
+	            $('.buttonSave').css('background','#2196F3');
+	        }, 900);
 		} else {
 			var countryId = $('#countriesData option:selected').text();
             $('#countryId').val(countryId);
@@ -393,14 +405,16 @@
             var cityId = $('#citiesData option:selected').text();
             $('#cityId').val(cityId);
 
-            // Concat birthdate
+            var aboutMeId = $('#aboutMe').html();
+            $('#aboutMeId').val(aboutMeId);
+
             var day = $('#birthdayDay').val(),
             	month = $('#birthdayMonth').val(),
             	year = $('#birthdayYear').val();
-
 			$('#birthdayDate').val(day + ' - ' + month + ' - ' + year);
-
+            
             var getInputName = $('#formOne');
+            $('.buttonSave svg').show();
 
 			$.ajax({
 				type: 'POST',
@@ -408,26 +422,31 @@
 				data: getInputName.serialize(),
 				success: function(response) {
 					if (response == true){
-						$('#formOne .buttonSave').addClass('doneButton');
+	                	setTimeout(function() {
+	                		$('.buttonSave svg').hide();
+	                		$('.actionMessage').addClass('showMessageSettings');
+	                	}, 1200);
 
-						setTimeout(function(){
-							$('#formOne .buttonSave').removeClass('doneButton');
-						}, 600);
+	                	setTimeout(function() {
+	                		$('.actionMessage').removeClass('showMessageSettings');
+	                	}, 5000);
 					} else {
-						$('#formOne .buttonSave').addClass('errorButton');
+						$('.buttonSave svg').hide();
+						$('.buttonSave').css('background','#F44336');
 
-						setTimeout(function(){
-							$('#formOne .buttonSave').removeClass('errorButton');
-						}, 600);
+						setTimeout(function() {
+				            $('.buttonSave').css('background','#2196F3');
+				        }, 900);
 					}
 				}
 			});
 		}
 	}
 
-	//// BACKGROUNDS
+	//···> BACKGROUNDS
 	function saveBackgrounds(){
 		var getInputName = $('#formTwo');
+		$('.buttonSave svg').show();
 
 		$.ajax({
 			type: 'POST',
@@ -435,23 +454,27 @@
 			data: getInputName.serialize(),
 			success: function(response) {
 				if (response == true){
-					$('#formTwo .buttonSave').addClass('doneButton');
+                	setTimeout(function() {
+                		$('.buttonSave svg').hide();
+                		$('.actionMessage').addClass('showMessageSettings');
+                	}, 1200);
 
-					setTimeout(function(){
-						$('#formTwo .buttonSave').removeClass('doneButton');
-					}, 600);
+                	setTimeout(function() {
+                		$('.actionMessage').removeClass('showMessageSettings');
+                	}, 5000);
 				} else {
-					$('#formTwo .buttonSave').addClass('errorButton');
+					$('.buttonSave svg').hide();
+					$('.buttonSave').css('background','#F44336');
 
-					setTimeout(function(){
-						$('#formTwo .buttonSave').removeClass('errorButton');
-					}, 600);
+					setTimeout(function() {
+			            $('.buttonSave').css('background','#2196F3');
+			        }, 900);
 				}
 			}
 		});
 	}
 
-	//// LANGUAGE
+	//···> LANGUAGE
 	function setLanguage(value){
 		$.ajax({
 			type: 'POST',
@@ -463,7 +486,7 @@
 		});
 	}
 
-	//// PASSWORD
+	//···> PASSWORD
 	function changePassword(type, value1, value2, value3, idUser) {
 		if (type==1) {
 			var password = '<?php echo $row_userData['password']; ?>',
@@ -514,37 +537,38 @@
 			var password = '<?php echo $row_userData['password']; ?>';
 
 			if (password == md5(value1) && value2 == value3 && value2 != '') {
-				console.log('OK');
 				$.ajax({
 					type: 'POST',
 					url: url + 'pages/user/settings/password/change.php',
 					data: 'newPassword=' + value2 + '&idUser=' + idUser,
 					success: function(response){ 
+						$('.buttonSave svg').show();
+
 						if (response == true){
-							$('#formFour .buttonSave').addClass('doneButton');
+		                	setTimeout(function() {
+		                		$('.buttonSave svg').hide();
+		                		$('.actionMessage').addClass('showMessageSettings');
+		                	}, 1200);
 
-							setTimeout(function(){
-								$('#formFour .buttonSave').removeClass('doneButton');
-								
-								document.getElementById("formFour").reset();
-								$('#currentPassword .done').hide();
-								$('#confirmPassword .done').hide();
-							}, 600);
+		                	setTimeout(function() {
+		                		$('.actionMessage').removeClass('showMessageSettings');
+		                	}, 5000);
 						} else {
-							$('#formFour .buttonSave').addClass('errorButton');
+							$('.buttonSave svg').hide();
+							$('.buttonSave').css('background','#F44336');
 
-							setTimeout(function(){
-								$('#formFour .buttonSave').removeClass('errorButton');
-							}, 600);
+							setTimeout(function() {
+					            $('.buttonSave').css('background','#2196F3');
+					        }, 900);
 						}
 					}
 				});
 			}else{
-				$('#formFour .buttonSave').addClass('errorButton');
+				$('.buttonSave').css('background','#F44336');
 
-				setTimeout(function(){
-					$('#formFour .buttonSave').removeClass('errorButton');
-				}, 600);
+				setTimeout(function() {
+		            $('.buttonSave').css('background','#2196F3');
+		        }, 900);
 			}
 		}
 	}

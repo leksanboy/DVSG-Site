@@ -44,13 +44,13 @@
 				</div>
 
 				<?php  if (isset($_SESSION['MM_Id'])) { ?>
-					<div class="menuLeft" onclick="toggleLeftSide(1)">
+					<div class="menuLeft" onclick="toggleMenu('left', 1)">
 						<?php include("images/svg/menu.php"); ?>
 					</div>
 					<div class="userName">
 						<?php echo $row_userData['name']; ?>
 					</div>
-					<div class="menuRight" onclick="toggleRightSide(1)">
+					<div class="menuRight" onclick="toggleMenu('right', 1)">
 						<?php include("images/svg/circles.php"); ?>
 					</div>
 				<?php } ?>
@@ -73,6 +73,11 @@
 						<?php if ($row_userData['id'] == $_SESSION['MM_Id']) { ?>
 							<li>
 								<a href="#/formTwo">
+									<?php if (pendingFriendsToConfirm($_SESSION['MM_Id']) > 0){ ?>
+										<div class="countReceiver" style="color:#<?php echo $row_userData['primary_color']; ?>">
+											<?php echo pendingFriendsToConfirm($_SESSION['MM_Id']) ?>
+										</div>
+									<?php }?>
 									<?php include("images/svg/friends-received.php"); ?>
 									Received
 									<span class="paperripple">

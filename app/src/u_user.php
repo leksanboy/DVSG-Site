@@ -23,7 +23,7 @@
 
 	//User photos
 	mysql_select_db($database_conexion, $conexion);
-	$query_photosList = sprintf("SELECT f.photo, f.date, v.name FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo WHERE f.user = $userPageId ORDER BY f.date DESC");
+	$query_photosList = sprintf("SELECT f.photo, f.date, v.name FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo WHERE f.user = $userPageId ORDER BY f.date DESC LIMIT 10");
 	$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
 	$row_photosList = mysql_fetch_assoc($photosList);
 	$totalRows_photosList = mysql_num_rows($photosList);
@@ -49,7 +49,7 @@
 			<?php include_once("includes/leftBlockRight.php"); ?>
 			<div class="header headerUser headerMyPage">
 				<?php  if (isset($_SESSION['MM_Id'])) { ?>
-					<div class="menuLeft" onclick="toggleLeftSide(1)">
+					<div class="menuLeft" onclick="toggleMenu('left', 1)">
 						<?php include("images/svg/menu.php"); ?>
 					</div>
 				<?php } ?>
@@ -57,7 +57,7 @@
 					<?php echo $row_userData['name']; ?>
 				</div>
 				<?php  if (isset($_SESSION['MM_Id'])) { ?>
-					<div class="menuRight" onclick="toggleRightSide(1)">
+					<div class="menuRight" onclick="toggleMenu('right', 1)">
 						<?php include("images/svg/circles.php"); ?>
 					</div>
 				<?php } ?>

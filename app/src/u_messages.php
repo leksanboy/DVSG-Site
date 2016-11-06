@@ -37,13 +37,13 @@
 					<canvas id="headerEffect"></canvas>
 				</div>
 
-				<div class="menuLeft" onclick="toggleLeftSide(1)">
+				<div class="menuLeft" onclick="toggleMenu('left', 1)">
 					<?php include("images/svg/menu.php"); ?>
 				</div>
 				<div class="userName">
 					<?php echo $row_userData['name']; ?>
 				</div>
-				<div class="menuRight" onclick="toggleRightSide(1)">
+				<div class="menuRight" onclick="toggleMenu('right', 1)">
 					<?php include("images/svg/circles.php"); ?>
 				</div>
 				<div class="buttonAction" onclick="newMessage(1)">
@@ -57,6 +57,11 @@
 					<ul class="papertabs">
 						<li>
 							<a href="#/formOne" class="active">
+								<?php if (pendingMessagesToRead($_SESSION['MM_Id']) > 0){ ?>
+									<div class="countReceiver" style="color:#<?php echo $row_userData['primary_color']; ?>">
+										<?php echo pendingMessagesToRead($_SESSION['MM_Id']) ?>
+									</div>
+								<?php }?>
 								<?php include("images/svg/inbox.php"); ?>
 								<?php echo traducir(42,$_COOKIE['idioma'])?>
 								<span class="paperripple">
@@ -77,6 +82,7 @@
 				</nav>
 			</div>
 			<div class="innerBodyContent">
+				<div class="actionMessage">Message was sent correctly</div>
 				<div class="pageMessages">
 					<?php include("pages/user/messages/content.php");?>
 				</div>

@@ -1,4 +1,7 @@
 <formbox id="formOne"> <!-- Inbox -->
+	<div class="pageLoader">
+		<?php include("images/svg/spinner.php");?>
+	</div>
 </formbox>
 
 <formbox id="formTwo"> <!-- Outbox -->
@@ -55,8 +58,6 @@
 		if (type==1) {
 			$('#delete'+id).toggle();
 		}else if (type==2) {
-			console.log('DELETED', id);
-
 			$.ajax({
 				type: 'POST',
 				url: url + 'pages/user/messages/functions/delete.php',
@@ -104,13 +105,23 @@
 
 			$('.modalBox .box').html(box);
 
+
 			// ···>Pasar a leido
+			var messagesCount = $('.countReceiver').html();
 			$.ajax({ 
 				type: 'POST',
 				url: url + 'pages/user/messages/functions/checkRead.php',
 				data: 'idLeido=' + id,
 				success: function(response){
+					if (messagesCount-1 == 0) {
+						$('.countReceiver').hide();
+					}else{
+						$('.countReceiver').html(messagesCount-1);
+					}
+
 					$('#message' + id + ' .head .glitch').hide();
+					$('#message' + id + ' .head .delete').show();
+					$('#message' + id).removeClass('pendingMessage');
 				}
 			});
 		} else if (type==2) { //Close
@@ -132,7 +143,12 @@
 					success: function(response){
 						setTimeout(function() {
 							showMessageInbox(2);
+							$('.actionMessage').addClass('showMessageSettings');
 						}, 600);
+
+						setTimeout(function() {
+	                		$('.actionMessage').removeClass('showMessageSettings');
+	                	}, 5000);
 					}
 				});
 			}
@@ -193,7 +209,12 @@
 					success: function(response){
 						setTimeout(function() {
 							showMessageOutbox(2);
+							$('.actionMessage').addClass('showMessageSettings');
 						}, 600);
+
+						setTimeout(function() {
+	                		$('.actionMessage').removeClass('showMessageSettings');
+	                	}, 5000);
 					}
 				});
 			}
@@ -210,9 +231,9 @@
 			}, 100);
 			$('body').toggleClass('modalHidden');
 
-			var searchIcon = '<svg viewBox="0 0 48 48"><path d="M31 28h-1.59l-.55-.55C30.82 25.18 32 22.23 32 19c0-7.18-5.82-13-13-13S6 11.82 6 19s5.82 13 13 13c3.23 0 6.18-1.18 8.45-3.13l.55.55V31l10 9.98L40.98 38 31 28zm-12 0c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9z"/></svg>',
-				loaderIcon = '<svg viewBox="0 0 28 28"><g class="qp-circular-loader"><path class="qp-circular-loader-path" fill="none" d="M 14,1.5 A 12.5,12.5 0 1 1 1.5,14" stroke-linecap="round" /></g></svg>',
-				clearIcon = '<svg viewBox="0 0 48 48"><path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z"/></svg>';
+			var loaderIcon		= '<?php include('images/svg/spinner.php');?>',
+				searchIcon		= '<?php include('images/svg/search.php');?>',
+				clearIcon		= '<?php include('images/svg/close.php');?>';
 
 			var box = "<div class='head'>\
 							<div class='search'>\
@@ -265,7 +286,6 @@
 			$('.searchReceiverDataList').hide();
 			$('.modalBox .box .head .search form input').val(value2);
 		} else if (type==5) { //Send
-			console.log('N');
 			if (value1.trim() != '' && receiverId != undefined) {
 				$.ajax({ 
 					type: 'POST',
@@ -274,7 +294,12 @@
 					success: function(response){
 						setTimeout(function() {
 							newMessage(2);
+							$('.actionMessage').addClass('showMessageSettings');
 						}, 600);
+
+						setTimeout(function() {
+	                		$('.actionMessage').removeClass('showMessageSettings');
+	                	}, 5000);
 					}
 				});
 			}

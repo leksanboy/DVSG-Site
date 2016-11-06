@@ -13,10 +13,13 @@
 ?>
 	<div class="leftSideBlock">
 		<div class="userBox">
-			<div class="images">
+			<!-- <div class="images">
 				<div class="fadeImage" style="background-image: url(<?php echo $row_getUserData['avatar_bg1']; ?>);"></div>
 				<div class="fadeImage" style="background-image: url(<?php echo $row_getUserData['avatar_bg2']; ?>);"></div>
 				<div class="fadeImage" style="background-image: url(<?php echo $row_getUserData['avatar_bg3']; ?>);"></div>
+			</div> -->
+			<div class="backgroundImage">
+				<div class="cover" style="background-image: url(<?php echo $row_getUserData['avatar_bg1']; ?>)"></div>
 			</div>
 
 			<div class="image">
@@ -59,8 +62,8 @@
 				<li onClick="clickThePage(13)">
 					<?php include("images/svg/messages.php");?>
 					My Messages
-					<?php if (MensajesPendientes($_SESSION['MM_Id'])){ ?>
-						<div class="pending">+<?php echo saber_cuantos_estan_sin_leer($_SESSION['MM_Id']) ?></div>
+					<?php if (pendingMessagesToRead($_SESSION['MM_Id']) > 0){ ?>
+						<div class="pending">+<?php echo pendingMessagesToRead($_SESSION['MM_Id']) ?></div>
 					<?php }?>
 				</li>
 				<li style="opacity:0.35">
@@ -79,7 +82,7 @@
 					<?php include("images/svg/flash.php");?>
 					DVSG Home
 				</li>
-				<li onClick="logOut()">
+				<li onClick="logOut(1)">
 					<?php include("images/svg/logout.php");?>
 					Sign out
 				</li>
@@ -87,7 +90,7 @@
 		</div>
 	</div>
 
-	<div class="leftSideClose" onclick="toggleLeftSide(0)"></div>
+	<div class="leftSideClose" onclick="toggleMenu('left',2)"></div>
 
 
 	<div class="rightSideBlock">
@@ -107,14 +110,14 @@
 		</center>
 	</div>
 
-	<div class="rightSideClose" onclick="toggleRightSide(0)"></div>
+	<div class="rightSideClose" onclick="toggleMenu('right', 2)"></div>
 
 	<div class="logOutWindow">
 		<div class="text">You sure to want to leave the page ?</div>
-		<div class="button" onClick="logOutFade()">No</div>
+		<div class="button" onClick="logOut(2)">No</div>
 		<div class="button" onClick="location.href='<?php echo $logoutAction ?>'">Yes</div>
 	</div>
-	<div class="logOutWindowHidden" onClick="logOutFade()"></div>
+	<div class="logOutWindowHidden" onClick="logOut(2)"></div>
 <?php } else { ?>
 	<div class="webAccess">
 		<div class="button" onClick="clickThePage(7)">Sign up</div>
@@ -128,19 +131,17 @@
 		<form onsubmit="return false"> 
 			<div class="error"></div>
 			<label for="signinWindowMail">Email</label>
-			<input type="email" name="email" class="input" id="signinWindowMail"/>
+			<input type="email" name="email" id="signinWindowMail"/>
 			<label for="signinWindowPassword">Password</label>
-			<input type="password" name="password" class="input" id="signinWindowPassword"/>
-			<input id="signin-remember-check" data-role="none" type="checkbox" value="on" name="recordar" checked="checked" class="check">
-			<label for="signin-remember-check" data-role="none" class="check">Remember me</label>
-
-			<input type="button" onClick="clickThePage(19)" class="button" value="Forgot password ?"/>
-			<input type="submit" onClick="loginAccess(1, email.value, password.value);" class="button signInLoading" value="Sign in"/>
+			<input type="password" name="password" id="signinWindowPassword"/>
+			<button type="button" onClick="clickThePage(19)">Forgot password ?</button>
+			<button type="submit" onClick="loginAccess(1, email.value, password.value);" id="signInLoading">Sign in</button>
 		</form>
 	</div>
 	<div class="signInBoxHidden" onclick="loginAccess(2)"></div>
 <?php } ?>
 <script type="text/javascript">
+	//Log in
 	function loginAccess(type, email, password) {
 	    if (type == 1) {
 	        if (email === "" || password === "") {
@@ -157,7 +158,7 @@
 	                data: 'email=' + email + '&password=' + password,
 	                success: function(html) {
 	                    if (html != "false") {
-	                        $('.signInLoading').val("Loading...");
+	                        $('#signInLoading').val("Loading...");
 	                        location.reload();
 	                        return true;
 	                    } else if (html == "false") {
@@ -175,6 +176,30 @@
 	        $('.signInBox').toggleClass('signInBoxActive');
 	        $('.signInBoxHidden').toggleClass('signInBoxHiddenActive');
 	    }
+	}
+
+	// Log out
+	function logOut(type){
+		if (type == 1) {
+		    $('.logOutWindow').toggleClass('logOutWindowActive');
+		    $('.logOutWindowHidden').toggleClass('logOutWindowHiddenActive');
+		} else if (type == 2) {
+		    $('.logOutWindow').addClass('logOutFadeOut');
+		    $('.logOutWindowHidden').addClass('logOutFadeOut');
+
+		    setTimeout(function() {
+		        $('.logOutWindow').removeClass('logOutWindowActive');
+		        $('.logOutWindowHidden').removeClass('logOutWindowHiddenActive');
+		    }, 300);
+
+		    setTimeout(function() {
+		        $('.logOutWindow').removeClass('logOutFadeOut');
+		        $('.logOutWindowHidden').removeClass('logOutFadeOut');
+		    }, 1000);
+
+		    $('.confirmationDeleteBox').removeClass('confirmationDeleteBoxShow');
+		    $('body').removeClass('bodyFixed');
+		}
 	}
 </script>
 <?php mysql_free_result($getUserData);?>

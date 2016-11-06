@@ -174,7 +174,7 @@
 	}
 
 	//·····> Load more comment
-	function loadMorecomments(id){
+	function loadMoreComments(id){
 		var commentsList 					= $('.modalBox .box .slidePhotosBox .boxData .comments .commentsList'),
 			buttonLoadMoreCommentsPhoto 	= $('.modalBox .box .slidePhotosBox .boxData .comments .loadMore');
 

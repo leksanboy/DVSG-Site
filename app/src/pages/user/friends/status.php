@@ -15,8 +15,7 @@
 		mysql_select_db($database_conexion, $conexion);
 		$Result1 = mysql_query($deleteSQL, $conexion) or die(mysql_error());
 	} else if ($_POST['status'] == 2) { //Accept request
-	    $updateSQL = sprintf("UPDATE z_friends SET status = 2 WHERE 
-	    						(sender = %s AND receiver = %s)",
+	    $updateSQL = sprintf("UPDATE z_friends SET status = 2 WHERE (sender = %s AND receiver = %s)",
         $_POST['sender'], $_POST['receiver']);
 	    mysql_select_db($database_conexion, $conexion);
 	    $Result1 = mysql_query($updateSQL, $conexion) or die(mysql_error());

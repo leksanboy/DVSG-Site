@@ -1,4 +1,4 @@
-<?php if (isset ($_SESSION['MM_Id'])){ ?>	
+<?php if (isset ($_SESSION['MM_Id'])){ ?>
 	<div class="searchBox">
 		<form>
 			<input name="search" onKeyUp="searchButton(1, search.value)" placeholder="Search a song..."/>
@@ -15,7 +15,11 @@
 	</div>
 
 	<div class="searchBoxDataList"></div>
-	<div class="defaultDataList"></div>
+	<div class="defaultDataList">
+		<div class="pageLoader">
+			<?php include("images/svg/spinner.php");?>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 		var userId = <?php echo $userPageId ?>;
@@ -24,7 +28,8 @@
 		//·····> SVG icons
 		var uploadIcon 			= '<?php include('images/svg/upload.php'); ?>',
 			arrowUpIcon 		= '<?php include('images/svg/arrow-up.php'); ?>',
-			progressIcon 		= '<?php include('images/svg/progress.php'); ?>';
+			progressIcon 		= '<?php include('images/svg/progress.php'); ?>',
+			removeIcon 			= '<?php include('images/svg/close.php'); ?>';
 
 		//·····> Get id element
 		function getFile(el){
@@ -32,8 +37,22 @@
 		}
 
 		//·····> Add new song
-		var filesArray = [];
+		var filesArray = [],
+			fileId =  0;
 		function uploadFile(type, event){
+			var removeByAttr = function(arr, attr, value){ //·····> Remove from array by atribute
+			    var i = arr.length;
+			    while(i--){
+			       if( arr[i] 
+			           && arr[i].hasOwnProperty(attr) 
+			           && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+
+			           arr.splice(i,1);
+			       }
+			    }
+			    return arr;
+			}
+
 			if (type==1) { // Open
 				$('.modalBox').toggleClass('modalDisplay');
 				setTimeout(function() {
@@ -70,24 +89,29 @@
 					$('.modalBox').toggleClass('showModal');
 					$(".filesBox").html('');
 					filesArray = [];
+					fileId =  0;
 				}, 100);
 			} else if (type==3) { //Save
+				$('.fileStatus .operations .action').hide();
+				$('.fileStatus .operations #status').show();
+
 				var i = 0;
 
 				for (; i < filesArray.length; i++) {
 					var file = filesArray[i],
+						id = filesArray[i].id;
 						formdata = new FormData(),
 						ajax = new XMLHttpRequest();
 
-					ajaxCall(file, formdata, ajax, i);
+					ajaxCall(file, formdata, ajax, id);
 				}
 
-				function ajaxCall(file, formdata, ajax, i){
+				function ajaxCall(file, formdata, ajax, id){
 					formdata.append("fileUpload", file);
-					ajax.upload.addEventListener("progress", function(evt){ progressHandler(evt, i) }, false);
-					ajax.addEventListener("load", function(evt){ completeHandler(evt, i) }, false);
-					ajax.addEventListener("error", function(evt){ errorHandler(evt, i) }, false);
-					ajax.addEventListener("abort", function(evt){ abortHandler(evt, i) }, false);
+					ajax.upload.addEventListener("progress", function(evt){ progressHandler(evt, id) }, false);
+					ajax.addEventListener("load", function(evt){ completeHandler(evt, id) }, false);
+					ajax.addEventListener("error", function(evt){ errorHandler(evt, id) }, false);
+					ajax.addEventListener("abort", function(evt){ abortHandler(evt, id) }, false);
 					ajax.open("POST", "pages/user/music/upload.php");
 					ajax.send(formdata);
 				}
@@ -98,25 +122,29 @@
 				var	file,
 					i = 0;
 
-				for (; i < event.currentTarget.files.length; i++) {
+				for (;i < event.currentTarget.files.length; i++) {
 	      			file = event.currentTarget.files[i];
+	      			file.id = fileId++;
 					filesArray.push(file);
 
-		      		var title = "\
-				      		<div class='fileStatus' id='fileStatus"+ i +"'>\
-								<div class='title' id='title'>" + file.name + "</div>\
-								<div class='operations'>\
-									<div class='status' id='status'>\
-										<div class='progress'>" + progressIcon + "</div>\
-										<div class='percentage'>0%</div>\
-										<div class='loading'>" + arrowUpIcon + "</div>\
-										<div class='result'></div>\
+		      		var title = "<div class='fileStatus' id='fileStatus"+ file.id +"'>\
+									<div class='title' id='title'>" + file.name + "</div>\
+									<div class='operations'>\
+										<div class='status action' onclick='uploadFile(5, "+ file.id +")'>"+removeIcon+"</div>\
+										<div class='status' id='status'>\
+											<div class='progress'>" + progressIcon + "</div>\
+											<div class='percentage'>0%</div>\
+											<div class='loading'>" + arrowUpIcon + "</div>\
+											<div class='result'></div>\
+										</div>\
 									</div>\
-								</div>\
-							</div>";
+								</div>";
 
 		      		$(".filesBox").append(title);
 	      		}
+			}else if (type==5) { //Remove from array
+				removeByAttr(filesArray, 'id', event);
+				$('#fileStatus' + event).fadeOut();
 			}
 		}
 
@@ -160,7 +188,9 @@
 				}
 			});
 		}
-		defaultLoad();
+		$(document).ready(function() {
+			defaultLoad();
+		});
 
 		//·····> Add song form another User
 		function addSong(type, id, songId){
@@ -189,17 +219,35 @@
 		}
 
 		//·····> Delete song
-		function deleteSong(type, id){
+		function deleteSong(type, id, songId, idNew){
 			if (type==1) {
-				$('#delete'+id).toggle();
-			}else if (type==2) {
+				var idData;
+				if (idNew == '' || idNew == undefined)
+					idData = id;
+				else
+					idData = idNew;
+
 				$.ajax({
 					type: 'POST',
-					url: '<?php echo $urlWeb ?>' + 'pages/user/music/delete.php',
-					data: 'id=' + id,
+					url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
+					data: 'type=delete' + '&songId=' + idData,
 					success: function(response){
-						$('.song'+id).fadeOut(300);
-						$('#delete'+id).fadeOut(300);
+						$('.song'+ id).css('opacity','0.5');
+						$('.song'+ id +' .actions .add').hide();
+						$('.song'+ id +' .actions .added').show();
+						$('.song'+ id +' .actions .added').attr("onclick","deleteSong(2, "+ id +", "+ songId +");");
+					}
+				});
+			} else if (type==2) {
+				$.ajax({
+					type: 'POST',
+					url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
+					data: 'type=add' + '&songId=' + songId,
+					success: function(response){
+						$('.song'+ id).css('opacity','1');
+						$('.song'+ id + ' .actions .add').show();
+						$('.song'+ id +' .actions .add').attr("onclick","deleteSong(1, "+ id +", "+ songId +", "+ response +");");
+						$('.song'+ id + ' .actions .added').hide();
 					}
 				});
 			}

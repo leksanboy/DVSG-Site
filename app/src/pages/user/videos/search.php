@@ -14,9 +14,9 @@
 	<ul class="videosListBox">
 		<?php do { ?>
 			<li class="videoSearch<?php echo $row_songsListSearch['id'] ?>">
-				<video onclick="openVideo(1, '<?php echo $row_songsListSearch['name']?>', '<?php echo $row_songsListSearch['title']?>', '<?php echo $row_songsListSearch['id']?>')">
-					<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row_songsListSearch['name']?>"/>
-				</video>
+				<div class="video" onclick="openVideo(1, '<?php echo $row_songsListSearch['name']?>', '<?php echo $row_songsListSearch['title']?>', '<?php echo $row_songsListSearch['video']?>')">
+					<div class="thumb" style="background-image: url(<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails/<?php echo $row_songsListSearch['name']?>.jpg); width: 100%; height: 150px;"></div>
+				</div>
 				<div class="title">
 					<div class="duration"><?php echo $row_songsListSearch['duration']?></div>
 					<div class="text"><?php echo $row_songsListSearch['title']?></div>

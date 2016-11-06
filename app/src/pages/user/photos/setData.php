@@ -112,7 +112,7 @@
 	</div>
 
     <?php if ($totalRows_GetComments > 10) { ?>
-    	<div class="loadMore" onclick="loadMorecomments(<?php echo $photoId ?>);"> + LOAD MORE</div>
+    	<div class="loadMore" onclick="loadMoreComments(<?php echo $photoId ?>);"> + LOAD MORE</div>
     <?php } ?>
 </div>
 

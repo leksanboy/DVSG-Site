@@ -11,7 +11,6 @@
 	$GetMoreComments = mysql_query($query_GetMoreComments, $conexion) or die(mysql_error());
 	$row_GetMoreComments = mysql_fetch_assoc($GetMoreComments);
 	$totalRows_GetMoreComments = mysql_num_rows($GetMoreComments);
-
 ?>
 <?php if ($row_GetMoreComments != ''){?>
 	<?php do { ?>

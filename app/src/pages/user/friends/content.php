@@ -144,12 +144,20 @@
 
 	//·····> Status friends
 	function statusFriend(status, sender, id){
+		var friendsPendingCount = $('.countReceiver').html();
+
 		$.ajax({
 			type: 'POST',
 			url: url + 'pages/user/friends/status.php',
 			data: 'status=' + status + '&receiver=' + <?php echo $_SESSION['MM_Id'] ?> + '&sender=' + sender,
 			success: function(response){
 				$('#friend'+id).fadeOut(300);
+
+				if (friendsPendingCount-1 == 0) {
+					$('.countReceiver').hide();
+				}else{
+					$('.countReceiver').html(friendsPendingCount-1);
+				}
 			}
 		});
 	}

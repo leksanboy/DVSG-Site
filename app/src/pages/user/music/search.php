@@ -44,7 +44,6 @@
     					<div class="add added">
     						<?php include("../../../images/svg/check.php"); ?>
     					</div>
-    					
     				</div>
                 <?php } ?>
 			</li>

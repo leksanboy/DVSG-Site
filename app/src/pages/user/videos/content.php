@@ -15,7 +15,11 @@
 	</div>
 
 	<div class="searchBoxDataList"></div>
-	<div class="defaultDataList"></div>
+	<div class="defaultDataList">
+		<div class="pageLoader">
+			<?php include("images/svg/spinner.php");?>
+		</div>
+	</div>
 
 	<script type="text/javascript">
 		var userId = <?php echo $userPageId ?>;
@@ -32,16 +36,31 @@
 			moreIcon 			= '<?php include('images/svg/dots.php'); ?>',
 			fullscreenIcon 		= '<?php include('images/svg/fullscreen.php'); ?>',
 			likeIcon 			= '<?php include('images/svg/like.php'); ?>',
-			unlikeIcon 			= '<?php include('images/svg/unlike.php'); ?>';
+			unlikeIcon 			= '<?php include('images/svg/unlike.php'); ?>',
+			removeIcon 			= '<?php include('images/svg/close.php'); ?>';
 		
 		//·····> Get id element
 		function getFile(el){
 			return document.getElementById(el);
 		}
 
-		//·····> Add new song
-		var filesArray = [];
+		//·····> Add new video
+		var filesArray = [],
+			fileId =  0;
 		function uploadFile(type, event){
+			var removeByAttr = function(arr, attr, value){ //·····> Remove from array by atribute
+			    var i = arr.length;
+			    while(i--){
+			       if( arr[i] 
+			           && arr[i].hasOwnProperty(attr) 
+			           && (arguments.length > 2 && arr[i][attr] === value ) ){ 
+
+			           arr.splice(i,1);
+			       }
+			    }
+			    return arr;
+			}
+
 			if (type==1) { // Open
 				$('.modalBox').toggleClass('modalDisplay');
 				setTimeout(function() {
@@ -78,57 +97,66 @@
 					$('.modalBox').toggleClass('showModal');
 					$(".filesBox").html('');
 					filesArray = [];
+					fileId =  0;
 				}, 100);
 			} else if (type==3) { //Save
+				$('.fileStatus .operations .action').hide();
+				$('.fileStatus .operations #status').show();
+
 				var i = 0;
 
 				for (; i < filesArray.length; i++) {
 					var file = filesArray[i],
+						id = filesArray[i].id;
 						formdata = new FormData(),
 						ajax = new XMLHttpRequest();
 
-					ajaxCall(file, formdata, ajax, i);
+					ajaxCall(file, formdata, ajax, id);
 				}
 
-				function ajaxCall(file, formdata, ajax, i){
+				function ajaxCall(file, formdata, ajax, id){
 					formdata.append("fileUpload", file);
-					ajax.upload.addEventListener("progress", function(evt){ progressHandler(evt, i) }, false);
-					ajax.addEventListener("load", function(evt){ completeHandler(evt, i) }, false);
-					ajax.addEventListener("error", function(evt){ errorHandler(evt, i) }, false);
-					ajax.addEventListener("abort", function(evt){ abortHandler(evt, i) }, false);
+					ajax.upload.addEventListener("progress", function(evt){ progressHandler(evt, id) }, false);
+					ajax.addEventListener("load", function(evt){ completeHandler(evt, id) }, false);
+					ajax.addEventListener("error", function(evt){ errorHandler(evt, id) }, false);
+					ajax.addEventListener("abort", function(evt){ abortHandler(evt, id) }, false);
 					ajax.open("POST", "pages/user/videos/upload.php");
 					ajax.send(formdata);
 				}
 
 				if (filesArray.length > 0) // Disable button after upload
 					$(event).attr("disabled", "disabled");
-			} else if (type==4) { //Get song data
+			} else if (type==4) { //Get video data
 				var	file,
 					i = 0;
 
-				for (; i < event.currentTarget.files.length; i++) {
+				for (;i < event.currentTarget.files.length; i++) {
 	      			file = event.currentTarget.files[i];
+	      			file.id = fileId++;
 					filesArray.push(file);
-		      		
-		      		var title = "\
-				      		<div class='fileStatus' id='fileStatus"+ i +"'>\
-								<div class='title' id='title'>" + file.name + "</div>\
-								<div class='operations'>\
-									<div class='status' id='status'>\
-										<div class='progress'>" + progressIcon + "</div>\
-										<div class='percentage'>0%</div>\
-										<div class='loading'>" + arrowUpIcon + "</div>\
-										<div class='result'></div>\
+
+		      		var title = "<div class='fileStatus' id='fileStatus"+ file.id +"'>\
+									<div class='title' id='title'>" + file.name + "</div>\
+									<div class='operations'>\
+										<div class='status action' onclick='uploadFile(5, "+ file.id +")'>"+removeIcon+"</div>\
+										<div class='status' id='status'>\
+											<div class='progress'>" + progressIcon + "</div>\
+											<div class='percentage'>0%</div>\
+											<div class='loading'>" + arrowUpIcon + "</div>\
+											<div class='result'></div>\
+										</div>\
 									</div>\
-								</div>\
-							</div>";
+								</div>";
 
 		      		$(".filesBox").append(title);
 	      		}
+			}else if (type==5) { //Remove from array
+				removeByAttr(filesArray, 'id', event);
+				$('#fileStatus' + event).fadeOut();
 			}
 		}
 
-		//·····> Add new song uploading progress bar
+		//·····> Add new video uploading progress bar
 		/* https://www.developphp.com/video/JavaScript/File-
 		Upload-Progress-Bar-Meter-Tutorial-Ajax-PHP */
 		function progressHandler(event, i){
@@ -197,17 +225,35 @@
 		}
 
 		//·····> Delete video
-		function deleteVideo(type, id){
+		function deleteVideo(type, id, videoId, idNew){
 			if (type==1) {
-				$('#delete'+id).toggle();
-			}else if (type==2) {
+				var idData;
+				if (idNew == '' || idNew == undefined)
+					idData = id;
+				else
+					idData = idNew;
+
 				$.ajax({
 					type: 'POST',
-					url: '<?php echo $urlWeb ?>' + 'pages/user/videos/delete.php',
-					data: 'id=' + id,
+					url: '<?php echo $urlWeb ?>' + 'pages/user/videos/add.php',
+					data: 'type=delete' + '&videoId=' + idData,
 					success: function(response){
-						$('.video'+id).fadeOut(300);
-						$('#delete'+id).fadeOut(300);
+						$('.video'+ id).css('opacity','0.5');
+						$('.video'+ id +' .actions .add').hide();
+						$('.video'+ id +' .actions .added').show();
+						$('.video'+ id +' .actions .added').attr("onclick","deleteVideo(2, "+ id +", "+ videoId +");");
+					}
+				});
+			} else if (type==2) {
+				$.ajax({
+					type: 'POST',
+					url: '<?php echo $urlWeb ?>' + 'pages/user/videos/add.php',
+					data: 'type=add' + '&videoId=' + videoId,
+					success: function(response){
+						$('.video'+ id).css('opacity','1');
+						$('.video'+ id + ' .actions .add').show();
+						$('.video'+ id +' .actions .add').attr("onclick","deleteVideo(1, "+ id +", "+ videoId +", "+ response +");");
+						$('.video'+ id + ' .actions .added').hide();
 					}
 				});
 			}
@@ -375,6 +421,21 @@
 				$('.modalBox').toggleClass('modalDisplay');
 				$('body').toggleClass('modalHidden');
 			}
+		}
+
+		//·····> Load more
+		function loadMoreVideos(id){
+			$.ajax({
+	            type: "POST",
+	            url: '<?php echo $urlWeb ?>' + 'pages/user/videos/loadMore.php',
+	            data: 'cuantity=' + 10 + '&userId=' + userId,
+	            success: function(response) {
+	            	if (response != '')
+	                	$('.pageVideos .defaultDataList .videosListBox').append(response);
+	                else
+	                	$('.pageVideos .defaultDataList .loadMore').hide();
+	            }
+	        });
 		}
 	</script>
 <?php } else { ?>

@@ -3,7 +3,7 @@
 
 <br><br><br>
 <div id="newsPosts">
-	<div class="loaderNews">
+	<div class="pageLoader">
 		<?php include("images/svg/spinner.php");?>
 	</div>
 </div>

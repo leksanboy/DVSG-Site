@@ -1,5 +1,4 @@
 <?php require_once('../../../Connections/conexion.php');
-
 	class getDuration {
         protected $filename;
         public function __construct($filename)
@@ -175,7 +174,7 @@
 
     $time               = time();
     $userId             = $_SESSION['MM_Id'];
-	$FILE_NAME          = $userId.'_'.$time.'_'.rand(); // File name
+	$FILE_NAME          = $userId.$time.rand(); // File name
 	$FILE_TITLE         = $_FILES["fileUpload"]["name"]; // File title
 	$fileTmpLoc         = $_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
     $locationPath       = '/var/www/html/pages/user/music/songs';
@@ -188,7 +187,7 @@
     }
 
     if (!$fileTmpLoc) { // if file not chosen
-        echo "ERROR: Size";
+        echo "<svg viewBox='0 0 24 24' fill='#FFAB00'><path d='M0 0h24v24H0z' fill='none'/><path d='M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z'/></svg>";
         exit();
     }
 

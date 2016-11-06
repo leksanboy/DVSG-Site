@@ -219,7 +219,7 @@
 				display: block;
 				height: 48px;
 				width: 100%;
-				z-index: 9;
+				z-index: 10;
 				right: 0;
 				left: 0;
 				top: 0;
@@ -257,7 +257,7 @@
 				display: block;
 				height: 56px;
 				width: 100%;
-				z-index: 9;
+				z-index: 10;
 				right: 0;
 				left: 0;
 				top: 0;
@@ -452,6 +452,22 @@
 									width: 24px;
 									fill: #FFF;
 								}
+							}
+
+							.countReceiver{
+								box-sizing: border-box;
+								margin: 4px 0 0 16px;
+								position: absolute;
+								border-radius: 9px;
+								text-align: center;
+								font-weight: bold;
+								line-height: 14px;
+								background: #fff;
+								font-size: 10px;
+								color: #404040;
+								padding: 0 6px;
+								height: 14px;
+								left: 50%;
 							}
 						}
 					}
@@ -679,8 +695,8 @@
 				z-index: 8;
 				top: 0;
 
+				/*Search box audios & videos & friends*/
 				.searchBox {
-					/*Search: songs & videos;*/
 					margin: 12px 2%;
 					float: left;
 					width: 96%;
@@ -767,8 +783,8 @@
 					}
 				}
 
+				/*If there is nothing files or someting else*/
 				.noData {
-					/*If nothing is uploaded*/
 					text-transform: uppercase;
 					text-align: center;
 					padding: 48px 0;
@@ -776,6 +792,87 @@
 					width: 100%;
 					color: #fff;
 				}
+
+				/*Button load more*/
+				.loadMore{
+					border-radius: 3px;
+					text-align: center;
+					line-height: 42px;
+					margin: 24px 25% 0;
+					background: #fff;
+					color: #404040;
+					height: 42px;
+					float: left;
+					width: 50%;
+				}
+
+				/*Page loader*/
+				.pageLoader{
+					text-align: center;
+					margin: 35vw auto;
+					width: 100%;
+					float: left;
+
+					svg {
+						height: 32px;
+						width: 32px;
+						margin: 0;
+
+						.qp-circular-loader {
+							width: 64px;
+							height: 64px;
+							stroke-width: 3px;
+						}
+
+						.qp-circular-loader-path {
+							stroke-dasharray: 58.9;
+							stroke-dashoffset: 58.9;
+						}
+
+						.qp-circular-loader,
+						.qp-circular-loader * {
+							transform-origin: 50% 50%;
+						}
+
+						.qp-circular-loader {
+							animation-iteration-count: infinite;
+							animation-timing-function: linear;
+							animation-name: rotatespinner;
+							animation-duration: 1568.63ms;
+						}
+
+						.qp-circular-loader-path {
+							animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+							animation-name: fillunfill, rotspinner, colorspinnerwhite;
+							animation-iteration-count: infinite, infinite, infinite;
+							animation-play-state: running, running, running;
+							animation-duration: 1333ms, 5332ms, 5332ms;
+							animation-fill-mode: forwards;
+						}
+					}
+				}
+
+				/*Message when save*/
+				.actionMessage {
+					box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+					text-transform: uppercase;
+					box-sizing: border-box;
+					text-align: center;
+					background: #fff;
+					transition: .3s;
+					position: fixed;
+					color: #404040;
+					padding: 12px;
+					width: 100%;
+					top: -50px;
+					z-index: 9;
+					margin: 0;
+					
+					&.showMessageSettings{
+						top: 112px;
+					}
+				}
+
 				/*PROFILE - My page*/
 				.pageUser {
 					margin: 0;
@@ -930,7 +1027,7 @@
 								.image {
 									position: absolute;
 									overflow: hidden;
-									height: 100%;
+									height: 150px;
 									width: 100%;
 
 									.img {
@@ -1203,7 +1300,7 @@
 											width: 100%;
 
 											video{
-												background: #000;
+												background: #212121;
 												min-height: 100%;
 												width: 100%;
 											}
@@ -1504,6 +1601,7 @@
 									margin: 0;
 
 									li{
+										background: transparent;
 										border-radius: 3px;
 										box-shadow: none;
 										margin: 6px 2%;
@@ -1652,7 +1750,6 @@
 							}
 
 							.foot{
-								border-top: 1px solid rgba(0, 0, 0, 0.25);
 								box-sizing: border-box;
 								text-align: right;
 								height: 48px;
@@ -1691,7 +1788,7 @@
 									width: 96%;
 
 									.item{
-										margin: 2px 0;
+										margin: 2px 0 12px;
 										width: 100%;
 										float: left;
 
@@ -1706,12 +1803,19 @@
 										}
 
 										.name{
-											padding: 2px 12px;
+											font-weight: initial;
+											padding: 0 0 0 12px;
 											font-size: 13px;
+											color: #09f;
 											float: left;
 
-											&:hover,
+											font{
+												font-size: 11px;
+												color: #aaa;
+											}
+
 											&:active{
+												font-weight: bold;
 												color: #09f;
 											}
 										}
@@ -1719,15 +1823,17 @@
 										.content{
 											text-overflow: ellipsis;
 											word-break: break-word;
-											margin: -12px 0 0 50px;
+											box-sizing: border-box;
+											margin: -8px 0 0;
 											line-height: 15px;
 											min-height: 15px;
 											font-size: 13px;
+											color: #404040;
 											float: left;
 											width: 100%;
 
 											.inner{
-												padding: 0 56px 12px 0;
+												padding: 0 0 0 44px;
 											}
 										}
 
@@ -1737,8 +1843,8 @@
 
 											svg{
 												fill: #404040;
-												height: 20px;
-												width: 20px;
+												height: 16px;
+												width: 16px;
 											}
 										}
 
@@ -1860,6 +1966,7 @@
 						}
 					}
 				}
+
 				/*VIDEOS*/
 				.pageVideos {
 					margin: 56px auto 0;
@@ -1873,15 +1980,27 @@
 							box-sizing: border-box;
 							margin: 6px 0 12px 2%;
 							position: relative;
-							border-radius: 3px;
 							overflow: hidden;
 							height: initial;
+							transition: .3s;
 							float: left;
 							width: 47%;
 
-							video {
+							.video {
+								border-radius: 3px;
+								background: #000;
+								overflow: hidden;
+								height: 96px;
 								width: 100%;
-								float: left;
+
+								.thumb {
+									background-position: center 35%;
+									background-repeat: no-repeat;
+									transform: translate(0px);
+									box-sizing: border-box;
+									background-size: cover;
+									display: inline-block;
+								}
 							}
 
 							.title {
@@ -1924,9 +2043,10 @@
 							}
 
 							.actions {
-								position: relative;
+								position: absolute;
 								width: 100%;
 								height: 0;
+								top: 0;
 
 								svg {
 									padding: 3px;
@@ -1967,53 +2087,10 @@
 									display: none;
 								}
 							}
-
-							.deleteBoxConfirmation {
-								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-								border-radius: 3px;
-								position: absolute;
-								background: #fff;
-								display: none;
-								padding: 6px;
-								float: right;
-								margin: 2px;
-								z-index: 9;
-								right: 0;
-
-								.text {
-									padding: 4px 6px 8px;
-									line-height: 24px;
-									color: #404040;
-									width: inherit;
-									height: 24px;
-									margin: 0;
-								}
-
-								.buttons {
-									text-align: center;
-									display: flex;
-									width: 100%;
-									margin: 0;
-
-									button {
-										border-radius: 3px;
-										background: #f00;
-										outline: none;
-										margin: 0 4px;
-										border: none;
-										height: 28px;
-										color: #fff;
-										width: 100%;
-
-										&:last-child {
-											background: #09f;
-										}
-									}
-								}
-							}
 						}
 					}
 				}
+
 				/*MUSIC*/
 				.pageMusic {
 					margin: 154px auto 0;
@@ -2025,6 +2102,7 @@
 
 						li {
 							border-radius: 3px;
+							transition: .3s;
 							margin: 6px 2%;
 							display: flex;
 							height: 36px;
@@ -2105,52 +2183,7 @@
 								}
 							}
 
-							.deleteBoxConfirmation {
-								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-								border-radius: 3px;
-								position: absolute;
-								margin: -36px 0 0;
-								background: #fff;
-								display: none;
-								padding: 6px;
-								float: right;
-								right: 2%;
-
-								.text {
-									padding: 4px 6px 8px;
-									line-height: 24px;
-									color: #404040;
-									width: inherit;
-									height: 24px;
-									margin: 0;
-								}
-
-								.buttons {
-									text-align: center;
-									display: flex;
-									width: 100%;
-									margin: 0;
-
-									button {
-										border-radius: 3px;
-										background: #f00;
-										outline: none;
-										margin: 0 4px;
-										border: none;
-										height: 28px;
-										color: #fff;
-										width: 100%;
-
-										&:last-child {
-											background: #09f;
-										}
-									}
-								}
-							}
-
 							&.active {
-								/*box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);*/
-								/*background-color: rgba(255, 255, 255, 0.07);*/
 								text-shadow: 0 3px 6px rgba(0,0,0,0.23);
 								color: #09f;
 
@@ -2161,6 +2194,7 @@
 						}
 					}
 				}
+
 				/*PHOTOS*/
 				.pagePhotos {
 					margin: 56px auto 0;
@@ -2176,6 +2210,7 @@
 							margin: 1vw 0 0 1%;
 							position: relative;
 							border-radius: 3px;
+							transition: .3s;
 							height: 32vw;
 							float: left;
 							width: 32%;
@@ -2208,20 +2243,6 @@
 									fill: #fff;
 								}
 
-								.delete {
-									background: rgba(0,0,0,.5);
-									border-radius: 3px;
-									position: absolute;
-									height: 24px;
-									width: 24px;
-									margin: 2px;
-									right: 0;
-
-									&:active {
-										background: rgba(255, 0, 0, 0.5);
-									}
-								}
-
 								.add {
 									background: rgba(0,0,0,.5);
 									border-radius: 3px;
@@ -2240,54 +2261,22 @@
 									display: none;
 								}
 							}
-
-							.deleteBoxConfirmation {
-								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-								border-radius: 3px;
-								position: absolute;
-								background: #fff;
-								display: none;
-								padding: 6px;
-								float: right;
-								margin: 2px;
-								z-index: 9;
-								right: 0;
-
-								.text {
-									padding: 4px 6px 8px;
-									white-space: nowrap;
-									line-height: 24px;
-									color: #404040;
-									width: inherit;
-									height: 24px;
-									margin: 0;
-								}
-
-								.buttons {
-									text-align: center;
-									display: flex;
-									width: 100%;
-									margin: 0;
-
-									button {
-										border-radius: 3px;
-										background: #f00;
-										outline: none;
-										margin: 0 4px;
-										border: none;
-										height: 28px;
-										color: #fff;
-										width: 100%;
-
-										&:last-child {
-											background: #09f;
-										}
-									}
-								}
-							}
 						}
 					}
+
+					.loadMore{
+						box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+						border-radius: 3px;
+						text-align: center;
+						margin: 36px 5% 0;
+						line-height: 36px;
+						background: #09f;
+						height: 36px;
+						float: left;
+						width: 90%;
+					}
 				}
+
 				/*FRIENDS*/
 				.pageFriends {
 					margin: 128px auto 0;
@@ -2369,7 +2358,7 @@
 									color: #404040;
 								}
 
-								.buttons {
+								.confirmation {
 									text-align: center;
 									display: flex;
 									width: 100%;
@@ -2399,26 +2388,37 @@
 
 								button {
 									text-transform: uppercase;
+									border: 1px solid #fff;
 									border-radius: 3px;
 									margin: 0 6px 0 0;
-									background: #09f;
-									border: none;
+									background: #fff;
+									color: #404040;
+									outline: none;
 									height: 24px;
-									color: #fff;
-
-									&:first-child {
-										background: red;
-									}
 
 									svg{
 										margin: -2px 2px -5px 0;
+										fill: #404040;
 										height: 18px;
 										width: 18px;
-										fill: #fff;
 									}
 
-									&.blueButton{
-										background: #09f;
+									&:first-child {
+										background: transparent;
+										color: #fff;
+
+										svg{
+											fill: #fff;
+										}
+									}
+
+									&.acceptButton{
+										background: #fff;
+										color: #404040;
+
+										svg{
+											fill: #404040;
+										}
 									}
 								}
 							}
@@ -2436,6 +2436,7 @@
 						}
 					}
 				}
+
 				/*MESSAGES*/
 				.pageMessages {
 					margin: 128px auto 0;
@@ -2594,8 +2595,8 @@
 
 						.body {
 							-webkit-box-orient: vertical;
+							padding: 6px 4px 2px 60px;
 							text-overflow: ellipsis;
-							padding: 6px 0 2px 60px;
 							box-sizing: border-box;
 							-webkit-line-clamp: 2;
 							word-break: break-all;
@@ -2606,7 +2607,16 @@
 							float: left;
 						}
 					}
+
+					.pendingMessage{
+						background: rgba(255, 255, 255, 0.25);
+						border-radius: 3px;
+						padding: 6px 1%;
+						margin: 6px 1%;
+						width: 96%;
+					}
 				}
+
 				/*SETTINGS*/
 				.pageSettings {
 					margin: 128px auto 0;
@@ -2819,6 +2829,7 @@
 
 						.title {
 							color: rgba(255, 255, 255, 0.5);
+							box-sizing: border-box;
 							padding: 8px 2%;
 							width: 100%;
 						}
@@ -2841,11 +2852,12 @@
 							};
 						}
 
-						textarea {
+						.aboutMe {
 							background: transparent;
 							box-sizing: border-box;
 							border: 1px solid #fff;
 							border-radius: 3px;
+							min-height: 98px;
 							padding: 6px 8px;
 							outline: none;
 							color: #fff;
@@ -2995,22 +3007,67 @@
 						}
 					}
 
-					.buttonSave {
+					.button{
 						text-transform: uppercase;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						background: #0C98F5;
 						border-radius: 3px;
-						background: #09f;
-						margin: 36px 15%;
-						transition: 0.6s;
+						text-align: center;
+						line-height: 42px;
+						margin: 32px 2%;
+						transition: .45s;
+						appearance: none;
 						font-size: 13px;
 						display: block;
-						height: 36px;
+						outline: none;
 						border: none;
-						color: #fff;
+						height: 42px;
 						float: left;
-						outline: 0;
-						width: 70%;
+						color: #fff;
+						width: 96%;
+
+						svg {
+							margin: 0px 4px -2px 0px;
+							height: 16px;
+							width: 16px;
+							display: none;
+
+							.qp-circular-loader {
+								width: 64px;
+								height: 64px;
+								stroke-width: 3px;
+							}
+
+							.qp-circular-loader-path {
+								stroke-dasharray: 58.9;
+								stroke-dashoffset: 58.9;
+							}
+
+							.qp-circular-loader,
+							.qp-circular-loader * {
+								transform-origin: 50% 50%;
+							}
+
+							.qp-circular-loader {
+								animation-iteration-count: infinite;
+								animation-timing-function: linear;
+								animation-name: rotatespinner;
+								animation-duration: 1568.63ms;
+							}
+
+							.qp-circular-loader-path {
+								animation-timing-function: cubic-bezier(0.4, 0.0, 0.2, 1), steps(4), linear;
+								animation-name: fillunfill, rotspinner, colorspinnerwhite;
+								animation-iteration-count: infinite, infinite, infinite;
+								animation-play-state: running, running, running;
+								animation-duration: 1333ms, 5332ms, 5332ms;
+								animation-fill-mode: forwards;
+							}
+						}
 					}
 
+					/*
 					.errorButton {
 						background: #ff0000 !important;
 						margin: 36px 25% !important;
@@ -3021,7 +3078,7 @@
 						background: #0099ff !important;
 						margin: 36px 2% !important;
 						width: 96% !important;
-					}
+					}*/
 				}
 
 				.footer {
@@ -3064,7 +3121,8 @@
 			/*NAV MENU*/
 			.leftSideBlock {
 				box-shadow: 0 12px 15px 0 rgba(0,0,0,.29), 0 17px 50px 0 rgba(0,0,0,0.17);
-				overflow: hidden;
+				overflow-x: hidden;
+				overflow-y: auto;
 				background: #fff;
 				position: fixed;
 				display: none;
@@ -3079,7 +3137,7 @@
 					height: 160px;
 					width: 100%;
 
-					.images {
+					/*.images {
 						position: absolute;
 						overflow: hidden;
 						height: 100%;
@@ -3088,7 +3146,7 @@
 						.fadeImage {
 							position: absolute;
 							filter: blur(3px);
-							height: 44vw;
+							height: 50vw;
 							width: 100%;
 
 							&:nth-child(1) {
@@ -3102,6 +3160,27 @@
 							&:nth-child(3) {
 								animation: fade-background-images 24s 6s infinite;
 							}
+						}
+					}*/
+
+					.backgroundImage{
+						background: #212121;
+						position: absolute;
+						overflow: hidden;
+						height: 100%;
+						width: 100%;
+
+						.cover{
+							background-position: center 35%;
+							background-repeat: no-repeat;
+							transform: translate(0);
+							box-sizing: border-box;
+							background-size: cover;
+							display: inline-block;
+							filter: blur(3px);
+							height: 120%;
+							width: 110%;
+							margin: -5%;
 						}
 					}
 
@@ -3151,10 +3230,8 @@
 				}
 
 				.menu {
-					margin: 160px 0 0;
-					position: absolute;
-					overflow-x: hidden;
-					overflow-y: auto;
+					margin: 0 0 24px 0;
+					position: relative;
 					width: 100%;
 					bottom: 0;
 					left: 0;
@@ -3396,7 +3473,7 @@
 					width: 90%;
 				}
 
-				.input {
+				input {
 					border: 1px solid #999;
 					border-radius: 3px;
 					background: none;
@@ -3413,8 +3490,9 @@
 					}
 				}
 
-				.button {
+				button {
 					text-transform: uppercase;
+					-webkit-appearance: none;
 					text-overflow: ellipsis;
 					margin: 16px 0 0 3%;
 					white-space: nowrap;
@@ -3441,10 +3519,6 @@
 						background: #09f;
 						color: #fff;
 					}
-				}
-
-				.check {
-					display: none;
 				}
 			}
 

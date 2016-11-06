@@ -17,11 +17,11 @@
 </div>
 
 <?php if (isset ($_SESSION['MM_Id'])){ ?>
-	<div class="menuLeft" onclick="toggleLeftSide(1)">
+	<div class="menuLeft" onclick="toggleMenu('left', 1)">
 		<?php include_once("images/svg/menu.php"); ?>
 	</div>
 
-	<div class="menuRight" onclick="toggleRightSide(1)">
+	<div class="menuRight" onclick="toggleMenu('right', 1)">
 		<?php include_once("images/svg/circles.php"); ?>
 	</div>
 <?php }?>

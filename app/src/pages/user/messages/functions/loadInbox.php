@@ -3,7 +3,7 @@
 	
 	//Inbox
 	mysql_select_db($database_conexion, $conexion);
-	$query_inboxMessages = sprintf("SELECT * FROM z_messages WHERE receiver=%s ORDER BY id DESC LIMIT 99",$userId,"int");
+	$query_inboxMessages = sprintf("SELECT * FROM z_messages WHERE receiver=%s AND is_deleted = 0 ORDER BY id DESC LIMIT 99", $userId, "int");
 	$inboxMessages = mysql_query($query_inboxMessages, $conexion) or die(mysql_error());
 	$row_inboxMessages = mysql_fetch_assoc($inboxMessages);
 	$totalRows_inboxMessages = mysql_num_rows($inboxMessages);
@@ -12,14 +12,14 @@
 	<center>LA BANDEJA DE ENTRADA ESTA VACIA</center>
 <?php } else { ?>
 	<?php do { ?>
-		<div class="messageBox" id="message<?php echo $row_inboxMessages['id'] ?>">
+		<div class="messageBox <?php if ($row_inboxMessages['status'] == 0){ ?>pendingMessage<?php } ?>" id="message<?php echo $row_inboxMessages['id'] ?>">
 			<div class="head">
 				<div class="image" onclick="userPage(<?php echo $row_inboxMessages['sender']; ?>)">
 					<img src="<?php echo userAvatar($row_inboxMessages['sender']); ?>"/>
 				</div>
 				<div class="name" onclick="userPage(<?php echo $row_inboxMessages['sender']; ?>)">
 					<?php if ($row_inboxMessages['status'] == 0){ ?>
-						<div class="glitch" style="background:#<?php echo $row_userData['primary_color']; ?>">
+						<div class="glitch" style="background:#fff;">
 							<?php echo traducir(48,$_COOKIE['idioma'])?>
 						</div>
 					<?php } ?>
@@ -28,7 +28,7 @@
 						<?php echo timeAgo($row_inboxMessages['time']); ?>
 					</div>
 				</div>
-				<div class="delete" onClick="deleteMessage(1, '<?php echo $row_inboxMessages['id'] ?>')">
+				<div class="delete" onClick="deleteMessage(1, '<?php echo $row_inboxMessages['id'] ?>')" <?php if ($row_inboxMessages['status'] == 0){ ?>style="display:none;"<?php } ?>>
 					<?php include("../../../../images/svg/close.php"); ?>
 				</div>
 				<div class="deleteBoxConfirmation" id="delete<?php echo $row_inboxMessages['id'] ?>">
