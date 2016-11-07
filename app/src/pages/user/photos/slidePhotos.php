@@ -1,6 +1,6 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_POST['userId'];
-	$photoId = $_POST['photoId'];
+	$userId = $_GET['userId'];
+	$photoId = $_GET['photoId'];
 
 	// User photos  --> photosList
 	mysql_select_db($database_conexion, $conexion);
@@ -9,7 +9,6 @@
 	$row_photosList = mysql_fetch_assoc($photosList);
 	$totalRows_photosList = mysql_num_rows($photosList);
 ?>
-
 <div class="boxContent">
 	<div class="panel">
 		<div class="counter">
@@ -37,8 +36,8 @@
 		unlikeIcon 			= '<?php include('../../../images/svg/unlike.php'); ?>';
 	
 	// ···> Init
-		userId				= <?php echo $_POST['userId']; ?>,
-    	position 			= <?php echo $_POST['position']; ?>,
+		userId				= <?php echo $_GET['userId']; ?>,
+    	position 			= <?php echo $_GET['position']; ?>,
     	totalCount 			= <?php echo $totalRows_photosList; ?>,
 		photosDataList 		= [	<?php do { ?>
 				        				{
@@ -84,7 +83,7 @@
 		datePhoto.html(photosDataList[position].date);
 
 		$.ajax({
-	        type: 'POST',
+	        type: 'GET',
 	        url: '<?php echo $urlWeb ?>' + 'pages/user/photos/setData.php',
 	        data: 'photoId=' + photosDataList[position].id + '&userId=' + userId,
 	        success: function(response){
@@ -179,7 +178,7 @@
 			buttonLoadMoreCommentsPhoto 	= $('.modalBox .box .slidePhotosBox .boxData .comments .loadMore');
 
 		$.ajax({
-            type: "POST",
+            type: "GET",
             url: '<?php echo $urlWeb ?>' + 'pages/user/photos/comments/loadMore.php',
             data: 'cuantity=' + 10 + '&photoId=' + id,
             success: function(response) {

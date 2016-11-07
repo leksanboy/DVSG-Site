@@ -1,6 +1,6 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_POST['userId'];
-	$videoId = $_POST['videoId'];
+	$userId = $_GET['userId'];
+	$videoId = $_GET['videoId'];
 	$_SESSION['moreCommentsVideo'] = 0;
 
 	// Update views

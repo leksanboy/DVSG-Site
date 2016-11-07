@@ -219,34 +219,27 @@
 		}
 
 		//·····> Delete song
-		function deleteSong(type, id, songId, idNew){
+		function deleteSong(type, id){
 			if (type==1) {
-				var idData;
-				if (idNew == '' || idNew == undefined)
-					idData = id;
-				else
-					idData = idNew;
-
 				$.ajax({
 					type: 'POST',
-					url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
-					data: 'type=delete' + '&songId=' + idData,
+					url: '<?php echo $urlWeb ?>' + 'pages/user/music/delete.php',
+					data: 'type=delete' + '&id=' + id,
 					success: function(response){
 						$('.song'+ id).css('opacity','0.5');
 						$('.song'+ id +' .actions .add').hide();
 						$('.song'+ id +' .actions .added').show();
-						$('.song'+ id +' .actions .added').attr("onclick","deleteSong(2, "+ id +", "+ songId +");");
+						$('.song'+ id +' .actions .added').attr("onclick","deleteSong(2, "+ id +");");
 					}
 				});
 			} else if (type==2) {
 				$.ajax({
 					type: 'POST',
-					url: '<?php echo $urlWeb ?>' + 'pages/user/music/add.php',
-					data: 'type=add' + '&songId=' + songId,
+					url: '<?php echo $urlWeb ?>' + 'pages/user/music/delete.php',
+					data: 'type=add' + '&id=' + id,
 					success: function(response){
 						$('.song'+ id).css('opacity','1');
 						$('.song'+ id + ' .actions .add').show();
-						$('.song'+ id +' .actions .add').attr("onclick","deleteSong(1, "+ id +", "+ songId +", "+ response +");");
 						$('.song'+ id + ' .actions .added').hide();
 					}
 				});
@@ -315,6 +308,21 @@
 				});
 			}
 		}
+
+		//·····> Load more
+		// function loadMore(){
+		// 	// $.ajax({
+		// 	//     type: "GET",
+		// 	//     url: '<?php echo $urlWeb ?>' + 'pages/user/music/loadMore.php',
+		// 	//     data: 'cuantity=' + 30 + '&userId=' + userId,
+		// 	//     success: function(response) {
+		// 	//     	// if (response != '')
+		// 	//      //    	$('.pageMusic .defaultDataList .photosListBox').append(response);
+		// 	//      //    else
+		// 	//      //    	$('.pageMusic .defaultDataList .loadMore').hide();
+		// 	//     }
+		// 	// });
+		// }
 	</script>
 	<script type="text/javascript">
 	    var player = document.getElementById('playerBoxAudio');

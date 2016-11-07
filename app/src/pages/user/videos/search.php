@@ -1,30 +1,33 @@
 <?php require_once('../../../Connections/conexion.php');
-	$titleValue = $_POST['titleValue'];
+	$searchValue = $_GET['searchValue'];
+	$userId = $_GET['userId'];
 
-	//All music --> songsListSearch
+	//Default data for LoadMoreSearch
+	$_SESSION['loadMoreSearchVideos'.$userId] = 0;
+
+	//SEARCH
 	mysql_select_db($database_conexion, $conexion);
-	$query_songsListSearch = sprintf("SELECT * FROM z_videos WHERE title LIKE %s ORDER BY title DESC", 
-		GetSQLValueString("%" . $titleValue . "%", "text"));
-	$songsListSearch = mysql_query($query_songsListSearch, $conexion) or die(mysql_error());
-	$row_songsListSearch = mysql_fetch_assoc($songsListSearch);
-	$totalRows_songsListSearch = mysql_num_rows($songsListSearch);
+	$query_searchData = sprintf("SELECT * FROM z_videos WHERE title LIKE %s ORDER BY title DESC LIMIT 10", 
+	GetSQLValueString("%" . $searchValue . "%", "text"));
+	$searchData = mysql_query($query_searchData, $conexion) or die(mysql_error());
+	$row_searchData = mysql_fetch_assoc($searchData);
+	$totalRows_searchData = mysql_num_rows($searchData);
 ?>
-
-<?php if ($totalRows_songsListSearch != 0){ ?>
+<?php if ($totalRows_searchData != 0){ ?>
 	<ul class="videosListBox">
 		<?php do { ?>
-			<li class="videoSearch<?php echo $row_songsListSearch['id'] ?>">
-				<div class="video" onclick="openVideo(1, '<?php echo $row_songsListSearch['name']?>', '<?php echo $row_songsListSearch['title']?>', '<?php echo $row_songsListSearch['video']?>')">
-					<div class="thumb" style="background-image: url(<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails/<?php echo $row_songsListSearch['name']?>.jpg); width: 100%; height: 150px;"></div>
+			<li class="videoSearch<?php echo $row_searchData['id'] ?>">
+				<div class="video" onclick="openVideo(1, '<?php echo $row_searchData['name']?>', '<?php echo $row_searchData['title']?>', '<?php echo $row_searchData['video']?>')">
+					<div class="thumb" style="background-image: url(<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails/<?php echo substr($row_searchData['name'], 0, -4)?>.jpg); width: 100%; height: 150px;"></div>
 				</div>
 				<div class="title">
-					<div class="duration"><?php echo $row_songsListSearch['duration']?></div>
-					<div class="text"><?php echo $row_songsListSearch['title']?></div>
-					<div class="replays"><?php echo $row_songsListSearch['replays']?> viwes · <?php echo timeAgo($row_songsListSearch['date']) ?></div>
+					<div class="duration"><?php echo $row_searchData['duration']?></div>
+					<div class="text"><?php echo $row_searchData['title']?></div>
+					<div class="replays"><?php echo $row_searchData['replays']?> viwes · <?php echo timeAgo($row_searchData['date']) ?></div>
 				</div>
 				<?php if (isset ($_SESSION['MM_Id'])){ ?>
 					<div class="actions">
-						<div class="add" onClick="addVideoSearch(1, <?php echo $row_songsListSearch['id'] ?>)">
+						<div class="add" onClick="addVideoSearch(1, <?php echo $row_searchData['id'] ?>)">
 							<?php include("../../../images/svg/add.php"); ?>
 						</div>
 						<div class="add added">
@@ -33,11 +36,15 @@
 					</div>
 				<?php } ?>
 			</li>
-		<?php } while ($row_songsListSearch = mysql_fetch_assoc($songsListSearch)); ?>
+		<?php } while ($row_searchData = mysql_fetch_assoc($searchData)); ?>
 	</ul>
+
+	<?php if ($totalRows_searchData == 10){ ?>
+		<div class="loadMore" onclick="loadMoreSearch();"> + LOAD MORE</div>
+	<?php } ?>
 <?php } else { ?>
 	<div class="noData">
 		No result videos
 	</div>
 <?php } ?>
-<?php mysql_free_result($songsListSearch); ?>
+<?php mysql_free_result($searchData); ?>

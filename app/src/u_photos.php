@@ -12,9 +12,6 @@
 		}
 	}
 
-	//Default data for LoadMore
-	$_SESSION['loadMorePhotos'.$userPageId] = 0;
-
 	//User data
 	mysql_select_db($database_conexion, $conexion);
 	$query_userData = sprintf("SELECT id, name, primary_color, secondary_color FROM z_users WHERE id = %s", 

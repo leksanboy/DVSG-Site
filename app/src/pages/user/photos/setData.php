@@ -1,6 +1,6 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_POST['userId'];
-	$photoId = $_POST['photoId'];
+	$userId = $_GET['userId'];
+	$photoId = $_GET['photoId'];
 	$_SESSION['moreCommentsPhoto'] = 0;
 
 	// Update views

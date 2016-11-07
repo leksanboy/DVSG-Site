@@ -160,10 +160,8 @@
 			$('#fileStatus' + i + ' .operations #status .result').html('Aborted');
 		}
 
-		//·····> Delete video
+		//·····> Delete photo
 		function deletePhoto(type, id){
-			console.log('-->', type, id);
-
 			if (type==1) {
 				$.ajax({
 					type: 'POST',
@@ -193,7 +191,7 @@
 		//·····> Default
 		function defaultLoad(){
 			$.ajax({
-				type: 'POST',
+				type: 'GET',
 				url: '<?php echo $urlWeb ?>' + 'pages/user/photos/default.php',
 				data: 'userId=' + userId,
 				success: function(response) {
@@ -215,7 +213,7 @@
 				$('body').toggleClass('modalHidden');
 
 				$.ajax({
-	                type: 'POST',
+	                type: 'GET',
 	                url: '<?php echo $urlWeb ?>' + 'pages/user/photos/slidePhotos.php',
 	                data: 'position=' + position + '&photoId=' + photoId + '&userId=' + userId,
 	                success: function(response){
@@ -240,9 +238,9 @@
 		}
 
 		//·····> Load more
-		function loadMorePhotos(id){
+		function loadMore(){
 			$.ajax({
-	            type: "POST",
+	            type: "GET",
 	            url: '<?php echo $urlWeb ?>' + 'pages/user/photos/loadMore.php',
 	            data: 'cuantity=' + 15 + '&userId=' + userId,
 	            success: function(response) {

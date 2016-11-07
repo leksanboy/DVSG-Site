@@ -1,21 +1,21 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_POST['userId'];
-	$cuantity = $_POST['cuantity'];
-	$_SESSION['loadMorePhotos'.$userId] = $_SESSION['loadMorePhotos'.$userId] + $cuantity;
+	$userId = $_GET['userId'];
+	$cuantity = $_GET['cuantity'];
+	$_SESSION['loadMoreVideos'.$userId] = $_SESSION['loadMoreVideos'.$userId] + $cuantity;
 
-	//User photos  --> load more
+	// Load more videos
 	mysql_select_db($database_conexion, $conexion);
-	$query_loadMorePhotos = sprintf("SELECT f.id, v.name FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo WHERE f.user = $userId ORDER BY f.date DESC LIMIT %s, 15",
-	GetSQLValueString($_SESSION['loadMorePhotos'.$userId], "int"));
-	$loadMorePhotos = mysql_query($query_loadMorePhotos, $conexion) or die(mysql_error());
-	$row_loadMorePhotos = mysql_fetch_assoc($loadMorePhotos);
-	$totalRows_loadMorePhotos = mysql_num_rows($loadMorePhotos);
+	$query_loadMoreVideos = sprintf("SELECT f.id, f.video, f.date, f.time, v.name, v.title, v.duration, v.replays FROM z_videos_favorites f INNER JOIN z_videos v ON v.id = f.video WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT %s, 10",
+	GetSQLValueString($_SESSION['loadMoreVideos'.$userId], "int"));
+	$loadMoreVideos = mysql_query($query_loadMoreVideos, $conexion) or die(mysql_error());
+	$row_loadMoreVideos = mysql_fetch_assoc($loadMoreVideos);
+	$totalRows_loadMoreVideos = mysql_num_rows($loadMoreVideos);
 ?>
 <?php if ($totalRows_loadMoreVideos != 0){ ?>
 	<?php do { ?>
 		<li class="video<?php echo $row_loadMoreVideos['id'] ?>">
 			<div class="video" onclick="openVideo(1, '<?php echo $row_loadMoreVideos['name']?>', '<?php echo $row_loadMoreVideos['title']?>', '<?php echo $row_loadMoreVideos['video']?>')">
-				<div class="thumb" style="background-image: url(<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails/<?php echo $row_loadMoreVideos['name']?>.jpg); width: 100%; height: 150px;"></div>
+				<div class="thumb" style="background-image: url(<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails/<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails/<?php echo substr($row_loadMoreVideos['name'], 0, -4)?>.jpg); width: 100%; height: 150px;"></div>
 			</div>
 			<div class="title">
 				<div class="duration"><?php echo $row_loadMoreVideos['duration']?></div>

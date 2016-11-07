@@ -4,6 +4,7 @@
 	$FILE_NAME 			= $userId.$time.rand(); // File name
     $FILE_TITLE 		= $_FILES["fileUpload"]["name"]; // File title
 	$fileTmpLoc 		= $_FILES["fileUpload"]["tmp_name"]; // File in the PHP tmp folder
+	$locationPath 		= '/var/www/html/pages/user/photos/photos/';
 
 	if ($FILE_TITLE == '' || $FILE_TITLE == undefined) {
 		$FILE_TITLE = 'Untitled';
@@ -17,6 +18,12 @@
 	}
 
 	if(move_uploaded_file($fileTmpLoc, "photos/$FILE_NAME")){
+		$inFile = $locationPath."$FILE_NAME";
+		$outFile = $locationPath."thumbnails/$FILE_NAME";
+		$image = new Imagick($inFile);
+		$image->thumbnailImage(0, 200, false);
+		$image->writeImage($outFile);
+
 		//Insert in photos
 	    $insertSQL = sprintf("INSERT INTO z_photos (name, user, time) VALUES (%s, %s, %s)",
 		GetSQLValueString($FILE_NAME, "text"),

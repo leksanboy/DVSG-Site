@@ -1,5 +1,8 @@
 <?php require_once('../../../Connections/conexion.php');
-	$userId = $_POST['userId'];
+	$userId = $_GET['userId'];
+
+	//Default data for LoadMore
+	$_SESSION['loadMorePhotos'.$userId] = 0;
 
 	//User photos  --> photosList
 	mysql_select_db($database_conexion, $conexion);
@@ -8,7 +11,6 @@
 	$row_photosList = mysql_fetch_assoc($photosList);
 	$totalRows_photosList = mysql_num_rows($photosList);
 ?>
-
 <?php if ($totalRows_photosList != 0){ ?>
 	<ul class="photosListBox">
 		<?php 
@@ -18,7 +20,7 @@
 		?>
 			<li class="photo<?php echo $row_photosList['id'] ?>">
 				<div class="image" onClick="openPhoto(1, <?php echo $_SESSION['counterPhotos'.$userId] ?>, <?php echo $row_photosList['id'] ?>)">
-					<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row_photosList['name']?>); width: 100%; height: 150px;"></div>
+					<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/thumbnails/<?php echo $row_photosList['name']?>); width: 100%; height: 100%;"></div>
 				</div>
 				<?php if ($userId == $_SESSION['MM_Id']) { ?>
 					<div class="actions">
@@ -35,7 +37,7 @@
 	</ul>
 
 	<?php if ($totalRows_photosList == 15){ ?>
-		<div class="loadMore" onclick="loadMorePhotos();"> + LOAD MORE</div>
+		<div class="loadMore" onclick="loadMore();"> + LOAD MORE</div>
 	<?php } ?>
 <?php } else { ?>
 	<div class="noData">

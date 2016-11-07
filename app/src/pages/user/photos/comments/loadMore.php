@@ -1,6 +1,6 @@
 <?php require_once('../../../../Connections/conexion.php');
-	$photoId = $_POST['photoId'];
-	$cuantity = $_POST['cuantity'];
+	$photoId = $_GET['photoId'];
+	$cuantity = $_GET['cuantity'];
 	$_SESSION['moreCommentsPhoto'] = $_SESSION['moreCommentsPhoto'] + $cuantity;
 
 	// More comments user photo

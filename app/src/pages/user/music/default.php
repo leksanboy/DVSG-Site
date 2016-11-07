@@ -7,13 +7,6 @@
 	$songsList = mysql_query($query_songsList, $conexion) or die(mysql_error());
 	$row_songsList = mysql_fetch_assoc($songsList);
 	$totalRows_songsList = mysql_num_rows($songsList);
-
-	// // User music  --> songsListJS
-	// mysql_select_db($database_conexion, $conexion);
-	// $query_songsListJS = sprintf("SELECT f.id, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
-	// $songsListJS = mysql_query($query_songsListJS, $conexion) or die(mysql_error());
-	// $row_songsListJS = mysql_fetch_assoc($songsListJS);
-	// $totalRows_songsListJS = mysql_num_rows($songsListJS);
 ?>
 
 <?php if ($totalRows_songsList != 0){ ?>
@@ -38,7 +31,7 @@
                 <?php  if (isset($_SESSION['MM_Id'])) { ?>
                     <div class="actions">
                         <?php if ($userId == $_SESSION['MM_Id']) { ?>
-                            <div class="add" onClick="deleteSong(1, <?php echo $row_songsList['id'] ?>, <?php echo $row_songsList['song'] ?>)">
+                            <div class="add" onClick="deleteSong(1, <?php echo $row_songsList['id'] ?>)">
                                 <?php include("../../../images/svg/close.php"); ?>
                             </div>
                             <div class="add added">
@@ -57,6 +50,8 @@
 			</li>
 		<?php } while ($row_songsList = mysql_fetch_assoc($songsList)); ?>
 	</ul>
+
+    <div class="loadMore" onclick="loadMore();"> + LOAD MORE</div>
 <?php } else { ?>
 	<div class="noData">
 		No songs
@@ -211,6 +206,12 @@
         	$('.playerBox .buttons .playPause .pause').show();
         }
     };
+
+    // ·····> Load more
+    function loadMore(){
+        tracks.push(tracks);
+        console.log('TRACKS:', tracks);
+    }
 </script>
 <?php mysql_free_result($songsList); ?>
 <?php mysql_free_result($songsListJS); ?>
