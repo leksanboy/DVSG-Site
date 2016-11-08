@@ -4,7 +4,9 @@
 
 	// User photos  --> photosList
 	mysql_select_db($database_conexion, $conexion);
-	$query_photosList = sprintf("SELECT f.photo, f.date, v.name FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo WHERE f.user = $userId ORDER BY f.date DESC");
+	$query_photosList = sprintf("SELECT f.photo, f.date, v.name 
+								FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo 
+								WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC");
 	$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
 	$row_photosList = mysql_fetch_assoc($photosList);
 	$totalRows_photosList = mysql_num_rows($photosList);

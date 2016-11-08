@@ -3,9 +3,11 @@
 	$cuantity = $_GET['cuantity'];
 	$_SESSION['loadMorePhotos'.$userId] = $_SESSION['loadMorePhotos'.$userId] + $cuantity;
 
-	//loadMorePhotos
+	//Load more
 	mysql_select_db($database_conexion, $conexion);
-	$query_loadMorePhotos = sprintf("SELECT f.id, v.name FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT %s, 15",
+	$query_loadMorePhotos = sprintf("SELECT f.id, v.name 
+									FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo 
+									WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT %s, 15",
 	GetSQLValueString($_SESSION['loadMorePhotos'.$userId], "int"));
 	$loadMorePhotos = mysql_query($query_loadMorePhotos, $conexion) or die(mysql_error());
 	$row_loadMorePhotos = mysql_fetch_assoc($loadMorePhotos);

@@ -6,7 +6,9 @@
 
 	//User videos
 	mysql_select_db($database_conexion, $conexion);
-	$query_videosList = sprintf("SELECT f.id, f.video, f.date, f.time, v.name, v.title, v.duration, v.replays FROM z_videos_favorites f INNER JOIN z_videos v ON v.id = f.video WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT 10");
+	$query_videosList = sprintf("SELECT f.id, f.video, f.date, f.time, v.name, v.title, v.duration, v.replays 
+								FROM z_videos_favorites f INNER JOIN z_videos v ON v.id = f.video 
+								WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT 10");
 	$videosList = mysql_query($query_videosList, $conexion) or die(mysql_error());
 	$row_videosList = mysql_fetch_assoc($videosList);
 	$totalRows_videosList = mysql_num_rows($videosList);

@@ -6,7 +6,9 @@
 
 	//User photos  --> photosList
 	mysql_select_db($database_conexion, $conexion);
-	$query_photosList = sprintf("SELECT f.id, v.name FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT 15");
+	$query_photosList = sprintf("SELECT f.id, v.name 
+								FROM z_photos_favorites f INNER JOIN z_photos v ON v.id = f.photo 
+								WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT 15");
 	$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
 	$row_photosList = mysql_fetch_assoc($photosList);
 	$totalRows_photosList = mysql_num_rows($photosList);
@@ -14,7 +16,7 @@
 <?php if ($totalRows_photosList != 0){ ?>
 	<ul class="photosListBox">
 		<?php 
-			$_SESSION['counterPhotos'.$userId] = - 1; 
+			$_SESSION['counterPhotos'.$userId] = - 1;
 			do { 
 			$_SESSION['counterPhotos'.$userId] = $_SESSION['counterPhotos'.$userId] + 1;
 		?>

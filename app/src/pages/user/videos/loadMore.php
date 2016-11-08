@@ -5,7 +5,9 @@
 
 	// Load more videos
 	mysql_select_db($database_conexion, $conexion);
-	$query_loadMoreVideos = sprintf("SELECT f.id, f.video, f.date, f.time, v.name, v.title, v.duration, v.replays FROM z_videos_favorites f INNER JOIN z_videos v ON v.id = f.video WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT %s, 10",
+	$query_loadMoreVideos = sprintf("SELECT f.id, f.video, f.date, f.time, v.name, v.title, v.duration, v.replays 
+									FROM z_videos_favorites f INNER JOIN z_videos v ON v.id = f.video 
+									WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT %s, 10",
 	GetSQLValueString($_SESSION['loadMoreVideos'.$userId], "int"));
 	$loadMoreVideos = mysql_query($query_loadMoreVideos, $conexion) or die(mysql_error());
 	$row_loadMoreVideos = mysql_fetch_assoc($loadMoreVideos);

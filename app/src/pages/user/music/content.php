@@ -308,21 +308,6 @@
 				});
 			}
 		}
-
-		//·····> Load more
-		// function loadMore(){
-		// 	// $.ajax({
-		// 	//     type: "GET",
-		// 	//     url: '<?php echo $urlWeb ?>' + 'pages/user/music/loadMore.php',
-		// 	//     data: 'cuantity=' + 30 + '&userId=' + userId,
-		// 	//     success: function(response) {
-		// 	//     	// if (response != '')
-		// 	//      //    	$('.pageMusic .defaultDataList .photosListBox').append(response);
-		// 	//      //    else
-		// 	//      //    	$('.pageMusic .defaultDataList .loadMore').hide();
-		// 	//     }
-		// 	// });
-		// }
 	</script>
 	<script type="text/javascript">
 	    var player = document.getElementById('playerBoxAudio');

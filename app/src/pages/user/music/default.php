@@ -1,23 +1,27 @@
 <?php require_once('../../../Connections/conexion.php');
 	$userId = $_POST['userId'];
 
+    //Default data for LoadMore
+    $_SESSION['loadMoreSongs'.$userId] = 0;
+
 	// User music  --> songsList
 	mysql_select_db($database_conexion, $conexion);
-	$query_songsList = sprintf("SELECT f.id, f.song, m.name, m.title, m.duration FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song WHERE f.user = $userId ORDER BY f.date DESC");
+	$query_songsList = sprintf("SELECT f.id, f.song, m.name, m.title, m.duration 
+                                FROM z_music_favorites f INNER JOIN z_music m ON m.id = f.song 
+                                WHERE f.user = $userId AND f.is_deleted = 0 ORDER BY f.date DESC LIMIT 10");
 	$songsList = mysql_query($query_songsList, $conexion) or die(mysql_error());
 	$row_songsList = mysql_fetch_assoc($songsList);
 	$totalRows_songsList = mysql_num_rows($songsList);
 ?>
-
 <?php if ($totalRows_songsList != 0){ ?>
 	<ul class="songsListBox">
 		<?php 
-			$contador=-1; 
+			$_SESSION['counterSongs'.$userId] = - 1;
 			do { 
-			$contador = $contador+1;
+			$_SESSION['counterSongs'.$userId] = $_SESSION['counterSongs'.$userId]+1;
 		?>
-			<li class="song<?php echo $row_songsList['id'] ?>" id="song<?php echo $contador ?>">
-				<div class="playPause" onClick="playTrack(<?php echo $contador ?>)">
+			<li class="song<?php echo $row_songsList['id'] ?>" id="song<?php echo $_SESSION['counterSongs'.$userId] ?>">
+				<div class="playPause" onClick="playTrack(<?php echo $_SESSION['counterSongs'.$userId] ?>)">
 					<div class="play" style="display:block;">
 						<?php include("../../../images/svg/play.php"); ?>
 					</div>
@@ -25,7 +29,7 @@
 						<?php include("../../../images/svg/pause.php"); ?>
 					</div>
 				</div>
-				<div class="text" onClick="playTrack(<?php echo $contador ?>)"><?php echo $row_songsList['title']?></div>
+				<div class="text" onClick="playTrack(<?php echo $_SESSION['counterSongs'.$userId] ?>)"><?php echo $row_songsList['title']?></div>
 				<div class="duration"><?php echo $row_songsList['duration']?></div>
 
                 <?php  if (isset($_SESSION['MM_Id'])) { ?>
@@ -51,7 +55,9 @@
 		<?php } while ($row_songsList = mysql_fetch_assoc($songsList)); ?>
 	</ul>
 
-    <div class="loadMore" onclick="loadMore();"> + LOAD MORE</div>
+    <?php if ($totalRows_songsList == 10){ ?>
+        <div class="loadMore" onclick="loadMore();"> + LOAD MORE</div>
+    <?php } ?>
 <?php } else { ?>
 	<div class="noData">
 		No songs
@@ -207,10 +213,61 @@
         }
     };
 
-    // ·····> Load more
+    //·····> Load more
     function loadMore(){
-        tracks.push(tracks);
-        console.log('TRACKS:', tracks);
+        $.ajax({ //HTML
+            type: "GET",
+            url: '<?php echo $urlWeb ?>' + 'pages/user/music/loadMore.php',
+            data: 'cuantity=' + 10 + '&userId=' + userId,
+            success: function(response) {
+                if (response != '') {
+                    response = JSON.parse(response);
+
+                    for (var i = 0; i < response.length ; i++) {
+                        tracks.push(response[i]);
+                    }
+                    trackCount = tracks.length;
+
+                    for (var i = 0; i < response.length ; i++) {
+                        var moreData = '<li class="song'+ response[i].id +'" id="song'+ response[i].counter+'">\
+                                            <div class="playPause" onClick="playTrack('+ response[i].counter+')">\
+                                                <div class="play" style="display:block;">\
+                                                    <?php include("../../../images/svg/play.php"); ?>\
+                                                </div>\
+                                                <div class="pause" style="display:none;">\
+                                                    <?php include("../../../images/svg/pause.php"); ?>\
+                                                </div>\
+                                            </div>\
+                                            <div class="text" onClick="playTrack('+ response[i].counter+')">'+ response[i].name +'</div>\
+                                            <div class="duration">'+ response[i].duration +'</div>\
+                                            <?php  if (isset($_SESSION['MM_Id'])) { ?>\
+                                                <div class="actions">\
+                                                    <?php if ($userId == $_SESSION['MM_Id']) { ?>\
+                                                        <div class="add" onClick="deleteSong(1, '+ response[i].id +')">\
+                                                            <?php include("../../../images/svg/close.php"); ?>\
+                                                        </div>\
+                                                        <div class="add added">\
+                                                            <?php include("../../../images/svg/add.php"); ?>\
+                                                        </div>\
+                                                    <?php } else { ?>\
+                                                        <div class="add" onClick="addSong(1, '+ response[i].id +', '+ response[i].song +')">\
+                                                            <?php include("../../../images/svg/add.php"); ?>\
+                                                        </div>\
+                                                        <div class="add added">\
+                                                            <?php include("../../../images/svg/check.php"); ?>\
+                                                        </div>\
+                                                    <?php } ?>\
+                                                </div>\
+                                            <?php } ?>\
+                                        </li>';
+
+                        $('.songsListBox').append(moreData);
+                    }
+                } else {
+                    $('.loadMore').hide();
+                }
+            }
+        });
     }
 </script>
 <?php mysql_free_result($songsList); ?>
