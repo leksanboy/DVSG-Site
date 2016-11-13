@@ -1,6 +1,6 @@
 <?php
 	// *EMAIL SENDER
-	// require '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php';
+	require '/usr/share/php/libphp-phpmailer/PHPMailerAutoload.php';
 
 	if (!function_exists("GetSQLValueString")) {
 		function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") {

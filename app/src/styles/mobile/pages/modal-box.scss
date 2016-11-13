@@ -41,16 +41,17 @@
 		box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
 		box-sizing: border-box;
 		border-radius: 3px;
+		margin: 12px auto;
 		background: #fff;
-		margin: 12px 2%;
-		float: left;
+		display: block;
 		width: 96%;
+		max-width: 560px;
 
 		.head{
 			box-sizing: border-box;
+			display: inline-block;
 			color: #404040;
 			padding: 12px;
-			float: left;
 			width: 100%;
 
 			.image{
@@ -165,16 +166,15 @@
 			}
 
 			.searchReceiverDataList{
-				box-shadow: 0 10px 20px rgba(0,0,0,.19),0 6px 6px rgba(0,0,0,.23);
-				margin: 42px 0px 0 0px;
-				border-radius: 3px;
+				border-radius: 0 0 3px 3px;
+				margin: 42px auto 0;
 				position: absolute;
 				max-height: 220px;
 				overflow-y: auto;
 				background: #fff;
-				width: 92%;
+				width: 100%;
 				padding: 0;
-				left: 4%;
+				max-width: 536px;
 
 				.receiverBox{
 					border-bottom: 1px solid #e5e5e5;
@@ -235,17 +235,17 @@
 			border-bottom: 1px solid rgba(0, 0, 0, 0.25);
 			box-sizing: border-box;
 			word-break: break-all;
+			display: inline-block;
 			padding: 0 12px 12px;
 			font-size: 14px;
 			color: #404040;
-			float: left;
 			width: 100%;
 		}
 
 		.buttons{
 			border-top: 1px solid #c6c6c6;
+			display: inline-block;
 			width: 100%;
-			float: left;
 			margin: 0;
 
 			button{
@@ -323,7 +323,6 @@
 			outline: none;
 			border: none;
 			height: 36px;
-			float: left;
 			padding: 0;
 			width: 95%;
 
@@ -358,7 +357,6 @@
 			box-sizing: border-box;
 			padding: 12px;
 			display: none;
-			float: left;
 			width: 100%;
 
 			textarea{
@@ -389,6 +387,7 @@
 		}
 
 		.filesBox{
+			display: inline-block;
 			width: 100%;
 		
 			.fileStatus{
@@ -530,7 +529,6 @@
 			background: #1e1e1e;
 			min-height: 360px;
 			width: 100%;
-			float: left;
 
 			.loader{
 				margin: 35vw auto 0;
@@ -919,7 +917,7 @@
 		}
 
 		.videoBox{
-            float: left;
+			display: inline-block;
 			width: 100%;
 
 			.boxContent{
@@ -1342,7 +1340,7 @@
 		}
 
 		.createPostBox{
-			float: left;
+			display: inline-block;
 			width: 100%;
 
 			.textArea{
@@ -1986,14 +1984,14 @@
 			}
 		}
 	}
-}
 
-.showModal{
-	background: rgba(0, 0, 0, 0.75); 
-}
+	&.showModal{
+		background: rgba(0, 0, 0, 0.75); 
+	}
 
-.modalDisplay{
-	display: block; 
+	&.modalDisplay{
+		display: block; 
+	}
 }
 
 .modalHidden{

@@ -32,7 +32,7 @@
 		<?php include("includes/browsehappy.php");?>
 		<div class="innerBody">
 			<?php include("includes/leftBlockRight.php"); ?>
-			<div class="header headerUser headerNews" style="background:#<?php echo $row_userData['primary_color']; ?>">
+			<div class="header headerUser headerNews">
 				<div class="headerEffect">
 					<canvas id="headerEffect"></canvas>
 				</div>
@@ -41,13 +41,12 @@
 					<div class="menuLeft" onclick="toggleMenu('left', 1)">
 						<?php include("images/svg/menu.php"); ?>
 					</div>
-					<div class="userName">
-						<?php echo $row_userData['name']; ?>
-					</div>
 					<div class="menuRight" onclick="toggleMenu('right', 1)">
 						<?php include("images/svg/circles.php"); ?>
 					</div>
 				<?php } ?>
+
+				<?php include("includes/userDataLogin.php"); ?>
 
 				<div class="title">
 					<?php echo traducir(90,$_COOKIE['idioma'])?>

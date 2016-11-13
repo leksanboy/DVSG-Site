@@ -11,6 +11,8 @@
 @import 'mobile/pages/web/shop-post';/*CREATE & EDIT NOTICE POST Styles*/
 
 @media (max-width: 899px){
+	/*$bodyColor: #132030;*/
+	
 	/*Fonts*/
 		@font-face {
 			font-family: 'DVSG';
@@ -1329,13 +1331,14 @@
 				left: 5%;
 
 				.text{
+					padding: 24px 0 12px;
 					text-align: center;
 					color: #404040;
-					padding: 24px;
 				}
 
 				.button{
-					margin: 12px 0 12px 10%;
+					text-transform: uppercase;
+					margin: 12px 0 12px 7.5%;
 					background: #404040;
 					text-align: center;
 					border-radius: 3px;
@@ -1343,10 +1346,10 @@
 					height: 36px;
 					float: left;
 					color: #fff;
-					width: 36%;
+					width: 40%;
 
 					&:last-child{
-						margin: 12px 0 12px 8%;
+						margin: 12px 0 12px 5%;
 						background: #09f;
 						color: #fff;
 					}

@@ -7,7 +7,9 @@
 
 	//SEARCH
 	mysql_select_db($database_conexion, $conexion);
-	$query_searchData = sprintf("SELECT * FROM z_videos WHERE title LIKE %s ORDER BY title DESC LIMIT 10", 
+	$query_searchData = sprintf("SELECT * 
+									FROM z_videos 
+									WHERE title LIKE %s ORDER BY title DESC LIMIT 10", 
 	GetSQLValueString("%" . $searchValue . "%", "text"));
 	$searchData = mysql_query($query_searchData, $conexion) or die(mysql_error());
 	$row_searchData = mysql_fetch_assoc($searchData);

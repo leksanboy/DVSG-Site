@@ -134,7 +134,7 @@
 										<li>
 											<div class="video" onclick="openVideoPost(1, <?php echo $row['file'] ?>, '<?php echo $row['name'] ?>')">
 												<video>
-													<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row['name'] ?>"/>
+													<source src="<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails<?php echo $row['name'] ?>.jpg"/>
 												</video>
 												<div class="play">
 													<?php include('../../../images/svg/play.php'); ?>
@@ -162,7 +162,7 @@
 								while($row = mysql_fetch_array( $newsFiles )){
 									if ($row['type'] == 'photo') { ?>
 										<li <?php $contadorPhotos = $contadorPhotos + 1; ?>>
-											<div class="image" onclick="openPhotoPost(1, <?php echo $contadorPhotos ?>, <?php echo $postId ?>, <?php echo $row['file'] ?>)" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row['name']?>)">
+											<div class="image" onclick="openPhotoPost(1, <?php echo $contadorPhotos ?>, <?php echo $postId ?>, <?php echo $row['file'] ?>)" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/thumbnails/<?php echo $row['name']?>)">
 											</div>
 										</li>
 									<?php }
@@ -410,8 +410,7 @@
 					$('#playerBoxVideoProgress').val(duration);
 
 					$('#playerBoxVideoProgress').css({
-						'backgroundSize': (duration / 10) + '% 100%',
-						'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+						'backgroundSize': (duration / 10) + '% 100%'
 					});
 				}
 		    });

@@ -127,7 +127,7 @@
 							?>
 								<li class="photo<?php echo $row_photosList['photo'] ?>">
 									<div class="image">
-										<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/<?php echo $row_photosList['name']?>); width: 100%; height: 100%;"></div>
+										<div class="img" style="background-image: url(<?php echo $urlWeb ?>pages/user/photos/photos/thumbnails/<?php echo $row_photosList['name']?>); width: 100%; height: 100%;"></div>
 									</div>
 									<div class="actions" onClick='attachPhotoFiles(2, <?php echo htmlspecialchars(json_encode($row_photosList), ENT_QUOTES, "UTF-8"); ?>)'>
 			                            <div class="add">
@@ -171,7 +171,7 @@
 								<li class="video<?php echo $row_videosList['video'] ?>">
 									<div class="video">
 										<video>
-											<source src="<?php echo $urlWeb ?>pages/user/videos/videos/<?php echo $row_videosList['name']?>"/>
+											<source src="<?php echo $urlWeb ?>pages/user/videos/videos/thumbnails/<?php echo $row_videosList['name']?>.jpg"/>
 										</video>
 									</div>
 									<div class="actions" onClick='attachVideoFiles(2, <?php echo htmlspecialchars(json_encode($row_videosList), ENT_QUOTES, "UTF-8"); ?>)'>

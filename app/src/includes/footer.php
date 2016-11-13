@@ -6,9 +6,9 @@
 		<li>Contact</li>
 		<li>Careers</li>
 	</ul>
-	<div>DVSG &copy; <?php echo date("Y") ?></div>
-	<br>
+	<div class="copy">&copy; <?php echo date("Y") ?> DVSG</div>
+	<!-- <br>
 	<div onClick="location.href='<?php echo $urlWeb ?>id0'">
 		Sasá Rafalsky
-	</div>
+	</div> -->
 </div>

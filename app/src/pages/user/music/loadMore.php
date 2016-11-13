@@ -18,14 +18,14 @@
 		while($row = mysql_fetch_assoc($loadMoreSongs)){
 			$_SESSION['counterSongs'.$userId] = $_SESSION['counterSongs'.$userId] + 1;
 
-		    $a = new stdClass;
-		    $a->id=$row['id'];
-		    $a->song=$row['song'];
-		    $a->counter=$_SESSION['counterSongs'.$userId];
-		    $a->name=$row['title'];
-		    $a->file=$row['name'];
-		    $a->duration=$row['duration'];
-		    array_push($array, $a);
+			$a = new stdClass;
+			$a->id=$row['id'];
+			$a->song=$row['song'];
+			$a->counter=$_SESSION['counterSongs'.$userId];
+			$a->name=$row['title'];
+			$a->file=$row['name'];
+			$a->duration=$row['duration'];
+			array_push($array, $a);
 		}
 
 		echo json_encode($array);

@@ -182,8 +182,7 @@
 			val = e.target.value;
 
 		$(e.target).css({
-			'backgroundSize': (val - min) * 100 / (max - min) + '% 100%',
-			'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+			'backgroundSize': (val - min) * 100 / (max - min) + '% 100%'
 		});
 	}).trigger('input');
 

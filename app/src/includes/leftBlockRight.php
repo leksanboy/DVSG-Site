@@ -99,7 +99,6 @@
 		<br>
 		<br>
 		<center>
-			RIGHT SIDE CONTENT
 			<br>
 			<br>
 			Audio Player
@@ -120,7 +119,7 @@
 	<div class="logOutWindowHidden" onClick="logOut(2)"></div>
 <?php } else { ?>
 	<div class="webAccess">
-		<div class="button" onClick="clickThePage(7)">Sign up</div>
+		<div class="button" onclick="clickThePage(7)">Sign up</div>
 		<div class="button" onclick="loginAccess(2)">Sign in</div>
 	</div>
 
@@ -140,66 +139,4 @@
 	</div>
 	<div class="signInBoxHidden" onclick="loginAccess(2)"></div>
 <?php } ?>
-<script type="text/javascript">
-	//Log in
-	function loginAccess(type, email, password) {
-	    if (type == 1) {
-	        if (email === "" || password === "") {
-	            $('.error').fadeIn(300).html('Complete the Fields');
-	            setTimeout(function() {
-	                $('.error').fadeOut(300);
-	            }, 3000);
-
-	            return false;
-	        } else {
-	            $.ajax({
-	                type: 'POST',
-	                url: url + 'includes/arrancar.php',
-	                data: 'email=' + email + '&password=' + password,
-	                success: function(html) {
-	                    if (html != "false") {
-	                        $('#signInLoading').val("Loading...");
-	                        location.reload();
-	                        return true;
-	                    } else if (html == "false") {
-	                        $('.error').fadeIn(300);
-	                        setTimeout(function() {
-	                            $('.error').fadeOut(500);
-	                        }, 3000);
-	                        $('.error').html('Email or Password is incorrect');
-	                        return false;
-	                    }
-	                }
-	            });
-	        }
-	    } else if (type == 2) {
-	        $('.signInBox').toggleClass('signInBoxActive');
-	        $('.signInBoxHidden').toggleClass('signInBoxHiddenActive');
-	    }
-	}
-
-	// Log out
-	function logOut(type){
-		if (type == 1) {
-		    $('.logOutWindow').toggleClass('logOutWindowActive');
-		    $('.logOutWindowHidden').toggleClass('logOutWindowHiddenActive');
-		} else if (type == 2) {
-		    $('.logOutWindow').addClass('logOutFadeOut');
-		    $('.logOutWindowHidden').addClass('logOutFadeOut');
-
-		    setTimeout(function() {
-		        $('.logOutWindow').removeClass('logOutWindowActive');
-		        $('.logOutWindowHidden').removeClass('logOutWindowHiddenActive');
-		    }, 300);
-
-		    setTimeout(function() {
-		        $('.logOutWindow').removeClass('logOutFadeOut');
-		        $('.logOutWindowHidden').removeClass('logOutFadeOut');
-		    }, 1000);
-
-		    $('.confirmationDeleteBox').removeClass('confirmationDeleteBoxShow');
-		    $('body').removeClass('bodyFixed');
-		}
-	}
-</script>
 <?php mysql_free_result($getUserData);?>

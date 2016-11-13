@@ -253,9 +253,9 @@
 				$('.searchBox .loaderIcon').show();
 
 				$.ajax({
-					type: 'POST',
+					type: 'GET',
 					url: '<?php echo $urlWeb ?>' + 'pages/user/music/search.php',
-					data: 'titleValue=' + value,
+					data: 'searchValue=' + value + '&userId=' + userId,
 					success: function(response) {
 						setTimeout(function() {
 							$('.searchBox .searchIcon').show();

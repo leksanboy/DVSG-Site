@@ -129,39 +129,46 @@
 		loaderIcon		= '<?php include('images/svg/spinner.php');?>';
 
 	//·····> Header scrolling transparent to color
-	var imagesBox = $('.backgroundImages .imgBox'),
-		dataBox = $('.dataBox'),
-	    header = $('.header'),
-	    navHeight = 56;
+	if (window.matchMedia("(max-width: 560px)").matches) {
+		var imagesBox = $('.backgroundImages .imgBox'),
+			dataBox = $('.dataBox'),
+		    header = $('.header'),
+		    navHeight = 56;
 
-	$('.backgroundImages').css('background', "#<?php echo $row_userData['primary_color'];?>");
+		$('.backgroundImages').css('background', "#<?php echo $row_userData['primary_color'];?>");
 
-	$(window).scroll(function() {
-	    var scrollTop = $(this).scrollTop(),
-	        headlineHeight = imagesBox.outerHeight() - navHeight,
-	        navOffset = header.offset().top;
+		$(window).scroll(function() {
+		    var scrollTop = $(this).scrollTop(),
+		        headlineHeight = imagesBox.outerHeight() - navHeight,
+		        navOffset = header.offset().top;
 
-	    imagesBox.css({
-	        'opacity': (1 - scrollTop / headlineHeight)
-	    });
-	    dataBox.children().css({
-	        'transform': 'translateY(' + scrollTop * 0.4 + 'px)'
-	    });
+		    imagesBox.css({
+		        'opacity': (1 - scrollTop / headlineHeight)
+		    });
+		    dataBox.children().css({
+		        'transform': 'translateY(' + scrollTop * 0.4 + 'px)'
+		    });
 
-	    if (navOffset > headlineHeight) {
-	        $('.userName').addClass('showUserName');
-	        header.css({
-						'boxShadow': '0 2px 5px rgba(0,0,0,.26)',
-						'background': "#<?php echo $row_userData['primary_color'];?>"
-					});
-	    } else {
-	        $('.userName').removeClass('showUserName');
-			    header.css({
-						'boxShadow': 'none',
-						'background': "transparent"
-					});
-	    }
-	});
+		    if (navOffset > headlineHeight) {
+		        $('.userName').addClass('showUserName');
+		        header.css({
+							'boxShadow': '0 2px 5px rgba(0,0,0,.26)',
+							'background': "#<?php echo $row_userData['primary_color'];?>"
+						});
+		    } else {
+		        $('.userName').removeClass('showUserName');
+				    header.css({
+							'boxShadow': 'none',
+							'background': "transparent"
+						});
+		    }
+		});
+	} else {
+		$('.header').css({
+			'boxShadow': '0 2px 5px rgba(0,0,0,.26)',
+			'background': "#<?php echo $row_userData['primary_color'];?>"
+		});
+	}
 
 	//·····> Add to friends
 	<?php if (isset($_SESSION['MM_Id'])){ ?>
@@ -226,7 +233,7 @@
 			$('body').toggleClass('modalHidden');
 
 			$.ajax({
-                type: 'POST',
+                type: 'GET',
                 url: '<?php echo $urlWeb ?>' + 'pages/user/photos/slidePhotos.php',
                 data: 'position=' + position + '&photoId=' + photoId + '&userId=' + userId,
                 success: function(response){

@@ -1,178 +1,183 @@
-@media (max-width: 899px) {
-	/*Fonts*/
-	@font-face {
-		font-family: 'DVSG';
-		src: url('fonts/dvsg-bold.ttf') format('truetype');
-		font-weight: bold;
+/*Fonts*/
+@font-face {
+	font-family: 'DVSG';
+	src: url('fonts/dvsg-bold.ttf') format('truetype');
+	font-weight: bold;
+}
+@font-face {
+	font-family: 'DVSG';
+	src: url('fonts/dvsg-regular.ttf') format('truetype');
+	font-weight: normal;
+}
+@font-face {
+	font-family: 'DVSG';
+	src: url('fonts/dvsg-thin.ttf') format('truetype');
+	font-weight: 300;
+}
+@font-face {
+	font-family: 'DVSG';
+	src: url('fonts/dvsg-ultralight.ttf') format('truetype');
+	font-weight: 100;
+}
+
+/*Booleans*/
+$bodyColor: #fff;
+$primaryColor: #fff;
+$secondaryColor: #2b2a29;
+$saveButton: #0C98F5;
+
+/*Keyframes*/
+@keyframes scale {
+	0% {
+		/*null*/
+	} 100% {
+		transform: scale(1.2);
 	}
-	@font-face {
-		font-family: 'DVSG';
-		src: url('fonts/dvsg-regular.ttf') format('truetype');
-		font-weight: normal;
+}
+@keyframes ripple {
+	0% {
+		background: transparent;
+	} 25% {
+		background: transparentize($secondaryColor, .45);
+		width: 15%;
+		padding-bottom: 15%;
+	} 50% {
+		background: transparentize($secondaryColor, .55);
+		width: 85%;
+		padding-bottom: 85%;
+	} 100% {
+		width: 200%;
+		padding-bottom: 200%;
+		background: transparentize($secondaryColor, .75);
 	}
-	@font-face {
-		font-family: 'DVSG';
-		src: url('fonts/dvsg-thin.ttf') format('truetype');
-		font-weight: 300;
+}
+@keyframes fade-background-images {
+	0% {
+		opacity: 1;
 	}
-	@font-face {
-		font-family: 'DVSG';
-		src: url('fonts/dvsg-ultralight.ttf') format('truetype');
-		font-weight: 100;
+
+	25% {
+		opacity: 0;
 	}
-	/*Keyframes*/
-	@keyframes scale {
-		0% {}
 
-		100% {
-			transform: scale(1.2);
-		}
+	50% {
+		opacity: 0;
 	}
-	@keyframes ripple {
-		0% {
-			background: rgba(255, 255, 255, 0);
-		}
 
-		25% {
-			background: rgba(255, 255, 255, 0.55);
-			width: 15%;
-			padding-bottom: 15%;
-		}
-
-		50% {
-			background: rgba(255, 255, 255, 0.45);
-			width: 85%;
-			padding-bottom: 85%;
-		}
-
-		100% {
-			width: 200%;
-			padding-bottom: 200%;
-			background: rgba(255, 255, 255, 0.25);
-		}
+	100% {
+		opacity: 1;
 	}
-	@keyframes fade-background-images {
-		0% {
-			opacity: 1;
-		}
-
-		25% {
-			opacity: 0;
-		}
-
-		50% {
-			opacity: 0;
-		}
-
-		100% {
-			opacity: 1;
-		}
+}
+@keyframes fillunfill {
+	from {
+		stroke-dashoffset: 58.8;
 	}
-	@keyframes fillunfill {
-		from {
-			stroke-dashoffset: 58.8;
-		}
 
-		50% {
-			stroke-dashoffset: 0;
-		}
-
-		to {
-			stroke-dashoffset: -58.4;
-		}
+	50% {
+		stroke-dashoffset: 0;
 	}
-	@keyframes colorspinner {
-		0% {stroke: #754fa0;}
-		20% {stroke: #09b7bf;}
-		40% {stroke: #90d36b;}
-		60% {stroke: #f2d40d;}
-		80% {stroke: #fcb12b;}
-		100% {stroke: #ed1b72;}
+
+	to {
+		stroke-dashoffset: -58.4;
 	}
-	@keyframes colorspinnerwhite {
-		0% {stroke: #fff;}
-		20% {stroke: #fff;}
-		40% {stroke: #fff;}
-		60% {stroke: #fff;}
-		80% {stroke: #fff;}
-		100% {stroke: #fff;}
+}
+@keyframes colorspinner {
+	0% {stroke: #754fa0;}
+	20% {stroke: #09b7bf;}
+	40% {stroke: #90d36b;}
+	60% {stroke: #f2d40d;}
+	80% {stroke: #fcb12b;}
+	100% {stroke: #ed1b72;}
+}
+@keyframes colorspinnerwhite {
+	0% {stroke: #fff;}
+	20% {stroke: #fff;}
+	40% {stroke: #fff;}
+	60% {stroke: #fff;}
+	80% {stroke: #fff;}
+	100% {stroke: #fff;}
+}
+@keyframes rotatespinner {
+	from {
+		transform: rotate(0deg);
 	}
-	@keyframes rotatespinner {
-		from {
-			transform: rotate(0deg);
-		}
 
-		to {
-			transform: rotate(360deg);
-		}
+	to {
+		transform: rotate(360deg);
 	}
-	@keyframes rotspinner {
-		from {
-			transform: rotate(0deg);
-		}
-
-		to {
-			transform: rotate(-360deg);
-		}
+}
+@keyframes rotspinner {
+	from {
+		transform: rotate(0deg);
 	}
-	@keyframes ripplesquarebox {
-		to {
-			-webkit-transform: scale(2);
-			transform: scale(2);
-			opacity: 0;
-		}
+
+	to {
+		transform: rotate(-360deg);
 	}
-	@keyframes spinbutton {
-		0% {
-			transform: scale(1.0);
-		}
-
-		15% {
-			transform: scale(1.2);
-		}
-
-		25% {
-			transform: scale(1.0);
-		}
-
-		50% {
-			transform: scale(1.2);
-		}
-
-		100% {
-			transform: scale(1.2);
-		}
+}
+@keyframes ripplesquarebox {
+	to {
+		-webkit-transform: scale(2);
+		transform: scale(2);
+		opacity: 0;
 	}
-	@keyframes glitch {
-		0% {
-			opacity: 0.1;
-		}
-
-		50% {
-			opacity: 1;
-		}
-
-		100% {
-			opacity: 0.1;
-		}
+}
+@keyframes spinbutton {
+	0% {
+		transform: scale(1.0);
 	}
-	/*ScrollBar*/
-	::-webkit-scrollbar {
-		display: none;
-	}
-	/*Booleans*/
-	$bodyColor: #132030;
 
+	15% {
+		transform: scale(1.2);
+	}
+
+	25% {
+		transform: scale(1.0);
+	}
+
+	50% {
+		transform: scale(1.2);
+	}
+
+	100% {
+		transform: scale(1.2);
+	}
+}
+@keyframes glitch {
+	0% {
+		opacity: 0.1;
+	}
+
+	50% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0.1;
+	}
+}
+
+/*ScrollBar*/
+::-webkit-scrollbar {
+	display: none;
+}
+
+@media (max-width: 9999px) {
 	body {
+		background: $bodyColor;
+		color: $secondaryColor;
 		letter-spacing: 1px;
 		font-family: 'DVSG';
 		font-weight: 300;
-		background: #fff;
 		font-size: 14px;
-		transition: 0.3s;
-		color: #fff;
+		transition: .3s;
 		padding: 0;
 		margin: 0;
+
+		.userData,
+		.loginData{
+			display: none;
+		}
 
 		&.stopPage {
 			overflow: hidden;
@@ -214,7 +219,6 @@
 
 			.header {
 				transform: translateX(0);
-				overflow: hidden;
 				position: fixed;
 				display: block;
 				height: 48px;
@@ -229,27 +233,14 @@
 					background: rgba(#09f, 1);
 				}
 
-				.userName {
-					font-weight: normal;
-					line-height: 56px;
-					transition: 0.45s;
-					margin: 56px 0 0;
-					display: initial;
-					font-size: 15px;
-					color: #fff;
-					opacity: 0;
-					top: 0;
-
-					&.showUserName {
-						opacity: 1;
-						margin: 0;
-					}
+				.userData{
+					display: none;
 				}
 			}
 
 			.headerUser {
 				box-shadow: 0 2px 5px rgba(0,0,0,0.26);
-				background: rgba(0,0,0,.666);
+				background: $primaryColor;
 				transform: translateX(0);
 				text-align: center;
 				transition: 0.3s;
@@ -271,21 +262,6 @@
 					font-size: 16px;
 					z-index: -1;
 					width: 100%;
-				}
-
-				.buttonAction {
-					float: right;
-					height: 56px;
-					width: 56px;
-					margin: 0;
-					top: 0;
-
-					svg {
-						margin: 16px;
-						height: 24px;
-						width: 24px;
-						fill: #fff;
-					}
 				}
 
 				.hidden {
@@ -363,6 +339,7 @@
 				}
 
 				.menuLeft {
+					cursor: pointer;
 					height: 56px;
 					width: 56px;
 					float: left;
@@ -370,24 +347,41 @@
 					top: 0;
 
 					svg {
+						fill: $secondaryColor;
 						margin: 16px;
 						height: 24px;
 						width: 24px;
-						fill: #fff;
 					}
 				}
 
 				.menuRight {
+					cursor: pointer;
 					float: right;
 					height: 56px;
 					width: 56px;
 					top: 0;
 
 					svg {
+						fill: $secondaryColor;
 						margin: 16px;
 						height: 24px;
 						width: 24px;
-						fill: #fff;
+					}
+				}
+
+				.buttonAction {
+					cursor: pointer;
+					float: right;
+					height: 56px;
+					width: 56px;
+					margin: 0;
+					top: 0;
+
+					svg {
+						fill: $secondaryColor;
+						margin: 16px;
+						height: 24px;
+						width: 24px;
 					}
 				}
 
@@ -410,10 +404,11 @@
 					ul.papertabs {
 						position: relative;
 						list-style: none;
+						margin: 0 auto;
 						display: flex;
 						width: 100%;
 						padding: 0;
-						margin: 0;
+						max-width: 560px;
 
 						li {
 							text-overflow: ellipsis;
@@ -426,13 +421,13 @@
 
 							a {
 								text-transform: uppercase;
+								color: $secondaryColor;
 								text-decoration: none;
 								white-space: nowrap;
 								font-weight: normal;
 								position: relative;
 								line-height: 24px;
 								font-size: 8px;
-								color: #fff;
 								float: left;
 								width: 100%;
 
@@ -441,30 +436,30 @@
 								}
 
 								&.focused .paperripple {
-									background: rgba(255, 255, 255, 0.25);
+									background: transparentize($secondaryColor, .75);
 									transition: none;
 								}
 
 								svg {
+									fill: $secondaryColor;
 									margin: 8px auto 0;
 									display: block;
 									height: 24px;
 									width: 24px;
-									fill: #FFF;
 								}
 							}
 
 							.countReceiver{
+								background: $secondaryColor;
 								box-sizing: border-box;
+								color: $primaryColor;
 								margin: 4px 0 0 16px;
 								position: absolute;
 								border-radius: 9px;
 								text-align: center;
 								font-weight: bold;
 								line-height: 14px;
-								background: #fff;
 								font-size: 10px;
-								color: #404040;
 								padding: 0 6px;
 								height: 14px;
 								left: 50%;
@@ -474,7 +469,6 @@
 				}
 
 				.paperripple {
-					background: rgba(255, 255, 255, 0);
 					transition: ease-in 0.4s;
 					position: absolute;
 					overflow: hidden;
@@ -484,7 +478,6 @@
 					top: 0;
 
 					.circleNav {
-						background: rgba(255, 255, 255, 0);
 						transform: translate(-50%, -50%);
 						position: absolute;
 						border-radius: 50%;
@@ -496,8 +489,8 @@
 				}
 
 				#papertabs-line {
+					background: $secondaryColor;
 					position: absolute;
-					background: #fff;
 					height: 2px;
 					bottom: 0;
 				}
@@ -506,6 +499,23 @@
 			.headerMyPage {
 				box-shadow: none;
 				background: none;
+
+				.userName {
+					color: $secondaryColor;
+					font-weight: normal;
+					line-height: 56px;
+					transition: 0.45s;
+					margin: 56px 0 0;
+					display: initial;
+					font-size: 15px;
+					opacity: 0;
+					top: 0;
+
+					&.showUserName {
+						opacity: 1;
+						margin: 0;
+					}
+				}
 			}
 
 			.headerMessages,
@@ -550,27 +560,29 @@
 						.next,
 						.previous {
 							border-radius: 3px;
+							cursor: pointer;
 							margin: 8px 0;
 							height: 36px;
 							width: 36px;
 							float: left;
 
 							svg {
+								fill: $secondaryColor;
 								padding: 6px;
 								height: 24px;
 								width: 24px;
-								fill: #fff;
 							}
 
 							&:active {
-								background: rgba(255,255,255, 0.5);
+								background: transparentize($secondaryColor, 0.75);
 							}
 						}
 
 						.playPause {
+							border: 2px solid $secondaryColor;
 							box-sizing: border-box;
-							border: 2px solid #fff;
 							border-radius: 50%;
+							cursor: pointer;
 							margin: 0 12px;
 							height: 52px;
 							width: 52px;
@@ -578,10 +590,10 @@
 							.pause,
 							.play {
 								svg {
+									fill: $secondaryColor;
 									padding: 8px;
 									height: 32px;
 									width: 32px;
-									fill: #fff;
 								}
 							}
 
@@ -592,9 +604,10 @@
 					}
 
 					.titleAndProgress {
-						width: 100%;
-						float: left;
+						margin: 0 auto;
 						height: 36px;
+						width: 100%;
+						max-width: 560px;
 
 						.titleDuration {
 							display: flex;
@@ -605,13 +618,13 @@
 							.duration,
 							.text {
 								text-overflow: ellipsis;
+								color: $secondaryColor;
 								white-space: nowrap;
-								line-height: 32px;
+								line-height: 34px;
 								overflow: hidden;
 								text-align: left;
 								font-size: 13px;
-								height: 32px;
-								color: #fff;
+								height: 34px;
 								width: 100%;
 								float: left;
 							}
@@ -623,19 +636,20 @@
 						}
 
 						.progress {
-							background: rgba(255,255,255,.5);
+							background-color: transparentize($secondaryColor, .75);
 							width: 100%;
-							height: 4px;
+							height: 2px;
 							float: left;
 
 							.buffer {
-								background-color: #fff;
+								background: transparentize($secondaryColor, .75);
 								position: relative;
-								margin: -4px 0 0;
+								margin: -2px 0 0;
 								opacity: 0.5;
 								float: left;
-								height: 4px;
+								height: 2px;
 								z-index: -1;
+								width: 100%;
 							}
 
 							input[type=range] {
@@ -647,7 +661,7 @@
 								outline: none;
 								margin: auto;
 								width: 100%;
-								height: 4px;
+								height: 2px;
 								float: left;
 								padding: 0;
 
@@ -657,28 +671,21 @@
 								}
 
 								&::-webkit-slider-thumb {
-									position: relative;
-									margin: 0;
-									border: none;
-									width: 14px;
-									height: 14px;
-									transition: 0.3s;
-									border-radius: 50%;
-									background: #132030;
-									border: 4px solid #fff;
-									cursor: ew-resize;
 									box-shadow: 0 5px 10px 0 rgba(0,0,0,.29),0 13px 30px 0 rgba(0,0,0,.17);
-								}
-
-								,
-								 &::-moz-range-thumb &::-ms-thumb {
-									border: none;
-									width: 16px;
-									height: 16px;
+									background: $secondaryColor;
+									position: relative;
 									border-radius: 50%;
-									box-shadow: inset 1px 1px 3px #00cafc;
-									background: #fff;
 									cursor: ew-resize;
+									transition: 0.3s;
+									border: none;
+									height: 12px;
+									width: 12px;
+									margin: 0;
+
+									&:hover,
+									&:active {
+										transform: scale(1.5);
+									}
 								}
 							}
 						}
@@ -687,7 +694,6 @@
 			}
 
 			.innerBodyContent {
-				background: $bodyColor;
 				position: relative;
 				overflow: hidden;
 				transition: 0.3s;
@@ -703,12 +709,12 @@
 
 					form {
 						input {
+							border: 1px solid transparentize($secondaryColor, 0.5);
+							background: transparent;
 							box-sizing: border-box;
 							border-radius: 3px;
 							padding: 0 36px;
-							background: #fff;
-							color: #404040;
-							border: none;
+							font-size: 13px;
 							height: 36px;
 							width: 100%;
 							float: left;
@@ -728,10 +734,10 @@
 							float: left;
 
 							svg {
+								fill: transparentize($secondaryColor, 0.5);
 								padding: 6px;
 								height: 24px;
 								width: 24px;
-								fill: #aaa;
 							}
 						}
 
@@ -790,20 +796,24 @@
 					padding: 48px 0;
 					float: left;
 					width: 100%;
-					color: #fff;
 				}
 
 				/*Button load more*/
 				.loadMore{
+					margin: 24px 25% 0;
 					border-radius: 3px;
 					text-align: center;
 					line-height: 42px;
-					margin: 24px 25% 0;
 					background: #fff;
-					color: #404040;
+					transition: .3s;
+					cursor: pointer;
 					height: 42px;
 					float: left;
 					width: 50%;
+
+					&:hover{
+						background: transparentize($secondaryColor, .85);
+					}
 				}
 
 				/*Page loader*/
@@ -855,21 +865,62 @@
 				/*Message when save*/
 				.actionMessage {
 					box-shadow: 0 2px 5px rgba(0,0,0,0.26);
+					background: $secondaryColor;
 					text-transform: uppercase;
 					box-sizing: border-box;
+					color: $primaryColor;
 					text-align: center;
-					background: #fff;
 					transition: .3s;
 					position: fixed;
-					color: #404040;
 					padding: 12px;
 					width: 100%;
 					top: -50px;
 					z-index: 9;
 					margin: 0;
+					max-width: 560px;
 					
 					&.showMessageSettings{
 						top: 112px;
+					}
+				}
+
+				/*Message delete confirmation*/
+				.deleteBoxConfirmation {
+					box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+					border-radius: 3px;
+					position: absolute;
+					margin: -18px 0 0;
+					background: #fff;
+					display: none;
+					padding: 6px;
+					float: right;
+					right: 2%;
+
+					.text {
+						padding: 4px 6px 8px;
+						color: #404040;
+					}
+
+					.confirmation {
+						text-align: center;
+						display: flex;
+						width: 100%;
+						margin: 0;
+
+						button {
+							border-radius: 3px;
+							background: #f00;
+							outline: none;
+							margin: 0 4px;
+							border: none;
+							height: 28px;
+							color: #fff;
+							width: 100%;
+
+							&:last-child {
+								background: #09f;
+							}
+						}
 					}
 				}
 
@@ -950,10 +1001,9 @@
 							}
 
 							.name {
-								margin: 12px 0 0;
 								text-align: center;
+								margin: 12px 0 0;
 								font-weight: 700;
-								color: #404040;
 								width: 100%;
 								float: left;
 							}
@@ -964,7 +1014,6 @@
 								list-style: none;
 								margin: 12px 2%;
 								font-size: 15px;
-								color: #404040;
 								display: flex;
 								float: left;
 								width: 96%;
@@ -977,7 +1026,6 @@
 									line-height: 24px;
 									padding: 4px 6px;
 									cursor: pointer;
-									color: #404040;
 									height: 24px;
 									margin: 0 1%;
 									width: 18%;
@@ -1054,7 +1102,6 @@
 						line-height: 36px;
 						background: #09f;
 						height: 36px;
-						color: #fff;
 						float: left;
 						width: 96%;
 
@@ -1216,45 +1263,6 @@
 										margin: 3px;
 									}
 								}
-
-								.deleteBoxConfirmation {
-									box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-									border-radius: 3px;
-									position: absolute;
-									margin: -18px 0 0;
-									background: #fff;
-									display: none;
-									padding: 6px;
-									float: right;
-									z-index: 1;
-									right: 2%;
-
-									.text {
-										padding: 4px 6px 8px;
-									}
-
-									.buttons {
-										text-align: center;
-										display: flex;
-										width: 100%;
-										margin: 0;
-
-										button {
-											border-radius: 3px;
-											background: #f00;
-											outline: none;
-											margin: 0 4px;
-											border: none;
-											height: 28px;
-											color: #fff;
-											width: 100%;
-
-											&:last-child {
-												background: #09f;
-											}
-										}
-									}
-								}
 							}
 
 							.body {
@@ -1347,6 +1355,7 @@
 											height: 50vw !important;
 											width: 100% !important;
 											padding: 0 !important;
+											max-height: 260px;
 										}
 									}
 
@@ -1355,6 +1364,7 @@
 											padding: 0 0 0 1px !important;
 											height: 25vw !important;
 											width: 50% !important;
+											max-height: 150px;
 
 											&:first-child{
 												padding: 0 1px 0 0 !important;
@@ -1367,6 +1377,7 @@
 											padding: 2px 1px 0 0 !important;
 											height: 25vw !important;
 											width: 50% !important;
+											max-height: 260px;
 
 											&:first-child{
 												height: 50vw !important;
@@ -1425,6 +1436,7 @@
 											height: 75vw !important;
 											width: 100% !important;
 											padding: 0 !important;
+											max-height: 480px;
 										}
 									}
 
@@ -1433,6 +1445,7 @@
 											padding: 0 0 0 1px !important;
 											height: 75vw !important;
 											width: 50% !important;
+											max-height: 260px;
 
 											&:first-child{
 												padding: 0 1px 0 0 !important;
@@ -1446,6 +1459,7 @@
 											height: 75vw !important;
 											width: 33% !important;
 											padding: 0 !important;
+											max-height: 320px;
 
 											&:first-child{
 												margin: 0 !important;
@@ -1458,6 +1472,7 @@
 											padding: 0 0 1px 1px !important;
 											height: 45vw !important;
 											width: 50% !important;
+											max-height: 150px;
 
 											&:nth-child(2n+1){
 												padding: 0 1px 1px 0 !important;
@@ -1470,6 +1485,7 @@
 											padding: 2px 2px 0 0 !important;
 											height: 60px !important;
 											width: 25% !important;
+											max-height: 260px;
 
 											&:first-child{
 												height: 75vw !important;
@@ -1488,6 +1504,7 @@
 											padding: 2px 2px 0 0 !important;
 											height: 60px !important;
 											width: 20% !important;
+											max-height: 260px;
 
 											&:first-child{
 												height: 75vw !important;
@@ -1506,6 +1523,7 @@
 											padding: 2px 2px 0 0 !important;
 											height: 60px !important;
 											width: 20% !important;
+											max-height: 260px;
 
 											&:nth-child(-n+2){
 												padding: 0 0 0 1px !important;
@@ -1528,6 +1546,7 @@
 											padding: 2px 2px 0 0 !important;
 											height: 60px !important;
 											width: 20% !important;
+											max-height: 260px;
 
 											&:nth-child(-n+3){
 												margin: 0 0 0 .5% !important;
@@ -1552,6 +1571,7 @@
 											padding: 2px 2px 0 0 !important;
 											height: 60px !important;
 											width: 12.5% !important;
+											max-height: 260px;
 
 											&:first-child{
 												height: 75vw !important;
@@ -1728,7 +1748,6 @@
 													transition: 0.3s;
 													border-radius: 50%;
 													background: #09f;
-													/*border: 2px solid rgba(0,0,0,.5);*/
 													cursor: ew-resize;
 													box-shadow: 0 1px 5px 0 rgba(0,0,0,.29),0 7px 20px 0 rgba(0,0,0,.17);
 												}
@@ -1847,49 +1866,6 @@
 												width: 16px;
 											}
 										}
-
-										.deleteBoxConfirmation{
-											box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-											border-radius: 3px;
-											position: absolute;
-											background: #fff;
-											display: none;
-											padding: 6px;
-											float: right;
-											margin: 2px;
-											z-index: 9;
-											right: 0;
-
-											.text{
-												padding: 4px 6px 8px;
-												line-height: 24px;
-												width: inherit;
-												height: 24px;
-												margin: 0;
-											}
-
-											.buttons{
-												text-align: center;
-												display: flex;
-												width: 100%;
-												margin: 0;
-
-												button{
-													border-radius: 3px;
-													background: #f00;
-													outline: none;
-													margin: 0 4px;
-													border: none;
-													height: 28px;
-													color: #fff;
-													width: 100%;
-
-													&:last-child{
-														background: #09f;
-													}
-												}
-											}
-										}
 									}
 								}
 
@@ -1987,10 +1963,10 @@
 							width: 47%;
 
 							.video {
+								background: $secondaryColor;
 								border-radius: 3px;
-								background: #000;
 								overflow: hidden;
-								height: 96px;
+								height: 130px;
 								width: 100%;
 
 								.thumb {
@@ -2016,7 +1992,6 @@
 									font-size: 13px;
 									width: 100%;
 									float: left;
-									color: #fff;
 								}
 
 								.duration {
@@ -2034,7 +2009,6 @@
 								}
 
 								.replays {
-									color: rgba(255,255,255,.5);
 									text-align: left;
 									font-size: 10px;
 									float: left;
@@ -2106,7 +2080,6 @@
 							margin: 6px 2%;
 							display: flex;
 							height: 36px;
-							color: #fff;
 							float: left;
 							width: 96%;
 
@@ -2116,10 +2089,10 @@
 								width: 36px;
 
 								svg {
+									fill: $secondaryColor;
 									padding: 6px;
 									height: 24px;
 									width: 24px;
-									fill: #fff;
 								}
 							}
 
@@ -2148,10 +2121,10 @@
 								width: 36px;
 
 								svg {
+									fill: transparentize($secondaryColor, 0.5);
 									padding: 9px;
 									height: 18px;
 									width: 18px;
-									fill: #fff;
 								}
 
 								.delete {
@@ -2207,13 +2180,14 @@
 						li {
 							background-color: #404040;
 							box-sizing: border-box;
-							margin: 1vw 0 0 1%;
 							position: relative;
 							border-radius: 3px;
+							margin: 1% 0 0 1%;
 							transition: .3s;
 							height: 32vw;
 							float: left;
 							width: 32%;
+							max-height: 135px;
 
 							.image {
 								position: absolute;
@@ -2269,158 +2243,124 @@
 				.pageFriends {
 					margin: 128px auto 0;
 
-					#formThree,
-					#formTwo {
+					#formTwo,
+					#formThree{
 						display: none;
 					}
 
-					.friendBox {
-						border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-						padding: 12px 0;
-						margin: 0 2%;
-						float: left;
-						width: 96%;
+					ul.friendsListBox{
+						list-style: none;
+						padding: 0;
+						margin: 0;
 
-						&:last-child {
-							border: none;
-						}
-
-						.head {
+						li {
+							border-bottom: 1px solid transparentize($secondaryColor, .75);
+							padding: 12px 0;
+							margin: 0 2%;
 							float: left;
-							width: 100%;
+							width: 96%;
 
-							.image {
-								box-sizing: border-box;
-								border: 1px solid #fff;
-								border-radius: 50%;
-								overflow: hidden;
-								height: 48px;
-								width: 48px;
+							&:last-child {
+								border: none;
+							}
+
+							.head {
 								float: left;
+								width: 100%;
 
-								img {
-									height: 100%;
-									width: 100%;
-								}
-							}
+								.image {
+									border: 1px solid $secondaryColor;
+									box-sizing: border-box;
+									border-radius: 50%;
+									overflow: hidden;
+									height: 48px;
+									width: 48px;
+									float: left;
 
-							.name {
-								margin: 0 0 0 12px;
-								font-size: 15px;
-								float: left;
-								color: #fff;
-
-								.date {
-									color: rgba(255, 255, 255, 0.5);
-									margin: 2px 0 0;
-									font-size: 11px;
-								}
-							}
-
-							.delete {
-								float: right;
-								height: 24px;
-								width: 24px;
-
-								svg {
-									height: 18px;
-									width: 18px;
-									margin: 3px;
-									fill: #fff;
-								}
-							}
-
-							.deleteBoxConfirmation {
-								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-								border-radius: 3px;
-								position: absolute;
-								margin: -18px 0 0;
-								background: #fff;
-								display: none;
-								padding: 6px;
-								float: right;
-								right: 2%;
-
-								.text {
-									padding: 4px 6px 8px;
-									color: #404040;
-								}
-
-								.confirmation {
-									text-align: center;
-									display: flex;
-									width: 100%;
-									margin: 0;
-
-									button {
-										border-radius: 3px;
-										background: #f00;
-										outline: none;
-										margin: 0 4px;
-										border: none;
-										height: 28px;
-										color: #fff;
+									img {
+										height: 100%;
 										width: 100%;
-
-										&:last-child {
-											background: #09f;
-										}
 									}
 								}
-							}
 
-							.buttons {
-								margin: -26px 0 0 60px;
-								width: 100%;
-								float: left;
+								.name {
+									margin: 0 0 0 12px;
+									font-size: 15px;
+									float: left;
 
-								button {
-									text-transform: uppercase;
-									border: 1px solid #fff;
-									border-radius: 3px;
-									margin: 0 6px 0 0;
-									background: #fff;
-									color: #404040;
-									outline: none;
+									.date {
+										color: transparentize($secondaryColor, .5);
+										margin: 2px 0 0;
+										font-size: 11px;
+									}
+								}
+
+								.delete {
+									float: right;
 									height: 24px;
+									width: 24px;
 
-									svg{
-										margin: -2px 2px -5px 0;
-										fill: #404040;
+									svg {
+										fill: transparentize($secondaryColor, .5);
 										height: 18px;
 										width: 18px;
+										margin: 3px;
 									}
+								}
 
-									&:first-child {
-										background: transparent;
-										color: #fff;
+								.buttons {
+									margin: -26px 0 0 60px;
+									width: 100%;
+									float: left;
 
-										svg{
-											fill: #fff;
-										}
-									}
-
-									&.acceptButton{
+									button {
+										text-transform: uppercase;
+										border: 1px solid $secondaryColor;
+										border-radius: 3px;
+										margin: 0 6px 0 0;
 										background: #fff;
 										color: #404040;
+										outline: none;
+										height: 24px;
 
 										svg{
+											margin: -2px 2px -5px 0;
 											fill: #404040;
+											height: 18px;
+											width: 18px;
+										}
+
+										&:first-child {
+											background: transparent;
+											color: $secondaryColor;
+
+											svg{
+												fill: $secondaryColor;
+											}
+										}
+
+										&.acceptButton{
+											background: $secondaryColor;
+											color: $primaryColor;
+
+											svg{
+												fill: $primaryColor;
+											}
 										}
 									}
 								}
 							}
-						}
 
-						.body {
-							-webkit-box-orient: vertical;
-							text-overflow: ellipsis;
-							-webkit-line-clamp: 2;
-							word-break: break-all;
-							display: -webkit-box;
-							margin: 0 0 0 60px;
-							overflow: hidden;
-							float: left;
+							.body {
+								-webkit-box-orient: vertical;
+								text-overflow: ellipsis;
+								-webkit-line-clamp: 2;
+								word-break: break-all;
+								display: -webkit-box;
+								margin: 0 0 0 60px;
+								overflow: hidden;
+								float: left;
+							}
 						}
 					}
 				}
@@ -2433,175 +2373,143 @@
 						display: none;
 					}
 
-					.messageBox {
-						border-bottom: 1px solid rgba(255, 255, 255, 0.13);
-						padding: 12px 0;
-						margin: 0 2%;
-						float: left;
-						width: 96%;
+					ul.inboxListBox,
+					ul.outboxListBox {
+						list-style: none;
+						padding: 0;
+						margin: 0;
 
-						&:last-child {
-							border: none;
-						}
-
-						.head {
+						li {
+							border-bottom: 1px solid rgba(255, 255, 255, 0.13);
+							padding: 12px 0;
+							margin: 0 2%;
 							float: left;
-							width: 100%;
+							width: 96%;
 
-							.image {
-								box-sizing: border-box;
-								border: 1px solid #fff;
-								position: relative;
-								border-radius: 50%;
-								overflow: hidden;
-								height: 48px;
-								width: 48px;
-								float: left;
-								z-index: 1;
-
-								img {
-									height: 100%;
-									width: 100%;
-								}
+							&:last-child {
+								border: none;
 							}
 
-							.imageSender {
-								margin: 28px 0 0 28px;
-								position: absolute;
-
-								svg {
-									filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.86));
-									margin: -10px -20px 0 -8px;
-									position: relative;
-									fill: #e5e5e5;
-									height: 20px;
-									width: 20px;
-									float: left;
-									z-index: 2;
-								}
+							.head {
+								float: left;
+								width: 100%;
 
 								.image {
-									box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+									border: 1px solid $secondaryColor;
 									box-sizing: border-box;
-									border: 1px solid #fff;
 									position: relative;
 									border-radius: 50%;
 									overflow: hidden;
-									height: 28px;
-									width: 28px;
-									z-index: 2;
+									height: 48px;
+									width: 48px;
+									float: left;
+									z-index: 1;
 
 									img {
 										height: 100%;
 										width: 100%;
 									}
 								}
-							}
 
-							.name {
-								margin: 0 0 0 12px;
-								font-size: 15px;
-								float: left;
-								color: #fff;
+								.imageSender {
+									margin: 28px 0 0 28px;
+									position: absolute;
 
-								.glitch {
-									animation: glitch 1.3s infinite;
-									font-weight: normal;
-									margin: 2px 8px 0 0;
-									border-radius: 3px;
-									text-align: center;
-									line-height: 14px;
-									background: #fff;
-									font-size: 11px;
-									color: #404040;
-									padding: 0 8px;
-									height: 14px;
-									float: left;
-								}
+									svg {
+										filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.86));
+										fill: transparentize($secondaryColor, .5);
+										margin: -10px -20px 0 -8px;
+										position: relative;
+										height: 20px;
+										width: 20px;
+										float: left;
+										z-index: 2;
+									}
 
-								.date {
-									color: rgba(255, 255, 255, 0.5);
-									margin: 6px 0 0 8px;
-									font-size: 10px;
-									float: right;
-								}
-							}
-
-							.delete {
-								position: relative;
-								float: right;
-								height: 24px;
-								width: 24px;
-
-								svg {
-									height: 18px;
-									width: 18px;
-									margin: 3px;
-									fill: #fff;
-								}
-							}
-
-							.deleteBoxConfirmation {
-								box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-								border-radius: 3px;
-								position: absolute;
-								margin: -18px 0 0;
-								background: #fff;
-								display: none;
-								padding: 6px;
-								float: right;
-								right: 2%;
-
-								.text {
-									padding: 4px 6px 8px;
-									color: #404040;
-								}
-
-								.buttons {
-									text-align: center;
-									display: flex;
-									width: 100%;
-									margin: 0;
-
-									button {
-										border-radius: 3px;
-										background: #f00;
-										outline: none;
-										margin: 0 4px;
-										border: none;
+									.image {
+										box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+										box-sizing: border-box;
+										border: 1px solid #fff;
+										position: relative;
+										border-radius: 50%;
+										overflow: hidden;
 										height: 28px;
-										color: #fff;
-										width: 100%;
+										width: 28px;
+										z-index: 2;
 
-										&:last-child {
-											background: #09f;
+										img {
+											height: 100%;
+											width: 100%;
 										}
 									}
 								}
+
+								.name {
+									margin: 0 0 0 12px;
+									font-size: 15px;
+									float: left;
+
+									.glitch {
+										animation: glitch 1.3s infinite;
+										background: $secondaryColor;
+										text-transform: capitalize;
+										color: $primaryColor;
+										font-weight: normal;
+										margin: 2px 8px 0 0;
+										border-radius: 3px;
+										text-align: center;
+										line-height: 14px;
+										font-size: 11px;
+										padding: 0 8px;
+										height: 14px;
+										float: left;
+									}
+
+									.date {
+										color: transparentize($secondaryColor, .5);
+										margin: 6px 0 0 8px;
+										font-size: 10px;
+										float: right;
+									}
+								}
+
+								.delete {
+									position: relative;
+									float: right;
+									height: 24px;
+									width: 24px;
+
+									svg {
+										fill: transparentize($secondaryColor, .5);
+										height: 18px;
+										width: 18px;
+										margin: 3px;
+									}
+								}
+							}
+
+							.body {
+								-webkit-box-orient: vertical;
+								padding: 6px 4px 2px 60px;
+								text-overflow: ellipsis;
+								box-sizing: border-box;
+								-webkit-line-clamp: 2;
+								word-break: break-all;
+								display: -webkit-box;
+								margin: -30px 0 0;
+								overflow: hidden;
+								width: 100%;
+								float: left;
+							}
+
+							&.pendingMessage{
+								background: transparentize($secondaryColor, .75);
+								border-radius: 3px;
+								padding: 6px 1%;
+								margin: 6px 1%;
+								width: 96%;
 							}
 						}
-
-						.body {
-							-webkit-box-orient: vertical;
-							padding: 6px 4px 2px 60px;
-							text-overflow: ellipsis;
-							box-sizing: border-box;
-							-webkit-line-clamp: 2;
-							word-break: break-all;
-							display: -webkit-box;
-							margin: -30px 0 0;
-							overflow: hidden;
-							width: 100%;
-							float: left;
-						}
-					}
-
-					.pendingMessage{
-						background: rgba(255, 255, 255, 0.25);
-						border-radius: 3px;
-						padding: 6px 1%;
-						margin: 6px 1%;
-						width: 96%;
 					}
 				}
 
@@ -2622,7 +2530,7 @@
 						.avatar,
 						.background {
 							box-shadow: 0 0 5px rgba(0,0,0,.15);
-							border: 1px solid #fff;
+							border: 1px solid $secondaryColor;
 							border-radius: 3px;
 							position: relative;
 							overflow: hidden;
@@ -2631,6 +2539,7 @@
 							margin: auto;
 
 							img {
+								cursor: pointer;
 								height: 100%;
 								width: 100%;
 							}
@@ -2651,7 +2560,7 @@
 							width: 200px;
 						}
 
-						button {
+						/*button {
 							text-transform: uppercase;
 							border-radius: 3px;
 							margin: 12px auto;
@@ -2662,33 +2571,36 @@
 							height: 36px;
 							border: none;
 							color: #fff;
-						}
+						}*/
 					}
 
 					.colorBox {
+						margin: 0 2%;
 						float: left;
-						width: 100%;
+						width: 96%;
 
 						.title {
-							color: rgba(255, 255, 255, 0.5);
-							padding: 8px 2%;
+							color: transparentize($secondaryColor, .5);
+							box-sizing: border-box;
+							padding: 8px 1%;
 							width: 100%;
 						}
 
 						.selector {
-							margin: 0 2%;
 							float: left;
-							width: 96%;
+							width: 100%;
+							margin: 0;
 
 							button {
+								border: 1px solid transparentize($secondaryColor, .5);
 								text-transform: uppercase;
+								background: transparent;
+								color: $secondaryColor;
 								border-radius: 3px;
-								background: #fff;
+								cursor: pointer;
 								font-size: 13px;
 								outline: none;
 								height: 36px;
-								border: none;
-								color: #fff;
 								float: left;
 								width: 20%;
 							}
@@ -2699,23 +2611,23 @@
 								width: 0;
 
 								svg {
+									fill: $secondaryColor;
 									margin: 11px 0 0 22px;
 									height: 14px;
 									width: 14px;
-									fill: #fff;
 								}
 							}
 
 							input {
+								border: 1px solid transparentize($secondaryColor, .5);
 								background: transparent;
+								color: $secondaryColor;
 								box-sizing: border-box;
-								border: 1px solid #fff;
 								border-radius: 3px;
 								margin: 0 0 0 2%;
 								padding: 0 36px;
 								outline: none;
 								height: 36px;
-								color: #fff;
 								float: left;
 								width: 78%;
 
@@ -2726,13 +2638,11 @@
 						}
 
 						.box {
-							box-shadow: inset 0 8px 8px -8px #000, inset 0 -8px 8px -8px #000;
-							background: #123055;
-							overflow: hidden;
 							margin: 12px 0 0;
+							overflow: hidden;
 							transition: 0.6s;
-							width: 100%;
 							float: left;
+							width: 100%;
 							height: 0;
 
 							.btn {
@@ -2803,10 +2713,43 @@
 							.button-bluegrey {
 								background: #607D8B;
 							}
+
+							.button-light {
+								background: #ffffff;
+							}
+
+							.button-dark {
+								background: #2b2a29;
+							}
 						}
 
 						.showColorBox {
-							height: 146px;
+							height: 196px;
+						}
+
+						.buttons{
+							display: flex;
+
+							button{
+								border: 1px solid transparentize($secondaryColor, .5);
+								text-transform: uppercase;
+								border-radius: 3px;
+								margin: 0 2% 0 0;
+								background: #fff;
+								cursor: pointer;
+								font-size: 13px;
+								color: #404040;
+								outline: none;
+								height: 36px;
+								float: left;
+								width: 50%;
+
+								&:last-child{
+									background: #2b2a29;
+									color: #fff;
+									margin: 0;
+								}
+							}
 						}
 					}
 
@@ -2816,39 +2759,21 @@
 						width: 96%;
 
 						.title {
-							color: rgba(255, 255, 255, 0.5);
+							color: transparentize($secondaryColor, .5);
 							box-sizing: border-box;
-							padding: 8px 2%;
+							padding: 8px 1%;
 							width: 100%;
 						}
 
 						input {
+							border: 1px solid transparentize($secondaryColor, .5);
 							background: transparent;
 							box-sizing: border-box;
-							border: 1px solid #fff;
+							color: $secondaryColor;
 							border-radius: 3px;
 							padding: 0 8px;
 							outline: none;
 							height: 36px;
-							color: #fff;
-							float: left;
-							width: 100%;
-							margin: 0;
-
-							&:focus {
-								border-color: #09f;
-							};
-						}
-
-						.aboutMe {
-							background: transparent;
-							box-sizing: border-box;
-							border: 1px solid #fff;
-							border-radius: 3px;
-							min-height: 98px;
-							padding: 6px 8px;
-							outline: none;
-							color: #fff;
 							float: left;
 							width: 100%;
 							margin: 0;
@@ -2860,21 +2785,21 @@
 
 						.select {
 							box-sizing: border-box;
+							display: flex;
 							height: 36px;
 							float: left;
 							width: 100%;
 							margin: 0;
-							display: flex;
 
 							select {
+								border: 1px solid transparentize($secondaryColor, .5);
 								background: transparent;
+								color: $secondaryColor;
 								box-sizing: border-box;
-								border: 1px solid #fff;
 								border-radius: 3px;
 								margin: 0 0 0 1%;
 								outline: none;
 								height: 36px;
-								color: #fff;
 								float: left;
 								width: 100%;
 
@@ -2882,6 +2807,24 @@
 									margin: 0;
 								}
 							}
+						}
+
+						.aboutMe {
+							border: 1px solid transparentize($secondaryColor, .5);
+							background: transparent;
+							color: $secondaryColor;
+							box-sizing: border-box;
+							border-radius: 3px;
+							min-height: 98px;
+							padding: 6px 8px;
+							outline: none;
+							float: left;
+							width: 100%;
+							margin: 0;
+
+							&:focus {
+								border-color: #09f;
+							};
 						}
 
 						.status {
@@ -2958,13 +2901,13 @@
 
 						a {
 							text-transform: uppercase;
+							color: $secondaryColor;
 							font-weight: normal;
 							text-align: center;
 							border-radius: 3px;
 							line-height: 36px;
 							margin: 0 2% 24px;
-							background: #fff;
-							color: #404040;
+							cursor: pointer;
 							height: 36px;
 							float: left;
 							width: 96%;
@@ -2976,20 +2919,18 @@
 								fill: #fff;
 							}
 
-							&.selected {
+							&:active,
+							&:hover{
+								background: #09f;
 								color: #fff;
-
-								svg {
-									fill: #fff;
-								}
 							}
 
-							&:active {
-								background: #404040;
-								color: #fff;
+							&.selected {
+								background: $secondaryColor;
+								color: $primaryColor;
 
 								svg {
-									fill: #fff;
+									fill: $primaryColor;
 								}
 							}
 						}
@@ -2998,14 +2939,15 @@
 					.button{
 						text-transform: uppercase;
 						text-overflow: ellipsis;
+						background: $saveButton;
 						white-space: nowrap;
-						background: #0C98F5;
 						border-radius: 3px;
 						text-align: center;
 						line-height: 42px;
-						margin: 32px 2%;
 						transition: .45s;
 						appearance: none;
+						margin: 32px 2%;
+						cursor: pointer;
 						font-size: 13px;
 						display: block;
 						outline: none;
@@ -3054,23 +2996,10 @@
 							}
 						}
 					}
-
-					/*
-					.errorButton {
-						background: #ff0000 !important;
-						margin: 36px 25% !important;
-						width: 50% !important;
-					}
-
-					.doneButton {
-						background: #0099ff !important;
-						margin: 36px 2% !important;
-						width: 96% !important;
-					}*/
 				}
 
 				.footer {
-					/*background: $bodyColor;*/
+					color: $secondaryColor;
 					padding: 64px 0 24px;
 					text-align: center;
 					position: relative;
@@ -3083,9 +3012,9 @@
 						display: -webkit-inline-box;
 						display: -moz-inline-box;
 						position: relative;
-						margin: 0 0 12px;
 						text-align: center;
 						list-style: none;
+						margin: 0 0 12px;
 						height: 36px;
 						padding: 0;
 
@@ -3094,15 +3023,18 @@
 							padding: 0 8px;
 
 							&:active {
-								border-radius: 3px;
-								background: #fff;
-								color: #404040;
+								text-decoration: underline;
 							}
 						}
 
 						div {
 							padding: 4px 0;
 						}
+					}
+
+					.copy{
+						font-weight: normal;
+						font-size: 12px;
 					}
 				}
 			}
@@ -3124,32 +3056,6 @@
 					overflow: hidden;
 					height: 160px;
 					width: 100%;
-
-					/*.images {
-						position: absolute;
-						overflow: hidden;
-						height: 100%;
-						width: 100%;
-
-						.fadeImage {
-							position: absolute;
-							filter: blur(3px);
-							height: 50vw;
-							width: 100%;
-
-							&:nth-child(1) {
-								animation: fade-background-images 24s 18s infinite;
-							}
-
-							&:nth-child(2) {
-								animation: fade-background-images 24s 12s infinite;
-							}
-
-							&:nth-child(3) {
-								animation: fade-background-images 24s 6s infinite;
-							}
-						}
-					}*/
 
 					.backgroundImage{
 						background: #212121;
@@ -3301,7 +3207,7 @@
 			}
 
 			.addShadowColor {
-				background: rgba(0, 0, 0, 0.333);
+				background: rgba(0, 0, 0, 0.15);
 			}
 
 			.rightSideBlock {
@@ -3334,13 +3240,14 @@
 				left: 5%;
 
 				.text {
+					padding: 24px 0 12px;
 					text-align: center;
 					color: #404040;
-					padding: 24px;
 				}
 
-				.button {
-					margin: 12px 0 12px 10%;
+				.button{
+					text-transform: uppercase;
+					margin: 12px 0 12px 7.5%;
 					background: #404040;
 					text-align: center;
 					border-radius: 3px;
@@ -3348,10 +3255,10 @@
 					height: 36px;
 					float: left;
 					color: #fff;
-					width: 36%;
+					width: 40%;
 
-					&:last-child {
-						margin: 12px 0 12px 8%;
+					&:last-child{
+						margin: 12px 0 12px 5%;
 						background: #09f;
 						color: #fff;
 					}
@@ -3486,10 +3393,10 @@
 					white-space: nowrap;
 					border-radius: 3px;
 					text-align: center;
+					color: $saveButton;
 					line-height: 36px;
 					background: #fff;
 					font-size: 13px;
-					color: #0C98F5;
 					outline: none;
 					width: 45.5%;
 					height: 36px;
@@ -3498,7 +3405,7 @@
 
 					&:last-child {
 						box-shadow: 0 3px 10px 0 rgba(0,0,0,.19), 0 17px 50px 0 rgba(0,0,0,0.07);
-						background: #0C98F5;
+						background: $saveButton;
 						color: #fff;
 					}
 
@@ -3602,6 +3509,400 @@
 
 		.moveToLeft {
 			transform: translateX(-83%) !important;
+			transition: 0.3s;
+		}
+	}
+}
+
+/*DESKTOP*/
+@media (min-width: 560px) {
+	body{
+		.webAccess,
+		.signInBox{
+			display: none;
+		}
+
+		.innerBody{
+			.headerUser{
+				.userData{
+					display: block;
+					float: right;
+					height: 56px;
+					padding: 0;
+					top: 0;
+
+					.avatar{
+						border: 1px solid $secondaryColor;
+						box-sizing: border-box;
+						border-radius: 50%;
+						overflow: hidden;
+						cursor: pointer;
+						transition: .6s;
+						margin: 10px;
+						height: 36px;
+						width: 36px;
+						float: left;
+
+						img{
+							border-radius: 50%;
+							height: 100%;
+							width: 100%;
+						}
+
+						&:hover{
+							box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+						}
+					}
+
+					.name{
+						font-weight: normal;
+						border-radius: 3px;
+						margin: 17px 0 0 0;
+						line-height: 18px;
+						padding: 2px 4px;
+						transition: .3s;
+						cursor: pointer;
+						font-size: 14px;
+						height: 18px;
+						float: left;
+
+						&:hover{
+							box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+							background: #404040;
+							color: #fff;
+						}
+					}
+
+					.dataBox{
+						display: none;
+						float: left;
+						height: 0;
+						width: 0;
+
+						.box{
+							box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+							background: $secondaryColor;
+							margin: 60px 0px 0 0;
+							position: relative;
+							border-radius: 3px;
+							display: flex;
+							padding: 4px;
+							float: right;
+							z-index: 2;
+							right: 0;
+
+							&:after{
+								border-bottom: 8px solid $secondaryColor;
+								border-right: 8px solid transparent;
+								border-left: 8px solid transparent;
+								margin: -8px 20px 0 0;
+								position: absolute;
+								content: '';
+								height: 0;
+								right: 0;
+								width: 0;
+								top: 0;
+							}
+
+							.button{
+								border-radius: 3px;
+								transition: .6s;
+								cursor: pointer;
+								height: 48px;
+								width: 48px;
+								float: left;
+
+								svg{
+									fill: $primaryColor;
+									margin: 12px;
+									height: 24px;
+									width: 24px;
+								}
+
+								&:hover{
+									background: transparentize($primaryColor, 0.85);
+									
+									svg{
+										fill: $primaryColor;
+									}
+								}
+							}
+						}
+					}
+				}
+
+				.loginData{
+					margin: 17px 16px 0 0;
+					font-weight: inherit;
+					line-height: 18px;
+					transition: .3s;
+					cursor: pointer;
+					font-size: 14px;
+					display: block;
+					float: right;
+					height: 18px;
+					color: #fff;
+					top: 0;
+
+					span{
+						border-radius: 3px;
+						padding: 2px 6px;
+
+						&:hover{
+							text-decoration: underline;
+						}
+					}
+
+					.dataBox{
+						display: none;
+						box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+						margin: 16px 16px 0 0;
+						position: absolute;
+						border-radius: 3px;
+						padding: 12px 4px;
+						background: #fff;
+						width: 320px;
+						z-index: 2;
+						right: 0;
+
+						&:after{
+							border-right: 8px solid transparent;
+							border-left: 8px solid transparent;
+							border-bottom: 8px solid #fff;
+							margin: -8px 24px 0 0;
+							position: absolute;
+							content: '';
+							height: 0;
+							right: 0;
+							width: 0;
+							top: 0;
+						}
+
+						.error {
+							background: rgba(213, 0, 0,.3);
+							text-align: center;
+							border-radius: 3px;
+							line-height: 36px;
+							padding: 2px 3%;
+							font-size: 13px;
+							margin: 12px 3%;
+							color: #D50000;
+							display: none;
+							height: 36px;
+							width: 88%;
+						}
+
+						label {
+							text-align: left;
+							font-size: 13px;
+							color: #404040;
+							margin: 0 5%;
+							float: left;
+							width: 90%;
+						}
+
+						input {
+							border: 1px solid #999;
+							border-radius: 3px;
+							background: none;
+							transition: 0.3s;
+							margin: 12px 3%;
+							color: #404040;
+							outline: none;
+							padding: 0 2%;
+							height: 36px;
+							width: 90%;
+
+							&:focus {
+								border: 1px solid #09f;
+							}
+						}
+
+						button {
+							text-transform: uppercase;
+							-webkit-appearance: none;
+							text-overflow: ellipsis;
+							margin: 16px 0 0 3%;
+							white-space: nowrap;
+							border-radius: 3px;
+							color: $saveButton;
+							text-align: center;
+							line-height: 36px;
+							background: #fff;
+							font-size: 13px;
+							outline: none;
+							width: 45.5%;
+							height: 36px;
+							border: none;
+							float: left;
+
+							&:last-child {
+								box-shadow: 0 3px 10px 0 rgba(0,0,0,.19), 0 17px 50px 0 rgba(0,0,0,0.07);
+								background: $saveButton;
+								color: #fff;
+							}
+
+							&:active {
+								box-shadow: 0 3px 10px 0 rgba(0,0,0,.19), 0 17px 50px 0 rgba(0,0,0,0.07);
+								background: #09f;
+								color: #fff;
+							}
+						}
+					}
+				}
+			}
+
+			.innerBodyContent{
+				position: relative;
+				margin: 0 auto;
+				width: 560px;
+				z-index: 8;
+				top: 0;
+
+				.pageUser{
+					border-radius: 3px;
+					margin: 68px 0 0;
+
+					.userBox {
+						width: 100%;
+						position: relative;
+						overflow: hidden;
+						border-radius: 3px;
+
+						.backgroundImages {
+							position: relative;
+							overflow: hidden;
+							height: 240px;
+							width: 100%;
+
+							.imgBox {
+								background-size: cover;
+								height: 100%;
+								width: 100%;
+								float: left;
+
+								img.fadeImage {
+									position: absolute;
+									height: 240px;
+									width: 100%;
+
+									&:nth-child(1) {
+										animation: fade-background-images 24s 18s infinite;
+									}
+
+									&:nth-child(2) {
+										animation: fade-background-images 24s 12s infinite;
+									}
+
+									&:nth-child(3) {
+										animation: fade-background-images 24s 6s infinite;
+									}
+								}
+
+								&:after {
+									position: absolute;
+									content: '';
+									top: 0;
+									left: 0;
+									width: 100%;
+									height: 100%;
+									background: rgba(#09f, 0);
+								}
+							}
+						}
+
+						.dataBox {
+							position: relative;
+							background: #fff;
+							height: 128px;
+							margin: 0;
+
+							.image{
+								border: 2px solid #fff;
+								margin: -43px 0 0 -43px;
+								box-sizing: border-box;
+								background: #1e1e1e;
+								border-radius: 5px;
+								position: relative;
+								overflow: hidden;
+								height: 86px;
+								width: 86px;
+								float: left;
+								left: 50%;
+
+								img {
+									height: 100%;
+									width: 100%;
+								}
+							}
+
+							.name {
+								color: $secondaryColor;
+								font-weight: normal;
+								text-align: center;
+								margin: 12px 0 0;
+								width: 100%;
+								float: left;
+							}
+
+							ul.media {
+								text-transform: lowercase;
+								font-weight: normal;
+								list-style: none;
+								margin: 12px 2%;
+								font-size: 15px;
+								color: #404040;
+								display: flex;
+								float: left;
+								width: 96%;
+								padding: 0;
+
+								li {
+									text-transform: capitalize;
+									text-align: center;
+									border-radius: 3px;
+									line-height: 24px;
+									padding: 4px 6px;
+									cursor: pointer;
+									color: #404040;
+									height: 24px;
+									margin: 0 1%;
+									width: 18%;
+
+									span {
+										display: none;
+									}
+
+									svg {
+										margin: 0 0 -4px;
+										fill: #404040;
+										height: 20px;
+										width: 20px;
+									}
+
+									&:hover {
+										box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+			.leftSideBlock,
+			.rightSideBlock{
+				max-width: 300px;
+			}
+		}
+
+		.moveToRight {
+			transform: translateX(300px) !important;
+			transition: 0.3s;
+		}
+
+		.moveToLeft {
+			transform: translateX(-300px) !important;
 			transition: 0.3s;
 		}
 	}

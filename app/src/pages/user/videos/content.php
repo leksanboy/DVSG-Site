@@ -326,8 +326,7 @@
 						$('#playerBoxVideoProgress').val(duration);
 
 						$('#playerBoxVideoProgress').css({
-							'backgroundSize': (duration / 10) + '% 100%',
-							'background-image': "linear-gradient(#<?php echo $row_userData['secondary_color'];?>, #<?php echo $row_userData['secondary_color'];?>)"
+							'backgroundSize': (duration / 10) + '% 100%'
 						});
 					}
 			    });

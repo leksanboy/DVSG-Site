@@ -2,63 +2,68 @@
 	$userId = $_GET['userId'];
 	
 	//My friends
-	$query_myFriends = sprintf("SELECT * FROM z_friends WHERE receiver = %s AND status = 2 OR sender = %s AND status = 2",
+	$query_friendsList = sprintf("SELECT * 
+									FROM z_friends 
+									WHERE receiver = %s AND status = 2 OR sender = %s AND status = 2",
 	GetSQLValueString($userId,"int"),
 	GetSQLValueString($userId,"int"));
-	$myFriends = mysql_query($query_myFriends, $conexion) or die(mysql_error());
-	$row_myFriends = mysql_fetch_assoc($myFriends);
-	$totalRows_myFriends = mysql_num_rows($myFriends);
+	$friendsList = mysql_query($query_friendsList, $conexion) or die(mysql_error());
+	$row_friendsList = mysql_fetch_assoc($friendsList);
+	$totalRows_friendsList = mysql_num_rows($friendsList);
 ?>
-<?php if ($totalRows_myFriends == 0){ ?>
-	<center>Search a friend</center>
-<?php } else { ?>
-	<?php do { 
-		if ($row_myFriends['sender'] == $userId){ 
-			$receiver = $row_myFriends['receiver'];
-		} else if ($row_myFriends['receiver'] == $userId){ 
-			$receiver = $row_myFriends['sender'];
+<?php if ($totalRows_friendsList != 0){ ?>
+	<ul class="friendsListBox">
+		<?php do { 
+		if ($row_friendsList['sender'] == $userId){ 
+			$receiver = $row_friendsList['receiver'];
+		} else if ($row_friendsList['receiver'] == $userId){ 
+			$receiver = $row_friendsList['sender'];
 		} ?>
-
-		<div class="friendBox" id="friend<?php echo $row_myFriends['id'] ?>">
-			<div class="head">
-				<div class="image" onclick="userPage(<?php echo $receiver ?>)">
-					<img src="<?php echo userAvatar($receiver) ?>"/>
-				</div>
-				<div class="name" onclick="userPage(<?php echo $receiver ?>)">
-					<?php echo userName($receiver) ?>
-				</div>
-				<?php if ($userId == $_SESSION['MM_Id']) { ?>
-					<div class="delete" onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">
-						<?php include("../../../../images/svg/close.php"); ?>
+			<li id="friend<?php echo $row_friendsList['id'] ?>">
+				<div class="head">
+					<div class="image" onclick="userPage(<?php echo $receiver ?>)">
+						<img src="<?php echo userAvatar($receiver) ?>"/>
 					</div>
-					<div class="deleteBoxConfirmation" id="delete<?php echo $row_myFriends['id'] ?>">
-						<div class="text">Delete from friends?</div>
-						<div class="confirmation">
-							<button onClick="deleteFriend(1, <?php echo $row_myFriends['id'] ?>)">NO</button>
-							<button onClick="deleteFriend(2, <?php echo $row_myFriends['id'] ?>, <?php echo $receiver ?>, <?php echo $_SESSION['MM_Id'] ?>)">YES</button>
+					<div class="name" onclick="userPage(<?php echo $receiver ?>)">
+						<?php echo userName($receiver) ?>
+					</div>
+					<?php if ($userId == $_SESSION['MM_Id']) { ?>
+						<div class="delete" onClick="deleteFriend(1, <?php echo $row_friendsList['id'] ?>)">
+							<?php include("../../../../images/svg/close.php"); ?>
 						</div>
-					</div>
-				<?php } else { 
-					if ($receiver != $_SESSION['MM_Id']) {
-						if(checkFriendStatus($row_myFriends['id'], $_SESSION['MM_Id']) == 0){ ?>
-							<div class="buttons">
-								<button onClick="statusFriendOtherUser(0, <?php echo $receiver ?>, <?php echo $row_myFriends['id'] ?>)">
-									<?php include("../../../../images/svg/add.php");?>
-									Add to friends
-								</button>
+						<div class="deleteBoxConfirmation" id="delete<?php echo $row_friendsList['id'] ?>">
+							<div class="text">Delete from friends?</div>
+							<div class="confirmation">
+								<button onClick="deleteFriend(1, <?php echo $row_friendsList['id'] ?>)">NO</button>
+								<button onClick="deleteFriend(2, <?php echo $row_friendsList['id'] ?>, <?php echo $receiver ?>, <?php echo $_SESSION['MM_Id'] ?>)">YES</button>
 							</div>
-						<?php } else { ?>
-							<div class="buttons">
-								<button onClick="statusFriendOtherUser(1, <?php echo $receiver ?>, <?php echo $row_myFriends['id'] ?>)">
-									<?php include("../../../../images/svg/close.php");?>
-									Cancel request
-								</button>
-							</div>
-						<?php }
-					}
-				} ?>
-			</div>
-		</div>
-	<?php } while ($row_myFriends = mysql_fetch_assoc($myFriends)); ?>
+						</div>
+					<?php } else { 
+						if ($receiver != $_SESSION['MM_Id']) {
+							if(checkFriendStatus($row_friendsList['id'], $_SESSION['MM_Id']) == 0){ ?>
+								<div class="buttons">
+									<button onClick="statusFriendOtherUser(0, <?php echo $receiver ?>, <?php echo $row_friendsList['id'] ?>)">
+										<?php include("../../../../images/svg/add.php");?>
+										Add to friends
+									</button>
+								</div>
+							<?php } else { ?>
+								<div class="buttons">
+									<button onClick="statusFriendOtherUser(1, <?php echo $receiver ?>, <?php echo $row_friendsList['id'] ?>)">
+										<?php include("../../../../images/svg/close.php");?>
+										Cancel request
+									</button>
+								</div>
+							<?php }
+						}
+					} ?>
+				</div>
+			</li>
+		<?php } while ($row_friendsList = mysql_fetch_assoc($friendsList)); ?>
+	</ul>
+<?php } else { ?>
+	<div class="noData">
+		No friends
+	</div>
 <?php } ?>
-<?php mysql_free_result($myFriends); ?>
+<?php mysql_free_result($friendsList); ?>

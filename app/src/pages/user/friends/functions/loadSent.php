@@ -2,32 +2,36 @@
 	$userId = $_GET['userId'];
 	
 	//Pending friends 'sent'
-	$query_pendingSent = sprintf("SELECT * FROM z_friends WHERE sender = %s AND status = 1",
+	$query_sentList = sprintf("SELECT * FROM z_friends WHERE sender = %s AND status = 1",
 	GetSQLValueString($userId, "int"));
-	$pendingSent = mysql_query($query_pendingSent, $conexion) or die(mysql_error());
-	$row_pendingSent = mysql_fetch_assoc($pendingSent);
-	$totalRows_pendingSent = mysql_num_rows($pendingSent);
+	$sentList = mysql_query($query_sentList, $conexion) or die(mysql_error());
+	$row_sentList = mysql_fetch_assoc($sentList);
+	$totalRows_sentList = mysql_num_rows($sentList);
 ?>
-<?php if ($totalRows_pendingSent == 0){ ?>
-	<center>Have not sent requests</center>
+<?php if ($totalRows_sentList != 0){ ?>
+	<ul class="friendsListBox">
+		<?php do { ?>
+			<li id="friend<?php echo $row_sentList['id'] ?>">
+				<div class="head">
+					<div class="image" onclick="userPage(<?php echo $row_sentList['receiver'] ?>)">
+						<img src="<?php echo userAvatar($row_sentList['receiver']) ?>"/>
+					</div>
+					<div class="name" onclick="userPage(<?php echo $row_sentList['receiver'] ?>)">
+						<?php echo userName($row_sentList['receiver']) ?>
+					</div>
+					<div class="buttons">
+						<button onClick="statusFriend(1, <?php echo $row_sentList['receiver'] ?>, <?php echo $row_sentList['id'] ?>)">
+							<?php include("../../../../images/svg/close.php");?>
+							Cancel Request
+						</button>
+					</div>
+				</div>
+			</li>
+		<?php } while ($row_sentList = mysql_fetch_assoc($sentList)); ?>
+	</ul>
 <?php } else { ?>
-	<?php do { ?>
-		<div class="friendBox" id="friend<?php echo $row_pendingSent['id'] ?>">
-			<div class="head">
-				<div class="image" onclick="userPage(<?php echo $row_pendingSent['receiver'] ?>)">
-					<img src="<?php echo userAvatar($row_pendingSent['receiver']) ?>"/>
-				</div>
-				<div class="name" onclick="userPage(<?php echo $row_pendingSent['receiver'] ?>)">
-					<?php echo userName($row_pendingSent['receiver']) ?>
-				</div>
-				<div class="buttons">
-					<button onClick="statusFriend(1, <?php echo $row_pendingSent['receiver'] ?>, <?php echo $row_pendingSent['id'] ?>)">
-						<?php include("../../../../images/svg/close.php");?>
-						Cancel Request
-					</button>
-				</div>
-			</div>
-		</div>
-	<?php } while ($row_pendingSent = mysql_fetch_assoc($pendingSent)); ?>
-<?php }?>
-<?php mysql_free_result($pendingSent); ?>
+	<div class="noData">
+		No friends sent requests
+	</div>
+<?php } ?>
+<?php mysql_free_result($sentList); ?>

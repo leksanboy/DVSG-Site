@@ -4,9 +4,11 @@
 	$searchValue = $_GET['searchValue'];
 	$_SESSION['loadMoreSearchVideos'.$userId] = $_SESSION['loadMoreSearchVideos'.$userId] + $cuantity;
 
-	// Load more videos
+	// Load more
 	mysql_select_db($database_conexion, $conexion);
-	$query_loadMoreSearch = sprintf("SELECT * FROM z_videos WHERE title LIKE %s ORDER BY title DESC LIMIT %s, 10",
+	$query_loadMoreSearch = sprintf("SELECT * 
+										FROM z_videos 
+										WHERE title LIKE %s ORDER BY title DESC LIMIT %s, 10",
 	GetSQLValueString("%" . $searchValue . "%", "text"),
 	GetSQLValueString($_SESSION['loadMoreSearchVideos'.$userId], "int"));
 	$loadMoreSearch = mysql_query($query_loadMoreSearch, $conexion) or die(mysql_error());

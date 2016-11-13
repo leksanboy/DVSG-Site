@@ -14,7 +14,7 @@
 
 	//User data
 	mysql_select_db($database_conexion, $conexion);
-	$query_userData = sprintf("SELECT id, name, primary_color, secondary_color FROM z_users WHERE id = %s", 
+	$query_userData = sprintf("SELECT id, name, primary_color FROM z_users WHERE id = %s", 
 	GetSQLValueString($userPageId, "int"));
 	$userData = mysql_query($query_userData, $conexion) or die(mysql_error());
 	$row_userData = mysql_fetch_assoc($userData);
@@ -39,7 +39,7 @@
 		<?php include("includes/browsehappy.php");?>
 		<div class="innerBody">
 			<?php include("includes/leftBlockRight.php"); ?>
-			<div class="header headerUser headerPhotos" style="background:#<?php echo $row_userData['primary_color']; ?>">
+			<div class="header headerUser headerPhotos">
 				<div class="headerEffect">
 					<canvas id="headerEffect"></canvas>
 				</div>
@@ -47,9 +47,6 @@
 				<?php  if (isset($_SESSION['MM_Id'])) { ?>
 					<div class="menuLeft" onclick="toggleMenu('left', 1)">
 						<?php include("images/svg/menu.php"); ?>
-					</div>
-					<div class="userName">
-						<?php echo $row_userData['name']; ?>
 					</div>
 					<div class="menuRight" onclick="toggleMenu('right', 1)">
 						<?php include("images/svg/circles.php"); ?>
@@ -60,6 +57,8 @@
 						</div>
 					<?php } ?>
 				<?php } ?>
+
+				<?php include("includes/userDataLogin.php"); ?>
 
 				<div class="title">
 					<?php echo traducir(82,$_COOKIE['idioma'])?>

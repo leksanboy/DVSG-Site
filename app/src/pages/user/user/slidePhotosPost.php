@@ -7,7 +7,7 @@
 	if ($pageLocation == 'user') {
 		// User photos  --> photosList
 		mysql_select_db($database_conexion, $conexion);
-		$query_photosList = sprintf("SELECT * FROM z_news_files WHERE user=%s AND type=%s ORDER by id DESC",
+		$query_photosList = sprintf("SELECT * FROM z_news_files WHERE user=%s AND type=%s  AND is_deleted = 0 ORDER by id DESC",
 		GetSQLValueString($userId, "int"),
 	   	GetSQLValueString("photo", "text"));
 		$photosList = mysql_query($query_photosList, $conexion) or die(mysql_error());
@@ -32,7 +32,6 @@
 		$totalRows_photosList = mysql_num_rows($photosList);
 	}
 ?>
-
 <div class="boxContent">
 	<div class="panel">
 		<div class="counter">

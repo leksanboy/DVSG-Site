@@ -8,8 +8,16 @@
 		</div>
 	</div>
 
+	<div class="colorBox" id="colorBoxTheme">
+		<div class="title">Theme color</div>
+		<div class="buttons">
+			<button onclick="colorTheme('light')">Light</button>
+			<button onclick="colorTheme('dark')">Dark</button>
+		</div>
+	</div>
+
 	<div class="colorBox" id="colorBoxPrimary">
-		<div class="title">Primary color</div>
+		<div class="title">Header color</div>
 		<div class="selector">
 			<button onclick="colorPicker(1)" id="buttonPrimary" style="background:#<?php echo $row_userData['primary_color']; ?>">Choose</button>
 			<label>
@@ -40,41 +48,8 @@
 			<div class="btn button-orange" onclick="colorPicker(3, 'button-orange')"></div>
 			<div class="btn button-deeporange" onclick="colorPicker(3, 'button-deeporange')"></div>
 			<div class="btn button-bluegrey" onclick="colorPicker(3, 'button-bluegrey')"></div>
-		</div>
-	</div>
-
-	<div class="colorBox" id="colorBoxSecondary">
-		<div class="title">Secondary color</div>
-		<div class="selector">
-			<button onclick="colorPicker(4)" id="buttonSecondary" style="background:#<?php echo $row_userData['secondary_color']; ?>">Choose</button>
-			<label>
-				<?php include("images/svg/hashtag.php"); ?>
-			</label>
-			<input name="secondary-color" 
-				type="text" 
-				onkeyup="colorPicker(5, this.value)" 
-				maxlength="6" 
-				placeholder="0099ff" 
-				value="<?php echo $row_userData['secondary_color']; ?>"
-			/>
-		</div>
-
-		<div class="box">
-			<div class="btn button-red" onclick="colorPicker(6, 'button-red')"></div>
-			<div class="btn button-pink" onclick="colorPicker(6, 'button-pink')"></div>
-			<div class="btn button-purple" onclick="colorPicker(6, 'button-purple')"></div>
-			<div class="btn button-deeppurple" onclick="colorPicker(6, 'button-deeppurple')"></div>
-			<div class="btn button-indigo" onclick="colorPicker(6, 'button-indigo')"></div>
-			<div class="btn button-blue" onclick="colorPicker(6, 'button-blue')"></div>
-			<div class="btn button-lightblue" onclick="colorPicker(6, 'button-lightblue')"></div>
-			<div class="btn button-teal" onclick="colorPicker(6, 'button-teal')"></div>
-			<div class="btn button-green" onclick="colorPicker(6, 'button-green')"></div>
-			<div class="btn button-lightgreen" onclick="colorPicker(6, 'button-lightgreen')"></div>
-			<div class="btn button-lime" onclick="colorPicker(6, 'button-lime')"></div>
-			<div class="btn button-yellow" onclick="colorPicker(6, 'button-yellow')"></div>
-			<div class="btn button-orange" onclick="colorPicker(6, 'button-orange')"></div>
-			<div class="btn button-deeporange" onclick="colorPicker(6, 'button-deeporange')"></div>
-			<div class="btn button-bluegrey" onclick="colorPicker(6, 'button-bluegrey')"></div>
+			<div class="btn button-light" onclick="colorPicker(3, 'button-light')"></div>
+			<div class="btn button-dark" onclick="colorPicker(3, 'button-dark')"></div>
 		</div>
 	</div>
 
@@ -205,7 +180,7 @@
 		<?php do{ ?>
 			<a onClick="setLanguage('<?php echo $row_languages['pais']?>');"
 				<?php if ($_COOKIE['idioma'] == $row_languages['pais']){?>
-				class="selected" style="background:#<?php echo $row_userData['secondary_color']; ?>"
+				class="selected"
 			<?php }?>>
 				<?php if ($_COOKIE['idioma'] == $row_languages['pais']){?>
 			    	<?php include("images/svg/check.php"); ?>
@@ -287,14 +262,10 @@
 
 	// Color picker
 	function colorPicker(type, value){
-		var button = $('.avatarBox button');
-			buttonSave = $('.buttonSave'),
-			buttonLanguage = $('.languageBox .selected'),
-			header = $('.headerUser'),
+		var header = $('.headerUser'),
 			inputPrimary = $('#colorBoxPrimary > .selector > input'),
-			inputSecondary = $('#colorBoxSecondary > .selector > input'),
-			buttonPrimary = $('#buttonPrimary'),
-			buttonSecondary = $('#buttonSecondary');
+			buttonLanguage = $('.languageBox .selected'),
+			buttonPrimary = $('#buttonPrimary');
 
 		if (type==1) { //Box One
 			$('#colorBoxPrimary .box').toggleClass('showColorBox');
@@ -307,21 +278,19 @@
 			buttonPrimary.css('background', color);
 			var colorHex = rgb2hex(color);
 			inputPrimary.val(colorHex);
-		}else if (type==4) { //Box Two
-			$('#colorBoxSecondary > .box').toggleClass('showColorBox');
-		}else if (type==5) {
-			button.css('background', '#' + value);
-			buttonSave.css('background', '#' + value);
-			buttonLanguage.css('background', '#' + value);
-			buttonSecondary.css('background', '#' + value);
-		}else if (type==6) {
-			var color = $('.'+ value).css("background-color");
-			button.css('background', color);
-			buttonSave.css('background', color);
-			buttonLanguage.css('background', color);
-			buttonSecondary.css('background', color);
-			var colorHex = rgb2hex(color);
-			inputSecondary.val(colorHex);
+		}
+	}
+
+	// Color theme
+	function colorTheme(type){
+		console.log('T:', type);
+		
+		if (type=='light') {
+			$('#darkThemeColor').hide();
+			$('#lightThemeColor').show();
+		}else if (type=='dark') {
+			$('#lightThemeColor').hide();
+			$('#darkThemeColor').show();
 		}
 	}
 	

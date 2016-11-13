@@ -8,8 +8,8 @@
  * Domain URL
  */
 // var url = 'http://104.199.60.227/';
-// var url = 'http://www.dvsg.co/';
-var url = 'http://localhost/DVSG-site/app/dist/';
+var url = 'http://www.dvsg.co/';
+// var url = 'http://localhost/DVSG-site/app/dist/';
 var $;
 
 /**
@@ -458,14 +458,130 @@ var Sketch = {
 Sketch.init();
 
 /**
- * Open/Close UserDataBox
+ * Editable div
  */
-function openUserDataBox() {
-    $('.userDataBox').toggle();
+$('div[contenteditable=true]').keydown(function(e) {
+    if (e.keyCode == 13) {
+        return true;
+    } else if (e.keyCode == 32) {
+        document.execCommand('insertHTML', false, '&nbsp;');
+        return false;
+    }
+});
+
+
+/**
+ * Sign in
+ */
+function loginAccess(type, email, password) {
+    if (type == 1) {
+        if (email === "" || password === "") {
+            $('.signInBox .error').fadeIn(300).html('Complete the Fields');
+            setTimeout(function() {
+                $('.signInBox .error').fadeOut(300);
+            }, 3000);
+
+            return false;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: url + 'includes/arrancar.php',
+                data: 'email=' + email + '&password=' + password,
+                success: function(html) {
+                    if (html != "false") {
+                        $('.signInBox #signInLoading').val("Loading...");
+                        location.reload();
+                        return true;
+                    } else if (html == "false") {
+                        $('.signInBox .error').fadeIn(300);
+                        setTimeout(function() {
+                            $('.signInBox .error').fadeOut(500);
+                        }, 3000);
+                        $('.signInBox .error').html('Email or Password is incorrect');
+                        return false;
+                    }
+                }
+            });
+        }
+    } else if (type == 2) {
+        $('.signInBox').toggleClass('signInBoxActive');
+        $('.signInBoxHidden').toggleClass('signInBoxHiddenActive');
+    }
 }
 
 /**
- * Open/Close Left menu
+ * Sign in dataBox
+ */
+function loginBoxAccess(type, email, password) {
+    if (type == 1) {
+        if (email === "" || password === "") {
+            $('.loginData .dataBox .error').fadeIn(300).html('Complete the Fields');
+            setTimeout(function() {
+                $('.loginData .dataBox .error').fadeOut(300);
+            }, 3000);
+
+            return false;
+        } else {
+            $.ajax({
+                type: 'POST',
+                url: url + 'includes/arrancar.php',
+                data: 'email=' + email + '&password=' + password,
+                success: function(html) {
+                    if (html != "false") {
+                        $('.loginData .dataBox #signInLoading').val("Loading...");
+                        location.reload();
+                        return true;
+                    } else if (html == "false") {
+                        $('.loginData .dataBox .error').fadeIn(300);
+                        setTimeout(function() {
+                            $('.loginData .dataBox .error').fadeOut(500);
+                        }, 3000);
+                        $('.loginData .dataBox .error').html('Email or Password is incorrect');
+                        return false;
+                    }
+                }
+            });
+        }
+    } else if (type == 2) {
+        $('.loginData .dataBox').toggle();
+    }
+}
+
+/**
+ * Log out
+ */
+function logOut(type) {
+    if (type == 1) {
+        $('.logOutWindow').toggleClass('logOutWindowActive');
+        $('.logOutWindowHidden').toggleClass('logOutWindowHiddenActive');
+    } else if (type == 2) {
+        $('.logOutWindow').addClass('logOutFadeOut');
+        $('.logOutWindowHidden').addClass('logOutFadeOut');
+
+        setTimeout(function() {
+            $('.logOutWindow').removeClass('logOutWindowActive');
+            $('.logOutWindowHidden').removeClass('logOutWindowHiddenActive');
+        }, 300);
+
+        setTimeout(function() {
+            $('.logOutWindow').removeClass('logOutFadeOut');
+            $('.logOutWindowHidden').removeClass('logOutFadeOut');
+        }, 1000);
+
+        $('.confirmationDeleteBox').removeClass('confirmationDeleteBoxShow');
+        $('body').removeClass('bodyFixed');
+    }
+}
+
+/**
+ * Open·Close UserDataBox
+ */
+function userDataBox() {
+    $('.userData .dataBox').toggle();
+}
+
+/**
+ * Open·Close Left menu
  */
 function toggleMenu(side, type) {
     if (side == 'left') {
@@ -503,18 +619,6 @@ function toggleMenu(side, type) {
     }
 }
 
-/**
- * Editable div
- */
-$('div[contenteditable=true]').keydown(function(e) {
-    if (e.keyCode == 13) {
-        return true;
-    } else if (e.keyCode == 32) {
-        document.execCommand('insertHTML', false, '&nbsp;');
-        return false;
-    }
-});
-
 
 
 // corregir
@@ -522,8 +626,6 @@ $('div[contenteditable=true]').keydown(function(e) {
 // aqui
 // para
 // abajo
-
-
 /**
  * Search box
  *  - Input empty

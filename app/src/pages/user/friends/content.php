@@ -90,42 +90,6 @@
 	};
 	defaultLoad('friends');
 
-	//·····> Search
-	function searchButton(type, value){
-		if (type==1 && value.trim().length > 0) { // Search
-			$('.searchBox .searchIcon').hide();
-			$('.searchBox .loaderIcon').show();
-
-			$.ajax({
-				type: 'POST',
-				url: '<?php echo $urlWeb ?>' + 'pages/user/friends/search.php',
-				data: 'titleValue=' + value,
-				success: function(response) {
-					setTimeout(function() {
-						$('.searchBox .searchIcon').show();
-						$('.searchBox .loaderIcon').hide();
-
-						$(".pageFriends").find('formbox').hide();
-						$('.searchBoxDataList').show();
-						$('.searchBoxDataList').html(response);
-					}, 600);
-				}
-			});
-		} else if (type==2 || value.trim().length == 0) { // Reset
-			$('.searchBox .searchIcon').hide();
-			$('.searchBox .loaderIcon').show();
-			$('.searchBox form input').val('');
-			$('.searchBoxDataList').hide();
-
-			setTimeout(function() {
-				$('.searchBox .searchIcon').show();
-				$('.searchBox .loaderIcon').hide();
-
-				defaultLoad(clickedTab);
-			}, 600);
-		}
-	}
-
 	//·····> Delete a friend
 	function deleteFriend(type, id, sender, receiver){
 		if (type==1) {
@@ -170,9 +134,9 @@
 			data: 'status=' + status + '&sender=' + <?php echo $_SESSION['MM_Id'] ?> + '&receiver=' + receiver,
 			success: function(response){
 				if (status == 0) {
-					$('.searchBoxDataList #friend'+ id +' .head .buttons button').attr("onclick","statusFriendSearch(1, "+receiver+", "+id+");").html('Remove');
+					$('.searchBoxDataList #friend'+ id +' .head .buttons button').attr("onclick","statusFriendSearch(1, "+receiver+", "+id+");").html('Cancel request');
 				} else {
-					$('.searchBoxDataList #friend'+ id +' .head .buttons button').attr("onclick","statusFriendSearch(0, "+receiver+", "+id+");").html('+ Add');
+					$('.searchBoxDataList #friend'+ id +' .head .buttons button').attr("onclick","statusFriendSearch(0, "+receiver+", "+id+");").html('+ Add to friends');
 				}
 			}
 		});
@@ -192,5 +156,59 @@
 				}
 			}
 		});
+	}
+
+	//·····> Search
+	var searchValue;
+	function searchButton(type, value){
+		if (type==1 && value.trim().length > 0) { // Search
+			$('.searchBox .searchIcon').hide();
+			$('.searchBox .loaderIcon').show();
+			searchValue = value;
+
+			$.ajax({
+				type: 'GET',
+				url: '<?php echo $urlWeb ?>' + 'pages/user/friends/search.php',
+				data: 'searchValue=' + value + '&userId=' + userId,
+				success: function(response) {
+					setTimeout(function() {
+						$('.searchBox .searchIcon').show();
+						$('.searchBox .loaderIcon').hide();
+
+						$(".pageFriends").find('formbox').hide();
+						$('.searchBoxDataList').show();
+						$('.searchBoxDataList').html(response);
+					}, 600);
+				}
+			});
+		} else if (type==2 || value.trim().length == 0) { // Reset
+			$('.searchBox .searchIcon').hide();
+			$('.searchBox .loaderIcon').show();
+			$('.searchBox form input').val('');
+			$('.searchBoxDataList').hide();
+
+			setTimeout(function() {
+				$('.searchBox .searchIcon').show();
+				$('.searchBox .loaderIcon').hide();
+
+				defaultLoad(clickedTab);
+			}, 600);
+		}
+	}
+
+	//·····> Load more
+	function loadMoreSearch(){
+		$.ajax({
+            type: "GET",
+            url: '<?php echo $urlWeb ?>' + 'pages/user/friends/loadMoreSearch.php',
+            data: 'searchValue=' + searchValue + '&cuantity=' + 10 + '&userId=' + userId,
+            success: function(response) {
+            	if (response != '')
+            		$('.searchBoxDataList').append(response);
+                else
+                	$('.searchBoxDataList .loadMore').hide();
+
+            }
+        });
 	}
 </script>

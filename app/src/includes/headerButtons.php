@@ -1,19 +1,5 @@
 <div class="logo" onClick="clickThePage(1)">
-	<?php  if (is_file("images/svg/logo.php")){
-		include_once("images/svg/logo.php");
-		}
-		else if(is_file("../images/svg/logo.php"))
-		{
-		include_once("../images/svg/logo.php");
-		}
-		else if(is_file("../../images/svg/logo.php"))
-		{
-		include_once("../../images/svg/logo.php");
-		}
-		else if(is_file("../../../images/svg/logo.php"))
-		{
-		include_once("../../../images/svg/logo.php");
-	}?>
+	<?php  include_once("images/svg/logo.php"); ?>
 </div>
 
 <?php if (isset ($_SESSION['MM_Id'])){ ?>
@@ -27,21 +13,7 @@
 <?php }?>
 
 <div class="searchButton" onClick="searchBox();">
-	<?php  if (is_file("images/svg/search.php")){
-		include_once("images/svg/search.php");
-		}
-		else if(is_file("../images/svg/search.php"))
-		{
-		include_once("../images/svg/search.php");
-		}
-		else if(is_file("../../images/svg/search.php"))
-		{
-		include_once("../../images/svg/search.php");
-		}
-		else if(is_file("../../../images/svg/search.php"))
-		{
-		include_once("../../../images/svg/search.php");
-	}?>
+	<?php include_once("images/svg/search.php"); ?>
 </div>
 
 <?php if (isset ($_SESSION['MM_Id'])){ ?>

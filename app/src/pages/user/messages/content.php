@@ -54,18 +54,33 @@
 	defaultLoad('inbox');
 
 	//·····> Delete message on Inbox
-	function deleteMessage(type, id){
-		if (type==1) {
-			$('#delete'+id).toggle();
-		}else if (type==2) {
-			$.ajax({
-				type: 'POST',
-				url: url + 'pages/user/messages/functions/delete.php',
-				data: 'id=' + id,
-				success: function(response){
-					$('#message'+id).fadeOut(300);
-				}
-			});
+	function deleteMessage(category, type, id){
+		if (category == 'inbox') {
+			if (type==1) {
+				$('#deleteInbox'+id).toggle();
+			}else if (type==2) {
+				$.ajax({
+					type: 'POST',
+					url: url + 'pages/user/messages/functions/delete.php',
+					data: 'id=' + id + '&category='+ category,
+					success: function(response){
+						$('.inboxListBox #message'+id).fadeOut(300);
+					}
+				});
+			}
+		} else if (category == 'outbox') {
+			if (type==1) {
+				$('#deleteOutbox'+id).toggle();
+			}else if (type==2) {
+				$.ajax({
+					type: 'POST',
+					url: url + 'pages/user/messages/functions/delete.php',
+					data: 'id=' + id + '&category='+ category,
+					success: function(response){
+						$('.outboxListBox #message'+id).fadeOut(300);
+					}
+				});
+			}
 		}
 	}
 
@@ -183,7 +198,7 @@
 								<textarea name='answer' placeholder='Write the message...'></textarea>\
 							</div>\
 							<div class='buttons'>\
-								<button onClick='showMessageOutbox(3)' id='answerButton'>NEW ONE</button>\
+								<button onClick='showMessageOutbox(3)' id='answerButton'>REPLY</button>\
 								<button onClick='showMessageOutbox(4, " + id + ", " + idReceiver + " ,answer.value)' id='sendButton' style='display:none'>SEND</button>\
 								<button onClick='showMessageOutbox(2)'>CLOSE</button>\
 							</div>\
